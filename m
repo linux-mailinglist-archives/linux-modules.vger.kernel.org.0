@@ -2,263 +2,76 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 635F5D2D72
-	for <lists+linux-modules@lfdr.de>; Thu, 10 Oct 2019 17:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1EA4D3ACF
+	for <lists+linux-modules@lfdr.de>; Fri, 11 Oct 2019 10:21:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726633AbfJJPQP (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 10 Oct 2019 11:16:15 -0400
-Received: from mail-wm1-f74.google.com ([209.85.128.74]:39560 "EHLO
-        mail-wm1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726597AbfJJPQO (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 10 Oct 2019 11:16:14 -0400
-Received: by mail-wm1-f74.google.com with SMTP id 190so2761186wme.4
-        for <linux-modules@vger.kernel.org>; Thu, 10 Oct 2019 08:16:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=i3Erxj68tMcwkIZ2NUT8ZG/xvUxR9gGY2fME2mvG5JY=;
-        b=tyB4NIF4cyHaIp1deXiILh3c/NzNlyLfId7Y01hj7cBrdXiAD5xlGQJutMNAGCtNmG
-         ZKUSPPCStZWLOV/zrn9ZVfQ0dgRnycAO478qTG/1k2UWvgsEZWhqRUE1IWFVAwnLdUMr
-         N/5Y1aBXECx5kPn+1WmAsLLyI8fXweizVUDikwqGEMRkPfDLOpCUyQv5GgqrPQBUQi2s
-         MAxDgN89vvewQZl4gT7NCY39rc4pVbYCKMGlL1U4iX9rbcA4FP8tw7l01GYvjrCqShoc
-         /STRfyXIDPQXEuI1ky55ZGGvrHCrNZVlQ4bPrfRsNptOT/sHAQAxJA5mUdJGineCrdTT
-         Pw+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=i3Erxj68tMcwkIZ2NUT8ZG/xvUxR9gGY2fME2mvG5JY=;
-        b=jb6qusAOc4OpUMrqcB1UT0PB1VJVZEMImsE4it9jCCCtbedC5hg6r7l7JKdG97FU3L
-         pePkWQSGtmFU1GdluKmzzjvY6DEx5vjz1V0QoiEqNM/MA6lWdW8IAlkuCTgb/R2bP+f3
-         fetU6blI10jomVODDJp1OAx3wK361W4u8RLppmWPQGfjREOVhvdKO9nyx6QXCN7lvfxe
-         67Lx/cT9giWqSLcEqBklmRVnHv2eqRUGIGwIYZEdCHBct1tzy+AvoWEYN5RODCNWHBOk
-         xqBqOV1BctsJ3zr3zOBqLfmM06rFlF6aG7rTQeQgnosMcOb1NV91sls1u6OomsARSvXg
-         lFrg==
-X-Gm-Message-State: APjAAAX5sWam3EKz/2F6jEe439CvasNePUDYtUsTHmH6XztFQ9CgX7S2
-        OLnVoHC9HnNJQlt9CSbTbWJpPCYlIDR/RA==
-X-Google-Smtp-Source: APXvYqzykiWp/pYZwS7FjqEfOT321sqVXUyjY6mctjsFEEZhtdsbXpRqa/2zu/NB+vr22KsSqa76pviTrglD3w==
-X-Received: by 2002:a5d:4691:: with SMTP id u17mr8903588wrq.41.1570720571422;
- Thu, 10 Oct 2019 08:16:11 -0700 (PDT)
-Date:   Thu, 10 Oct 2019 16:14:43 +0100
-In-Reply-To: <20191010151443.7399-1-maennich@google.com>
-Message-Id: <20191010151443.7399-5-maennich@google.com>
-Mime-Version: 1.0
-References: <20191010151443.7399-1-maennich@google.com>
-X-Mailer: git-send-email 2.23.0.581.g78d2f28ef7-goog
-Subject: [PATCH 4/4] export: avoid code duplication in include/linux/export.h
-From:   Matthias Maennich <maennich@google.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     kernel-team@android.com, maennich@google.com,
-        Jessica Yu <jeyu@kernel.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Martijn Coenen <maco@android.com>,
-        Lucas De Marchi <lucas.de.marchi@gmail.com>,
-        Shaun Ruffell <sruffell@sruffell.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Will Deacon <will@kernel.org>, linux-kbuild@vger.kernel.org,
-        linux-modules@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1727414AbfJKIUH (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 11 Oct 2019 04:20:07 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:51434 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727411AbfJKIUH (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Fri, 11 Oct 2019 04:20:07 -0400
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.13])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 04CF03D966;
+        Fri, 11 Oct 2019 08:20:07 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.43.2.40])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 553B860625;
+        Fri, 11 Oct 2019 08:20:06 +0000 (UTC)
+From:   Alexey Gladkov <gladkov.alexey@gmail.com>
+To:     linux-modules@vger.kernel.org
+Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>
+Subject: [PATCH v1 0/4] Add modules.builtin.modinfo support
+Date:   Fri, 11 Oct 2019 10:19:52 +0200
+Message-Id: <20191011081956.4127892-1-gladkov.alexey@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 11 Oct 2019 08:20:07 +0000 (UTC)
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Now that the namespace value is not part of the __ksymtab entry name
-anymore, we can simplify the implementation of EXPORT_SYMBOL*. By
-allowing the empty string "" to represent 'no namespace', we can unify
-the implementation and drop a lot redundant code.  That increases
-readability and maintainability.
+The kernel since version v5.2-rc1 exports information about built-in
+modules in the modules.builtin.modinfo. Now, kmod can show complete information
+about the built-in modules as well as about external modules. Also kmod can
+understand aliases of built-in modules.
 
-As Masahiro pointed out earlier,
-"The drawback of this change is, it grows the code size. When the symbol
-has no namespace, sym->namespace was previously NULL, but it is now am
-empty string "". So, it increases 1 byte for every no namespace
-EXPORT_SYMBOL. A typical kernel configuration has 10K exported symbols,
-so it increases 10KB in rough estimation."
+Before:
 
-Suggested-by: Masahiro Yamada <yamada.masahiro@socionext.com>
-Signed-off-by: Matthias Maennich <maennich@google.com>
----
- include/linux/export.h | 92 +++++++++++++-----------------------------
- kernel/module.c        |  2 +-
- 2 files changed, 29 insertions(+), 65 deletions(-)
+$ modinfo block-major-9-1
+modinfo: ERROR: Module block-major-9-1 not found.
 
-diff --git a/include/linux/export.h b/include/linux/export.h
-index f24b86d7dd4d..201262793369 100644
---- a/include/linux/export.h
-+++ b/include/linux/export.h
-@@ -46,7 +46,7 @@ extern struct module __this_module;
-  * absolute relocations that require runtime processing on relocatable
-  * kernels.
-  */
--#define __KSYMTAB_ENTRY_NS(sym, sec)					\
-+#define __KSYMTAB_ENTRY(sym, sec)					\
- 	__ADDRESSABLE(sym)						\
- 	asm("	.section \"___ksymtab" sec "+" #sym "\", \"a\"	\n"	\
- 	    "	.balign	4					\n"	\
-@@ -56,34 +56,17 @@ extern struct module __this_module;
- 	    "	.long	__kstrtabns_" #sym "- .			\n"	\
- 	    "	.previous					\n")
- 
--#define __KSYMTAB_ENTRY(sym, sec)					\
--	__ADDRESSABLE(sym)						\
--	asm("	.section \"___ksymtab" sec "+" #sym "\", \"a\"	\n"	\
--	    "	.balign 4					\n"	\
--	    "__ksymtab_" #sym ":				\n"	\
--	    "	.long	" #sym "- .				\n"	\
--	    "	.long	__kstrtab_" #sym "- .			\n"	\
--	    "	.long	0					\n"	\
--	    "	.previous					\n")
--
- struct kernel_symbol {
- 	int value_offset;
- 	int name_offset;
- 	int namespace_offset;
- };
- #else
--#define __KSYMTAB_ENTRY_NS(sym, sec)					\
--	static const struct kernel_symbol __ksymtab_##sym		\
--	__attribute__((section("___ksymtab" sec "+" #sym), used))	\
--	__aligned(sizeof(void *))					\
--	= { (unsigned long)&sym, __kstrtab_##sym, __kstrtabns_##sym }
--
- #define __KSYMTAB_ENTRY(sym, sec)					\
- 	static const struct kernel_symbol __ksymtab_##sym		\
--	asm("__ksymtab_" #sym)						\
- 	__attribute__((section("___ksymtab" sec "+" #sym), used))	\
- 	__aligned(sizeof(void *))					\
--	= { (unsigned long)&sym, __kstrtab_##sym, NULL }
-+	= { (unsigned long)&sym, __kstrtab_##sym, __kstrtabns_##sym }
- 
- struct kernel_symbol {
- 	unsigned long value;
-@@ -94,28 +77,20 @@ struct kernel_symbol {
- 
- #ifdef __GENKSYMS__
- 
--#define ___EXPORT_SYMBOL(sym,sec)	__GENKSYMS_EXPORT_SYMBOL(sym)
--#define ___EXPORT_SYMBOL_NS(sym,sec,ns)	__GENKSYMS_EXPORT_SYMBOL(sym)
-+#define ___EXPORT_SYMBOL(sym, sec, ns)	__GENKSYMS_EXPORT_SYMBOL(sym)
- 
- #else
- 
--#define ___export_symbol_common(sym, sec)				\
-+/* For every exported symbol, place a struct in the __ksymtab section */
-+#define ___EXPORT_SYMBOL(sym, sec, ns)					\
- 	extern typeof(sym) sym;						\
- 	__CRC_SYMBOL(sym, sec);						\
- 	static const char __kstrtab_##sym[]				\
- 	__attribute__((section("__ksymtab_strings"), used, aligned(1)))	\
--	= #sym								\
--
--/* For every exported symbol, place a struct in the __ksymtab section */
--#define ___EXPORT_SYMBOL_NS(sym, sec, ns)				\
--	___export_symbol_common(sym, sec);				\
-+	= #sym;								\
- 	static const char __kstrtabns_##sym[]				\
- 	__attribute__((section("__ksymtab_strings"), used, aligned(1)))	\
--	= #ns;								\
--	__KSYMTAB_ENTRY_NS(sym, sec)
--
--#define ___EXPORT_SYMBOL(sym, sec)					\
--	___export_symbol_common(sym, sec);				\
-+	= ns;								\
- 	__KSYMTAB_ENTRY(sym, sec)
- 
- #endif
-@@ -127,8 +102,7 @@ struct kernel_symbol {
-  * be reused in other execution contexts such as the UEFI stub or the
-  * decompressor.
-  */
--#define __EXPORT_SYMBOL_NS(sym, sec, ns)
--#define __EXPORT_SYMBOL(sym, sec)
-+#define __EXPORT_SYMBOL(sym, sec, ns)
- 
- #elif defined(CONFIG_TRIM_UNUSED_KSYMS)
- 
-@@ -144,48 +118,38 @@ struct kernel_symbol {
- #define __ksym_marker(sym)	\
- 	static int __ksym_marker_##sym[0] __section(".discard.ksym") __used
- 
--#define __EXPORT_SYMBOL(sym, sec)				\
--	__ksym_marker(sym);					\
--	__cond_export_sym(sym, sec, __is_defined(__KSYM_##sym))
--#define __cond_export_sym(sym, sec, conf)			\
--	___cond_export_sym(sym, sec, conf)
--#define ___cond_export_sym(sym, sec, enabled)			\
--	__cond_export_sym_##enabled(sym, sec)
--#define __cond_export_sym_1(sym, sec) ___EXPORT_SYMBOL(sym, sec)
--#define __cond_export_sym_0(sym, sec) /* nothing */
--
--#define __EXPORT_SYMBOL_NS(sym, sec, ns)				\
-+#define __EXPORT_SYMBOL(sym, sec, ns)					\
- 	__ksym_marker(sym);						\
--	__cond_export_ns_sym(sym, sec, ns, __is_defined(__KSYM_##sym))
--#define __cond_export_ns_sym(sym, sec, ns, conf)			\
--	___cond_export_ns_sym(sym, sec, ns, conf)
--#define ___cond_export_ns_sym(sym, sec, ns, enabled)			\
--	__cond_export_ns_sym_##enabled(sym, sec, ns)
--#define __cond_export_ns_sym_1(sym, sec, ns) ___EXPORT_SYMBOL_NS(sym, sec, ns)
--#define __cond_export_ns_sym_0(sym, sec, ns) /* nothing */
-+	__cond_export_sym(sym, sec, ns, __is_defined(__KSYM_##sym))
-+#define __cond_export_sym(sym, sec, ns, conf)				\
-+	___cond_export_sym(sym, sec, ns, conf)
-+#define ___cond_export_sym(sym, sec, ns, enabled)			\
-+	__cond_export_sym_##enabled(sym, sec, ns)
-+#define __cond_export_sym_1(sym, sec, ns) ___EXPORT_SYMBOL(sym, sec, ns)
-+#define __cond_export_sym_0(sym, sec, ns) /* nothing */
- 
- #else
- 
--#define __EXPORT_SYMBOL_NS(sym,sec,ns)	___EXPORT_SYMBOL_NS(sym,sec,ns)
--#define __EXPORT_SYMBOL(sym,sec)	___EXPORT_SYMBOL(sym,sec)
-+#define __EXPORT_SYMBOL(sym, sec, ns)	___EXPORT_SYMBOL(sym, sec, ns)
- 
- #endif /* CONFIG_MODULES */
- 
- #ifdef DEFAULT_SYMBOL_NAMESPACE
--#undef __EXPORT_SYMBOL
--#define __EXPORT_SYMBOL(sym, sec)				\
--	__EXPORT_SYMBOL_NS(sym, sec, DEFAULT_SYMBOL_NAMESPACE)
-+#include <linux/stringify.h>
-+#define _EXPORT_SYMBOL(sym, sec)	__EXPORT_SYMBOL(sym, sec, __stringify(DEFAULT_SYMBOL_NAMESPACE))
-+#else
-+#define _EXPORT_SYMBOL(sym, sec)	__EXPORT_SYMBOL(sym, sec, "")
- #endif
- 
--#define EXPORT_SYMBOL(sym)		__EXPORT_SYMBOL(sym, "")
--#define EXPORT_SYMBOL_GPL(sym)		__EXPORT_SYMBOL(sym, "_gpl")
--#define EXPORT_SYMBOL_GPL_FUTURE(sym)	__EXPORT_SYMBOL(sym, "_gpl_future")
--#define EXPORT_SYMBOL_NS(sym, ns)	__EXPORT_SYMBOL_NS(sym, "", ns)
--#define EXPORT_SYMBOL_NS_GPL(sym, ns)	__EXPORT_SYMBOL_NS(sym, "_gpl", ns)
-+#define EXPORT_SYMBOL(sym)		_EXPORT_SYMBOL(sym, "")
-+#define EXPORT_SYMBOL_GPL(sym)		_EXPORT_SYMBOL(sym, "_gpl")
-+#define EXPORT_SYMBOL_GPL_FUTURE(sym)	_EXPORT_SYMBOL(sym, "_gpl_future")
-+#define EXPORT_SYMBOL_NS(sym, ns)	__EXPORT_SYMBOL(sym, "", #ns)
-+#define EXPORT_SYMBOL_NS_GPL(sym, ns)	__EXPORT_SYMBOL(sym, "_gpl", #ns)
- 
- #ifdef CONFIG_UNUSED_SYMBOLS
--#define EXPORT_UNUSED_SYMBOL(sym)	__EXPORT_SYMBOL(sym, "_unused")
--#define EXPORT_UNUSED_SYMBOL_GPL(sym)	__EXPORT_SYMBOL(sym, "_unused_gpl")
-+#define EXPORT_UNUSED_SYMBOL(sym)	_EXPORT_SYMBOL(sym, "_unused")
-+#define EXPORT_UNUSED_SYMBOL_GPL(sym)	_EXPORT_SYMBOL(sym, "_unused_gpl")
- #else
- #define EXPORT_UNUSED_SYMBOL(sym)
- #define EXPORT_UNUSED_SYMBOL_GPL(sym)
-diff --git a/kernel/module.c b/kernel/module.c
-index ff2d7359a418..26c13173da3d 100644
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -1400,7 +1400,7 @@ static int verify_namespace_is_imported(const struct load_info *info,
- 	char *imported_namespace;
- 
- 	namespace = kernel_symbol_namespace(sym);
--	if (namespace) {
-+	if (namespace && namespace[0]) {
- 		imported_namespace = get_modinfo(info, "import_ns");
- 		while (imported_namespace) {
- 			if (strcmp(namespace, imported_namespace) == 0)
+After:
+
+$ modinfo block-major-9-1
+name:           md_mod
+filename:       (builtin)
+alias:          block-major-9-*
+alias:          md
+description:    MD RAID framework
+license:        GPL
+parm:           start_dirty_degraded:int
+parm:           create_on_open:bool
+
+Alexey Gladkov (4):
+  libkmod: Add parser for modules.builtin.modinfo
+  libkmod: Add function to get list of built-in modules
+  Lookup aliases in the modules.builtin.modinfo
+  modinfo: Show information about built-in modules
+
+ Makefile.am                |   1 +
+ libkmod/libkmod-builtin.c  | 231 +++++++++++++++++++++++++++++++++++++
+ libkmod/libkmod-internal.h |  10 ++
+ libkmod/libkmod-module.c   |  76 ++++++++++--
+ libkmod/libkmod.c          |  25 ++++
+ libkmod/libkmod.h          |   1 +
+ tools/depmod.c             |  63 ++++++++++
+ tools/modinfo.c            |  39 ++++---
+ 8 files changed, 419 insertions(+), 27 deletions(-)
+ create mode 100644 libkmod/libkmod-builtin.c
+
 -- 
-2.23.0.581.g78d2f28ef7-goog
+2.21.0
 
