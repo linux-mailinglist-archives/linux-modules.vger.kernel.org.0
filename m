@@ -2,109 +2,133 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 556A3D44A3
-	for <lists+linux-modules@lfdr.de>; Fri, 11 Oct 2019 17:43:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CE9DD4C6E
+	for <lists+linux-modules@lfdr.de>; Sat, 12 Oct 2019 05:24:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728165AbfJKPnP (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 11 Oct 2019 11:43:15 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36982 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727953AbfJKPnP (ORCPT
+        id S1726751AbfJLDYf (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 11 Oct 2019 23:24:35 -0400
+Received: from condef-02.nifty.com ([202.248.20.67]:22788 "EHLO
+        condef-02.nifty.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbfJLDYf (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 11 Oct 2019 11:43:15 -0400
-Received: by mail-wm1-f65.google.com with SMTP id f22so10671230wmc.2
-        for <linux-modules@vger.kernel.org>; Fri, 11 Oct 2019 08:43:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IkvpMa/Wbpx2VqhnGR9Yn3NTs6llmrr8FmiZZgZjer8=;
-        b=X3vZDG8yiduvmHkrBKdm66t60S2SmVt7Hj4fmdcMZ9LRkp8FNQ5jAnkRGJf8POzXRn
-         ZEPrUuEA3sjz31G7Y9MBGEg7tTqpLOgVdDXqiEMfgQqhoQdd6vB1WyxWmXPJM+K0yepf
-         ftDr+itzH0IsdPAiGU6jnb9Rp1PjWD57efySuYo06Y4A8D/xpLj+zhfX9ZXdovaI3IN6
-         dBzcy/EDVFQj7UDYNh325+ZdIyxnami4RvpcuTMpwIkaw2j4OYAfXqTA6DXki7NbT/Uw
-         2Dfml6WB1+tx2UD8EtcC+pFFiDQSfgST/KKkzypSFFKVKwOOhG+HvaNXU1oKtc4fkeIx
-         dNGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IkvpMa/Wbpx2VqhnGR9Yn3NTs6llmrr8FmiZZgZjer8=;
-        b=MTDSNfJV70F1FJXkxFblbP4nwpdamcQ1bnumQ6/3507HIeCVtDLc9cpUGEdSFz4oU8
-         dal7p+7/bQFdta/Rdb83N0drbOyFnaCWRNXKXTF1BTwv64oULubn0tGrOhnppxNImUOp
-         IdwHQKTaWYeLj/y4nJgqriJmylan/OhgSvh7VJ+f619qUqgvcrKAaW+ZRQDCU8hsu91U
-         N1Z1jRGMWU9Im8BfUai2dgqgKkj1l5QL8oNlUq3eoKj8DgCUx292KnO2qc5Mor9SP7IY
-         rYkMVbhSl8cHN0ERUNzU6XybfmI2Evf8A2oU2B9DJo5l+9v2bIIM+QNcmDG8qq7lRYPm
-         FsIw==
-X-Gm-Message-State: APjAAAViSfplu0RYmWUJRuM7ndLJ9GLvFtN8fQO8h4CtSD5tZZ7vsOq0
-        46IktmLRPmSEacpV5/3yDho1AQ==
-X-Google-Smtp-Source: APXvYqxt3UXygeXinwIg1evC6ymRhLH+w7/H5e3CEQMemZD1O0osIhi1XeCl3mzp06xPlgUPPoUUnA==
-X-Received: by 2002:a1c:6a05:: with SMTP id f5mr3785533wmc.121.1570808592952;
-        Fri, 11 Oct 2019 08:43:12 -0700 (PDT)
-Received: from google.com ([2a00:79e0:d:210:e8f7:125b:61e9:733d])
-        by smtp.gmail.com with ESMTPSA id r2sm13732272wrm.3.2019.10.11.08.43.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2019 08:43:11 -0700 (PDT)
-Date:   Fri, 11 Oct 2019 16:43:11 +0100
-From:   Matthias Maennich <maennich@google.com>
+        Fri, 11 Oct 2019 23:24:35 -0400
+Received: from conssluserg-01.nifty.com ([10.126.8.80])by condef-02.nifty.com with ESMTP id x9C3Konj010649
+        for <linux-modules@vger.kernel.org>; Sat, 12 Oct 2019 12:20:50 +0900
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42]) (authenticated)
+        by conssluserg-01.nifty.com with ESMTP id x9C3KZvC029353;
+        Sat, 12 Oct 2019 12:20:35 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-01.nifty.com x9C3KZvC029353
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1570850436;
+        bh=fVr6myVWeNkwM1bzUYkAV3KR6w6/G/BTVwiRy1YKeFE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=jBGzyU5Mq7JX//jH7mWGJu9NdKguZyZXnVGNj3iCJS5PRSD3xLkJRY0TGS4Dk2k0G
+         PJQ7rHVBvJb3mZkIbGIpgatVzi0UNBGZW3Oa2TAi1tVvoegSiHlWCBzOUQtFg/wGSW
+         9t9f3+QGAgRYXfE3wrIe0ip/p3bytfQVfw/nQvT4u3bYR4T8Vk6zvfIXG7KTzYmZfD
+         3QERovRA/lXLHDqYZCmp4F2raHSRboVWEeLWepwohRaE56ray+aQB3i17uJAu9wpXj
+         wiWyYHDDm4LRjw50yOhTz56hoox7MNupUsWV4924Ir95zuqk9ECeRDvXtUz0+XBKNc
+         FVtnRymLipdlg==
+X-Nifty-SrcIP: [209.85.217.42]
+Received: by mail-vs1-f42.google.com with SMTP id z14so7481125vsz.13;
+        Fri, 11 Oct 2019 20:20:35 -0700 (PDT)
+X-Gm-Message-State: APjAAAW1xwzad01EzQvNacNbHmX0+XbtwRiUi9FQqHD8/aksLmU/mbFD
+        epPPHsweGjzTP0pJT6Z3vEiwTkxpHfuWt2qS3yk=
+X-Google-Smtp-Source: APXvYqxNrd3wl6DgsTBqbsxBQYF+1gG7D7r2FAwVB2ThW11Jz8W/5aeuJmNk7KKiWAHe87RF9lJgtuaoBtTuQKOpfXE=
+X-Received: by 2002:a67:e354:: with SMTP id s20mr11109571vsm.54.1570850434646;
+ Fri, 11 Oct 2019 20:20:34 -0700 (PDT)
+MIME-Version: 1.0
+References: <20191010151443.7399-1-maennich@google.com> <20191010151443.7399-2-maennich@google.com>
+ <20191011153253.GB1283883@kroah.com>
+In-Reply-To: <20191011153253.GB1283883@kroah.com>
+From:   Masahiro Yamada <yamada.masahiro@socionext.com>
+Date:   Sat, 12 Oct 2019 12:19:58 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQbgtnP_P6aZEO7bHNL+w641ED+19TXCXKkU=dE+gyBGQ@mail.gmail.com>
+Message-ID: <CAK7LNAQbgtnP_P6aZEO7bHNL+w641ED+19TXCXKkU=dE+gyBGQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] modpost: delegate updating namespaces to separate function
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-kernel@vger.kernel.org, kernel-team@android.com,
+Cc:     Matthias Maennich <maennich@google.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "Cc: Android Kernel" <kernel-team@android.com>,
         Jessica Yu <jeyu@kernel.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
         Martijn Coenen <maco@android.com>,
         Lucas De Marchi <lucas.de.marchi@gmail.com>,
         Shaun Ruffell <sruffell@sruffell.net>,
-        Will Deacon <will@kernel.org>, linux-kbuild@vger.kernel.org,
-        linux-modules@vger.kernel.org,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Subject: Re: [PATCH 4/4] export: avoid code duplication in
- include/linux/export.h
-Message-ID: <20191011154311.GA192647@google.com>
-References: <20191010151443.7399-1-maennich@google.com>
- <20191010151443.7399-5-maennich@google.com>
- <20191011153127.GA1283883@kroah.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20191011153127.GA1283883@kroah.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        Will Deacon <will@kernel.org>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+        linux-modules <linux-modules@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Fri, Oct 11, 2019 at 05:31:27PM +0200, Greg Kroah-Hartman wrote:
->On Thu, Oct 10, 2019 at 04:14:43PM +0100, Matthias Maennich wrote:
->> Now that the namespace value is not part of the __ksymtab entry name
->> anymore, we can simplify the implementation of EXPORT_SYMBOL*. By
->> allowing the empty string "" to represent 'no namespace', we can unify
->> the implementation and drop a lot redundant code.  That increases
->> readability and maintainability.
->>
->> As Masahiro pointed out earlier,
->> "The drawback of this change is, it grows the code size. When the symbol
->> has no namespace, sym->namespace was previously NULL, but it is now am
->> empty string "". So, it increases 1 byte for every no namespace
->> EXPORT_SYMBOL. A typical kernel configuration has 10K exported symbols,
->> so it increases 10KB in rough estimation."
+On Sat, Oct 12, 2019 at 12:33 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
->10Kb of non-swapable memory isn't good.  But if you care about that, you
->can get it back with the option to compile away any non-used symbols,
->and that shouldn't be affected by this change, right?
+> On Thu, Oct 10, 2019 at 04:14:40PM +0100, Matthias Maennich wrote:
+> > Let the function 'sym_update_namespace' take care of updating the
+> > namespace for a symbol. While this currently only replaces one single
+> > location where namespaces are updated, in a following patch, this
+> > function will get more call sites.
+> >
+> > The function signature is intentionally close to sym_update_crc and
+> > taking the name by char* seems like unnecessary work as the symbol has
+> > to be looked up again. In a later patch of this series, this concern
+> > will be addressed.
+> >
+> > This function ensures that symbol::namespace is either NULL or has a
+> > valid non-empty value. Previously, the empty string was considered 'no
+> > namespace' as well and this lead to confusion.
+> >
+> > Signed-off-by: Matthias Maennich <maennich@google.com>
+> > ---
+> >  scripts/mod/modpost.c | 21 ++++++++++++++++++---
+> >  1 file changed, 18 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+> > index 4d2cdb4d71e3..9f5dcdff4d2f 100644
+> > --- a/scripts/mod/modpost.c
+> > +++ b/scripts/mod/modpost.c
+> > @@ -362,6 +362,22 @@ static char *sym_extract_namespace(const char **symname)
+> >       return namespace;
+> >  }
+> >
+> > +static void sym_update_namespace(const char *symname, const char *namespace)
+> > +{
+> > +       struct symbol *s = find_symbol(symname);
+> > +       /* That symbol should have been created earlier and thus this is
+> > +        * actually an assertion. */
+>
+> Do we care about checkpatch issues in tools?
 
-Rasmus suggested to put the 'aMS' flags on the __ksymtab_strings section
-to mitigate this:
-https://lore.kernel.org/lkml/f2e28d6b-77c5-5fe2-0bc4-b24955de9954@rasmusvillemoes.dk/
+Personally, I do.
 
-I was not yet able to properly test this, so I did not include it in
-this series. As I said in the cover letter, this 4th patch might be
-optional for 5.4. So, we could defer it to a later time when we have
-addressed that properly.
-
-Cheers,
-Matthias
 
 >
->That being said, the code is a lot cleaner, so I have no objection to
->it.
+> If so, you need a blank line before the comment :)
+
+One more minor issue, the block comment style is not correct.
+Please do like this:
+
+/*
+ * Blah Blah ...
+ * Blah Blha ...
+ */
+
+With those addressed,
+
+Reviewed-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+
+
+
 >
->Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Anyway, not a big deal
+>
+> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+
+
+
+
+-- 
+Best Regards
+Masahiro Yamada
