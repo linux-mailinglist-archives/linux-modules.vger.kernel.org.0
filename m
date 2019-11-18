@@ -2,64 +2,88 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 9304D100EED
-	for <lists+linux-modules@lfdr.de>; Mon, 18 Nov 2019 23:46:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02DB0100F5C
+	for <lists+linux-modules@lfdr.de>; Tue, 19 Nov 2019 00:17:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726717AbfKRWp7 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 18 Nov 2019 17:45:59 -0500
-Received: from relay10.mail.gandi.net ([217.70.178.230]:48177 "EHLO
-        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726543AbfKRWp7 (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 18 Nov 2019 17:45:59 -0500
-Received: from windsurf.home (lfbn-1-2159-45.w90-76.abo.wanadoo.fr [90.76.216.45])
-        (Authenticated sender: thomas.petazzoni@bootlin.com)
-        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 9B8DB240004;
-        Mon, 18 Nov 2019 22:45:57 +0000 (UTC)
-Date:   Mon, 18 Nov 2019 23:45:56 +0100
-From:   Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+        id S1726809AbfKRXRY (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 18 Nov 2019 18:17:24 -0500
+Received: from monster.unsafe.ru ([5.9.28.80]:50728 "EHLO mail.unsafe.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726795AbfKRXRY (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Mon, 18 Nov 2019 18:17:24 -0500
+Received: from Legion-PC.fortress (ip-89-102-33-211.net.upcbroadband.cz [89.102.33.211])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.unsafe.ru (Postfix) with ESMTPSA id ADE09C61AF3;
+        Mon, 18 Nov 2019 23:17:21 +0000 (UTC)
+Date:   Tue, 19 Nov 2019 00:17:19 +0100
+From:   Alexey Gladkov <gladkov.alexey@gmail.com>
 To:     Lucas De Marchi <lucas.de.marchi@gmail.com>
-Cc:     Fabrice Fontaine <fontaine.fabrice@gmail.com>,
-        linux-modules <linux-modules@vger.kernel.org>
-Subject: Re: [PATCH] Makefile.am: filter -Wl,--no-undefined
-Message-ID: <20191118234556.21a4984e@windsurf.home>
-In-Reply-To: <CAKi4VAKB1myn8AuMaV3SjBrthNiTxc8TkE18w95BPdRuzQBn2g@mail.gmail.com>
-References: <20191118215617.395319-1-fontaine.fabrice@gmail.com>
-        <CAKi4VAKB1myn8AuMaV3SjBrthNiTxc8TkE18w95BPdRuzQBn2g@mail.gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.4git49 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Cc:     linux-modules@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] Add modules.builtin.modinfo support
+Message-ID: <20191118231719.dz57yyino6k7bboo@Legion-PC.fortress>
+Mail-Followup-To: Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        linux-modules@vger.kernel.org
+References: <20191108172524.468494-1-gladkov.alexey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191108172524.468494-1-gladkov.alexey@gmail.com>
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Hello Lucas,
+On Fri, Nov 08, 2019 at 06:25:19PM +0100, Alexey Gladkov wrote:
+> The kernel since version v5.2-rc1 exports information about built-in
+> modules in the modules.builtin.modinfo. Now, kmod can show complete information
+> about the built-in modules as well as about external modules. Also kmod can
+> understand aliases of built-in modules.
 
-On Mon, 18 Nov 2019 14:18:07 -0800
-Lucas De Marchi <lucas.de.marchi@gmail.com> wrote:
+How about this version ?
 
-> On Mon, Nov 18, 2019 at 1:59 PM Fabrice Fontaine
-> <fontaine.fabrice@gmail.com> wrote:
-> >
-> > Commit 1d14ef82f4a3be741bcdf6b1c6d51ce9dce43567 does not completely fix  
+> Before:
 > 
-> CC'ing Thomas.
+> $ modinfo block-major-9-1
+> modinfo: ERROR: Module block-major-9-1 not found.
 > 
-> Lucas De Marchi
+> After:
+> 
+> $ modinfo block-major-9-1
+> name:           md_mod
+> filename:       (builtin)
+> alias:          block-major-9-*
+> alias:          md
+> description:    MD RAID framework
+> license:        GPL
+> parm:           start_dirty_degraded:int
+> parm:           create_on_open:bool
+> 
+> v2:
+> 
+> * Don't use kmod_file() to parse modules.builtin.modinfo. Instead, parser reads
+> the file into the buffer by chunks, which reduces the amount of memory.
+> 
+> Alexey Gladkov (4):
+>   libkmod: Add parser for modules.builtin.modinfo
+>   libkmod: Add function to get list of built-in modules
+>   Lookup aliases in the modules.builtin.modinfo
+>   modinfo: Show information about built-in modules
+> 
+>  Makefile.am                |   1 +
+>  libkmod/libkmod-builtin.c  | 329 +++++++++++++++++++++++++++++++++++++
+>  libkmod/libkmod-internal.h |  10 ++
+>  libkmod/libkmod-module.c   |  73 +++++++-
+>  libkmod/libkmod.c          |  25 +++
+>  libkmod/libkmod.h          |   1 +
+>  tools/depmod.c             |  63 +++++++
+>  tools/modinfo.c            |  39 +++--
+>  8 files changed, 514 insertions(+), 27 deletions(-)
+>  create mode 100644 libkmod/libkmod-builtin.c
+> 
+> -- 
+> 2.21.0
+> 
 
-Fabrice also submitted this patch to Buildroot, and I merged it.
-Indeed, the -z undefs option was only introduced in binutils 2.30, so
-any toolchain using a binutils older than that is not able to use -z
-undefs.
-
-So I'd say that Fabrice's proposal is fine. Another option would be to
-detect if the toolchain support -z undefs, and only use --no-undefined
-if -z undefs is supported, for example.
-
-Thomas
 -- 
-Thomas Petazzoni, CTO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Rgrds, legion
+
