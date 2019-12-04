@@ -2,28 +2,28 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 02DB0100F5C
-	for <lists+linux-modules@lfdr.de>; Tue, 19 Nov 2019 00:17:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14288112E4D
+	for <lists+linux-modules@lfdr.de>; Wed,  4 Dec 2019 16:27:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726809AbfKRXRY (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 18 Nov 2019 18:17:24 -0500
-Received: from monster.unsafe.ru ([5.9.28.80]:50728 "EHLO mail.unsafe.ru"
+        id S1728313AbfLDP11 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 4 Dec 2019 10:27:27 -0500
+Received: from monster.unsafe.ru ([5.9.28.80]:47674 "EHLO mail.unsafe.ru"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726795AbfKRXRY (ORCPT <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 18 Nov 2019 18:17:24 -0500
-Received: from Legion-PC.fortress (ip-89-102-33-211.net.upcbroadband.cz [89.102.33.211])
+        id S1728301AbfLDP11 (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Wed, 4 Dec 2019 10:27:27 -0500
+Received: from comp-core-i7-2640m-0182e6 (nat-pool-brq-t.redhat.com [213.175.37.10])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.unsafe.ru (Postfix) with ESMTPSA id ADE09C61AF3;
-        Mon, 18 Nov 2019 23:17:21 +0000 (UTC)
-Date:   Tue, 19 Nov 2019 00:17:19 +0100
+        by mail.unsafe.ru (Postfix) with ESMTPSA id 02430C61AAE;
+        Wed,  4 Dec 2019 15:27:24 +0000 (UTC)
+Date:   Wed, 4 Dec 2019 16:27:23 +0100
 From:   Alexey Gladkov <gladkov.alexey@gmail.com>
-To:     Lucas De Marchi <lucas.de.marchi@gmail.com>
-Cc:     linux-modules@vger.kernel.org
+To:     linux-modules@vger.kernel.org
+Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>
 Subject: Re: [PATCH v2 0/4] Add modules.builtin.modinfo support
-Message-ID: <20191118231719.dz57yyino6k7bboo@Legion-PC.fortress>
-Mail-Followup-To: Lucas De Marchi <lucas.de.marchi@gmail.com>,
-        linux-modules@vger.kernel.org
+Message-ID: <20191204152723.nnmumapusw5zeacl@comp-core-i7-2640m-0182e6>
+Mail-Followup-To: linux-modules@vger.kernel.org,
+        Lucas De Marchi <lucas.de.marchi@gmail.com>
 References: <20191108172524.468494-1-gladkov.alexey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -38,9 +38,7 @@ On Fri, Nov 08, 2019 at 06:25:19PM +0100, Alexey Gladkov wrote:
 > modules in the modules.builtin.modinfo. Now, kmod can show complete information
 > about the built-in modules as well as about external modules. Also kmod can
 > understand aliases of built-in modules.
-
-How about this version ?
-
+> 
 > Before:
 > 
 > $ modinfo block-major-9-1
@@ -68,7 +66,9 @@ How about this version ?
 >   libkmod: Add function to get list of built-in modules
 >   Lookup aliases in the modules.builtin.modinfo
 >   modinfo: Show information about built-in modules
-> 
+
+ping.
+
 >  Makefile.am                |   1 +
 >  libkmod/libkmod-builtin.c  | 329 +++++++++++++++++++++++++++++++++++++
 >  libkmod/libkmod-internal.h |  10 ++
