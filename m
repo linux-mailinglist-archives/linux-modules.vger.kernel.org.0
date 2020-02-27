@@ -2,28 +2,28 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id DC1721720F5
-	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 15:47:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12A3D17210F
+	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 15:47:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730269AbgB0Nou (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 27 Feb 2020 08:44:50 -0500
-Received: from vmicros1.altlinux.org ([194.107.17.57]:55366 "EHLO
+        id S1729471AbgB0Oqi (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 27 Feb 2020 09:46:38 -0500
+Received: from vmicros1.altlinux.org ([194.107.17.57]:59060 "EHLO
         vmicros1.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730262AbgB0Not (ORCPT
+        with ESMTP id S1731828AbgB0Oqh (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 27 Feb 2020 08:44:49 -0500
+        Thu, 27 Feb 2020 09:46:37 -0500
 Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
-        by vmicros1.altlinux.org (Postfix) with ESMTP id 00A9272CCF1;
-        Thu, 27 Feb 2020 16:44:47 +0300 (MSK)
+        by vmicros1.altlinux.org (Postfix) with ESMTP id 98A5172CCF1;
+        Thu, 27 Feb 2020 17:46:35 +0300 (MSK)
 Received: from boyarsh.office.basealt.ru (unknown [83.220.44.62])
-        by imap.altlinux.org (Postfix) with ESMTPSA id DFEAA4A4A16;
-        Thu, 27 Feb 2020 16:44:46 +0300 (MSK)
-Date:   Thu, 27 Feb 2020 16:44:46 +0300
+        by imap.altlinux.org (Postfix) with ESMTPSA id 7A0314A4A16;
+        Thu, 27 Feb 2020 17:46:35 +0300 (MSK)
+Date:   Thu, 27 Feb 2020 17:46:35 +0300
 From:   "Anton V. Boyarshinov" <boyarsh@altlinux.org>
 To:     linux-modules@vger.kernel.org
-Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>
+Cc:     lucas.de.marchi@gmail.com
 Subject: [PATCH v3] Add kernel-version dependent configuration directory
-Message-ID: <20200227164446.001173a6@boyarsh.office.basealt.ru>
+Message-ID: <20200227174635.5a2b13c9@boyarsh.office.basealt.ru>
 Organization: BaseALT
 X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-alt-linux-gnu)
 MIME-Version: 1.0
