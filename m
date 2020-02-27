@@ -2,214 +2,73 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id CC5B71712B9
-	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 09:44:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7002C1714BC
+	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 11:07:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728440AbgB0IoC (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 27 Feb 2020 03:44:02 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46354 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728482AbgB0IoC (ORCPT
+        id S1728659AbgB0KHX (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 27 Feb 2020 05:07:23 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:39732 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728454AbgB0KHX (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 27 Feb 2020 03:44:02 -0500
-Received: by mail-wr1-f68.google.com with SMTP id j7so2170429wrp.13
-        for <linux-modules@vger.kernel.org>; Thu, 27 Feb 2020 00:44:00 -0800 (PST)
+        Thu, 27 Feb 2020 05:07:23 -0500
+Received: by mail-lj1-f195.google.com with SMTP id o15so2685559ljg.6
+        for <linux-modules@vger.kernel.org>; Thu, 27 Feb 2020 02:07:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mLUOzi+75LC+LpoTw1P0vq9GAVyNQdTNfnYIoamCwiI=;
-        b=QJ4byFzneM2HNtD2ZPh+4ytuXQKSh6kNZz20CdKv4r23brJM/XZwlm6VEy7gUIjPfN
-         2cmD1NZ9ubJEYO7mcopsS+FTeqEmw0lY/Zs0+FZ6AMe8U17G6jiTwH4+QJpiinY+1553
-         fVobtz58xOUJVHp7uDr+TDbyBtTKbKJvg+ste1/BDsuvuQnJ0A+cjfzMDXAlae/YI8QV
-         yCVhmwudlg3oNCiFn0S0XXCax+68v2F/Gw8L01S7qYgx3gx+8x2JPJf5surN2CWpFLiI
-         1sAhvhnLnTxOLkEDszd6S7649KyimlCVSNkjrsyiuLMAInh37sIq/s3QsEqzWalCJpiT
-         jD/w==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=K2xi3e2quHyKafPCuMORzI8FTjA48rzjnGsQCXF/uoQ=;
+        b=k3MHFfFot8xxS1PI9DGD2L0R4Z3wlTePCdPzn87nsqC4gdAD9TTGwRf+q8rzV50LTi
+         jSW25IxlVLsAHQWu37KurTVF7R58FH/vcve1eOyj5W8Ge4EYDUWUBXDhDspHGtJyhjfE
+         R8jHGnralLWcpHJYhG3ivxcRPJQSpHIVFfwcg1eowslbkM4cJhAjnc2G+EnUno8GKmhH
+         d3C6XcOu1V0tV4NXv6CoX+9UJPzUFmfmyfAR9TUntXI1WFHxxPrw64ZNNIigbMZp0WKS
+         OxoNun/XNCJvmtEGefhfPal6v5k/PhyPKZpYt3bHxJwKuvShx6sGDdNrS6zQ7JCAJUX9
+         ppWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mLUOzi+75LC+LpoTw1P0vq9GAVyNQdTNfnYIoamCwiI=;
-        b=ccUlJOW+mgTPSY2D+xq8Tmc99/W2ViRPgVsRDqes71EJjidC4V4GvSKbYTXfHzUDFX
-         z6jzN/WSu5x27Zisid1Mnnaf1qq6nizPgqEH5e0Uf7oQ63I2vvg6Zamoe00HvitMYrUx
-         fM/xRC0w+DdCCEnyH1KDzv4C2P48eGy4nPuNvIqBzwpHDtI8UcJ9XavTQfZJ5rv1c2a3
-         yfQ8X55YbvZtiSFFIYkaDda8URoIdOENt7fkt31XXfC9AFbhVTCjYS7+2eB4H+67TuzI
-         01LFsdqscooEsISflI98li/d87IvuLcLMze5oVtvPKyt2iL4bAPZBNQVk3vHFcYFmwwh
-         zx9g==
-X-Gm-Message-State: APjAAAVFISbQKKPGz6W1jeBd8qVZPyrYaXx6HDsHMGlX2ip4I0qPGP72
-        gRuos9JvJZNe4J1vraramAI8q6UXA90CetWjaJrO5avyNl0=
-X-Google-Smtp-Source: APXvYqxFMhwK7xef1nfX+SPPgpYJPVgyTV9DyW2W3NkihozPY3OXoaa7FKpfdzsBUbNMnRqSVv3cxLm2FYXBNlPVvzk=
-X-Received: by 2002:adf:94a3:: with SMTP id 32mr3831449wrr.276.1582793039616;
- Thu, 27 Feb 2020 00:43:59 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=K2xi3e2quHyKafPCuMORzI8FTjA48rzjnGsQCXF/uoQ=;
+        b=YlNqnKhI3fvsVb9Izn4c0g75f92sOs/LVGq8NUDOLGn2wpyfO9PBeOHfEC1oBcFep8
+         bc2M0sjg/p0ZYM+4mFQDRwBrp/nWLOXzNCJS7P0D9O0Exo37YqHnSZ2XJunK92+tSV1z
+         DUGQVewe44HHX1kivOw3oCs984TwzrSPEpYIKb+Zq59XRqCp/aU9xV6TlSuSrV3j9zT3
+         yXw7UM2zKWJPR1Kj0EaeAsC0iJz4cS1hen/OUN1hRYaIkYsrXI5jsO9o3lQI6Ew70Pwv
+         mb1Owedk9GDZL/PEb7GmzATWWB+FIOxUO5YbEG3plhLTHOrq4PKNHzinVcRmLrsTBZY4
+         5Ceg==
+X-Gm-Message-State: ANhLgQ3QLls6kKch6hWrJF59wHAqg/Bzh+6AySNeaH3da1Ua/XB+sCKF
+        j/qEmlYiyZSLbvQ4kFWuAJxZYDL//35W88TRYNQ=
+X-Google-Smtp-Source: ADFU+vuZzjgXPtZYRBD+KLCuqBOm+SzvIsV1XZLfPSJxMHq9bQSuZSU4wWscCxp8skI9iQoIu09DiiMDMIRUgBX5f9k=
+X-Received: by 2002:a2e:9955:: with SMTP id r21mr2280232ljj.283.1582798041595;
+ Thu, 27 Feb 2020 02:07:21 -0800 (PST)
 MIME-Version: 1.0
-References: <20200226133221.44342a57@table.localdomain>
-In-Reply-To: <20200226133221.44342a57@table.localdomain>
-From:   Lucas De Marchi <lucas.de.marchi@gmail.com>
-Date:   Thu, 27 Feb 2020 00:43:47 -0800
-Message-ID: <CAKi4VA+8o=3HASrtuFNwts35q09xR_bUAY8Bd8_tc0ebj4DZ=g@mail.gmail.com>
-Subject: Re: [PATCH v2] Add kernel-version dependent configuration directory
-To:     "Anton V. Boyarshinov" <boyarsh@altlinux.org>
-Cc:     linux-modules <linux-modules@vger.kernel.org>, legion@altlinux.org
+Received: by 2002:a05:6512:1052:0:0:0:0 with HTTP; Thu, 27 Feb 2020 02:07:21
+ -0800 (PST)
+Reply-To: pabsd@bsdmail.com
+From:   Charles Lunga <bonbro84@gmail.com>
+Date:   Thu, 27 Feb 2020 10:07:21 +0000
+Message-ID: <CACT_RWdQknCkgwmrY+6xvKrdg9nB5DkgiZwV0Bxq2m5M1TBOtA@mail.gmail.com>
+Subject: =?UTF-8?Q?You=E2=80=99RE_Payment_Funds_Release=21=21?=
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Wed, Feb 26, 2020 at 5:32 AM Anton V. Boyarshinov
-<boyarsh@altlinux.org> wrote:
->
-> In some cases it looks reasonable to have kernel-version dependent
-> modules configuration: blacklists, options and so on. This commit
-> introduces additional configuration directories:
-> * /lib/modprobe.d/`uname -r`
-> * /etc/modprobe.d/`uname -r`
+Attn Dear,
+This is to inform you that your Funds Payment worth=E2=80=99s $1, 5 million=
+s
+USD delaying by the some of the corrupt officials of the bank failures
+act, who are trying to divert your funds into their private accounts
+has been authorized to immediate transfer by the European Financial
+Intelligence Unit (EFIU).
 
-Thanks for the patch, I really like the idea of supporting this. I
-have some suggestions below.
+You are hereby advice to contact them through the bellow information.
+Email..pabsd@bsdmail.com
+Name...Paul Traor=C3=A9
+Phone number..+226 6486 8134
 
->
-> Signed-off-by: Anton V. Boyarshinov <boyarsh@altlinux.org>
-> ---
-> Changes from v1: ARRAY_SIZE and SYSCONFDIR macros are used
->
->  libkmod/libkmod-config.c |  5 +----
->  libkmod/libkmod.c        | 44 ++++++++++++++++++++++++++++++++++++----
->  man/modprobe.d.xml       |  2 ++
->  3 files changed, 43 insertions(+), 8 deletions(-)
->
-> diff --git a/libkmod/libkmod-config.c b/libkmod/libkmod-config.c
-> index aaac0a1..5cc348a 100644
-> --- a/libkmod/libkmod-config.c
-> +++ b/libkmod/libkmod-config.c
-> @@ -711,11 +711,8 @@ static bool conf_files_filter_out(struct kmod_ctx *ctx, DIR *d,
->
->         fstatat(dirfd(d), fn, &st, 0);
->
-> -       if (S_ISDIR(st.st_mode)) {
-> -               ERR(ctx, "Directories inside directories are not supported: "
-> -                                                       "%s/%s\n", path, fn);
-> +       if (S_ISDIR(st.st_mode))
->                 return true;
-> -       }
->
->         return false;
->  }
-> diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
-> index 69fe431..b718da0 100644
-> --- a/libkmod/libkmod.c
-> +++ b/libkmod/libkmod.c
-> @@ -225,6 +225,21 @@ static char *get_kernel_release(const char *dirname)
->         return p;
->  }
->
-> +static char *get_ver_config_path(const char * dir)
-> +{
-> +       struct utsname u;
-> +       char *ver_conf;
-> +       static const char appendix[] = "modprobe.d";
-> +
-> +       if (uname(&u) < 0)
-> +               return NULL;
-> +
-> +       if (asprintf(&ver_conf, "%s/%s/%s", dir, appendix, u.release) < 0)
-> +               return NULL;
-> +
-> +       return ver_conf;
-> +}
-> +
->  /**
->   * kmod_new:
->   * @dirname: what to consider as linux module's directory, if NULL
-> @@ -251,7 +266,7 @@ KMOD_EXPORT struct kmod_ctx *kmod_new(const char *dirname,
->  {
->         const char *env;
->         struct kmod_ctx *ctx;
-> -       int err;
-> +       int err, configs_count;
->
->         ctx = calloc(1, sizeof(struct kmod_ctx));
->         if (!ctx)
-> @@ -269,9 +284,30 @@ KMOD_EXPORT struct kmod_ctx *kmod_new(const char *dirname,
->         if (env != NULL)
->                 kmod_set_log_priority(ctx, log_priority(env));
->
-> -       if (config_paths == NULL)
-> -               config_paths = default_config_paths;
-> -       err = kmod_config_new(ctx, &ctx->config, config_paths);
-> +       if (config_paths == NULL) {
-> +               char **tmp_config_paths = malloc(sizeof(default_config_paths) +
-> +                               sizeof(char *) * 2);
-
-See documentation above this function. This breaks the case in which
-the supplied array is empty,
-i.e. a single NULL element.
-
-I wonder if for implementing this it wouldn't be better to leave this
-function alone and implement it
-in kmod_config_new():
-
-1) we create ctx->kver that points to the end of ctx->dirname. If
-dirname is NULL in kmod_new(), then
-it's assumed we are actually not running for the current kernel, so we
-might leave this logic alone.
-
-2) conf_files_list(): after "opendir(path)" we try a opendirat(d,
-ctx->kver...) and just ignore if it doesn't exist.
-
-then we run the rest of the logic as usual.
-
-This should ensure that a) we don't break the API, b) we honor dirname
-== NULL meaning "don't treat this ctx as
-one for the currently running kernel" and also c) we allow
-kernel-version subdirs for a user-provided list.
-What do you think?
-
-
-Lucas De Marchi
-
-> +               if(tmp_config_paths == NULL) {
-> +                       ERR(ctx, "could not create versioned config.\n");
-> +                       goto fail;
-> +               }
-> +
-> +               memcpy(tmp_config_paths, default_config_paths, sizeof(default_config_paths));
-> +
-> +               configs_count = ARRAY_SIZE(default_config_paths);
-> +               tmp_config_paths[configs_count-1] = get_ver_config_path("/lib");
-> +               tmp_config_paths[configs_count] = get_ver_config_path(SYSCONFDIR);
-> +               tmp_config_paths[configs_count+1] = NULL;
-> +
-> +               err = kmod_config_new(ctx, &ctx->config, (const char * const*) tmp_config_paths);
-> +
-> +               free(tmp_config_paths[configs_count-1]);
-> +               free(tmp_config_paths[configs_count]);
-> +               free(tmp_config_paths);
-> +       }
-> +       else
-> +               err = kmod_config_new(ctx, &ctx->config, config_paths);
-> +
->         if (err < 0) {
->                 ERR(ctx, "could not create config\n");
->                 goto fail;
-> diff --git a/man/modprobe.d.xml b/man/modprobe.d.xml
-> index 211af84..d1e254a 100644
-> --- a/man/modprobe.d.xml
-> +++ b/man/modprobe.d.xml
-> @@ -41,7 +41,9 @@
->
->    <refsynopsisdiv>
->      <para><filename>/lib/modprobe.d/*.conf</filename></para>
-> +    <para><filename>/lib/modprobe.d/`uname -r`/*.conf</filename></para>
->      <para><filename>/etc/modprobe.d/*.conf</filename></para>
-> +    <para><filename>/etc/modprobe.d/`uname -r`/*.conf</filename></para>
->      <para><filename>/run/modprobe.d/*.conf</filename></para>
->    </refsynopsisdiv>
->
-> --
-> 2.21.0
->
->
-
-
--- 
-Lucas De Marchi
+Do not hesitate to inform us as soon as you receive your fund.
+Regards.
+Mr.Charles Lunga
