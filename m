@@ -2,73 +2,142 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7002C1714BC
-	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 11:07:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2517E1715B5
+	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 12:09:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728659AbgB0KHX (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 27 Feb 2020 05:07:23 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:39732 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728454AbgB0KHX (ORCPT
+        id S1728761AbgB0LJT (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 27 Feb 2020 06:09:19 -0500
+Received: from vmicros1.altlinux.org ([194.107.17.57]:55692 "EHLO
+        vmicros1.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726813AbgB0LJT (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 27 Feb 2020 05:07:23 -0500
-Received: by mail-lj1-f195.google.com with SMTP id o15so2685559ljg.6
-        for <linux-modules@vger.kernel.org>; Thu, 27 Feb 2020 02:07:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=K2xi3e2quHyKafPCuMORzI8FTjA48rzjnGsQCXF/uoQ=;
-        b=k3MHFfFot8xxS1PI9DGD2L0R4Z3wlTePCdPzn87nsqC4gdAD9TTGwRf+q8rzV50LTi
-         jSW25IxlVLsAHQWu37KurTVF7R58FH/vcve1eOyj5W8Ge4EYDUWUBXDhDspHGtJyhjfE
-         R8jHGnralLWcpHJYhG3ivxcRPJQSpHIVFfwcg1eowslbkM4cJhAjnc2G+EnUno8GKmhH
-         d3C6XcOu1V0tV4NXv6CoX+9UJPzUFmfmyfAR9TUntXI1WFHxxPrw64ZNNIigbMZp0WKS
-         OxoNun/XNCJvmtEGefhfPal6v5k/PhyPKZpYt3bHxJwKuvShx6sGDdNrS6zQ7JCAJUX9
-         ppWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=K2xi3e2quHyKafPCuMORzI8FTjA48rzjnGsQCXF/uoQ=;
-        b=YlNqnKhI3fvsVb9Izn4c0g75f92sOs/LVGq8NUDOLGn2wpyfO9PBeOHfEC1oBcFep8
-         bc2M0sjg/p0ZYM+4mFQDRwBrp/nWLOXzNCJS7P0D9O0Exo37YqHnSZ2XJunK92+tSV1z
-         DUGQVewe44HHX1kivOw3oCs984TwzrSPEpYIKb+Zq59XRqCp/aU9xV6TlSuSrV3j9zT3
-         yXw7UM2zKWJPR1Kj0EaeAsC0iJz4cS1hen/OUN1hRYaIkYsrXI5jsO9o3lQI6Ew70Pwv
-         mb1Owedk9GDZL/PEb7GmzATWWB+FIOxUO5YbEG3plhLTHOrq4PKNHzinVcRmLrsTBZY4
-         5Ceg==
-X-Gm-Message-State: ANhLgQ3QLls6kKch6hWrJF59wHAqg/Bzh+6AySNeaH3da1Ua/XB+sCKF
-        j/qEmlYiyZSLbvQ4kFWuAJxZYDL//35W88TRYNQ=
-X-Google-Smtp-Source: ADFU+vuZzjgXPtZYRBD+KLCuqBOm+SzvIsV1XZLfPSJxMHq9bQSuZSU4wWscCxp8skI9iQoIu09DiiMDMIRUgBX5f9k=
-X-Received: by 2002:a2e:9955:: with SMTP id r21mr2280232ljj.283.1582798041595;
- Thu, 27 Feb 2020 02:07:21 -0800 (PST)
+        Thu, 27 Feb 2020 06:09:19 -0500
+Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
+        by vmicros1.altlinux.org (Postfix) with ESMTP id 5F40172CCF1;
+        Thu, 27 Feb 2020 14:09:17 +0300 (MSK)
+Received: from boyarsh.office.basealt.ru (unknown [83.220.44.62])
+        by imap.altlinux.org (Postfix) with ESMTPSA id 233964A4A16;
+        Thu, 27 Feb 2020 14:09:17 +0300 (MSK)
+Date:   Thu, 27 Feb 2020 14:09:15 +0300
+From:   "Anton V. Boyarshinov" <boyarsh@altlinux.org>
+To:     Lucas De Marchi <lucas.de.marchi@gmail.com>
+Cc:     linux-modules <linux-modules@vger.kernel.org>, legion@altlinux.org
+Subject: Re: [PATCH v2] Add kernel-version dependent configuration directory
+Message-ID: <20200227140915.7fa32b2e@boyarsh.office.basealt.ru>
+In-Reply-To: <CAKi4VA+8o=3HASrtuFNwts35q09xR_bUAY8Bd8_tc0ebj4DZ=g@mail.gmail.com>
+References: <20200226133221.44342a57@table.localdomain>
+        <CAKi4VA+8o=3HASrtuFNwts35q09xR_bUAY8Bd8_tc0ebj4DZ=g@mail.gmail.com>
+Organization: BaseALT
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-alt-linux-gnu)
 MIME-Version: 1.0
-Received: by 2002:a05:6512:1052:0:0:0:0 with HTTP; Thu, 27 Feb 2020 02:07:21
- -0800 (PST)
-Reply-To: pabsd@bsdmail.com
-From:   Charles Lunga <bonbro84@gmail.com>
-Date:   Thu, 27 Feb 2020 10:07:21 +0000
-Message-ID: <CACT_RWdQknCkgwmrY+6xvKrdg9nB5DkgiZwV0Bxq2m5M1TBOtA@mail.gmail.com>
-Subject: =?UTF-8?Q?You=E2=80=99RE_Payment_Funds_Release=21=21?=
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Attn Dear,
-This is to inform you that your Funds Payment worth=E2=80=99s $1, 5 million=
-s
-USD delaying by the some of the corrupt officials of the bank failures
-act, who are trying to divert your funds into their private accounts
-has been authorized to immediate transfer by the European Financial
-Intelligence Unit (EFIU).
 
-You are hereby advice to contact them through the bellow information.
-Email..pabsd@bsdmail.com
-Name...Paul Traor=C3=A9
-Phone number..+226 6486 8134
+> Thanks for the patch, I really like the idea of supporting this. I
+> have some suggestions below.
 
-Do not hesitate to inform us as soon as you receive your fund.
-Regards.
-Mr.Charles Lunga
+Thank you for review. 
+> >
+> > -       if (config_paths == NULL)
+> > -               config_paths = default_config_paths;
+> > -       err = kmod_config_new(ctx, &ctx->config, config_paths);
+> > +       if (config_paths == NULL) {
+> > +               char **tmp_config_paths = malloc(sizeof(default_config_paths) +
+> > +                               sizeof(char *) * 2);  
+> 
+> See documentation above this function. This breaks the case in which
+> the supplied array is empty,
+> i.e. a single NULL element.
+
+Yes, i haven't read it carefully enouth, but it can be easyly fixed by checking
+first element.
+ 
+> I wonder if for implementing this it wouldn't be better to leave this
+> function alone and implement it
+> in kmod_config_new():
+
+But how to distinguish in mod_config_new(): are provided config pointer
+default config and needs version-dep paths adding or it is a custom config?
+I've considered this options but haven't found a straight way to do this.
+ 
+> 1) we create ctx->kver that points to the end of ctx->dirname. If
+> dirname is NULL in kmod_new(), then
+> it's assumed we are actually not running for the current kernel, so we
+> might leave this logic alone.
+
+AFAIK in reverse, if dirname is NOT NULL, we a not running for the current kernel.
+And you are right, my patch will cause evil effects when not current kernel is 
+specified. Not a problem for modprobe, but it is common code.
+ 
+> 2) conf_files_list(): after "opendir(path)" we try a opendirat(d,
+> ctx->kver...) and just ignore if it doesn't exist.
+
+But should we try to open versions-dependent dirs in user-specified dirs?
+It looks unexpected, considering user-specified dirs semantics.
+ 
+> then we run the rest of the logic as usual.
+> 
+> This should ensure that a) we don't break the API, b) we honor dirname
+> == NULL meaning "don't treat this ctx as
+> one for the currently running kernel" and also c) we allow
+> kernel-version subdirs for a user-provided list.
+> What do you think?
+> 
+> 
+> Lucas De Marchi
+> 
+> > +               if(tmp_config_paths == NULL) {
+> > +                       ERR(ctx, "could not create versioned
+> > config.\n");
+> > +                       goto fail;
+> > +               }
+> > +
+> > +               memcpy(tmp_config_paths, default_config_paths,
+> > sizeof(default_config_paths)); +
+> > +               configs_count = ARRAY_SIZE(default_config_paths);
+> > +               tmp_config_paths[configs_count-1] =
+> > get_ver_config_path("/lib");
+> > +               tmp_config_paths[configs_count] =
+> > get_ver_config_path(SYSCONFDIR);
+> > +               tmp_config_paths[configs_count+1] = NULL;
+> > +
+> > +               err = kmod_config_new(ctx, &ctx->config, (const
+> > char * const*) tmp_config_paths); +
+> > +               free(tmp_config_paths[configs_count-1]);
+> > +               free(tmp_config_paths[configs_count]);
+> > +               free(tmp_config_paths);
+> > +       }
+> > +       else
+> > +               err = kmod_config_new(ctx, &ctx->config,
+> > config_paths); +
+> >         if (err < 0) {
+> >                 ERR(ctx, "could not create config\n");
+> >                 goto fail;
+> > diff --git a/man/modprobe.d.xml b/man/modprobe.d.xml
+> > index 211af84..d1e254a 100644
+> > --- a/man/modprobe.d.xml
+> > +++ b/man/modprobe.d.xml
+> > @@ -41,7 +41,9 @@
+> >
+> >    <refsynopsisdiv>
+> >      <para><filename>/lib/modprobe.d/*.conf</filename></para>
+> > +    <para><filename>/lib/modprobe.d/`uname
+> > -r`/*.conf</filename></para>
+> > <para><filename>/etc/modprobe.d/*.conf</filename></para>
+> > +    <para><filename>/etc/modprobe.d/`uname
+> > -r`/*.conf</filename></para>
+> > <para><filename>/run/modprobe.d/*.conf</filename></para>
+> > </refsynopsisdiv>
+> >
+> > --
+> > 2.21.0
+> >
+> >  
+> 
+> 
+> -- 
+> Lucas De Marchi
