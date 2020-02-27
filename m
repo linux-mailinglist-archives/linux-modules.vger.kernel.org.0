@@ -2,31 +2,28 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 23AD91717AD
-	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 13:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC1721720F5
+	for <lists+linux-modules@lfdr.de>; Thu, 27 Feb 2020 15:47:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728998AbgB0Mli (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 27 Feb 2020 07:41:38 -0500
-Received: from vmicros1.altlinux.org ([194.107.17.57]:59992 "EHLO
+        id S1730269AbgB0Nou (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 27 Feb 2020 08:44:50 -0500
+Received: from vmicros1.altlinux.org ([194.107.17.57]:55366 "EHLO
         vmicros1.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728977AbgB0Mli (ORCPT
+        with ESMTP id S1730262AbgB0Not (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 27 Feb 2020 07:41:38 -0500
+        Thu, 27 Feb 2020 08:44:49 -0500
 Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
-        by vmicros1.altlinux.org (Postfix) with ESMTP id 5290972CCF1;
-        Thu, 27 Feb 2020 15:41:36 +0300 (MSK)
+        by vmicros1.altlinux.org (Postfix) with ESMTP id 00A9272CCF1;
+        Thu, 27 Feb 2020 16:44:47 +0300 (MSK)
 Received: from boyarsh.office.basealt.ru (unknown [83.220.44.62])
-        by imap.altlinux.org (Postfix) with ESMTPSA id 44B0A4A4A16;
-        Thu, 27 Feb 2020 15:41:36 +0300 (MSK)
-Date:   Thu, 27 Feb 2020 15:41:34 +0300
+        by imap.altlinux.org (Postfix) with ESMTPSA id DFEAA4A4A16;
+        Thu, 27 Feb 2020 16:44:46 +0300 (MSK)
+Date:   Thu, 27 Feb 2020 16:44:46 +0300
 From:   "Anton V. Boyarshinov" <boyarsh@altlinux.org>
-To:     Lucas De Marchi <lucas.de.marchi@gmail.com>
-Cc:     linux-modules <linux-modules@vger.kernel.org>, legion@altlinux.org
-Subject: Re: [PATCH v2] Add kernel-version dependent configuration directory
-Message-ID: <20200227154134.45fab57b@boyarsh.office.basealt.ru>
-In-Reply-To: <CAKi4VA+8o=3HASrtuFNwts35q09xR_bUAY8Bd8_tc0ebj4DZ=g@mail.gmail.com>
-References: <20200226133221.44342a57@table.localdomain>
-        <CAKi4VA+8o=3HASrtuFNwts35q09xR_bUAY8Bd8_tc0ebj4DZ=g@mail.gmail.com>
+To:     linux-modules@vger.kernel.org
+Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>
+Subject: [PATCH v3] Add kernel-version dependent configuration directory
+Message-ID: <20200227164446.001173a6@boyarsh.office.basealt.ru>
 Organization: BaseALT
 X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-alt-linux-gnu)
 MIME-Version: 1.0
@@ -36,22 +33,122 @@ Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu, 27 Feb 2020 00:43:47 -0800 Lucas De Marchi wrote:
+In some cases it looks reasonable to have kernel-version dependent
+modules configuration: blacklists, options and so on. This commit
+introduces additional configuration directories:
+* /lib/modprobe.d/`uname -r`
+* /etc/modprobe.d/`uname -r`
 
-> See documentation above this function. This breaks the case in which
-> the supplied array is empty,
-> i.e. a single NULL element.
+Signed-off-by: Anton V. Boyarshinov <boyarsh@altlinux.org>
+---
+Changes from v1: ARRAY_SIZE and SYSCONFDIR macros are used
 
-I've review this code and disagree with you. It doesn't break
-single NULL element vector. In this case config_paths is not NULL and,
-so no version-dependent configuation will be created. Single NULL will
-be passed as is, like any other custom configuration.
+Changes from v2: dirname honored
 
-   if (config_paths == NULL) {
-	/*creating version-dependent configuration */
-                err = kmod_config_new(ctx, &ctx->config, (const char * const*) tmp_config_paths);
-	/* free resources */
-        }
-        else
-                err = kmod_config_new(ctx, &ctx->config, config_paths);
+libkmod/libkmod-config.c |  5 +----
+ libkmod/libkmod.c        | 42 ++++++++++++++++++++++++++++++++++++----
+ man/modprobe.d.xml       |  2 ++
+ 3 files changed, 41 insertions(+), 8 deletions(-)
+
+diff --git a/libkmod/libkmod-config.c b/libkmod/libkmod-config.c
+index aaac0a1..5cc348a 100644
+--- a/libkmod/libkmod-config.c
++++ b/libkmod/libkmod-config.c
+@@ -711,11 +711,8 @@ static bool conf_files_filter_out(struct kmod_ctx *ctx, DIR *d,
+ 
+ 	fstatat(dirfd(d), fn, &st, 0);
+ 
+-	if (S_ISDIR(st.st_mode)) {
+-		ERR(ctx, "Directories inside directories are not supported: "
+-							"%s/%s\n", path, fn);
++	if (S_ISDIR(st.st_mode))
+ 		return true;
+-	}
+ 
+ 	return false;
+ }
+diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
+index 69fe431..51b2e58 100644
+--- a/libkmod/libkmod.c
++++ b/libkmod/libkmod.c
+@@ -225,6 +225,19 @@ static char *get_kernel_release(const char *dirname)
+ 	return p;
+ }
+ 
++static char *get_ver_config_path(const char * confdir, char * modulesdir)
++{
++	char *ver_conf;
++	char * kversion = strrchr(modulesdir, '/');
++	if(kversion == NULL)
++		return NULL;
++
++	if (asprintf(&ver_conf, "%s/modprobe.d/%s", confdir, kversion+1) < 0)
++		return NULL;
++
++	return ver_conf;
++}
++
+ /**
+  * kmod_new:
+  * @dirname: what to consider as linux module's directory, if NULL
+@@ -251,7 +264,7 @@ KMOD_EXPORT struct kmod_ctx *kmod_new(const char *dirname,
+ {
+ 	const char *env;
+ 	struct kmod_ctx *ctx;
+-	int err;
++	int err, configs_count;
+ 
+ 	ctx = calloc(1, sizeof(struct kmod_ctx));
+ 	if (!ctx)
+@@ -269,9 +282,30 @@ KMOD_EXPORT struct kmod_ctx *kmod_new(const char *dirname,
+ 	if (env != NULL)
+ 		kmod_set_log_priority(ctx, log_priority(env));
+ 
+-	if (config_paths == NULL)
+-		config_paths = default_config_paths;
+-	err = kmod_config_new(ctx, &ctx->config, config_paths);
++	if (config_paths == NULL) {
++		char **tmp_config_paths = malloc(sizeof(default_config_paths) +
++				sizeof(char *) * 2);
++		if(tmp_config_paths == NULL) {
++			ERR(ctx, "could not create versioned config.\n");
++			goto fail;
++		}
++
++		memcpy(tmp_config_paths, default_config_paths, sizeof(default_config_paths));
++
++		configs_count = ARRAY_SIZE(default_config_paths);
++		tmp_config_paths[configs_count-1] = get_ver_config_path("/lib", ctx->dirname);
++		tmp_config_paths[configs_count] = get_ver_config_path(SYSCONFDIR, ctx->dirname);
++		tmp_config_paths[configs_count+1] = NULL;
++
++		err = kmod_config_new(ctx, &ctx->config, (const char * const*) tmp_config_paths);
++
++		free(tmp_config_paths[configs_count-1]);
++		free(tmp_config_paths[configs_count]);
++		free(tmp_config_paths);
++	}
++	else
++		err = kmod_config_new(ctx, &ctx->config, config_paths);
++
+ 	if (err < 0) {
+ 		ERR(ctx, "could not create config\n");
+ 		goto fail;
+diff --git a/man/modprobe.d.xml b/man/modprobe.d.xml
+index 211af84..d1e254a 100644
+--- a/man/modprobe.d.xml
++++ b/man/modprobe.d.xml
+@@ -41,7 +41,9 @@
+ 
+   <refsynopsisdiv>
+     <para><filename>/lib/modprobe.d/*.conf</filename></para>
++    <para><filename>/lib/modprobe.d/`uname -r`/*.conf</filename></para>
+     <para><filename>/etc/modprobe.d/*.conf</filename></para>
++    <para><filename>/etc/modprobe.d/`uname -r`/*.conf</filename></para>
+     <para><filename>/run/modprobe.d/*.conf</filename></para>
+   </refsynopsisdiv>
+ 
+-- 
+2.21.0
+
 
