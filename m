@@ -2,76 +2,70 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C0435178FCD
-	for <lists+linux-modules@lfdr.de>; Wed,  4 Mar 2020 12:50:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B225179955
+	for <lists+linux-modules@lfdr.de>; Wed,  4 Mar 2020 20:53:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387398AbgCDLuX (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 4 Mar 2020 06:50:23 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:45776 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387925AbgCDLuW (ORCPT
+        id S1729499AbgCDTxW (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 4 Mar 2020 14:53:22 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:39072 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728955AbgCDTxW (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 4 Mar 2020 06:50:22 -0500
-Received: by mail-lj1-f194.google.com with SMTP id e18so1650455ljn.12
-        for <linux-modules@vger.kernel.org>; Wed, 04 Mar 2020 03:50:21 -0800 (PST)
+        Wed, 4 Mar 2020 14:53:22 -0500
+Received: by mail-lf1-f66.google.com with SMTP id n30so2535283lfh.6
+        for <linux-modules@vger.kernel.org>; Wed, 04 Mar 2020 11:53:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=WTBczowU/Nsod2w33lz16yranT9oF8yu5BlEgmgClk0=;
-        b=Rr/8r6WMOlCNoZw8K9AxgT2YscUmA9StRx65b+jyMOsPhLbQJkO/LFTU2JsKh/gjmS
-         3NczcRl8Vmmf7eV4/LLgdzQxAspHzGn4R57m4trBT3yX9Pjq3tne/S6uTPqGElEKuMhX
-         FDOvcgCOZPUOtBaEUM/6oNtIywzmsmzWzFYl95AZPlGMQUcEKV2d0/5x+bIJmu++6nP4
-         e5S14ThhE1VG5LwpD0RrIutszsAA8EQITKFOEDDY0qkIlfrwgW9iajBAha7U+0eAuFkk
-         yNfl/2UTnLl5OwYsYbYPXa8dkV6hpdl1dnetoiMNHJ0qblX3vb5+qgh1c+v73dBAXHWT
-         gFsw==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=NPzB4jBohoiFb0t8CxPNTrCbXLJmaZyvbjDIfzyJbAg=;
+        b=EmiZH8b37KWkae6Nnc2lIk3oR5U7ePey+IIFAkg8IX28DCbTi3ZeRNo29okDrk70g2
+         9P5U4JRY2NS0S9CWFaCnENCEAlepdm+Yyyf0Q9qFkyA9KrEDxHtUMXmFIUI4oa6kiHOs
+         6NsYgV+5HPuyV8tsZmlXoiDE+tG8I0a454Wbi0njDCl780IztuduudzFWq7ZCmfb9Au3
+         1oskdxSWwi/NcMommhrgl0UZZ6v7RP6WaYM8rG5/FMvzENA3VgodXWKGs0Ua+vZS6IMI
+         ScwmYg/JGaeHv2nLBZPJXJDw9xSjSOM6sBRJS0QtIReyw8Xgw9BNUqjfUJXSCJ2Goc9/
+         N+UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=WTBczowU/Nsod2w33lz16yranT9oF8yu5BlEgmgClk0=;
-        b=fY8yWc7pSq9KPt87avgD/fAnBK//2pYeNhAML4L1TczIc/36cmAMvKi0no267nT9Zg
-         hJXPNX2ZTCQ/u/wF/YEjeNId7y0yuqCfLk6Tv9Nw9PjX4g9lrpsHnu47VKvLrKtBDhj0
-         JhcZywHos6o7CNvLwCGeow6gUy3kfwjhzwOQf7Jvbrshdh8mQthiljx83jAugMXff+V5
-         uOYRsj18prDKLqcYShyhxEXELHiq7gMTYMmLLqBtzDXYgl6V0gGdrbRbxHj+A0weap8r
-         zeVT9KkQa7oXfGWA0JDVMmhpvByrxxsGMOYI2+cFJntYNBVu01KBsGXL5WhFpZ+BVrlv
-         f/dw==
-X-Gm-Message-State: ANhLgQ33JhexUrU4UzEwjlXb/5ydVziF1YBS0gD+ZY6w0TBKCgxbLjEk
-        A9Q3VyYGQjJig1tn2kTGXCWp+Roj7I3ctwc/Ooo=
-X-Google-Smtp-Source: ADFU+vsxsgkDDJ3DNPKaE9J4ICZM3n919qQzycdC8qg9l+4XsmJ0kMX0QwwwCw3tidQUb8nALZgpzZ4v+reoy0iYvZI=
-X-Received: by 2002:a05:651c:545:: with SMTP id q5mr1715881ljp.139.1583322620980;
- Wed, 04 Mar 2020 03:50:20 -0800 (PST)
+         :subject:to;
+        bh=NPzB4jBohoiFb0t8CxPNTrCbXLJmaZyvbjDIfzyJbAg=;
+        b=d5Y2RH6r5DjciJSBfjvTbF8COAYzDr9x/9FDBebr+xlQv8jIwVQ0XMbCPqzFAwySKJ
+         PVbZUhC5ajjimUj1v6tqJDpVPE7F4fBatViikmh1f4wHQ99LayhA0yOwM2Tb4QIvcGi9
+         tQyMckOubsyFYS7zQesziD5C5f9XnJm9VHBCeZwTitQJLAQGs1gVDwYLbMvur4gQMOaT
+         jvvrN+koZxspnMyKBStO9AeZqRvTpeeQeDf+g4xW6+/liTnwacvPEY6p41XJmJnSUDFM
+         87J+5/GDJfFndd4SV/1B3J88ecCoaZgUrb0HCZ1QmNxN42P7z7CoNQu9yI56JqN+NsZ2
+         XBYw==
+X-Gm-Message-State: ANhLgQ2XpNH5q1IzaAsyO1PDCH4VHtoR9a12Qr+3sC2ymiMTdCPldnHc
+        Sh8QSz8qvbsD3Pik7K+gykUcdiwbeHay9OmP6dk=
+X-Google-Smtp-Source: ADFU+vu2szm6PRzdniI/DhtfJhH9E0GIkrG6AisyzSdz/0FzH6qoBZeg4GA3kFqD75Ht6TXzZmVtHxK62bx4lTJ2CM8=
+X-Received: by 2002:a05:6512:1041:: with SMTP id c1mr3024739lfb.14.1583351600252;
+ Wed, 04 Mar 2020 11:53:20 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:ac2:5446:0:0:0:0:0 with HTTP; Wed, 4 Mar 2020 03:50:20 -0800 (PST)
-Reply-To: brianjesse343@gmail.com
-From:   brianjesse <westernu288@gmail.com>
-Date:   Wed, 4 Mar 2020 11:50:20 +0000
-Message-ID: <CAD1j+E_a33xnEbmPygbSLVwdaP=HO_oLwcgGQ5OiZfw=5Z+adQ@mail.gmail.com>
-Subject: Hl
+Received: by 2002:a19:7b1b:0:0:0:0:0 with HTTP; Wed, 4 Mar 2020 11:53:19 -0800 (PST)
+Reply-To: owusuAsa12@gmail.com
+From:   Owusu Asante <ttapiaatt4@gmail.com>
+Date:   Wed, 4 Mar 2020 11:53:19 -0800
+Message-ID: <CA+Vpfb-A79Zd23660JqWgDQL21yxVquOqJmxXjFPt=c2wp6g4Q@mail.gmail.com>
+Subject: From Owusu Asante
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Witaj, Uprzejmie informujemy, =C5=BCe ten e-mail, kt=C3=B3ry dotar=C5=82 do=
- Twojej
-skrzynki pocztowej, nie jest
-b=C5=82=C4=85d, ale zosta=C5=82 specjalnie skierowany do rozpatrzenia. ja
-mam propozycj=C4=99 (7,500.000,00 $) pozostawion=C4=85 przez mojego zmar=C5=
-=82ego
-klienta in=C5=BCyniera Carlosa
-kt=C3=B3ry nosi przy tobie to samo imi=C4=99, kt=C3=B3ry pracowa=C5=82 i mi=
-eszka=C5=82 tutaj w Lom=C3=A9
-I=C5=9B=C4=87. M=C3=B3j zmar=C5=82y klient i rodzina uczestniczyli w wypadk=
-u samochodowym,
-kt=C3=B3ry mia=C5=82 miejsce
-ich =C5=BCycia. Kontaktuj=C4=99 si=C4=99 z tob=C4=85 jako najbli=C5=BCszym =
-krewnym zmar=C5=82ego, wi=C4=99c ty
-mo=C5=BCe otrzyma=C4=87 =C5=9Brodki na roszczenia. Zrobi=C4=99 to po twojej=
- szybkiej odpowiedzi
-poinformuj=C4=99 ci=C4=99 o sposobach wykonania tego przymierza. skontaktuj=
- si=C4=99
-ze mn=C4=85 w tej sprawie
-e-maile (brianjesse343@gmail.com)
+Hello,
+I write to request your co-operation in my desire to find a foreign
+partner who will assist me in the relocation and Transfer of some
+amount of money which I have made available for investment purpose
+abroad. I would like you to assist in the following:
+
+(1) Assist me in the receiving of this sum in your country.
+(2) Advise on areas for potential future investment in your country.
+(3) Assist me in carrying a feasibility study before actual investment.
+
+Please state terms and conditions for me and also laws biding for a
+foreigner to invest in your country. The entire plan of investment
+will be forwarded to you as soon as I receive your positive response.
+
+Kind Regards,
+Owusu Asante
