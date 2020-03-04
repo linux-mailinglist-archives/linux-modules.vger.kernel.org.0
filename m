@@ -2,111 +2,76 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 15F61178F99
-	for <lists+linux-modules@lfdr.de>; Wed,  4 Mar 2020 12:34:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0435178FCD
+	for <lists+linux-modules@lfdr.de>; Wed,  4 Mar 2020 12:50:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729232AbgCDLem (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 4 Mar 2020 06:34:42 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54841 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726440AbgCDLem (ORCPT
+        id S2387398AbgCDLuX (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 4 Mar 2020 06:50:23 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:45776 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387925AbgCDLuW (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 4 Mar 2020 06:34:42 -0500
-Received: by mail-wm1-f68.google.com with SMTP id i9so1649155wml.4
-        for <linux-modules@vger.kernel.org>; Wed, 04 Mar 2020 03:34:39 -0800 (PST)
+        Wed, 4 Mar 2020 06:50:22 -0500
+Received: by mail-lj1-f194.google.com with SMTP id e18so1650455ljn.12
+        for <linux-modules@vger.kernel.org>; Wed, 04 Mar 2020 03:50:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=iQ6JteJFpQIhec40xTZagWTgiX07l7a4gvzXtzl/BmY=;
-        b=NwphqfemnVcGOxaWdTElj84LTefMU6UeuY5BVYCp41KdwecI74GLHHxjX32mu8DTJD
-         mNK+FjsX4wiC/97KI6J7d4LW6gBChLOaa/48b/hDVS7xZ1kvlI7v4AltvsiUC5QaPQ9C
-         +a75p5I4JaF2d3DLfTSOpx4byr5dch60Y8mNd8XcpLoYsn7mgovznj58PBgclWuBU5U2
-         +nsaunbQib9pPC7+YslEaEEadfsWHI2Lv4cZkLfVkcKX2EHLiMpDjDfm3Oz8RYLtIe0K
-         xyv0U2lX9TcRd+OU71RsDwpnaz3v7JgIaXKCy83XCJGs5zyoTTaDrHlPl+pQwaL0IPJR
-         q2hg==
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=WTBczowU/Nsod2w33lz16yranT9oF8yu5BlEgmgClk0=;
+        b=Rr/8r6WMOlCNoZw8K9AxgT2YscUmA9StRx65b+jyMOsPhLbQJkO/LFTU2JsKh/gjmS
+         3NczcRl8Vmmf7eV4/LLgdzQxAspHzGn4R57m4trBT3yX9Pjq3tne/S6uTPqGElEKuMhX
+         FDOvcgCOZPUOtBaEUM/6oNtIywzmsmzWzFYl95AZPlGMQUcEKV2d0/5x+bIJmu++6nP4
+         e5S14ThhE1VG5LwpD0RrIutszsAA8EQITKFOEDDY0qkIlfrwgW9iajBAha7U+0eAuFkk
+         yNfl/2UTnLl5OwYsYbYPXa8dkV6hpdl1dnetoiMNHJ0qblX3vb5+qgh1c+v73dBAXHWT
+         gFsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=iQ6JteJFpQIhec40xTZagWTgiX07l7a4gvzXtzl/BmY=;
-        b=VTT9vJeJUio/Hkeh5tGcEGf2knMaJwGdfylQUL3gPnmJHuz4sL/fUlhLNlFMH5r6QS
-         qy6Mnr+Kf+2pv8uqN1Oto8dGk47S+ebJqMCLGrNwrMGX6diR9gSar1LIkKp7hrOr79Ub
-         pBdgjeRN7AMAMg/RA/mTez7j5UtlR9soFv4z/VKNjWxWSnMo/ZMoJUVpk6UcoD9vM4fp
-         FGb8eBfl6AapRnx0GBSjrrjBZ8P8uX7wSWY/huKDJkSlQ22oN+cVKioayWrIm/o2o2er
-         diA/XEhmL6hxwfJ1wxHQzDu39gSmjlXWKnel7tHZAFIMcIqG1+lINr36Zr2/IZ3soIVm
-         kuhA==
-X-Gm-Message-State: ANhLgQ24t/ckWrB3gC1Lil9/kiKTCj5U7CbpP101dUe976ikv6OVRQfr
-        QtRpakA9zpAQdbLfuXm+rc64wg==
-X-Google-Smtp-Source: ADFU+vt532czteFBFM3TUwt9//Y0tP2xVzP1sSTxn41o9D99tK6cy9MyzBUxwfoAF38oj8vdAnSA2A==
-X-Received: by 2002:a05:600c:301:: with SMTP id q1mr3351931wmd.182.1583321678687;
-        Wed, 04 Mar 2020 03:34:38 -0800 (PST)
-Received: from google.com ([2a00:79e0:d:210:e8f7:125b:61e9:733d])
-        by smtp.gmail.com with ESMTPSA id b13sm3931011wme.2.2020.03.04.03.34.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2020 03:34:38 -0800 (PST)
-Date:   Wed, 4 Mar 2020 11:34:37 +0000
-From:   Matthias Maennich <maennich@google.com>
-To:     Jessica Yu <jeyu@kernel.org>
-Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>,
-        linux-modules <linux-modules@vger.kernel.org>
-Subject: Re: [PATCH] depmod: account for new namespace field in
- Module.symvers (for kernel versions >= 5.4)
-Message-ID: <20200304113437.GB66900@google.com>
-References: <20200221165243.25100-1-jeyu@kernel.org>
- <CAKi4VA+uO-mdZ=gKpWdU6vq2_VJjhDkHS3KVZb3_6N2YGVhgiA@mail.gmail.com>
- <20200304091833.GA14910@linux-8ccs>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=WTBczowU/Nsod2w33lz16yranT9oF8yu5BlEgmgClk0=;
+        b=fY8yWc7pSq9KPt87avgD/fAnBK//2pYeNhAML4L1TczIc/36cmAMvKi0no267nT9Zg
+         hJXPNX2ZTCQ/u/wF/YEjeNId7y0yuqCfLk6Tv9Nw9PjX4g9lrpsHnu47VKvLrKtBDhj0
+         JhcZywHos6o7CNvLwCGeow6gUy3kfwjhzwOQf7Jvbrshdh8mQthiljx83jAugMXff+V5
+         uOYRsj18prDKLqcYShyhxEXELHiq7gMTYMmLLqBtzDXYgl6V0gGdrbRbxHj+A0weap8r
+         zeVT9KkQa7oXfGWA0JDVMmhpvByrxxsGMOYI2+cFJntYNBVu01KBsGXL5WhFpZ+BVrlv
+         f/dw==
+X-Gm-Message-State: ANhLgQ33JhexUrU4UzEwjlXb/5ydVziF1YBS0gD+ZY6w0TBKCgxbLjEk
+        A9Q3VyYGQjJig1tn2kTGXCWp+Roj7I3ctwc/Ooo=
+X-Google-Smtp-Source: ADFU+vsxsgkDDJ3DNPKaE9J4ICZM3n919qQzycdC8qg9l+4XsmJ0kMX0QwwwCw3tidQUb8nALZgpzZ4v+reoy0iYvZI=
+X-Received: by 2002:a05:651c:545:: with SMTP id q5mr1715881ljp.139.1583322620980;
+ Wed, 04 Mar 2020 03:50:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20200304091833.GA14910@linux-8ccs>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Received: by 2002:ac2:5446:0:0:0:0:0 with HTTP; Wed, 4 Mar 2020 03:50:20 -0800 (PST)
+Reply-To: brianjesse343@gmail.com
+From:   brianjesse <westernu288@gmail.com>
+Date:   Wed, 4 Mar 2020 11:50:20 +0000
+Message-ID: <CAD1j+E_a33xnEbmPygbSLVwdaP=HO_oLwcgGQ5OiZfw=5Z+adQ@mail.gmail.com>
+Subject: Hl
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Wed, Mar 04, 2020 at 10:18:33AM +0100, Jessica Yu wrote:
->+++ Lucas De Marchi [03/03/20 22:28 -0800]:
->>On Fri, Feb 21, 2020 at 8:53 AM Jessica Yu <jeyu@kernel.org> wrote:
->>>
->>>depmod -e -E is broken for kernel versions >= 5.4, because a new
->>>namespace field was added to Module.symvers. Each line is tab delimited
->>>with 5 fields in total. E.g.,
->>>
->>>        0xb352177e\tfind_first_bit\tnamespace\tvmlinux\tEXPORT_SYMBOL
->>>
->>>When a symbol doesn't have a namespace, then the namespace field is empty:
->>>
->>>        0xb352177e\tfind_first_bit\t\tvmlinux\tEXPORT_SYMBOL
->>
->>Why is namespace added in the *middle*? We remember we specifically
->>talked about compatibility back when this was added. Why is it not at
->>the end so tools that don't know about namespace don't stop working?
->>
->>Lucas De Marchi
->
->Sigh, I do remember we had a short discussion upstream back in August
->[1] when we were tossing around Module.symvers format preferences. It
->is my fault for not having pushed the backwards compatibility option
->more instead of thinking it could be patched up in kmod tools. I think
->maybe the best course of option is to revert this upstream instead and
->Cc:stable.
->
->Sorry about this. :-/
-
-Sorry, my fault. The discussion went first all around whether we should
-append the namespace to the symbol name. This we did not do.
-Then we discussed whether the last values of this line are actually
-optional and we settled with the format now merged as nobody further
-objected in the tail end of this discussion:
-  https://lore.kernel.org/linux-modules/20190828101640.GB25048@linux-8ccs/
-
-We could probably move the namespace to the end as the other fields are
-not optional (at least judging from write_dump() in modpost.c).
-
-Cheers,
-Matthias
-
->
->[1] https://lore.kernel.org/r/20190828094325.GA25048@linux-8ccs
->
+Witaj, Uprzejmie informujemy, =C5=BCe ten e-mail, kt=C3=B3ry dotar=C5=82 do=
+ Twojej
+skrzynki pocztowej, nie jest
+b=C5=82=C4=85d, ale zosta=C5=82 specjalnie skierowany do rozpatrzenia. ja
+mam propozycj=C4=99 (7,500.000,00 $) pozostawion=C4=85 przez mojego zmar=C5=
+=82ego
+klienta in=C5=BCyniera Carlosa
+kt=C3=B3ry nosi przy tobie to samo imi=C4=99, kt=C3=B3ry pracowa=C5=82 i mi=
+eszka=C5=82 tutaj w Lom=C3=A9
+I=C5=9B=C4=87. M=C3=B3j zmar=C5=82y klient i rodzina uczestniczyli w wypadk=
+u samochodowym,
+kt=C3=B3ry mia=C5=82 miejsce
+ich =C5=BCycia. Kontaktuj=C4=99 si=C4=99 z tob=C4=85 jako najbli=C5=BCszym =
+krewnym zmar=C5=82ego, wi=C4=99c ty
+mo=C5=BCe otrzyma=C4=87 =C5=9Brodki na roszczenia. Zrobi=C4=99 to po twojej=
+ szybkiej odpowiedzi
+poinformuj=C4=99 ci=C4=99 o sposobach wykonania tego przymierza. skontaktuj=
+ si=C4=99
+ze mn=C4=85 w tej sprawie
+e-maile (brianjesse343@gmail.com)
