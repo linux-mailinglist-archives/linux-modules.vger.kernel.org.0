@@ -2,70 +2,78 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B225179955
-	for <lists+linux-modules@lfdr.de>; Wed,  4 Mar 2020 20:53:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 802E217B2AA
+	for <lists+linux-modules@lfdr.de>; Fri,  6 Mar 2020 01:10:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729499AbgCDTxW (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 4 Mar 2020 14:53:22 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:39072 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728955AbgCDTxW (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 4 Mar 2020 14:53:22 -0500
-Received: by mail-lf1-f66.google.com with SMTP id n30so2535283lfh.6
-        for <linux-modules@vger.kernel.org>; Wed, 04 Mar 2020 11:53:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=NPzB4jBohoiFb0t8CxPNTrCbXLJmaZyvbjDIfzyJbAg=;
-        b=EmiZH8b37KWkae6Nnc2lIk3oR5U7ePey+IIFAkg8IX28DCbTi3ZeRNo29okDrk70g2
-         9P5U4JRY2NS0S9CWFaCnENCEAlepdm+Yyyf0Q9qFkyA9KrEDxHtUMXmFIUI4oa6kiHOs
-         6NsYgV+5HPuyV8tsZmlXoiDE+tG8I0a454Wbi0njDCl780IztuduudzFWq7ZCmfb9Au3
-         1oskdxSWwi/NcMommhrgl0UZZ6v7RP6WaYM8rG5/FMvzENA3VgodXWKGs0Ua+vZS6IMI
-         ScwmYg/JGaeHv2nLBZPJXJDw9xSjSOM6sBRJS0QtIReyw8Xgw9BNUqjfUJXSCJ2Goc9/
-         N+UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=NPzB4jBohoiFb0t8CxPNTrCbXLJmaZyvbjDIfzyJbAg=;
-        b=d5Y2RH6r5DjciJSBfjvTbF8COAYzDr9x/9FDBebr+xlQv8jIwVQ0XMbCPqzFAwySKJ
-         PVbZUhC5ajjimUj1v6tqJDpVPE7F4fBatViikmh1f4wHQ99LayhA0yOwM2Tb4QIvcGi9
-         tQyMckOubsyFYS7zQesziD5C5f9XnJm9VHBCeZwTitQJLAQGs1gVDwYLbMvur4gQMOaT
-         jvvrN+koZxspnMyKBStO9AeZqRvTpeeQeDf+g4xW6+/liTnwacvPEY6p41XJmJnSUDFM
-         87J+5/GDJfFndd4SV/1B3J88ecCoaZgUrb0HCZ1QmNxN42P7z7CoNQu9yI56JqN+NsZ2
-         XBYw==
-X-Gm-Message-State: ANhLgQ2XpNH5q1IzaAsyO1PDCH4VHtoR9a12Qr+3sC2ymiMTdCPldnHc
-        Sh8QSz8qvbsD3Pik7K+gykUcdiwbeHay9OmP6dk=
-X-Google-Smtp-Source: ADFU+vu2szm6PRzdniI/DhtfJhH9E0GIkrG6AisyzSdz/0FzH6qoBZeg4GA3kFqD75Ht6TXzZmVtHxK62bx4lTJ2CM8=
-X-Received: by 2002:a05:6512:1041:: with SMTP id c1mr3024739lfb.14.1583351600252;
- Wed, 04 Mar 2020 11:53:20 -0800 (PST)
+        id S1726177AbgCFAKz (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 5 Mar 2020 19:10:55 -0500
+Received: from mga07.intel.com ([134.134.136.100]:60656 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726128AbgCFAKy (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Thu, 5 Mar 2020 19:10:54 -0500
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 05 Mar 2020 16:10:54 -0800
+X-IronPort-AV: E=Sophos;i="5.70,520,1574150400"; 
+   d="scan'208";a="234606811"
+Received: from ldmartin-desk1.jf.intel.com (HELO ldmartin-desk1) ([10.24.14.222])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 05 Mar 2020 16:10:54 -0800
+Date:   Thu, 5 Mar 2020 16:10:54 -0800
+From:   Lucas De Marchi <lucas.demarchi@intel.com>
+To:     Jessica Yu <jeyu@kernel.org>
+Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        Matthias Maennich <maennich@google.com>,
+        linux-modules <linux-modules@vger.kernel.org>
+Subject: Re: [PATCH] depmod: account for new namespace field in
+ Module.symvers (for kernel versions >= 5.4)
+Message-ID: <20200306001054.j4q5l4bsdotrgjbt@ldmartin-desk1>
+References: <20200221165243.25100-1-jeyu@kernel.org>
+ <CAKi4VA+uO-mdZ=gKpWdU6vq2_VJjhDkHS3KVZb3_6N2YGVhgiA@mail.gmail.com>
+ <20200304091833.GA14910@linux-8ccs>
 MIME-Version: 1.0
-Received: by 2002:a19:7b1b:0:0:0:0:0 with HTTP; Wed, 4 Mar 2020 11:53:19 -0800 (PST)
-Reply-To: owusuAsa12@gmail.com
-From:   Owusu Asante <ttapiaatt4@gmail.com>
-Date:   Wed, 4 Mar 2020 11:53:19 -0800
-Message-ID: <CA+Vpfb-A79Zd23660JqWgDQL21yxVquOqJmxXjFPt=c2wp6g4Q@mail.gmail.com>
-Subject: From Owusu Asante
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20200304091833.GA14910@linux-8ccs>
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Hello,
-I write to request your co-operation in my desire to find a foreign
-partner who will assist me in the relocation and Transfer of some
-amount of money which I have made available for investment purpose
-abroad. I would like you to assist in the following:
+On Wed, Mar 04, 2020 at 10:18:33AM +0100, Jessica Yu wrote:
+>+++ Lucas De Marchi [03/03/20 22:28 -0800]:
+>>On Fri, Feb 21, 2020 at 8:53 AM Jessica Yu <jeyu@kernel.org> wrote:
+>>>
+>>>depmod -e -E is broken for kernel versions >= 5.4, because a new
+>>>namespace field was added to Module.symvers. Each line is tab delimited
+>>>with 5 fields in total. E.g.,
+>>>
+>>>        0xb352177e\tfind_first_bit\tnamespace\tvmlinux\tEXPORT_SYMBOL
+>>>
+>>>When a symbol doesn't have a namespace, then the namespace field is empty:
+>>>
+>>>        0xb352177e\tfind_first_bit\t\tvmlinux\tEXPORT_SYMBOL
+>>
+>>Why is namespace added in the *middle*? We remember we specifically
+>>talked about compatibility back when this was added. Why is it not at
+>>the end so tools that don't know about namespace don't stop working?
+>>
+>>Lucas De Marchi
+>
+>Sigh, I do remember we had a short discussion upstream back in August
+>[1] when we were tossing around Module.symvers format preferences. It
+>is my fault for not having pushed the backwards compatibility option
+>more instead of thinking it could be patched up in kmod tools. I think
+>maybe the best course of option is to revert this upstream instead and
+>Cc:stable.
 
-(1) Assist me in the receiving of this sum in your country.
-(2) Advise on areas for potential future investment in your country.
-(3) Assist me in carrying a feasibility study before actual investment.
+Yeah I didn't follow that series thoroughly as I should. I agree that
+the best course of action now is to update the format and CC stable.
 
-Please state terms and conditions for me and also laws biding for a
-foreigner to invest in your country. The entire plan of investment
-will be forwarded to you as soon as I receive your positive response.
+Lucas De Marchi
 
-Kind Regards,
-Owusu Asante
+>
+>Sorry about this. :-/
+>
+>[1] https://lore.kernel.org/r/20190828094325.GA25048@linux-8ccs
+>
