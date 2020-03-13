@@ -2,64 +2,112 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD187182955
-	for <lists+linux-modules@lfdr.de>; Thu, 12 Mar 2020 07:53:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 819EC184C60
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2020 17:22:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387845AbgCLGxU (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 12 Mar 2020 02:53:20 -0400
-Received: from forward105o.mail.yandex.net ([37.140.190.183]:33965 "EHLO
-        forward105o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2387831AbgCLGxT (ORCPT
+        id S1726683AbgCMQWs (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 13 Mar 2020 12:22:48 -0400
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:55463 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbgCMQWr (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 12 Mar 2020 02:53:19 -0400
-Received: from forward100q.mail.yandex.net (forward100q.mail.yandex.net [IPv6:2a02:6b8:c0e:4b:0:640:4012:bb97])
-        by forward105o.mail.yandex.net (Yandex) with ESMTP id B3FAA4202F52
-        for <linux-modules@vger.kernel.org>; Thu, 12 Mar 2020 09:53:16 +0300 (MSK)
-Received: from mxback5q.mail.yandex.net (mxback5q.mail.yandex.net [IPv6:2a02:6b8:c0e:1ba:0:640:b716:ad89])
-        by forward100q.mail.yandex.net (Yandex) with ESMTP id B07777080019
-        for <linux-modules@vger.kernel.org>; Thu, 12 Mar 2020 09:53:16 +0300 (MSK)
-Received: from vla4-a16f3368381d.qloud-c.yandex.net (vla4-a16f3368381d.qloud-c.yandex.net [2a02:6b8:c17:d85:0:640:a16f:3368])
-        by mxback5q.mail.yandex.net (mxback/Yandex) with ESMTP id PhV7Ars6mq-rGoqFAEI;
-        Thu, 12 Mar 2020 09:53:16 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1583995996;
-        bh=5sngX1X65618H8XEfFWIY7RCm3QBVbYtHH9WSKqRzxA=;
-        h=In-Reply-To:Date:References:To:From:Subject:Message-ID;
-        b=Dk6p7kISj3Y5WLvwhH64+/p8uoBfnm6zos1z1vXJS9xcQQJwHiF1TwjGhz1H5ZUO+
-         lQ32lNqIDa/b7qy1pPEbYdHd6Mo6uuEIndi/tAxgN8PrnIsCSZzxBJkJcY614DAzwp
-         6GRpOX8iZdfPZTLjKcOfPULo7wk/AmXcO3qrJsMg=
-Authentication-Results: mxback5q.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by vla4-a16f3368381d.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id oViXAF7snZ-rGZeTg1B;
-        Thu, 12 Mar 2020 09:53:16 +0300
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client certificate not present)
-Subject: [RFE] Who's using a module?
-From:   Konstantin Kharlamov <hi-angel@yandex.ru>
-To:     linux-modules@vger.kernel.org
-References: <b623f4a2-8b9b-edd9-3546-281155d90d4a@yandex.ru>
-Message-ID: <53f0a2d1-51ba-51a7-2362-083c5248a0c4@yandex.ru>
-Date:   Thu, 12 Mar 2020 09:53:15 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+        Fri, 13 Mar 2020 12:22:47 -0400
+Received: by mail-wm1-f51.google.com with SMTP id 6so10647718wmi.5;
+        Fri, 13 Mar 2020 09:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hyBmDCgZ8uYUx/tXy78bJ2J5Y1NhGOC7ce7yPgKrfvI=;
+        b=GF8gv1FEwooSfzQKpStBbtBOdSqazE2H9nslRPWKIRHQGSfQJDjwZ+a9u28tCxukUR
+         xA5Al4QanP8WDDY5hBBjHCgirulfY7CvDsOAvLf+/Yku72bcSjS0yauOP5BLh+6DHaMc
+         VQ4BBrJ5K7JWGGigNmfR6StuPI+NZ0T9FT2vZOz4lTpgqfW1xD5QXoNU8xlG1yDitsVm
+         ngJdofvxs5zJHiTeHVSabmzk/rqdNuxgFxT7CP2teeCzwdbZSrfvIAxbOsoJggudLpgd
+         IlhsfBcg+NfEmF20KgdPxN1Is0x+CNWQlcX+zNeMznHdJ3wrJdBW8fFK3Qpc2+1Vh6F4
+         vfQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hyBmDCgZ8uYUx/tXy78bJ2J5Y1NhGOC7ce7yPgKrfvI=;
+        b=Gig1NMrost3ZJ0ubidpx7WZssHVRt/Mkabzhzo/KHV0Fy97aumQWdpdpBtc2LjMdlL
+         aKqPRinXZPgxRl47h5MQM3aCA73C1QH51Xaagtm7FXQZmh5RPf6Oc7L8z0xqYOTxNEis
+         Pjv86FWfFq5HfmVlJRRBvw2xvsEDH1OBbIL/O7oUN+3wdF/CSPP+J8AxTUIWhB55olCQ
+         b5vRkbDmmKRQZxTVYoOOlu8yU1aBoXO94K6zdjjjc+8dfBVQKokN0H7NrAEjbxh9w2vc
+         GLelrt2M/mGxfWi2giRhekBDpbfjhLBCCnX/1pLDdCgk/rKiDDd+A9DdFyLIMVH+2uqA
+         ARmw==
+X-Gm-Message-State: ANhLgQ1QwfyjVQktUhVTswUR4axu4WAuLQNeVGGE94TprxPCjKaPssIO
+        EmWkB+mgicOmtnXD/TlDxcCNOzr/ZVWYLsV2IaljKO7mnL8=
+X-Google-Smtp-Source: ADFU+vupxXWENSjqJudpb5FD1DcWZ65empCX4DOEyWuUXvChPHF/jZGByQes5gjjwlHItme0TP5nbZEtkAKJe73w6hY=
+X-Received: by 2002:a1c:7209:: with SMTP id n9mr11457309wmc.188.1584116565313;
+ Fri, 13 Mar 2020 09:22:45 -0700 (PDT)
 MIME-Version: 1.0
+References: <b623f4a2-8b9b-edd9-3546-281155d90d4a@yandex.ru>
 In-Reply-To: <b623f4a2-8b9b-edd9-3546-281155d90d4a@yandex.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+From:   Lucas De Marchi <lucas.de.marchi@gmail.com>
+Date:   Fri, 13 Mar 2020 09:22:33 -0700
+Message-ID: <CAKi4VAK6_vNdh3JYV11TwCDAFCBozaHhUQ-vVWj-hr63B=80HQ@mail.gmail.com>
+Subject: Re: [RFE] Who's using a module?
+To:     Konstantin Kharlamov <hi-angel@yandex.ru>
+Cc:     linux-modules <linux-modules@vger.kernel.org>,
+        Jessica Yu <jeyu@kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Once in a while there's a need to remove a module (for example because you rebuilt it, or to reload it with different parameters, or whatever…). And then doing `rmmod modulename` and `modprobe -r modulename` gives:
++Jessica +Steve +lkml
 
-     rmmod: ERROR: Module modulename is in use
+On Wed, Mar 11, 2020 at 6:33 AM Konstantin Kharlamov <hi-angel@yandex.ru> w=
+rote:
+>
+> Once in a while there's a need to remove a module (for example because yo=
+u rebuilt it, or to reload it with different parameters, or whatever=E2=80=
+=A6). And then doing `rmmod modulename` and `modprobe -r modulename` gives:
+>
+>         rmmod: ERROR: Module modulename is in use
+>
+> If you're lucky, firing up `lsmod | grep modulename` will get you offende=
+rs inside "used by" column. But often there's nothing except the count abov=
+e zero. It is very easy to reproduce if you check `lsmod` output for your g=
+raphics driver. I checked it on `i915` and `amdgpu`: when graphics session =
+is opened you can't remove it and `lsmod` doesn't show who's using it.
+>
+> There's very popular and old question on SO=C2=B9 that at the moment has =
+over 55k views, and the only answer that seem to work for people is insanel=
+y big and convoluted; it is using a custom kernel driver and kernel tracing=
+ capabilities. I guess this amount of research means: no, currently there's=
+ no easy way to get who's using a module.
+>
+> It would be amazing if kernel has capability to figure out who's using a =
+module.
 
-If you're lucky, firing up `lsmod | grep modulename` will get you offenders inside "used by" column. But often there's nothing except the count above zero. It is very easy to reproduce if you check `lsmod` output for your graphics driver. I checked it on `i915` and `amdgpu`: when graphics session is opened you can't remove it and `lsmod` doesn't show who's using it.
+Yeah, right now this would need some work on the kernel side to record
+the callers of try_module_get()/__module_get()... usually done e.g on
+fops-like structs in a owner field.
+The only thing we have there right now is the trace. The trace is not
+so bad since it can be added in the kernel command line, but would
+usually only be enabled while debugging.
 
-There's very popular and old question on SO¹ that at the moment has over 55k views, and the only answer that seem to work for people is insanely big and convoluted; it is using a custom kernel driver and kernel tracing capabilities. I guess this amount of research means: no, currently there's no easy way to get who's using a module.
+For implementing such a feature I think we would need to add/remove
+module owner into the mod struct whenever we have a _get()/_put().
+Maybe it's worth it, but it doesn't
+come without overhead. I'd like to hear what other people think.
 
-It would be amazing if kernel has capability to figure out who's using a module.
+Thanks
+Lucas De Marchi
 
-1: https://stackoverflow.com/questions/448999/is-there-a-way-to-figure-out-what-is-using-a-linux-kernel-module
 
-P.S.: please, add me to CC when replying, I'm not subscribed to the list.
-P.P.S: it's a resend since the previous email apparently got lost.
+>
+> 1: https://stackoverflow.com/questions/448999/is-there-a-way-to-figure-ou=
+t-what-is-using-a-linux-kernel-module
+>
+> P.S.: please, add me to CC when replying, I'm not subscribed to the list.
+
+
+
+--
+Lucas De Marchi
