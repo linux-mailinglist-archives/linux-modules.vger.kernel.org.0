@@ -2,123 +2,72 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 150AD18D4AE
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Mar 2020 17:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C64E118E1CD
+	for <lists+linux-modules@lfdr.de>; Sat, 21 Mar 2020 15:22:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727217AbgCTQli (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 20 Mar 2020 12:41:38 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:38501 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726935AbgCTQli (ORCPT
+        id S1726961AbgCUOW2 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 21 Mar 2020 10:22:28 -0400
+Received: from mail-lj1-f181.google.com ([209.85.208.181]:33624 "EHLO
+        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726192AbgCUOW1 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 20 Mar 2020 12:41:38 -0400
-Received: by mail-wr1-f46.google.com with SMTP id s1so8313517wrv.5
-        for <linux-modules@vger.kernel.org>; Fri, 20 Mar 2020 09:41:36 -0700 (PDT)
+        Sat, 21 Mar 2020 10:22:27 -0400
+Received: by mail-lj1-f181.google.com with SMTP id r22so2548481ljh.0
+        for <linux-modules@vger.kernel.org>; Sat, 21 Mar 2020 07:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aFwA9XUDndmzsgO0N2H6FgIvl23wmxeeBrn26mtmpLE=;
-        b=bHiHppOcK1oEk4Envqdl6wlBpBrFaGX4tAIb+bRSYKs24pPFxUTOClKN0UeIz+QFVd
-         h8wN/4fwCBkEoqelzcIMACu2M/g5NzwMYz0150vIrfevgyX4z4i4yiKwOw5GLNdXcY1U
-         roTgMt7TiMA8DFKFRcvNm91b1ASAkuM9zH/NbuKQBIRurBT/+0yiGlchkP94V9SssTnZ
-         MKCOXxbz51xO/TgsVd4JGiaBtTDY2w8sRKHTUV7WnFJBaztPs9sGTQcUx0lmUT0eMwIR
-         1yEIyoqZumQj0iNKf/qo90NWbnx43MiUGCcJnoKiLBNca1EezkPvnYTsL57AT+8vKUfN
-         /XDQ==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=o7YPuPA+Lvo3Vo3LoMsg1n6BEuSVWknRkdTk7foBna8=;
+        b=N/lEaimB4M38RGNueZKja3zkhj4p4xRx9pXGNBqDLN+IoyWU/AOPdJZWLu1pgXBVz1
+         oEyETBO3SB/pSNkudNH7oTrZgRn0LaF2WSHE/PtmEFZ5HQErA/sXgGSXTiz4Ul5fJJVf
+         sTjT/QWJJDo5cC5ydzh2HprVE+wOiCUPkrq+FBmoo+sIo4RHDIz5Ur52MRATMbtSYIJ8
+         I9lxJpT/gQg4EaorOWARV7KZ/KFyrIcRHJJNF2dl3IfUkqKvVQ+iawxBvj7lDW0qp8Mk
+         YIp0j7dG9mF7m+UzjPP/ljRTW1Dkg2wrh9wg+rG+xhhEvw3dvrxLLmrUhNv7RFhX2QIH
+         ElLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aFwA9XUDndmzsgO0N2H6FgIvl23wmxeeBrn26mtmpLE=;
-        b=Yj4JnTWaNNkoK1OM/HKWfePNuPNiJLcyyY+pyc/YGYW0DcfNeAt+bXiGOwnnxrANzq
-         fj3EEtTMvWsFlbzlMELAMfXZYNfJkzgmYg2ZSn/tJEu8WqxqfeoP2WVJKp3F+WBmC/Tv
-         ApXRyXdjjqwIYfkOFQtPbNrofMl7EYuUlB3wtnqvOpzcSA2RWagjDUNKWsW2Dodo5OEt
-         xtAC48FEyRHIfHSMmNftW0dqF3BaxxZ86UecbEkPl2+8gNJp+hYoJQJkFCaqeTbD3N9N
-         fn6mAZAZjcg7r0podNpCRlVN/ppgBw2aUvZa2BvmRZaIR1cQ8ohEGJYj8JkqfDI+jQRA
-         O4DA==
-X-Gm-Message-State: ANhLgQ1gYo2J+AZlPdNtoNcNOrDI9bPYuef/t/8RjIerOEBpEpy3s1um
-        rm/S43LK/CgZ4guVS1HVCtSmRiP0PZxuQY+/iM8KSbv0
-X-Google-Smtp-Source: ADFU+vtevN+CTIikBq1ie8sHuDFMJ2FGFNaxYblEzp7YVhNz1rO9Lf7BfHb7nB4epNwnJVIHQdrS2M404Vl5ozhFfZM=
-X-Received: by 2002:adf:9796:: with SMTP id s22mr11868736wrb.31.1584722495411;
- Fri, 20 Mar 2020 09:41:35 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=o7YPuPA+Lvo3Vo3LoMsg1n6BEuSVWknRkdTk7foBna8=;
+        b=GrmA3aGcCD0vaWSHy4K6uQdcPe2cfjXmQbG+stq8NkSYXZMh3FEbNMY8000qPSh/ou
+         CCDrBqL/CVqQCUrFCsDPzWmu8Hgr0fe/12GbrfZt791O2fKHI9vWEkbZi9tvcmgMVtdd
+         FvD8UvdjVol3KGWqhnC15yapoaoAx5O301vSbj6kjpntf8wzvGTCNAVDxDICpC5UWsT6
+         z+D+Wy5Xf/AHrAPQNTT7tJzSd3xKoYl/fGAxaq9YimZZknszIzQhKuD8filGogtDgYYt
+         CNe3U5yXyN6yXNBy6fDCYHwFlkQArZVmqj1vSHcZ9xnQ2k7GSKKyVyAnZVEO7er7xlBE
+         ffAg==
+X-Gm-Message-State: ANhLgQ2g1GvQtwJBeL7dYQoVP4bkiIPy3dsfwv50sY1BB7X8NYG4EYiM
+        mcRAy0ZF/+q4ZDzAXiyI82IyUyCV
+X-Google-Smtp-Source: ADFU+vtlT98P0t+b9Xy9DeVpZDoslvoED8b0Ajyd7hH1sVtdyLi/t8R3+qDUF1k8ARVexwcWtFm3Dw==
+X-Received: by 2002:a2e:a483:: with SMTP id h3mr4424892lji.264.1584800543829;
+        Sat, 21 Mar 2020 07:22:23 -0700 (PDT)
+Received: from [192.168.1.38] (88-114-211-119.elisa-laajakaista.fi. [88.114.211.119])
+        by smtp.gmail.com with ESMTPSA id h25sm5377693ljg.31.2020.03.21.07.22.22
+        for <linux-modules@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Mar 2020 07:22:23 -0700 (PDT)
+To:     linux-modules <linux-modules@vger.kernel.org>
+From:   Topi Miettinen <toiwoton@gmail.com>
+Subject: Replacement for blacklisting with 'install MOD /bin/false'?
+Message-ID: <c38d8c8d-5290-7ff7-8daa-d8d76dc80ce0@gmail.com>
+Date:   Sat, 21 Mar 2020 16:22:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <17444062.evWP73jU2D@devpool35>
-In-Reply-To: <17444062.evWP73jU2D@devpool35>
-From:   Lucas De Marchi <lucas.de.marchi@gmail.com>
-Date:   Fri, 20 Mar 2020 09:41:18 -0700
-Message-ID: <CAKi4VALBCxct17L9FazuHHfYN_ikim4Pj=Ko3-OY=Odn5pNu+A@mail.gmail.com>
-Subject: Re: Static build of kmod
-To:     Rolf Eike Beer <eb@emlix.com>
-Cc:     linux-modules <linux-modules@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu, Mar 19, 2020 at 7:40 AM Rolf Eike Beer <eb@emlix.com> wrote:
->
-> Greetings,
->
-> since commit b7016153ec87dba2b0f0d182cc8f1e3b12f4dfaf building static kmo=
-d is
-> disabled. I would like to question that decision.
->
-> My use case is as follows: I build a custom BSP and would like to provide
-> statically linked host tools. That makes it easy to deploy them at any
-> location, and that these tools do not pick up random shared libraries of =
-the
-> underlying Linux system when executed. Currently kmod is one of the few
-> packages that are not able to build in that way.
->
-> I understand that you may want to prevent other tools (e.g. sytemd was
-> mentioned in that commit) to link against a static libkmod, and that is f=
-ine
-> with me. What I would like to get is static kmod tools. For the BSP host =
-tools
-> case I don't mind if a libkmod does not exist at all, only the tools are =
-of
-> interest.
->
-> What do you think?
+Hi,
 
-It's a build system limitation:
+I'm looking for a replacement for the deprecated 'install MOD 
+/bin/{false,true}' modprobe.d rules for always blacklisting a module. 
+The advantage of using the 'install' rule is that the 'blacklist' rules 
+are ignored when loading modules manually, but the 'install' rules is 
+not. Perhaps there should be a new rule ('always_blacklist'?) which is 
+always obeyed?
 
-./configure -h| grep static
-  --enable-static[=3DPKGS]  build static libraries [default=3Dno]
-
-The --enable-static switch is about building static libraries, and as
-a consequence linking the binaries statically.
-We don't want libkmod to be built statically because its symbols will
-conflict with other libraries
-as you mentioned.
-
-If we had a --enable-static-tools switch that made only the tools
-static (default false), I think it would be acceptable.
-
-And since you are going to mess with the build system, if you want to
-convert kmod to meson it would be very
-appreciated :)
-
-thanks
-Lucas De Marchi
-
->
-> Regards,
->
-> Eike
-> --
-> Rolf Eike Beer, emlix GmbH, http://www.emlix.com
-> Fon +49 551 30664-0, Fax +49 551 30664-11
-> Gothaer Platz 3, 37083 G=C3=B6ttingen, Germany
-> Sitz der Gesellschaft: G=C3=B6ttingen, Amtsgericht G=C3=B6ttingen HR B 31=
-60
-> Gesch=C3=A4ftsf=C3=BChrung: Heike Jordan, Dr. Uwe Kracke =E2=80=93 Ust-Id=
-Nr.: DE 205 198 055
->
-> emlix - smart embedded open source
-
-
-
---=20
-Lucas De Marchi
+-Topi
