@@ -2,72 +2,110 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id C64E118E1CD
-	for <lists+linux-modules@lfdr.de>; Sat, 21 Mar 2020 15:22:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B37A18F0EF
+	for <lists+linux-modules@lfdr.de>; Mon, 23 Mar 2020 09:35:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726961AbgCUOW2 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sat, 21 Mar 2020 10:22:28 -0400
-Received: from mail-lj1-f181.google.com ([209.85.208.181]:33624 "EHLO
-        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726192AbgCUOW1 (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Sat, 21 Mar 2020 10:22:27 -0400
-Received: by mail-lj1-f181.google.com with SMTP id r22so2548481ljh.0
-        for <linux-modules@vger.kernel.org>; Sat, 21 Mar 2020 07:22:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=o7YPuPA+Lvo3Vo3LoMsg1n6BEuSVWknRkdTk7foBna8=;
-        b=N/lEaimB4M38RGNueZKja3zkhj4p4xRx9pXGNBqDLN+IoyWU/AOPdJZWLu1pgXBVz1
-         oEyETBO3SB/pSNkudNH7oTrZgRn0LaF2WSHE/PtmEFZ5HQErA/sXgGSXTiz4Ul5fJJVf
-         sTjT/QWJJDo5cC5ydzh2HprVE+wOiCUPkrq+FBmoo+sIo4RHDIz5Ur52MRATMbtSYIJ8
-         I9lxJpT/gQg4EaorOWARV7KZ/KFyrIcRHJJNF2dl3IfUkqKvVQ+iawxBvj7lDW0qp8Mk
-         YIp0j7dG9mF7m+UzjPP/ljRTW1Dkg2wrh9wg+rG+xhhEvw3dvrxLLmrUhNv7RFhX2QIH
-         ElLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=o7YPuPA+Lvo3Vo3LoMsg1n6BEuSVWknRkdTk7foBna8=;
-        b=GrmA3aGcCD0vaWSHy4K6uQdcPe2cfjXmQbG+stq8NkSYXZMh3FEbNMY8000qPSh/ou
-         CCDrBqL/CVqQCUrFCsDPzWmu8Hgr0fe/12GbrfZt791O2fKHI9vWEkbZi9tvcmgMVtdd
-         FvD8UvdjVol3KGWqhnC15yapoaoAx5O301vSbj6kjpntf8wzvGTCNAVDxDICpC5UWsT6
-         z+D+Wy5Xf/AHrAPQNTT7tJzSd3xKoYl/fGAxaq9YimZZknszIzQhKuD8filGogtDgYYt
-         CNe3U5yXyN6yXNBy6fDCYHwFlkQArZVmqj1vSHcZ9xnQ2k7GSKKyVyAnZVEO7er7xlBE
-         ffAg==
-X-Gm-Message-State: ANhLgQ2g1GvQtwJBeL7dYQoVP4bkiIPy3dsfwv50sY1BB7X8NYG4EYiM
-        mcRAy0ZF/+q4ZDzAXiyI82IyUyCV
-X-Google-Smtp-Source: ADFU+vtlT98P0t+b9Xy9DeVpZDoslvoED8b0Ajyd7hH1sVtdyLi/t8R3+qDUF1k8ARVexwcWtFm3Dw==
-X-Received: by 2002:a2e:a483:: with SMTP id h3mr4424892lji.264.1584800543829;
-        Sat, 21 Mar 2020 07:22:23 -0700 (PDT)
-Received: from [192.168.1.38] (88-114-211-119.elisa-laajakaista.fi. [88.114.211.119])
-        by smtp.gmail.com with ESMTPSA id h25sm5377693ljg.31.2020.03.21.07.22.22
-        for <linux-modules@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Mar 2020 07:22:23 -0700 (PDT)
+        id S1727547AbgCWIfn (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 23 Mar 2020 04:35:43 -0400
+Received: from mx1.emlix.com ([188.40.240.192]:60048 "EHLO mx1.emlix.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727534AbgCWIfn (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Mon, 23 Mar 2020 04:35:43 -0400
+Received: from mailer.emlix.com (unknown [81.20.119.6])
+        (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.emlix.com (Postfix) with ESMTPS id 121DA5F77C
+        for <linux-modules@vger.kernel.org>; Mon, 23 Mar 2020 09:35:42 +0100 (CET)
+From:   Rolf Eike Beer <eb@emlix.com>
 To:     linux-modules <linux-modules@vger.kernel.org>
-From:   Topi Miettinen <toiwoton@gmail.com>
-Subject: Replacement for blacklisting with 'install MOD /bin/false'?
-Message-ID: <c38d8c8d-5290-7ff7-8daa-d8d76dc80ce0@gmail.com>
-Date:   Sat, 21 Mar 2020 16:22:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+Subject: Re: Static build of kmod
+Date:   Mon, 23 Mar 2020 09:35:33 +0100
+Message-ID: <9035977.IJiM3cOGZI@devpool35>
+Organization: emlix GmbH
+In-Reply-To: <CAKi4VALBCxct17L9FazuHHfYN_ikim4Pj=Ko3-OY=Odn5pNu+A@mail.gmail.com>
+References: <17444062.evWP73jU2D@devpool35> <CAKi4VALBCxct17L9FazuHHfYN_ikim4Pj=Ko3-OY=Odn5pNu+A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="nextPart4291190.D9zf89q2FB"; micalg="pgp-sha256"; protocol="application/pgp-signature"
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Hi,
+--nextPart4291190.D9zf89q2FB
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 
-I'm looking for a replacement for the deprecated 'install MOD 
-/bin/{false,true}' modprobe.d rules for always blacklisting a module. 
-The advantage of using the 'install' rule is that the 'blacklist' rules 
-are ignored when loading modules manually, but the 'install' rules is 
-not. Perhaps there should be a new rule ('always_blacklist'?) which is 
-always obeyed?
+Am Freitag, 20. M=C3=A4rz 2020, 17:41:18 CET schrieb Lucas De Marchi:
+> On Thu, Mar 19, 2020 at 7:40 AM Rolf Eike Beer <eb@emlix.com> wrote:
+> > Greetings,
+> >=20
+> > since commit b7016153ec87dba2b0f0d182cc8f1e3b12f4dfaf building static k=
+mod
+> > is disabled. I would like to question that decision.
+> >=20
+> > My use case is as follows: I build a custom BSP and would like to provi=
+de
+> > statically linked host tools. That makes it easy to deploy them at any
+> > location, and that these tools do not pick up random shared libraries of
+> > the underlying Linux system when executed. Currently kmod is one of the
+> > few packages that are not able to build in that way.
+> >=20
+> > I understand that you may want to prevent other tools (e.g. sytemd was
+> > mentioned in that commit) to link against a static libkmod, and that is
+> > fine with me. What I would like to get is static kmod tools. For the BSP
+> > host tools case I don't mind if a libkmod does not exist at all, only t=
+he
+> > tools are of interest.
+> >=20
+> > What do you think?
+>=20
+> It's a build system limitation:
+>=20
+> ./configure -h| grep static
+>   --enable-static[=3DPKGS]  build static libraries [default=3Dno]
+>=20
+> The --enable-static switch is about building static libraries, and as
+> a consequence linking the binaries statically.
+> We don't want libkmod to be built statically because its symbols will
+> conflict with other libraries
+> as you mentioned.
 
--Topi
+Yes, for now I simply patch that check out there.
+
+> If we had a --enable-static-tools switch that made only the tools
+> static (default false), I think it would be acceptable.
+>=20
+> And since you are going to mess with the build system, if you want to
+> convert kmod to meson it would be very
+> appreciated :)
+
+If I change any build system the target is CMake.
+
+Eike
+=2D-=20
+Rolf Eike Beer, emlix GmbH, http://www.emlix.com
+=46on +49 551 30664-0, Fax +49 551 30664-11
+Gothaer Platz 3, 37083 G=C3=B6ttingen, Germany
+Sitz der Gesellschaft: G=C3=B6ttingen, Amtsgericht G=C3=B6ttingen HR B 3160
+Gesch=C3=A4ftsf=C3=BChrung: Heike Jordan, Dr. Uwe Kracke =E2=80=93 Ust-IdNr=
+=2E: DE 205 198 055
+
+emlix - smart embedded open source
+
+--nextPart4291190.D9zf89q2FB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iLMEAAEIAB0WIQQ/Uctzh31xzAxFCLur5FH7Xu2t/AUCXnh01QAKCRCr5FH7Xu2t
+/ICzBACQzQl8bEyONfOZ08pjdYEqwOOshNrGwzE66e0pa8Ysfl3UDL1Bu26Jbz0b
+k3aztKt6hiGeTCfV8B9b7WoZuU94MTz2EWu60TN2xDFHkPb4oiv3muMqNjc0Wojv
+fCZEE5PXfHjAt1bx3NOV3CpGXQfwjKg4Yl2xf38xC+aYXXQlww==
+=gEJB
+-----END PGP SIGNATURE-----
+
+--nextPart4291190.D9zf89q2FB--
+
+
+
