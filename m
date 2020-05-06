@@ -2,223 +2,76 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1D681C664A
-	for <lists+linux-modules@lfdr.de>; Wed,  6 May 2020 05:26:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790D61C6666
+	for <lists+linux-modules@lfdr.de>; Wed,  6 May 2020 05:39:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbgEFD0h (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 5 May 2020 23:26:37 -0400
-Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133]:57179 "EHLO
-        out30-133.freemail.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725900AbgEFD0h (ORCPT
+        id S1726514AbgEFDjk (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 5 May 2020 23:39:40 -0400
+Received: from sonic302-19.consmr.mail.ir2.yahoo.com ([87.248.110.82]:42442
+        "EHLO sonic302-19.consmr.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726495AbgEFDjk (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 5 May 2020 23:26:37 -0400
-X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R591e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e01358;MF=wenyang@linux.alibaba.com;NM=1;PH=DS;RN=5;SR=0;TI=SMTPD_---0TxbzzTU_1588735575;
-Received: from IT-C02W23QPG8WN.local(mailfrom:wenyang@linux.alibaba.com fp:SMTPD_---0TxbzzTU_1588735575)
-          by smtp.aliyun-inc.com(127.0.0.1);
-          Wed, 06 May 2020 11:26:33 +0800
-Subject: Re: [PATCH] libkmod: introduce kmod_module_uniq_options() to improve
- the reliability of loading module
-To:     Alexey Gladkov <gladkov.alexey@gmail.com>
-Cc:     Lucas De Marchi <lucas.demarchi@intel.com>,
-        Lucas De Marchi <lucas.de.marchi@gmail.com>,
-        Topi Miettinen <toiwoton@gmail.com>,
-        linux-modules@vger.kernel.org
-References: <20200429155208.97041-1-wenyang@linux.alibaba.com>
- <20200429164442.vx63qh2ioswxa4mf@comp-core-i7-2640m-0182e6>
-From:   Wen Yang <wenyang@linux.alibaba.com>
-Message-ID: <de672355-c3d9-9322-5a72-afeb9236e000@linux.alibaba.com>
-Date:   Wed, 6 May 2020 11:26:14 +0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.1.0
+        Tue, 5 May 2020 23:39:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048; t=1588736378; bh=DoDCAbWlwIrUQxj1tQyuN7G/GPdydGwqLzZzgqn+gmw=; h=Date:From:Reply-To:Subject:References:From:Subject; b=iWqaoBi+V7CD+llPoh7IhQ3eCxAm9icA1urGx/F2LqqlCPAa9yf0Ghn8qtfsCx+P4+mNEhTMWNzdifJ/61CGo2Mj2qd3iwWKJc0b/3FrCxPoUWXcP6Y/7qOg+tE7pIZLcKl3A8Kno3lSMKLf3SF3YGnRv/TOGW0hRYKrI5jVSSZzIaZptBCkviHxam4CduyHpDZ8eYDuczS6yhIo27SXFtdCcryutLXw6n+9RMxvOQgwqa2CB1MHJPhMLJEDUjaW2BWDEqprgVaGieebAP7PNiJocKIHsg/GStmpJSxlEHQlHDAqNuUdfVIoKHqJvj+YvUtAdcfW9NtRQJmCzP4Gzw==
+X-YMail-OSG: JX1BpQkVM1nqCKxnJ9qMPkgSllYJXqU0l.tqZgw4QO2I5nAwhoF8fDGDAww9oio
+ ptTz0hVSlPXWE480VozKwSrcIAfILTgdAVEwH038gveq42HzWF5aNDtYiPggYpCOC.Mu6B8W9jL6
+ 0M2usJAdyyiXT6hz1LbOmTC6lrqaa1K0PVnsjdtP4NAT2TSeEkDx8G7xGo1ctZFninTzQvtVCKG3
+ UcVEMOY6AkxsO7vGM77fJow_tft61YFUhAp6xiMIyHXz98ZGWFDH1MNkhEQ7xYNV7LN2TQTQXjGr
+ gS39qRQEUdm59Dwm3oxZ6mq4lCGaUUvcP2NJifDK6rWS3flweUcYkrDKFcJ7SVzIbedQR1TcXxHO
+ X_QDRLbfboSCRLtNLZjpgr.oBZjurjxhaLFI_dns9E3NElsNsNWm_RYkstrIETmyTzWdS47NGG_a
+ uUv5WpHWUsTEnIwqsR1G5Y6WzMmpa9KGdz8o5cll1_STMCnj6CVhi4sTr7nOA1qsFznr2Vc8vL2v
+ 8JNmiiA9kkQiV2D83BoxZdnMJMdAMWitG4M1TbvkB5l.YEOr1FOGu8rx_YUcQSUaM_7wJSLVCJru
+ J1or_38rSDdHuX8K.WxIFqpHRXLiWBQbjmKZVYMPnNC.qIZEjdp3HipOPejcGkFQo6AlMMM915dz
+ QINUcOmrCpFWRcgzfji79b_E4x8WDF97c_p89Py4wy50fygfvmbGPPmkMZEQ.f9B0c4tyx3fNLgI
+ Vq6kcFDIbVW7fcwcK_ftb0pX6ma9sz1aquYPm2nbfZV_WEngsZi3jAAmEUiB.RP2TQAPzjtvkP0w
+ uOuGDJSWcZTS6ahjdSh2vzgSBZq7z8DQilQyow_I4Pp_vw4qAwQdUGgAATvtb6GueIcEpdn4NxDc
+ Y1RP0dbQqG3gTMQnoXKSkCj1od4KsxCpPkBjiJuKiwM.c.zeXtdCI7MNlnj30icHgvmD_szI1TqH
+ ocxPoW2u9IVOrVZNhv94PgwQOxMkdtwx5o1Od108FT0qRQGx..49xfmvWyif1lLk_LlRybRZiiPz
+ BshuDMvOeiZE2AVXgCciP5BQsjqdxiCMSAGq0jHT.YYgeanZGNIaRyL7KvSU.3Ginckx3QPYiE3c
+ _yw_NlYtx8k7Bc0SLyxnW9h1q2zr0IlRTF6CuHnC2nujvcRQued1lFa2eOFtnYqbSu7x4gMZOXKX
+ H3bWsz9LwAincENa86OgQ1JM2EZpEF5IJgjq12y3..Yg_pqkbjD6JksnhTQKgwsE1_84naXZwnIC
+ cWVH2_xp_XWBXSwiun5.zKliwUJEwF2KMjnVL3PiOVkP8zYT91vJgJgMbTUMDS6eMGB2ZiVKOLpI
+ -
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.ir2.yahoo.com with HTTP; Wed, 6 May 2020 03:39:38 +0000
+Date:   Wed, 6 May 2020 03:39:36 +0000 (UTC)
+From:   "Mr. Leno Ovoh" <lindseytaylor28@aol.com>
+Reply-To: lenoovoh@gmail.com
+Message-ID: <1675702184.3775986.1588736376948@mail.yahoo.com>
+Subject: Dear Friend, I need your account to transfer this money please
+ reply me urgently
 MIME-Version: 1.0
-In-Reply-To: <20200429164442.vx63qh2ioswxa4mf@comp-core-i7-2640m-0182e6>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <1675702184.3775986.1588736376948.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.15756 YMailNodin Mozilla/5.0 (Windows NT 6.1; rv:75.0) Gecko/20100101 Firefox/75.0
+To:     unlisted-recipients:; (no To-header on input)
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
 
-Dear Alexey,
 
-Thank you for your comments,
-we will fix them and send a V2 soon.
+Dear Friend,
 
-Best wishes,
-Wen
+My name is Mr. Leno Ovoh. I am working with one of the prime banks in Burki=
+na Faso. Here in this bank existed a dormant account for many years, which =
+belong to one of our late foreign customer. The amount in this account stan=
+ds at $13,300,000.00 (Thirteen Million Three Hundred Thousand US Dollars).
 
-ÔÚ 2020/4/30 ÉÏÎç12:44, Alexey Gladkov Ð´µÀ:
-> On Wed, Apr 29, 2020 at 11:52:08PM +0800, Wen Yang wrote:
->> As in commit 2045cdfa1b40 ("netfilter: nf_conntrack: Fix possible possible crash on module loading"),
->> Loading the nf_conntrack module with doubled hashsize parameter, i.e.
->> 	  modprobe nf_conntrack hashsize=12345 hashsize=12345
->> causes NULL-ptr deref.
->>
->> If 'hashsize' specified twice, the nf_conntrack_set_hashsize() function
->> will be called also twice.
->>
->> In addition, we may also construct the doubled hashsize parameter scenario by using the following configuration:
->>
->> $ cat /etc/modprobe.d/firewalld-sysctls.conf
->> install nf_conntrack /usr/sbin/modprobe --ignore-install nf_conntrack $CMDLINE_OPTS && /usr/sbin/sysctl --quiet --pattern 'net[.]netfilter[.]nf_conntrack.*' --system
->>
->> $ cat /etc/modprobe.d/nf_conntrack.conf
->> options nf_conntrack hashsize=187600
->>
->> $ sudo modprobe nf_conntrack -v
->> install /usr/sbin/modprobe --ignore-install nf_conntrack $CMDLINE_OPTS && /usr/sbin/sysctl --quiet --pattern 'net[.]netfilter[.]nf_conntrack.*' --system hashsize=187500
->> insmod /path/to/nf_conntrack.ko hashsize=187500 hashsize=187500
->>
->> Passing multiple repeated parameters to the kernel may trigger kernel bugs
->> and affect the performance of loading kernel modules.
->>
->> We introduce the nf_conntrack_set_hashsize() and hope to solve this problem.
->>
->> Signed-off-by: Wen Yang <wenyang@linux.alibaba.com>
->> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
->> Cc: Lucas De Marchi <lucas.de.marchi@gmail.com>
->> Cc: Topi Miettinen <toiwoton@gmail.com>
->> Cc: Alexey Gladkov <gladkov.alexey@gmail.com>
->> Cc: linux-modules@vger.kernel.org
->> ---
->>   libkmod/libkmod-module.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
->>   libkmod/libkmod.h        |  1 +
->>   tools/insmod.c           |  7 +++++
->>   3 files changed, 80 insertions(+)
->>
->> diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
->> index 76a6dc3..f42beb8 100644
->> --- a/libkmod/libkmod-module.c
->> +++ b/libkmod/libkmod-module.c
->> @@ -1076,6 +1076,72 @@ static char *module_options_concat(const char *opt, const char *xopt)
->>   	return r;
->>   }
->>   
->> +static unsigned int module_options_cnt(const char *opts)
->> +{
->> +	int nr_opts = 0;
->> +	char *saveptr, *tok, *buf;
->> +
->> +	if (!opts)
->> +		return 0;
->> +
->> +	buf = strdup(opts);
->> +	for (tok = strtok_r(buf, " ", &saveptr); tok != NULL;
-> 
-> Why not use strchr() to find the " " and count them ?
-> 
->> +	     tok = strtok_r(NULL, " ", &saveptr), nr_opts++) {}
->> +
-> 
-> Parameters can have spaces [1]. Is not it so ?
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/lib/cmdline.c#n196
-> 
->> +	free(buf);
->> +	return nr_opts;
->> +}
->> +
->> +KMOD_EXPORT int kmod_module_uniq_options(char **opts)
->> +{
->> +	char *buf;
->> +	char **array;
->> +	bool duplicated;
->> +	char *saveptr, *tok;
->> +	int nr_opts, len, i, j;
->> +
->> +	if (!opts || !*opts)
->> +		return 0;
->> +
->> +	buf = strdup(*opts);
-> 
-> We have the options passed as an argument. You doubled it here and tripled
-> in the module_options_cnt(). Can you reduce memory usage ?
-> 
->> +	if (!buf)
->> +		return  -ENOMEM;
->> +
->> +	len = strlen(buf);
->> +	nr_opts = module_options_cnt(buf);
->> +	array = calloc(nr_opts, sizeof(char *));
->> +	if (!buf)
->> +		return  -ENOMEM;
->> +
->> +	for (tok = strtok_r(buf, " ", &saveptr), i = 0; tok != NULL;
->> +			tok = strtok_r(NULL, " ", &saveptr), i++) {
->> +		array[i] = tok;
->> +	}
->> +
->> +	(*opts)[0] = '\0';
->> +	len = 0;
->> +	for (i = 0; i < nr_opts; i++) {
->> +		duplicated = false;
->> +		for (j = 0; j < i; j++) {
->> +			if (strcmp(array[i], array[j]) == 0) {
->> +				duplicated = true;
->> +				break;
->> +			}
->> +		}
->> +
->> +		if (!duplicated) {
->> +			strcat(*opts, array[i]);
->> +			strcat(*opts, " ");
->> +			len += strlen(array[i]) + 1;
->> +		}
->> +	}
->> +
->> +	(*opts)[len] = '\0';
->> +	free(buf);
->> +	free(array);
->> +	return 0;
->> +}
->> +
->>   static int __kmod_module_get_probe_list(struct kmod_module *mod,
->>   						bool required,
->>   						bool ignorecmd,
->> @@ -1322,6 +1388,12 @@ KMOD_EXPORT int kmod_module_probe_insert_module(struct kmod_module *mod,
->>   		options = module_options_concat(moptions,
->>   					m == mod ? extra_options : NULL);
->>   
->> +		err = kmod_module_uniq_options(&options);
->> +		if (err < 0) {
->> +			free(options);
->> +			return err;
->> +		}
->> +
->>   		if (cmd != NULL && !m->ignorecmd) {
->>   			if (print_action != NULL)
->>   				print_action(m, true, options ?: "");
->> diff --git a/libkmod/libkmod.h b/libkmod/libkmod.h
->> index 3cab2e5..774e52a 100644
->> --- a/libkmod/libkmod.h
->> +++ b/libkmod/libkmod.h
->> @@ -186,6 +186,7 @@ int kmod_module_probe_insert_module(struct kmod_module *mod,
->>   const char *kmod_module_get_name(const struct kmod_module *mod);
->>   const char *kmod_module_get_path(const struct kmod_module *mod);
->>   const char *kmod_module_get_options(const struct kmod_module *mod);
->> +int kmod_module_uniq_options(char **opts);
->>   const char *kmod_module_get_install_commands(const struct kmod_module *mod);
->>   const char *kmod_module_get_remove_commands(const struct kmod_module *mod);
->>   struct kmod_list *kmod_module_get_dependencies(const struct kmod_module *mod);
->> diff --git a/tools/insmod.c b/tools/insmod.c
->> index c422971..2dc0c22 100644
->> --- a/tools/insmod.c
->> +++ b/tools/insmod.c
->> @@ -132,6 +132,13 @@ static int do_insmod(int argc, char *argv[])
->>   		opts[optslen] = '\0';
->>   	}
->>   
->> +	err = kmod_module_uniq_options(&opts);
->> +	if (err < 0) {
->> +		ERR("kmod_module_uniq_options() failed!\n");
->> +		free(opts);
->> +		return err;
->> +	}
->> +
->>   	ctx = kmod_new(NULL, &null_config);
->>   	if (!ctx) {
->>   		ERR("kmod_new() failed!\n");
->> -- 
->> 1.8.3.1
->>
-> 
+I want a foreign account where the bank will transfer this fund. I know you=
+ would be surprised to read this message, especially from someone relativel=
+y unknown to you. But, do not worry yourself so much. This is a genuine, ri=
+sk free and legal business transaction. All details shall be sent to you on=
+ce I hear from you.
+
+I was very fortunate to come across the deceased customer's security file d=
+uring documentation of old and abandoned customer=E2=80=99s files for an of=
+ficial redocumentation and audit of the year 2020.
+
+If you are really sure of your sincerity, trustworthiness, accountability a=
+nd confidentiality over this transaction, reply back to me through my alter=
+native email address: (lenoovoh@gmail.com).
+
+Best regards,
+
+Mr. Leno Ovoh
