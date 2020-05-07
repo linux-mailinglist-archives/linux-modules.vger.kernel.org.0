@@ -2,76 +2,248 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 790D61C6666
-	for <lists+linux-modules@lfdr.de>; Wed,  6 May 2020 05:39:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E94421C833F
+	for <lists+linux-modules@lfdr.de>; Thu,  7 May 2020 09:10:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726514AbgEFDjk (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 5 May 2020 23:39:40 -0400
-Received: from sonic302-19.consmr.mail.ir2.yahoo.com ([87.248.110.82]:42442
-        "EHLO sonic302-19.consmr.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726495AbgEFDjk (ORCPT
+        id S1725834AbgEGHKb (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 7 May 2020 03:10:31 -0400
+Received: from out30-42.freemail.mail.aliyun.com ([115.124.30.42]:43428 "EHLO
+        out30-42.freemail.mail.aliyun.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725783AbgEGHKa (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 5 May 2020 23:39:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048; t=1588736378; bh=DoDCAbWlwIrUQxj1tQyuN7G/GPdydGwqLzZzgqn+gmw=; h=Date:From:Reply-To:Subject:References:From:Subject; b=iWqaoBi+V7CD+llPoh7IhQ3eCxAm9icA1urGx/F2LqqlCPAa9yf0Ghn8qtfsCx+P4+mNEhTMWNzdifJ/61CGo2Mj2qd3iwWKJc0b/3FrCxPoUWXcP6Y/7qOg+tE7pIZLcKl3A8Kno3lSMKLf3SF3YGnRv/TOGW0hRYKrI5jVSSZzIaZptBCkviHxam4CduyHpDZ8eYDuczS6yhIo27SXFtdCcryutLXw6n+9RMxvOQgwqa2CB1MHJPhMLJEDUjaW2BWDEqprgVaGieebAP7PNiJocKIHsg/GStmpJSxlEHQlHDAqNuUdfVIoKHqJvj+YvUtAdcfW9NtRQJmCzP4Gzw==
-X-YMail-OSG: JX1BpQkVM1nqCKxnJ9qMPkgSllYJXqU0l.tqZgw4QO2I5nAwhoF8fDGDAww9oio
- ptTz0hVSlPXWE480VozKwSrcIAfILTgdAVEwH038gveq42HzWF5aNDtYiPggYpCOC.Mu6B8W9jL6
- 0M2usJAdyyiXT6hz1LbOmTC6lrqaa1K0PVnsjdtP4NAT2TSeEkDx8G7xGo1ctZFninTzQvtVCKG3
- UcVEMOY6AkxsO7vGM77fJow_tft61YFUhAp6xiMIyHXz98ZGWFDH1MNkhEQ7xYNV7LN2TQTQXjGr
- gS39qRQEUdm59Dwm3oxZ6mq4lCGaUUvcP2NJifDK6rWS3flweUcYkrDKFcJ7SVzIbedQR1TcXxHO
- X_QDRLbfboSCRLtNLZjpgr.oBZjurjxhaLFI_dns9E3NElsNsNWm_RYkstrIETmyTzWdS47NGG_a
- uUv5WpHWUsTEnIwqsR1G5Y6WzMmpa9KGdz8o5cll1_STMCnj6CVhi4sTr7nOA1qsFznr2Vc8vL2v
- 8JNmiiA9kkQiV2D83BoxZdnMJMdAMWitG4M1TbvkB5l.YEOr1FOGu8rx_YUcQSUaM_7wJSLVCJru
- J1or_38rSDdHuX8K.WxIFqpHRXLiWBQbjmKZVYMPnNC.qIZEjdp3HipOPejcGkFQo6AlMMM915dz
- QINUcOmrCpFWRcgzfji79b_E4x8WDF97c_p89Py4wy50fygfvmbGPPmkMZEQ.f9B0c4tyx3fNLgI
- Vq6kcFDIbVW7fcwcK_ftb0pX6ma9sz1aquYPm2nbfZV_WEngsZi3jAAmEUiB.RP2TQAPzjtvkP0w
- uOuGDJSWcZTS6ahjdSh2vzgSBZq7z8DQilQyow_I4Pp_vw4qAwQdUGgAATvtb6GueIcEpdn4NxDc
- Y1RP0dbQqG3gTMQnoXKSkCj1od4KsxCpPkBjiJuKiwM.c.zeXtdCI7MNlnj30icHgvmD_szI1TqH
- ocxPoW2u9IVOrVZNhv94PgwQOxMkdtwx5o1Od108FT0qRQGx..49xfmvWyif1lLk_LlRybRZiiPz
- BshuDMvOeiZE2AVXgCciP5BQsjqdxiCMSAGq0jHT.YYgeanZGNIaRyL7KvSU.3Ginckx3QPYiE3c
- _yw_NlYtx8k7Bc0SLyxnW9h1q2zr0IlRTF6CuHnC2nujvcRQued1lFa2eOFtnYqbSu7x4gMZOXKX
- H3bWsz9LwAincENa86OgQ1JM2EZpEF5IJgjq12y3..Yg_pqkbjD6JksnhTQKgwsE1_84naXZwnIC
- cWVH2_xp_XWBXSwiun5.zKliwUJEwF2KMjnVL3PiOVkP8zYT91vJgJgMbTUMDS6eMGB2ZiVKOLpI
- -
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.ir2.yahoo.com with HTTP; Wed, 6 May 2020 03:39:38 +0000
-Date:   Wed, 6 May 2020 03:39:36 +0000 (UTC)
-From:   "Mr. Leno Ovoh" <lindseytaylor28@aol.com>
-Reply-To: lenoovoh@gmail.com
-Message-ID: <1675702184.3775986.1588736376948@mail.yahoo.com>
-Subject: Dear Friend, I need your account to transfer this money please
- reply me urgently
+        Thu, 7 May 2020 03:10:30 -0400
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e01358;MF=wenyang@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0Txpfxm8_1588835417;
+Received: from localhost(mailfrom:wenyang@linux.alibaba.com fp:SMTPD_---0Txpfxm8_1588835417)
+          by smtp.aliyun-inc.com(127.0.0.1);
+          Thu, 07 May 2020 15:10:24 +0800
+From:   Wen Yang <wenyang@linux.alibaba.com>
+To:     Lucas De Marchi <lucas.demarchi@intel.com>
+Cc:     Caspar Zhang <caspar@linux.alibaba.com>,
+        Wen Yang <wenyang@linux.alibaba.com>,
+        Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        Topi Miettinen <toiwoton@gmail.com>,
+        Alexey Gladkov <gladkov.alexey@gmail.com>,
+        linux-modules@vger.kernel.org
+Subject: [PATCH v2] libkmod: introduce kmod_module_uniq_options() to improve the reliability of loading module
+Date:   Thu,  7 May 2020 15:10:14 +0800
+Message-Id: <20200507071014.68136-1-wenyang@linux.alibaba.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-References: <1675702184.3775986.1588736376948.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.15756 YMailNodin Mozilla/5.0 (Windows NT 6.1; rv:75.0) Gecko/20100101 Firefox/75.0
-To:     unlisted-recipients:; (no To-header on input)
+Content-Transfer-Encoding: 8bit
 Sender: owner-linux-modules@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
+As in commit 2045cdfa1b40 ("netfilter: nf_conntrack: Fix possible possible crash on module loading"),
+Loading the nf_conntrack module with doubled hashsize parameter, i.e.
+	  modprobe nf_conntrack hashsize=12345 hashsize=12345
+causes NULL-ptr deref.
 
+If 'hashsize' specified twice, the nf_conntrack_set_hashsize() function
+will be called also twice.
 
-Dear Friend,
+In addition, we may also construct the doubled hashsize parameter scenario by using the following configuration:
 
-My name is Mr. Leno Ovoh. I am working with one of the prime banks in Burki=
-na Faso. Here in this bank existed a dormant account for many years, which =
-belong to one of our late foreign customer. The amount in this account stan=
-ds at $13,300,000.00 (Thirteen Million Three Hundred Thousand US Dollars).
+$ cat /etc/modprobe.d/firewalld-sysctls.conf
+install nf_conntrack /usr/sbin/modprobe --ignore-install nf_conntrack $CMDLINE_OPTS && /usr/sbin/sysctl --quiet --pattern 'net[.]netfilter[.]nf_conntrack.*' --system
 
-I want a foreign account where the bank will transfer this fund. I know you=
- would be surprised to read this message, especially from someone relativel=
-y unknown to you. But, do not worry yourself so much. This is a genuine, ri=
-sk free and legal business transaction. All details shall be sent to you on=
-ce I hear from you.
+$ cat /etc/modprobe.d/nf_conntrack.conf
+options nf_conntrack hashsize=187600
 
-I was very fortunate to come across the deceased customer's security file d=
-uring documentation of old and abandoned customer=E2=80=99s files for an of=
-ficial redocumentation and audit of the year 2020.
+$ sudo modprobe nf_conntrack -v
+install /usr/sbin/modprobe --ignore-install nf_conntrack $CMDLINE_OPTS && /usr/sbin/sysctl --quiet --pattern 'net[.]netfilter[.]nf_conntrack.*' --system hashsize=187500
+insmod /path/to/nf_conntrack.ko hashsize=187500 hashsize=187500
 
-If you are really sure of your sincerity, trustworthiness, accountability a=
-nd confidentiality over this transaction, reply back to me through my alter=
-native email address: (lenoovoh@gmail.com).
+Passing multiple repeated parameters to the kernel may trigger kernel bugs
+and affect the performance of loading kernel modules.
 
-Best regards,
+We introduce the nf_conntrack_set_hashsize() and hope to solve this problem.
 
-Mr. Leno Ovoh
+Signed-off-by: Wen Yang <wenyang@linux.alibaba.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Lucas De Marchi <lucas.de.marchi@gmail.com>
+Cc: Topi Miettinen <toiwoton@gmail.com>
+Cc: Alexey Gladkov <gladkov.alexey@gmail.com>
+Cc: linux-modules@vger.kernel.org
+---
+v2:
+- parameters can have spaces.
+- reduce memory usage.
+
+ libkmod/libkmod-module.c | 121 +++++++++++++++++++++++++++++++++++++++++++++++
+ libkmod/libkmod.h        |   1 +
+ tools/insmod.c           |   7 +++
+ 3 files changed, 129 insertions(+)
+
+diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
+index 76a6dc3..a86c8c7 100644
+--- a/libkmod/libkmod-module.c
++++ b/libkmod/libkmod-module.c
+@@ -1076,6 +1076,121 @@ static char *module_options_concat(const char *opt, const char *xopt)
+ 	return r;
+ }
+ 
++/*
++ * Inspired by the next_arg() in kernel code.
++ * You can use " around spaces, but can't escape ".
++ */
++static unsigned int next_opt_index(const char *args)
++{
++	unsigned int i;
++	int in_quote = 0;
++
++	if (*args == '"')
++		in_quote = 1;
++
++	for (i = 0; args[i]; i++) {
++		if (isspace(args[i]) && !in_quote)
++			break;
++		if (args[i] == '"')
++			in_quote = !in_quote;
++	}
++
++	return i;
++}
++
++static unsigned int cnt_module_options(const char *args)
++{
++	unsigned int nr = 0;
++	unsigned int i = 0;
++
++	while (args[i]) {
++		nr++;
++		i += next_opt_index(args + i);
++		while (isspace(args[i]))
++			i++;
++	}
++	return nr;
++}
++
++struct module_option {
++	unsigned short begin;
++	unsigned short end;
++};
++
++static void parse_module_options(const char *args, unsigned int nr_opts,
++				 struct module_option *opts)
++{
++	unsigned int nr;
++	unsigned int i;
++
++	for (nr = 0, i = 0; nr < nr_opts; nr++) {
++		opts[nr].begin = i;
++		i += next_opt_index(args + i);
++		opts[nr].end = i;
++
++		while (isspace(args[i]))
++			i++;
++	}
++}
++
++static bool is_options_equal(const char *args, struct module_option *left,
++			     struct module_option *right)
++{
++	unsigned int left_len, right_len;
++
++	left_len = left->end - left->begin;
++	right_len = right->end - right->begin;
++	if (left_len != right_len)
++		return false;
++
++	return !memcmp(args+left->begin, args+right->begin, left_len);
++}
++
++KMOD_EXPORT int kmod_module_uniq_options(char **args)
++{
++	struct module_option *opts;
++	unsigned int nr_opts, i, j, k, delta;
++
++	if (!args || !*args)
++		return 0;
++
++	nr_opts = cnt_module_options(*args);
++	opts = calloc(nr_opts, sizeof(struct module_option));
++	if (!opts)
++		return -ENOMEM;
++	parse_module_options(*args, nr_opts, opts);
++
++	for (i = 0; i < nr_opts; i++) {
++		for (j = i+1; j < nr_opts; j++) {
++			if (is_options_equal(*args, &opts[i], &opts[j])) {
++				if (j + 1 < nr_opts)  {
++					memmove(*args + opts[j].begin,
++						*args + opts[j+1].begin,
++						opts[nr_opts-1].end - opts[j+1].begin);
++
++					delta = opts[j+1].begin - opts[j].begin;
++					for (k = j+1; k < nr_opts; k++) {
++						opts[k].begin -= delta;
++						opts[k].end -= delta;
++					}
++
++					memmove(&opts[j], &opts[j+1],
++						(nr_opts-j-1) * sizeof(struct module_option));
++				}
++				nr_opts--;
++				j--;
++			}
++		}
++	}
++
++	if (nr_opts > 0)
++		if ((*args)[opts[nr_opts-1].end])
++			(*args)[opts[nr_opts-1].end] = '\0';
++
++	free(opts);
++	return 0;
++}
++
+ static int __kmod_module_get_probe_list(struct kmod_module *mod,
+ 						bool required,
+ 						bool ignorecmd,
+@@ -1322,6 +1437,12 @@ KMOD_EXPORT int kmod_module_probe_insert_module(struct kmod_module *mod,
+ 		options = module_options_concat(moptions,
+ 					m == mod ? extra_options : NULL);
+ 
++		err = kmod_module_uniq_options(&options);
++		if (err < 0) {
++			free(options);
++			return err;
++		}
++
+ 		if (cmd != NULL && !m->ignorecmd) {
+ 			if (print_action != NULL)
+ 				print_action(m, true, options ?: "");
+diff --git a/libkmod/libkmod.h b/libkmod/libkmod.h
+index 3cab2e5..774e52a 100644
+--- a/libkmod/libkmod.h
++++ b/libkmod/libkmod.h
+@@ -186,6 +186,7 @@ int kmod_module_probe_insert_module(struct kmod_module *mod,
+ const char *kmod_module_get_name(const struct kmod_module *mod);
+ const char *kmod_module_get_path(const struct kmod_module *mod);
+ const char *kmod_module_get_options(const struct kmod_module *mod);
++int kmod_module_uniq_options(char **opts);
+ const char *kmod_module_get_install_commands(const struct kmod_module *mod);
+ const char *kmod_module_get_remove_commands(const struct kmod_module *mod);
+ struct kmod_list *kmod_module_get_dependencies(const struct kmod_module *mod);
+diff --git a/tools/insmod.c b/tools/insmod.c
+index c422971..2dc0c22 100644
+--- a/tools/insmod.c
++++ b/tools/insmod.c
+@@ -132,6 +132,13 @@ static int do_insmod(int argc, char *argv[])
+ 		opts[optslen] = '\0';
+ 	}
+ 
++	err = kmod_module_uniq_options(&opts);
++	if (err < 0) {
++		ERR("kmod_module_uniq_options() failed!\n");
++		free(opts);
++		return err;
++	}
++
+ 	ctx = kmod_new(NULL, &null_config);
+ 	if (!ctx) {
+ 		ERR("kmod_new() failed!\n");
+-- 
+1.8.3.1
+
