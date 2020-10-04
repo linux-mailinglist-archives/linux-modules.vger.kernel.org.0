@@ -2,106 +2,58 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD8F3261F22
-	for <lists+linux-modules@lfdr.de>; Tue,  8 Sep 2020 22:00:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02FE2282A7D
+	for <lists+linux-modules@lfdr.de>; Sun,  4 Oct 2020 13:50:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730361AbgIHT7l (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 8 Sep 2020 15:59:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36522 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731437AbgIHT7h (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 8 Sep 2020 15:59:37 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0C4C061755
-        for <linux-modules@vger.kernel.org>; Tue,  8 Sep 2020 12:59:37 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id q9so184150wmj.2
-        for <linux-modules@vger.kernel.org>; Tue, 08 Sep 2020 12:59:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6Bi+XdwVbjYliaCr5IaGm6ChAPDH7ThwYB/lImKcl0Y=;
-        b=i6HVXVbE0kOV+N7lAKBaYWwFd7HEZJRbOc6+iTNLBk4cjl0+ot04iC2WeXf+DkHCZ7
-         oa3yHdXjvi4SMJ7OpBU5NnSo8Q8pTz8HPj8DTrd6Pz1Ye7swwxzcMAqB+QoOkwZfK8jh
-         gwmvsDcpgeYeP4glQEJF/PntcbrftJcPrWUShBDi2SqRpskFWJOj6MdCYD2fbot9Spam
-         3H3VBf5KVAQ1oTbSW/H4JTRhk/m9xCrDX3CO9SBr6i2KAZTRGM2vcM2wifw2Ue/A/DVa
-         whCJle/nDb9esmV9ivJJArdb/B0iTxu1vm6AOh3cmT7S/PCaXtt1ArXk79z7Ke4J+tER
-         TKQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6Bi+XdwVbjYliaCr5IaGm6ChAPDH7ThwYB/lImKcl0Y=;
-        b=eeneWVPlrdTu4SdPUb4CVia8uHoSxIy8A4OUkmbW8lkYzu1557E9g4+gR3FqLnDsYp
-         EvqkqwYcJVeWDytERMgF1Ipx6I8x2KoXGG9Pg3F/ZHy6Y4F4kHGterWAd4/HK0t8O4j8
-         y+8owX3DwnOX8ClPurIgeuGV4NFYRcTTQuMqtyoTmBDYwpHbsO0s6lZyx812YgAYKkSx
-         ne2POlX1Zz0R2Ri0FkXyWnBY8wE130MBlMVceRBhex13dj/qozV88Wc5LyfvnD7afmIj
-         f/fwwxbTYkvBfBzJctCPXunwLlPYfQ32ABllO+R3nyaM+lxJXwFARz8y1PEyM3h5KaZF
-         DSfQ==
-X-Gm-Message-State: AOAM531NRJqU1pgtB+xqTureo9FXiCqxLiYijS9tINuWPiNgKw56Gg/p
-        iSQlYghBSrrJgHtOx71fYekKCAFPxIj1vQ==
-X-Google-Smtp-Source: ABdhPJwcVFNJUfxQPeCxvwOv7GPVUBLz19uWBfuTSqfPGoF47931LVU0rxLP3vK2XqesM7DHB/Mliw==
-X-Received: by 2002:a1c:9ed8:: with SMTP id h207mr94523wme.116.1599595174011;
-        Tue, 08 Sep 2020 12:59:34 -0700 (PDT)
-Received: from localhost.localdomain (ip1f11fff1.dynamic.kabel-deutschland.de. [31.17.255.241])
-        by smtp.gmail.com with ESMTPSA id m3sm680855wme.31.2020.09.08.12.59.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2020 12:59:33 -0700 (PDT)
-From:   Torge Matthies <openglfreak@googlemail.com>
+        id S1725911AbgJDLuI (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 4 Oct 2020 07:50:08 -0400
+Received: from mx1.riseup.net ([198.252.153.129]:45460 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725840AbgJDLuI (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Sun, 4 Oct 2020 07:50:08 -0400
+Received: from capuchin.riseup.net (capuchin-pn.riseup.net [10.0.1.176])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "*.riseup.net", Issuer "Sectigo RSA Domain Validation Secure Server CA" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 4C421P0tgdzFgrc
+        for <linux-modules@vger.kernel.org>; Sun,  4 Oct 2020 04:43:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1601811817; bh=IBQ+qrBa7eQapm943fIksR7KLzVUoZ6hY41YwNDsAHk=;
+        h=Date:From:To:Subject:From;
+        b=XBPWmUn2pAjhCnxkZwbjsAXiudP/keisSeOHZO60wy4amCRDVAt4iWjkMN6BqllOv
+         vbxs/o8V84m/0Ub5pp7VGtYtwURmmct/Scd5SLwG2mPM63ExrKl2tJ+ql0K4n0wluO
+         +tSQ2c1Cyp6eU+iZxx5JCWQSC/nTZpl+4SXug/uo=
+X-Riseup-User-ID: 55C0BE1AA357476BEC9258C5DEC4C84A2129C7592CA44C9010C8F39AB6C23174
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by capuchin.riseup.net (Postfix) with ESMTPSA id 4C421N20K8z8tp9
+        for <linux-modules@vger.kernel.org>; Sun,  4 Oct 2020 04:43:35 -0700 (PDT)
+Date:   Sun, 4 Oct 2020 11:43:33 +0000
+From:   Samanta Navarro <ferivoz@riseup.net>
 To:     linux-modules@vger.kernel.org
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Torge Matthies <openglfreak@googlemail.com>
-Subject: [PATCH v2 2/2] testsuite: add test for zstd-compressed module
-Date:   Tue,  8 Sep 2020 21:59:21 +0200
-Message-Id: <20200908195921.869779-2-openglfreak@googlemail.com>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200908195921.869779-1-openglfreak@googlemail.com>
-References: <20200908195921.869779-1-openglfreak@googlemail.com>
+Subject: [PATCH] man: fix typo
+Message-ID: <20201004114333.ekwqf5hvncv5vnid@localhost>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: owner-linux-modules@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-I took away one module from the gzip-compressed modules for this purpose.
-
-Signed-off-by: Torge Matthies <openglfreak@googlemail.com>
 ---
- testsuite/populate-modules.sh | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ man/modules.dep.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/testsuite/populate-modules.sh b/testsuite/populate-modules.sh
-index 5140f7a..358e740 100755
---- a/testsuite/populate-modules.sh
-+++ b/testsuite/populate-modules.sh
-@@ -66,10 +66,13 @@ map=(
- 
- gzip_array=(
-     "test-depmod/modules-order-compressed/lib/modules/4.4.4/kernel/drivers/block/cciss.ko"
--    "test-depmod/modules-order-compressed/lib/modules/4.4.4/kernel/drivers/scsi/hpsa.ko"
-     "test-depmod/modules-order-compressed/lib/modules/4.4.4/kernel/drivers/scsi/scsi_mod.ko"
-     )
- 
-+zstd_array=(
-+    "test-depmod/modules-order-compressed/lib/modules/4.4.4/kernel/drivers/scsi/hpsa.ko"
-+    )
-+
- attach_sha256_array=(
-     "test-modinfo/mod-simple-sha256.ko"
-     )
-@@ -101,6 +104,11 @@ for m in "${gzip_array[@]}"; do
-     gzip $ROOTFS/$m
- done
- 
-+# zstd-compress these modules
-+for m in "${zstd_array[@]}"; do
-+    zstd --rm $ROOTFS/$m
-+done
-+
- for m in "${attach_sha1_array[@]}"; do
-     cat ${MODULE_PLAYGROUND}/dummy.sha1 >> ${ROOTFS}/$m
- done
+diff --git a/man/modules.dep.xml b/man/modules.dep.xml
+index e53293a..ed63369 100644
+--- a/man/modules.dep.xml
++++ b/man/modules.dep.xml
+@@ -48,7 +48,7 @@
+       libkmod.
+     </para>
+     <para>
+-      Its text counterpar is located in the same directory with the name
++      Its text counterpart is located in the same directory with the name
+       <filename>modules.dep</filename>. The text version is maintained only
+       for easy of reading by humans and is in no way used by any kmod tool.
+     </para>
 -- 
 2.28.0
 
