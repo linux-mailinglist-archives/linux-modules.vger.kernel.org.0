@@ -2,55 +2,73 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0FC22C363F
-	for <lists+linux-modules@lfdr.de>; Wed, 25 Nov 2020 02:33:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 890272C7A16
+	for <lists+linux-modules@lfdr.de>; Sun, 29 Nov 2020 17:50:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727557AbgKYBbm (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 24 Nov 2020 20:31:42 -0500
-Received: from szxga04-in.huawei.com ([45.249.212.190]:7729 "EHLO
-        szxga04-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727534AbgKYBbm (ORCPT
+        id S1728185AbgK2QtO (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 29 Nov 2020 11:49:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:52932 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728188AbgK2QtO (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 24 Nov 2020 20:31:42 -0500
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
-        by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Cgjyp0pX6zkb2G;
-        Wed, 25 Nov 2020 09:31:14 +0800 (CST)
-Received: from huawei.com (10.174.176.87) by DGGEMS413-HUB.china.huawei.com
- (10.3.19.213) with Microsoft SMTP Server id 14.3.487.0; Wed, 25 Nov 2020
- 09:31:33 +0800
-From:   Shuo Wang <wangshuo47@huawei.com>
-To:     <lucas.de.marchi@gmail.com>, <patchwork-bot@kernel.org>,
-        <linux-modules@vger.kernel.org>
-CC:     <hushiyuan@huawei.com>
-Subject: [PATCH] NEWS: fix typo
-Date:   Wed, 25 Nov 2020 09:31:21 +0800
-Message-ID: <20201125013121.4196-1-wangshuo47@huawei.com>
-X-Mailer: git-send-email 2.19.0.windows.1
+        Sun, 29 Nov 2020 11:49:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1606668468;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=Va0pzBP0WDRC54+jdQgx8b2/fG4XqgFxvXzJV2H9QVY=;
+        b=Ms3aw4nKz5R8l15192I8DCKg7JDNPQdhD2lOO0DH1v6dXAfPbN9dOkOsO6mOGYkv+3g5xM
+        1qfSAZjtbgMOu2Me2TCkMYZyPLVhk8Ifgm1YP5SOQbaXbqyBMPiQh0XO1M2YU/2kaA53NF
+        hySYq6OzJNbam1QroioS3l7YbhVuVEw=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-166-IU4LhKG2NX-6Owplt1jxhA-1; Sun, 29 Nov 2020 11:47:44 -0500
+X-MC-Unique: IU4LhKG2NX-6Owplt1jxhA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.14])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 692D71E7EF;
+        Sun, 29 Nov 2020 16:47:43 +0000 (UTC)
+Received: from astarta.redhat.com (ovpn-112-95.ams2.redhat.com [10.36.112.95])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id 33ABE5D9D2;
+        Sun, 29 Nov 2020 16:47:39 +0000 (UTC)
+From:   Yauheni Kaliuta <yauheni.kaliuta@redhat.com>
+To:     linux-modules@vger.kernel.org
+Cc:     lucas.de.marchi@gmail.com,
+        Yauheni Kaliuta <yauheni.kaliuta@redhat.com>
+Subject: [PATCH 1/3] libkmod: kmod_builtin_get_modinfo: free modinfo on error
+Date:   Sun, 29 Nov 2020 18:47:35 +0200
+Message-Id: <20201129164737.135866-1-yauheni.kaliuta@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.174.176.87]
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
----
- NEWS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The function allocates array but on building it if get_string()
+fails it returns the error leaving the array allocated. The caller
+does not care about it in error case either.
 
-diff --git a/NEWS b/NEWS
-index 1c80582..39fe945 100644
---- a/NEWS
-+++ b/NEWS
-@@ -415,7 +415,7 @@ kmod 11
- - New features:
- 	- libkmod now keeps a file opened after the first call to
- 	  kmod_module_get_{info,versions,symbols,dependency_symbols}. This
--	  reduces signficantly the amount of time depmod tool takes to
-+	  reduces significantly the amount of time depmod tool takes to
- 	  execute. Particularly if compressed modules are used.
- 	- Remove --with-rootprefix from build system. It was not a great idea
- 	  after all and should not be use since it causes more harm then
+Free it to fix memory leak.
+
+Signed-off-by: Yauheni Kaliuta <yauheni.kaliuta@redhat.com>
+---
+ libkmod/libkmod-builtin.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libkmod/libkmod-builtin.c b/libkmod/libkmod-builtin.c
+index aaec5ddb0609..fc9a37644261 100644
+--- a/libkmod/libkmod-builtin.c
++++ b/libkmod/libkmod-builtin.c
+@@ -314,6 +314,7 @@ ssize_t kmod_builtin_get_modinfo(struct kmod_ctx *ctx, const char *modname,
+ 		offset = get_string(iter, pos, &line, &linesz);
+ 		if (offset <= 0) {
+ 			count = (offset) ? -errno : -EOF;
++			free(*modinfo);
+ 			goto fail;
+ 		}
+ 
 -- 
-2.23.0
+2.29.2
 
