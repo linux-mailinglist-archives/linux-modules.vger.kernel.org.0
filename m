@@ -2,55 +2,49 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 588E72CD2E2
-	for <lists+linux-modules@lfdr.de>; Thu,  3 Dec 2020 10:51:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B0A02D3A05
+	for <lists+linux-modules@lfdr.de>; Wed,  9 Dec 2020 06:03:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728958AbgLCJuc (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 3 Dec 2020 04:50:32 -0500
-Received: from mga02.intel.com ([134.134.136.20]:46643 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728789AbgLCJub (ORCPT <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 3 Dec 2020 04:50:31 -0500
-IronPort-SDR: CLIEjxN5KEmrQ/atT9QeozXPSF7npj5qn2dSE7xvCT5E8o6LBZXIE3QfJSHSDd6AqF83BU5R7d
- NT8oUYIncXcA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9823"; a="160221561"
-X-IronPort-AV: E=Sophos;i="5.78,389,1599548400"; 
-   d="scan'208";a="160221561"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2020 01:49:51 -0800
-IronPort-SDR: aAfKyuGeU0CB0x3yxhEyQjgAEsUAYKawfENEzBSeL1ZZqqJiDHnBdCcBPkvmojHTLJPjFxuVqh
- OPlFIiD9l63g==
-X-IronPort-AV: E=Sophos;i="5.78,389,1599548400"; 
-   d="scan'208";a="316415182"
-Received: from kvikashs-mobl1.amr.corp.intel.com (HELO ldmartin-desk1.intel.com) ([10.254.178.134])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2020 01:49:50 -0800
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     linux-modules@vger.kernel.org, lucas.de.marchi@gmail.com,
-        patchwork-bot@kernel.org, Shuo Wang <wangshuo47@huawei.com>
-Cc:     hushiyuan@huawei.com
-Subject: Re: [PATCH] NEWS: fix typo
-Date:   Thu,  3 Dec 2020 01:49:35 -0800
-Message-Id: <160698893481.49294.5586143633145480389.b4-ty@intel.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201125013121.4196-1-wangshuo47@huawei.com>
-References: <20201125013121.4196-1-wangshuo47@huawei.com>
+        id S1725944AbgLIFDR convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-modules@lfdr.de>); Wed, 9 Dec 2020 00:03:17 -0500
+Received: from vps-ad94741f.vps.ovh.ca ([51.79.157.202]:60711 "EHLO visi.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725765AbgLIFDR (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Wed, 9 Dec 2020 00:03:17 -0500
+X-Greylist: delayed 3535 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Dec 2020 00:03:14 EST
+Received: from [31.161.230.241] (account juliangath@visi.com HELO User)
+  by visi.com (CommuniGate Pro SMTP 6.1.9 _community_)
+  with ESMTPA id 119162; Wed, 09 Dec 2020 02:51:27 -0800
+Reply-To: <jalghafri3@gmail.com>
+From:   "MR JABER AL-GHAFR" <raywandyg@gmail.com>
+Subject: INVESTMENT
+Date:   Wed, 9 Dec 2020 05:03:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 8BIT
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1081
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+X-Antivirus: AVG (VPS 201207-4, 07/12/2020), Outbound message
+X-Antivirus-Status: Clean
+Message-ID: <auto-000000119162@visi.com>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Wed, 25 Nov 2020 09:31:21 +0800, Shuo Wang wrote:
-> 
+Good Day
+I am JABER AL-GHAFRI, Pleasant greetings to you as i seek your indulgence to introduce to you the desire of my principal’s wish, to make huge financial investment in your home country on areas of oil and gas, real estate, tourism and hotel, manufacturing and production company, agriculture, fishing, Mining & Trading of natural resources such as crude oil, coal, graphite, coke, refinery, energy, hospital etc.
 
+He needs a capable, trustworthy and understanding business partner, who can confidently handle and manage his investment funds with utmost care of secrecy without traces or link to him as he is politically exposed at the moment in his country. He has a huge available financial portfolio.
 
-Applied, thanks!
+Please, I will provide more details about the transaction if you are sure you can handle classified information and also let me know your entitlement for the solicited role
+I shall be expecting your quick reply. E-mail jalghafri3@gmail.com
+Best Regards,
+JABER AL-GHAFRI
 
-[1/1] NEWS: fix typo
-      commit: c72433254ee0bda8db5d8d78a643c481a51f88a5
-
-Best regards,
 -- 
-Lucas De Marchi <lucas.demarchi@intel.com>
+This email has been checked for viruses by AVG.
+https://www.avg.com
+
