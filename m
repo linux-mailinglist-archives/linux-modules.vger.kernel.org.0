@@ -2,63 +2,60 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFC2D2D6BB6
-	for <lists+linux-modules@lfdr.de>; Fri, 11 Dec 2020 00:39:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4D042D849C
+	for <lists+linux-modules@lfdr.de>; Sat, 12 Dec 2020 06:12:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392230AbgLJXOe (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 10 Dec 2020 18:14:34 -0500
-Received: from omta012.uswest2.a.cloudfilter.net ([35.164.127.235]:54092 "EHLO
-        omta012.uswest2.a.cloudfilter.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2393087AbgLJXOT (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 10 Dec 2020 18:14:19 -0500
-X-Greylist: delayed 335 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Dec 2020 18:14:19 EST
-Received: from cxr.smtp.a.cloudfilter.net ([10.0.16.208])
-        by cmsmtp with ESMTP
-        id nIzCk8qHGcxd0nV2Hkhk5k; Thu, 10 Dec 2020 23:07:45 +0000
-Received: from thunder.sweets ([68.100.138.62])
-        by cmsmtp with ESMTPSA
-        id nV2EkxgWsASf9nV2GkNJVA; Thu, 10 Dec 2020 23:07:45 +0000
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=jbuehler@cox.net
-X-Authority-Analysis: v=2.4 cv=EJrDb3VC c=1 sm=1 tr=0 ts=5fd2aa41
- a=3mkzfl4ircflX6G+lDqBYw==:117 a=3mkzfl4ircflX6G+lDqBYw==:17
- a=8nJEP1OIZ-IA:10 a=zTNgK-yGK50A:10 a=TNYumuwFysTXnyQBsCsA:9 a=wPNLvfGTeEIA:10
-Received: by thunder.sweets (Postfix, from userid 116)
-        id 7C0DC11B0E; Thu, 10 Dec 2020 18:07:36 -0500 (EST)
-Received: from [10.10.10.15] (thunder.sweets [10.10.10.15])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by thunder.sweets (Postfix) with ESMTPS id 0C28511AFF
-        for <linux-modules@vger.kernel.org>; Thu, 10 Dec 2020 18:07:34 -0500 (EST)
-Message-ID: <5FD2AA34.3000409@cox.net>
-Date:   Thu, 10 Dec 2020 18:07:32 -0500
-From:   Joe Buehler <aspam@cox.net>
-User-Agent: Thunderbird 1.5.0.12 (X11/20120201)
+        id S1726813AbgLLFLj (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 12 Dec 2020 00:11:39 -0500
+Received: from vps-ad94741f.vps.ovh.ca ([51.79.157.202]:54945 "EHLO visi.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727079AbgLLFL3 (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Sat, 12 Dec 2020 00:11:29 -0500
+Received: from [31.161.189.205] (account juliangath@visi.com HELO User)
+  by visi.com (CommuniGate Pro SMTP 6.1.9 _community_)
+  with ESMTPA id 655513; Sat, 12 Dec 2020 03:58:28 -0800
+Reply-To: <abadrmohamedsaleh@gmail.com>
+From:   "MR ALHOUSHANI" <qadeerkk85@gmail.com>
+Subject: ASAP
+Date:   Sat, 12 Dec 2020 06:10:16 +0100
 MIME-Version: 1.0
-To:     linux-modules@vger.kernel.org
-Subject: lspci: Unable to load libkmod resources: error -12
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+        charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfP3wnVxgcWDFl5MRDSlGCNwfLkigLJ9yx8hlLrBK6Rqqis0OwTB6+GTccF3TV1t8ou1RHuHgD+fX8tWEh6b0OOYCDPuI9fduHIo8Nl9bfco2590jQJv8
- OjBdlZG+xuKmMCVmJqB9OKlzS63J8IMe/gcgNqdg2edOKY1r7FOpCXLuXPx8trKRkPCWAkmNVs7SoA==
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1081
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+X-Antivirus: AVG (VPS 201211-2, 11/12/2020), Outbound message
+X-Antivirus-Status: Clean
+Message-ID: <auto-000000655513@visi.com>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-When running lspci -v on Ubuntu 20.40, I get the error message:
+Assalamualaikum.
+ 
+ I am ALHOUSHANI, BADR MOHAMED SALEH, and I want to inform you that an amount of
+ US$900,000,Nine Hundred Thousand United State Of America Dollars. will 
+ be
+ moved on your name as the beneficiary of my late client I need your help 
+ to
+ receive this money and you will get 45% of the money while I get 55%. 
+ You
+ will either receive this amount through a bank wire transfer.
+ 
+ Please send your Full Names, Direct Private Telephone Numbers, Private
+ Email Address and Physical Address.
+ 
+ More details will be given upon your reply. abadrmohamedsaleh@gmail.com
+ 
+ Your quick response will be highly appreciated.
+ 
+ Allah Hafiz,
+ 
+ ALHOUSHANI, BADR MOHAMED SALEH.
 
-lspci: Unable to load libkmod resources: error -12
-
-I tracked this down to a possible libkmod issue.  The kernel I am using
-has an empty modules.builtin.aliases.bin file (modules.builtin.aliases
-does not exist).
-
-kmod_load_resources() doesn't like this.  It calls index_mm_open() which
-checks the file size, sees that it is less than sizeof(hdr), error
-terminates, causing kmod_load_resources() to return -ENOMEM.
-
-kmod version 27 as shipped with ubuntu 20.04
-
-Please copy me on any responses, I am not on this list.
-
-Joe Buehler
+-- 
+This email has been checked for viruses by AVG.
+https://www.avg.com
 
