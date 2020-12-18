@@ -2,111 +2,79 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 719AE2DE5D1
-	for <lists+linux-modules@lfdr.de>; Fri, 18 Dec 2020 16:02:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36B382DE72A
+	for <lists+linux-modules@lfdr.de>; Fri, 18 Dec 2020 17:04:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730505AbgLRPCm (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 18 Dec 2020 10:02:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728708AbgLRPCl (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 18 Dec 2020 10:02:41 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7154CC0617A7
-        for <linux-modules@vger.kernel.org>; Fri, 18 Dec 2020 07:02:01 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id s26so6142595lfc.8
-        for <linux-modules@vger.kernel.org>; Fri, 18 Dec 2020 07:02:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kycfb3aGsFwFjrMKUq3nfJf2uPOaPiVPYna8srRZHQw=;
-        b=qYJzJu/lnQ5FYQILyGU4Cp29Lz1hJBYH5WLeKA/fwScuQy3A9m/Hcx2SNYZllp1/Zj
-         MHto3Vr0lQRscngmN8jBELt51FjATQWmGaxe317zl7PdXY1pQSTmlMh5IaJYXxpagocZ
-         dtBPBgYEzO4xHOP9BK/lfgkbhV5KNG1o1D9+XnHCJC9bQtsQa3hkaCX0hcWG1NQfRrlC
-         6jCLiCZlD5ubkdHCrOJzp6WBdvx/QcInXo3hv1uBOLpEvqsQyXsUnhK81bhbKN8O4hI4
-         xA6D3THmX0QfHi2C/pD2RKz4kNnseVdF5KRSC+ix9EWQBRSMD81n7irAg4lRcnNtCAY7
-         JeHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kycfb3aGsFwFjrMKUq3nfJf2uPOaPiVPYna8srRZHQw=;
-        b=fRSk6z+Gcae2wWEdqEPp6Jl/k6kCp8DS8WD6OAvnlyx/VZcVQxn5CHmpsguNBJVZf9
-         XKFJvwiKbNY1utnlQWSNqMeL4qcYpVx/SQ4cWQgLEf3e7f2AyWq7WY7B/wNauUyAq4Mu
-         CnHP7aeU/MRdRb6gryFb1/iPnvHjvkR7ZjWH3yJA0KkaOx32RFErlct0Whh86ZswU8TK
-         tqxZS+hnHseFjoNtXAs46HviaXSb1e0iOkitCXudkDuEuseY1jxdO9O5YH3YfaRh6Vnh
-         Y92U0vNpWJVOpR99q4G9GlHOqc+BhXGqAsvUdqVJhJ1ll2fP1O65tE1dVBn9uQer7wB/
-         Rdkw==
-X-Gm-Message-State: AOAM532P6W6Y/z+uD0FhIvTpcw7psDORrByrSNQSgmJFs0w98lUmsgP7
-        kbVQyoGNNHfpDbXJp6CJZINj2gJDil6tEfNI3Gqsf1JQJ4V5SA==
-X-Google-Smtp-Source: ABdhPJwZiJOj+lodSWvC+Lx4x416TIjMAmbRcz7/dC/yLfpoCGiChMzb6TmrRiggcrtXxPskQgYWoBbO17maTMPQzXg=
-X-Received: by 2002:a2e:2417:: with SMTP id k23mr1978492ljk.373.1608303718462;
- Fri, 18 Dec 2020 07:01:58 -0800 (PST)
+        id S1727531AbgLRQDb (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 18 Dec 2020 11:03:31 -0500
+Received: from mga17.intel.com ([192.55.52.151]:59177 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727047AbgLRQDb (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Fri, 18 Dec 2020 11:03:31 -0500
+IronPort-SDR: ljjcXG0zod81apt4tauW9DX4B8zr8thE7w6bBeFLYOqn4TY3CTlant90UN/Y4iGu8J64B6G6/O
+ JNKBajbBzszg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9839"; a="155257949"
+X-IronPort-AV: E=Sophos;i="5.78,430,1599548400"; 
+   d="scan'208";a="155257949"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Dec 2020 08:02:15 -0800
+IronPort-SDR: OlyXUo/8i35jXi78+mxFModY5PRRNSYKb8hNKFD7LiCrRUcwDyVWCH/hQlTUMnWOvMMZhxjNVG
+ zua1AByt7ptQ==
+X-IronPort-AV: E=Sophos;i="5.78,430,1599548400"; 
+   d="scan'208";a="388582539"
+Received: from lucas-s2600cw.jf.intel.com ([10.165.21.202])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Dec 2020 08:02:14 -0800
+From:   Lucas De Marchi <lucas.demarchi@intel.com>
+To:     linux-modules@vger.kernel.org
+Cc:     Joe Buehler <aspam@cox.net>,
+        Yauheni Kaliuta <yauheni.kaliuta@redhat.com>
+Subject: [PATCH 0/3] Fix kmod_load_resources without modules.builtin.modinfo
+Date:   Fri, 18 Dec 2020 08:02:06 -0800
+Message-Id: <20201218160209.4037174-1-lucas.demarchi@intel.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <5FD2AA34.3000409@cox.net> <CAKi4VAK4LFWZH7LD4nON=AOeO+iZBa8WfvCvhr8uhs9KR8pYqw@mail.gmail.com>
-In-Reply-To: <CAKi4VAK4LFWZH7LD4nON=AOeO+iZBa8WfvCvhr8uhs9KR8pYqw@mail.gmail.com>
-From:   Lucas De Marchi <lucas.de.marchi@gmail.com>
-Date:   Fri, 18 Dec 2020 07:01:46 -0800
-Message-ID: <CAKi4VALscaU9WL40sceR+xsqgGDZYFTZ1UPRs44Zcff4FiZyOA@mail.gmail.com>
-Subject: Re: lspci: Unable to load libkmod resources: error -12
-To:     Joe Buehler <aspam@cox.net>
-Cc:     linux-modules <linux-modules@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Fri, Dec 18, 2020 at 6:56 AM Lucas De Marchi
-<lucas.de.marchi@gmail.com> wrote:
->
-> On Fri, Dec 11, 2020 at 2:19 AM Joe Buehler <aspam@cox.net> wrote:
-> >
-> > When running lspci -v on Ubuntu 20.40, I get the error message:
-> >
-> > lspci: Unable to load libkmod resources: error -12
-> >
-> > I tracked this down to a possible libkmod issue.  The kernel I am using
-> > has an empty modules.builtin.aliases.bin file (modules.builtin.aliases
-> > does not exist).
->
-> It is indeed a little bit confusing, but modules.builtin.alias.bin is
-> created from
-> modules.builtin.modinfo that should come with the kernel.  Is this a
-> custom kernel or
-> one from the distro? modules.builtin.alias.bin should either not exist
-> (in case the kernel
-> doesn't have modules.builtin.modinfo) or should be a valid index.
->
-> Indeed depmod doesn't create the file unless it has something to
-> write. I wonder if the error wasn't
-> because the call to depmod failed for some reason (out of space?).
->
-> Looking at a ubuntu 20.04 system I do have both
-> modules.builtin.modinfo and modules.builtin.alias.bin. If I remove
-> modules.builtin.modinfo and call
-> depmod -a, then the latter is not created.
+When there isn't a modules.builtin.modinfo from the kernel, depmod
+should not generate and 0-sized modules.builtin.alias.bin file. It
+should rather be an empty index.
 
-oops, it turned out I was looking in the wrong directory. That should
-be the behavior, but
-it's not and and empty modules.builtin.alias.bin is being created.
+Lucas De Marchi (3):
+  depmod: unconditionally write builtin.alias.bin
+  shared: fix UNIQ definition
+  testsuite: add test for empty modules.builtin.aliases.bin
 
-Let me take a closer look what's going on.
+ shared/macro.h                                     |   7 +++++--
+ .../lib/modules/5.6.0/modules.alias                |   1 +
+ .../lib/modules/5.6.0/modules.alias.bin            | Bin 0 -> 12 bytes
+ .../lib/modules/5.6.0/modules.builtin              |   1 +
+ .../lib/modules/5.6.0/modules.builtin.alias.bin    | Bin 0 -> 12 bytes
+ .../lib/modules/5.6.0/modules.builtin.bin          | Bin 0 -> 39 bytes
+ .../lib/modules/5.6.0/modules.dep                  |   0
+ .../lib/modules/5.6.0/modules.dep.bin              | Bin 0 -> 12 bytes
+ .../lib/modules/5.6.0/modules.devname              |   1 +
+ .../lib/modules/5.6.0/modules.softdep              |   1 +
+ .../lib/modules/5.6.0/modules.symbols              |   1 +
+ .../lib/modules/5.6.0/modules.symbols.bin          | Bin 0 -> 12 bytes
+ testsuite/test-init.c                              |   9 ++++++++-
+ testsuite/testsuite.h                              |   2 +-
+ tools/depmod.c                                     |  10 ++++++----
+ 15 files changed, 25 insertions(+), 8 deletions(-)
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.alias
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.alias.bin
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.builtin
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.builtin.alias.bin
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.builtin.bin
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.dep
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.dep.bin
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.devname
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.softdep
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.symbols
+ create mode 100644 testsuite/rootfs-pristine/test-init-load-resources-empty-builtin-aliases-bin/lib/modules/5.6.0/modules.symbols.bin
 
-thanks
-Lucas De Marchi
+-- 
+2.29.2
 
->
-> Lucas De Marchi
->
-> >
-> > kmod_load_resources() doesn't like this.  It calls index_mm_open() which
-> > checks the file size, sees that it is less than sizeof(hdr), error
-> > terminates, causing kmod_load_resources() to return -ENOMEM.
-> >
-> > kmod version 27 as shipped with ubuntu 20.04
-> >
-> > Please copy me on any responses, I am not on this list.
-> >
-> > Joe Buehler
-> >
