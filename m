@@ -2,84 +2,77 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B6212EEDCE
-	for <lists+linux-modules@lfdr.de>; Fri,  8 Jan 2021 08:23:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E86052F16FE
+	for <lists+linux-modules@lfdr.de>; Mon, 11 Jan 2021 15:00:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbhAHHXf (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 8 Jan 2021 02:23:35 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191]:10041 "EHLO
-        szxga05-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725965AbhAHHXf (ORCPT
+        id S2388258AbhAKN7u (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 11 Jan 2021 08:59:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47886 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730465AbhAKNGd (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 8 Jan 2021 02:23:35 -0500
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.60])
-        by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DBvg81P3Fzj53r;
-        Fri,  8 Jan 2021 15:21:56 +0800 (CST)
-Received: from huawei.com (10.174.176.87) by DGGEMS405-HUB.china.huawei.com
- (10.3.19.205) with Microsoft SMTP Server id 14.3.498.0; Fri, 8 Jan 2021
- 15:22:43 +0800
-From:   Shuo Wang <wangshuo47@huawei.com>
-To:     <lucas.de.marchi@gmail.com>, <patchwork-bot@kernel.org>,
-        <linux-modules@vger.kernel.org>
-CC:     <hushiyuan@huawei.com>
-Subject: [PATCH] libkmod: assign values to variables to fix warnings
-Date:   Fri, 8 Jan 2021 15:22:43 +0800
-Message-ID: <20210108072243.22828-1-wangshuo47@huawei.com>
-X-Mailer: git-send-email 2.19.0.windows.1
+        Mon, 11 Jan 2021 08:06:33 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABBE0C061786
+        for <linux-modules@vger.kernel.org>; Mon, 11 Jan 2021 05:05:52 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id a12so37629477lfl.6
+        for <linux-modules@vger.kernel.org>; Mon, 11 Jan 2021 05:05:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=gh3LAHVoZ13tNSNxyl48BscJHu7DmAGOA8k6UgBmg5k=;
+        b=g2MbSpaBZ1XozhX8y6fGzYeProuebeoSxR1WWPv0AXTsxQ4eIQDqvTah8qK6Iceq6L
+         Paz4vHwOCPt2l8dZgROHT/JNkUsS3TjQNoXHGi/Vtlw15bgzaDoKZzvdC9Yat2tnwJOg
+         F1H+PsXFOdKdgMLibw9MPq0jHaM6roRQHwAYzzRE5newHv0+BK8I/0oFxdu7iZsSxIHS
+         nAYsqnNIKwKdhXoFd9jADL/rWH2fi9ZNJSJWha9rSXPGqf1HQMWY6HfJkXrH/8W8ZAHL
+         l11W+yCz6u5rY0CcvF+NVR/KV8ibFYdQGsNg/s0k9J2YmqdhfzJj90e2lhdP99meGxcS
+         GqYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=gh3LAHVoZ13tNSNxyl48BscJHu7DmAGOA8k6UgBmg5k=;
+        b=fmHMf2tLjUNyMhR7o80Dgb2arY48//oqg7QVIiRTjOohgWwwOLhLC1niVfTU/Z9tXb
+         2huBKrICdFpVPo/AMALfDbT+wjqgAwXK+E7V0tvKmCAKiEYOe4WqZ0wFyhDOrm1Jnym8
+         mfwPtzkYb2cSjZhR83kYVXImT+vT/7C2EqEG8LIpK0a9Aa4ag6asTkTQIwjXme38KVc0
+         ic84N0xY9rwE2+Pq3RLXeUmyz5pC4Oo6Jo4bMyfToswLPmW2Mtrelvh55xuKtT2NN97B
+         JrkSBpCPW0in22DgvzJXj4as7b8f8wUIMbH9Y0OxSiAKzKy0nqxUNaQ2CtF/tTMMXLop
+         0eKw==
+X-Gm-Message-State: AOAM532TovjiBvlEYxRN6uBRJjuLg7li7Ys09mZJWNecKiV/krXoMJA8
+        TZ+sz2zYoXQjpGqgFw3SYVMNqgjQTQn0j+vOPsU=
+X-Google-Smtp-Source: ABdhPJwzFe3y8lDD9XtneMJBzvl5qehOIYFtT5UvWArz1mSqb7LRyAUuNFSY2jQa8d2Gw3E00AtOj2ch0aquVM+Uea4=
+X-Received: by 2002:ac2:50c1:: with SMTP id h1mr7689638lfm.350.1610370351120;
+ Mon, 11 Jan 2021 05:05:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.174.176.87]
-X-CFilter-Loop: Reflected
+References: <X/e48mOg7WfVxRc0@bongo.bofh.it> <CAKi4VA+RA8Sr85dHrRf9-XL5cJ8_rf=0WG68zQQQO6JA4qRPjw@mail.gmail.com>
+ <X/fcBfwqlw1XkE/H@bongo.bofh.it>
+In-Reply-To: <X/fcBfwqlw1XkE/H@bongo.bofh.it>
+From:   Lucas De Marchi <lucas.de.marchi@gmail.com>
+Date:   Mon, 11 Jan 2021 05:05:38 -0800
+Message-ID: <CAKi4VA+5n2nLGm2j9RjYwaAybqOcC_vu0hpCNzB_62QVeGz13w@mail.gmail.com>
+Subject: Re: Bug#970871: "modinfo -F" always shows name for built-ins
+To:     Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        linux-modules <linux-modules@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-libkmod/libkmod.c: In function 'kmod_lookup_alias_is_builtin':
-./shared/util.h:73:9: warning: 'line' may be used uninitialized in this function [-Wmaybe-uninitialized]
-         free(*(void**) p);
-         ^~~~~~~~~~~~~~~~~
-libkmod/libkmod.c:581:23: note: 'line' was declared here
-  _cleanup_free_ char *line;
-                       ^~~~
-In file included from libkmod/libkmod-module.c:42:0:
-libkmod/libkmod-module.c: In function 'kmod_module_probe_insert_module':
-./shared/util.h:73:9: warning: 'cmd' may be used uninitialized in this function [-Wmaybe-uninitialized]
-         free(*(void**) p);
-         ^~~~~~~~~~~~~~~~~
-libkmod/libkmod-module.c:1009:23: note: 'cmd' was declared here
-  _cleanup_free_ char *cmd;
+On Thu, Jan 7, 2021 at 8:14 PM Marco d'Itri <md@linux.it> wrote:
+>
+> On Jan 08, Lucas De Marchi <lucas.de.marchi@gmail.com> wrote:
+>
+> > On Thu, Jan 7, 2021 at 5:55 PM Marco d'Itri <md@linux.it> wrote:
+> > >
+> > > The attached patch fixes this.
+> >
+> > who is the author?
+> I am.
 
----
- libkmod/libkmod-module.c | 2 +-
- libkmod/libkmod.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+applied, thanks.
 
-diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
-index 76a6dc3..2e973b5 100644
---- a/libkmod/libkmod-module.c
-+++ b/libkmod/libkmod-module.c
-@@ -1006,7 +1006,7 @@ static int module_do_install_commands(struct kmod_module *mod,
- {
- 	const char *command = kmod_module_get_install_commands(mod);
- 	char *p;
--	_cleanup_free_ char *cmd;
-+	_cleanup_free_ char *cmd = NULL;
- 	int err;
- 	size_t cmdlen, options_len, varlen;
- 
-diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
-index 43423d6..66e658c 100644
---- a/libkmod/libkmod.c
-+++ b/libkmod/libkmod.c
-@@ -578,7 +578,7 @@ finish:
- 
- bool kmod_lookup_alias_is_builtin(struct kmod_ctx *ctx, const char *name)
- {
--	_cleanup_free_ char *line;
-+	_cleanup_free_ char *line = NULL;
- 
- 	line = lookup_builtin_file(ctx, name);
- 
--- 
-2.23.0
+Lucas De Marchi
 
+>
+> --
+> ciao,
+> Marco
