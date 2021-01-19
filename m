@@ -2,72 +2,61 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FB622FBB52
-	for <lists+linux-modules@lfdr.de>; Tue, 19 Jan 2021 16:38:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F2042FBD7A
+	for <lists+linux-modules@lfdr.de>; Tue, 19 Jan 2021 18:25:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731777AbhASPgB (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 19 Jan 2021 10:36:01 -0500
-Received: from attila.bofh.it ([85.94.204.146]:53546 "EHLO attila.bofh.it"
+        id S1729498AbhASRYO (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 19 Jan 2021 12:24:14 -0500
+Received: from mga06.intel.com ([134.134.136.31]:14317 "EHLO mga06.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391577AbhASPfz (ORCPT <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 19 Jan 2021 10:35:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux.it;
- i=@linux.it; q=dns/txt; s=attila; t=1611070501; h=date : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to : from : from;
- bh=Q8/wmdeR6+kRyU/Ee/8H+zf+qWvYdFKqv209YU2YX2c=;
- b=iaIbQnaEHf7U1vlBmO6XEb+S+qlRRMtgzb1/jgP07HVgPPG84BGwUHuZl9bRx1evOxRBT
- zcTt2b00j2DujmsThoJWC3mskms4Rbk8lzYa+ZCEJ999S4gYb4ynIuhY3NFQzNUET5KOHdp
- Ivg4QeK+lye+90undzjp5tiwqkJ49bE=
-Received: by attila.bofh.it (Postfix, from userid 10)
-        id 2D02D12FC1B; Tue, 19 Jan 2021 16:35:01 +0100 (CET)
-Received: by bongo.bofh.it (Postfix, from userid 1000)
-        id D8C7E840C81; Tue, 19 Jan 2021 16:34:45 +0100 (CET)
-Date:   Tue, 19 Jan 2021 16:34:45 +0100
-To:     Lucas De Marchi <lucas.demarchi@intel.com>
-Cc:     linux-modules@vger.kernel.org
+        id S2387543AbhASRXr (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Tue, 19 Jan 2021 12:23:47 -0500
+IronPort-SDR: xSPjW5RCRs2ETP5ssQKVH6XxmPg7qEIMEy/0roAlFSV2e1PUwpYLwqR1ye5ipOMS/S/TimInEX
+ go23Uh168E1w==
+X-IronPort-AV: E=McAfee;i="6000,8403,9869"; a="240502583"
+X-IronPort-AV: E=Sophos;i="5.79,359,1602572400"; 
+   d="scan'208";a="240502583"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2021 09:22:47 -0800
+IronPort-SDR: VctKDfNYBCWSe8x4oex56n8ZwhC8i0xr8Y2qeM6UNerWFGSqyiXTnrV+LM7HSK6FIM2mi0H7OM
+ O5xk6olD0a4g==
+X-IronPort-AV: E=Sophos;i="5.79,359,1602572400"; 
+   d="scan'208";a="355700129"
+Received: from caophong-mobl.amr.corp.intel.com (HELO ldmartin-desk1) ([10.213.166.105])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2021 09:22:46 -0800
+Date:   Tue, 19 Jan 2021 09:22:42 -0800
+From:   Lucas De Marchi <lucas.demarchi@intel.com>
+To:     linux-modules@vger.kernel.org
 Subject: Re: [PATCH 2/3] depmod: fix precedence order
-Message-ID: <YAb8FfR+/I5YKxUq@bongo.bofh.it>
-Mail-Followup-To: Lucas De Marchi <lucas.demarchi@intel.com>,
-        linux-modules@vger.kernel.org
+Message-ID: <20210119172242.okzlqdgd5l6mtw6r@ldmartin-desk1>
+X-Patchwork-Hint: comment
 References: <20210119145238.12774-1-lucas.demarchi@intel.com>
  <20210119145238.12774-2-lucas.demarchi@intel.com>
+ <YAb8FfR+/I5YKxUq@bongo.bofh.it>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="xR3XgMmjQv9QgDeY"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20210119145238.12774-2-lucas.demarchi@intel.com>
-From:   Marco d'Itri <md@Linux.IT>
+In-Reply-To: <YAb8FfR+/I5YKxUq@bongo.bofh.it>
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
+On Tue, Jan 19, 2021 at 04:34:45PM +0100, Marco d'Itri wrote:
+>On Jan 19, Lucas De Marchi <lucas.demarchi@intel.com> wrote:
+>
+>> Configuration in /etc should have higher prio than /run.
+>> Given how rarely configuration in /run is used with depmod, this is
+>> likely not to cause any problems, even if it's a change in behavior.
+>I agree. But the order is documented in the man pages, so you should
+>change it there as well.
 
---xR3XgMmjQv9QgDeY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+that is what the first patch does.
 
-On Jan 19, Lucas De Marchi <lucas.demarchi@intel.com> wrote:
+thanks
+Lucas De Marchi
 
-> Configuration in /etc should have higher prio than /run.
-> Given how rarely configuration in /run is used with depmod, this is
-> likely not to cause any problems, even if it's a change in behavior.
-I agree. But the order is documented in the man pages, so you should=20
-change it there as well.
+>
+>-- 
+>ciao,
+>Marco
 
---=20
-ciao,
-Marco
 
---xR3XgMmjQv9QgDeY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQQnKUXNg20437dCfobLPsM64d7XgQUCYAb8FQAKCRDLPsM64d7X
-gfc8AQDU4U3Gge4ccmtf8PUpbvKeC1zfA1rZIf5KesvYU4fNhwD9HWMBcOLSFNRp
-vJs0I27q45mgnQqfL114bbFRc0p9GQY=
-=3vGq
------END PGP SIGNATURE-----
-
---xR3XgMmjQv9QgDeY--
