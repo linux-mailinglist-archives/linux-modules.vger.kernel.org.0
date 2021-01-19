@@ -2,88 +2,61 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C0CF2FBE13
-	for <lists+linux-modules@lfdr.de>; Tue, 19 Jan 2021 18:45:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C2862FBF0D
+	for <lists+linux-modules@lfdr.de>; Tue, 19 Jan 2021 19:33:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387906AbhASPFQ (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 19 Jan 2021 10:05:16 -0500
-Received: from mga03.intel.com ([134.134.136.65]:39971 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391697AbhASOzX (ORCPT <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 19 Jan 2021 09:55:23 -0500
-IronPort-SDR: 0YUn7F61nsEQaJoh29Es5yjl3e2Ib339lGQHJ6OFUKVaGRd5GvTkllKpFB95BVnjL9s2MQUyX8
- 3QIlQaKwGL0A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9868"; a="179023520"
-X-IronPort-AV: E=Sophos;i="5.79,359,1602572400"; 
-   d="scan'208,217";a="179023520"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2021 06:54:20 -0800
-IronPort-SDR: 4Ika1PSKCAtE4RxATFNUHrhnx6BQfG3g9gnjLNZJ/n/cKDTXhe61jAUBspzcAp4ewhns3kznvn
- w2tgDLZTJVRA==
-X-IronPort-AV: E=Sophos;i="5.79,359,1602572400"; 
-   d="scan'208,217";a="365772519"
-Received: from caophong-mobl.amr.corp.intel.com (HELO ldmartin-desk1.intel.com) ([10.213.166.105])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2021 06:54:18 -0800
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     linux-modules@vger.kernel.org
-Cc:     Jan Tojnar <jtojnar@gmail.com>
-Subject: [PATCH 1/3] libkmod: Fix documentation on config precedence order
-Date:   Tue, 19 Jan 2021 06:52:36 -0800
-Message-Id: <20210119145238.12774-1-lucas.demarchi@intel.com>
-X-Mailer: git-send-email 2.30.0
+        id S2390688AbhASSck (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 19 Jan 2021 13:32:40 -0500
+Received: from vmicros1.altlinux.org ([194.107.17.57]:39000 "EHLO
+        vmicros1.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390332AbhASScU (ORCPT
+        <rfc822;linux-modules@vger.kernel.org>);
+        Tue, 19 Jan 2021 13:32:20 -0500
+Received: from mua.local.altlinux.org (mua.local.altlinux.org [192.168.1.14])
+        by vmicros1.altlinux.org (Postfix) with ESMTP id 253B172C8B3;
+        Tue, 19 Jan 2021 21:31:31 +0300 (MSK)
+Received: by mua.local.altlinux.org (Postfix, from userid 508)
+        id 1796C7CC8A4; Tue, 19 Jan 2021 21:31:31 +0300 (MSK)
+Date:   Tue, 19 Jan 2021 21:31:31 +0300
+From:   "Dmitry V. Levin" <ldv@altlinux.org>
+To:     Lucas De Marchi <lucas.demarchi@intel.com>
+Cc:     linux-modules@vger.kernel.org, Jan Tojnar <jtojnar@gmail.com>
+Subject: Re: [PATCH 2/3] depmod: fix precedence order
+Message-ID: <20210119183130.GA10896@altlinux.org>
+References: <20210119145238.12774-1-lucas.demarchi@intel.com>
+ <20210119145238.12774-2-lucas.demarchi@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210119145238.12774-2-lucas.demarchi@intel.com>
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-/etc is has higher priority than /run.
----
- libkmod/libkmod.c  | 2 +-
- man/depmod.d.xml   | 2 +-
- man/modprobe.d.xml | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+On Tue, Jan 19, 2021 at 06:52:37AM -0800, Lucas De Marchi wrote:
+> Configuration in /etc should have higher prio than /run.
 
-diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
-index 43423d6..25655b9 100644
---- a/libkmod/libkmod.c
-+++ b/libkmod/libkmod.c
-@@ -235,7 +235,7 @@ static char *get_kernel_release(const char *dirname)
-  * @config_paths: ordered array of paths (directories or files) where
-  *                to load from user-defined configuration parameters such as
-  *                alias, blacklists, commands (install, remove). If
-- *                NULL defaults to /run/modprobe.d, /etc/modprobe.d and
-+ *                NULL defaults to /etc/modprobe.d, /run/modprobe.d and
-  *                /lib/modprobe.d. Give an empty vector if configuration should
-  *                not be read. This array must be null terminated.
-  *
-diff --git a/man/depmod.d.xml b/man/depmod.d.xml
-index 4341a56..6472bda 100644
---- a/man/depmod.d.xml
-+++ b/man/depmod.d.xml
-@@ -40,8 +40,8 @@
- 
-   <refsynopsisdiv>
-     <para><filename>/usr/lib/depmod.d/*.conf</filename></para>
--    <para><filename>/etc/depmod.d/*.conf</filename></para>
-     <para><filename>/run/depmod.d/*.conf</filename></para>
-+    <para><filename>/etc/depmod.d/*.conf</filename></para>
-   </refsynopsisdiv>
- 
-   <refsect1><title>DESCRIPTION</title>
-diff --git a/man/modprobe.d.xml b/man/modprobe.d.xml
-index 211af84..a674d69 100644
---- a/man/modprobe.d.xml
-+++ b/man/modprobe.d.xml
-@@ -41,8 +41,8 @@
- 
-   <refsynopsisdiv>
-     <para><filename>/lib/modprobe.d/*.conf</filename></para>
--    <para><filename>/etc/modprobe.d/*.conf</filename></para>
-     <para><filename>/run/modprobe.d/*.conf</filename></para>
-+    <para><filename>/etc/modprobe.d/*.conf</filename></para>
-   </refsynopsisdiv>
- 
-   <refsect1><title>DESCRIPTION</title>
+Should it?  Isn't the common practice nowadays to have /run override /etc?
+
+> Given how rarely configuration in /run is used with depmod, this is
+> likely not to cause any problems, even if it's a change in behavior.
+> ---
+>  tools/depmod.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tools/depmod.c b/tools/depmod.c
+> index 3f31cdf..8e1d9ec 100644
+> --- a/tools/depmod.c
+> +++ b/tools/depmod.c
+> @@ -51,8 +51,8 @@ static int verbose = DEFAULT_VERBOSE;
+>  static const char CFG_BUILTIN_KEY[] = "built-in";
+>  static const char CFG_EXTERNAL_KEY[] = "external";
+>  static const char *default_cfg_paths[] = {
+> -	"/run/depmod.d",
+>  	SYSCONFDIR "/depmod.d",
+> +	"/run/depmod.d",
+>  	"/lib/depmod.d",
+>  	NULL
+>  };
+
 -- 
-2.30.0
-
+ldv
