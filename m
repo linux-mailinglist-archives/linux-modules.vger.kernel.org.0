@@ -2,84 +2,69 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3CD63076F4
-	for <lists+linux-modules@lfdr.de>; Thu, 28 Jan 2021 14:20:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B10483078A2
+	for <lists+linux-modules@lfdr.de>; Thu, 28 Jan 2021 15:52:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231995AbhA1NTz (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 28 Jan 2021 08:19:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231377AbhA1NTu (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 28 Jan 2021 08:19:50 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21656C061573
-        for <linux-modules@vger.kernel.org>; Thu, 28 Jan 2021 05:19:10 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id c18so6267360ljd.9
-        for <linux-modules@vger.kernel.org>; Thu, 28 Jan 2021 05:19:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=P/xCooW3uFGckZuUVegVeYfuixVFsMHhPM7MAzFtiB0=;
-        b=edAiwhDoXjOjIUpokc7+JghVpuYvWYD207/8yMbi6+Yd8+FERvpzpL7K1T9zg1aKXk
-         WD/BXVm9ADorOblZZu3gbY0kbh3+rScC0xauVaJ0gK/X+WwdWwxbxo8jcaE6eA9x+TQJ
-         +vpuWrgDB0rb2GE41HbqDf/OLg/AfeqrBTWiRCHxdt5I/SGC6UFMSYjZ/CVnDENu3A+b
-         8AAwbO4Wrt/gtRLiHn7dWkPTOlkgl3rH9ADhHnLKKgrbeTJwnHU8uorWqxoqdV51AM0r
-         EZ/p7v4SkTY9TRoc0tx7qfotklXZG+vdwxmb4Qrv5LZsy4NB04P+jp4Av7Obpn0smNa/
-         KT2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=P/xCooW3uFGckZuUVegVeYfuixVFsMHhPM7MAzFtiB0=;
-        b=ZjWBTUEE+488kKz/R15YGx3QENXzht44bIwpxbRDTlxBPSWtZx5jhZnzyRMMkuwfcL
-         NZazZ6/7lrlKz1+lFP1aqUsSncauhg9hlbE9zJW/LfA6QlPnw0aWVKbnvz2lIMZrF2J1
-         Dh3ptLXW/ddM+v1nVHQ9FhAtlCkINBqw6kwd121rg0hjHYHvjYI3P3jK8S3Lt0+lKqEk
-         Io7ls5EGpT475oDgt8s9j0F6FqOkku03Z7r4CmQz8qFEH8wYA0ogHP5dOgDtF0M05zN+
-         Tl0gUhRepjFcMrGlrj1EW+bbZHmrGvxRXOL7aPBsyu8xJiylzE56+n+M+3VDlyH8bYuF
-         rq8g==
-X-Gm-Message-State: AOAM530GRKXYrI2DA+oT7K5Hohg4qQeaPAd9Kw22W+EHWn7YiATg8k/J
-        1/VSd7J3gHbAbsv6Cvpi/mlNU8IkCI7X4OoS27iCtwpSIhZuuw==
-X-Google-Smtp-Source: ABdhPJzOq53EcKob5KsuBU/jh7luBx5nMFP+OmF7NUQEmGq7Yo5uAPNKKkDmThGN0Qmfpy8szkPxgIWZiKYHo6fKUSg=
-X-Received: by 2002:a2e:94d0:: with SMTP id r16mr8606159ljh.332.1611839948588;
- Thu, 28 Jan 2021 05:19:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20210128130026.GH6564@kitsune.suse.cz>
-In-Reply-To: <20210128130026.GH6564@kitsune.suse.cz>
-From:   Lucas De Marchi <lucas.de.marchi@gmail.com>
-Date:   Thu, 28 Jan 2021 05:18:56 -0800
-Message-ID: <CAKi4VAK6PB1UxwcaPwmL0b0dByq8QcZYuWj5SZVaGjtRuu7BmA@mail.gmail.com>
-Subject: Re: depmod test fails when zstd not available
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     linux-modules <linux-modules@vger.kernel.org>,
+        id S232378AbhA1Ou3 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 28 Jan 2021 09:50:29 -0500
+Received: from mga11.intel.com ([192.55.52.93]:26919 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232417AbhA1Osb (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Thu, 28 Jan 2021 09:48:31 -0500
+IronPort-SDR: RZuQ5X0C2l2077sWcmauMel01oYo/1CJZmOXtjTXpbW79LI+7wz8Xzt5TpuZBIH0xrIwCdbPaM
+ 9HYeweIZcrYw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9877"; a="176735461"
+X-IronPort-AV: E=Sophos;i="5.79,382,1602572400"; 
+   d="scan'208";a="176735461"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jan 2021 06:47:47 -0800
+IronPort-SDR: v5TtMa2jDMJsgKv05gMD1nScS3ix+NReZBJamthNewp7vLCsR1OIMuuSVVUXqLQTjWXotGjeiZ
+ HTmYbqN7keVA==
+X-IronPort-AV: E=Sophos;i="5.79,382,1602572400"; 
+   d="scan'208";a="505330555"
+Received: from tnachmax-mobl1.ger.corp.intel.com (HELO ldmartin-desk1.intel.com) ([10.213.186.171])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jan 2021 06:47:44 -0800
+From:   Lucas De Marchi <lucas.demarchi@intel.com>
+To:     linux-modules@vger.kernel.org
+Cc:     =?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
         Petr Vorel <petr.vorel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [PATCH 1/2] testsuite: use skip for modules-order-compressed
+Date:   Thu, 28 Jan 2021 06:47:23 -0800
+Message-Id: <20210128144724.102147-1-lucas.demarchi@intel.com>
+X-Mailer: git-send-email 2.30.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu, Jan 28, 2021 at 5:02 AM Michal Such=C3=A1nek <msuchanek@suse.de> wr=
-ote:
->
-> Hello,
->
-> kmod version 28 adds support for zstd. The support is optional but when
-> not enabled the depmod test which unconditionally tests zstd fails.
->
-> As kmod supports more and more compression methods I think it is not
-> reasonable to expect everyone has all copression libraries available.
->
-> Do you think it is reasonable to fix the tests to only use teh
-> compresion methods enabled by configure?
+Instead of removing the test completely, use the new skip infra to skip
+that test.
+---
+ testsuite/test-depmod.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-We specifically added support for skipping tests when the build
-options would imply that the test
-would fail. It should not be failing, we probably screwed something up.
+diff --git a/testsuite/test-depmod.c b/testsuite/test-depmod.c
+index 261559c..d52602d 100644
+--- a/testsuite/test-depmod.c
++++ b/testsuite/test-depmod.c
+@@ -25,7 +25,6 @@
+ 
+ #include "testsuite.h"
+ 
+-#ifdef ENABLE_ZLIB
+ #define MODULES_ORDER_UNAME "4.4.4"
+ #define MODULES_ORDER_ROOTFS TESTSUITE_ROOTFS "test-depmod/modules-order-compressed"
+ #define MODULES_ORDER_LIB_MODULES MODULES_ORDER_ROOTFS "/lib/modules/" MODULES_ORDER_UNAME
+@@ -42,7 +41,8 @@ static noreturn int depmod_modules_order_for_compressed(const struct test *t)
+ }
+ 
+ DEFINE_TEST(depmod_modules_order_for_compressed,
+-#if defined(KMOD_SYSCONFDIR_NOT_ETC)
++#if defined(KMOD_SYSCONFDIR_NOT_ETC) || \
++    !defined(ENABLE_ZLIB)
+         .skip = true,
+ #endif
+ 	.description = "check if depmod let aliases in right order when using compressed modules",
+-- 
+2.30.0
 
-Lucas De Marchi
-
->
-> Thanks
->
-> Michal
