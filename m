@@ -2,80 +2,170 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66E89319C07
-	for <lists+linux-modules@lfdr.de>; Fri, 12 Feb 2021 10:44:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1C7E319C12
+	for <lists+linux-modules@lfdr.de>; Fri, 12 Feb 2021 10:47:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230223AbhBLJnH (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 12 Feb 2021 04:43:07 -0500
-Received: from mga17.intel.com ([192.55.52.151]:62378 "EHLO mga17.intel.com"
+        id S230209AbhBLJqq (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 12 Feb 2021 04:46:46 -0500
+Received: from mga03.intel.com ([134.134.136.65]:64846 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230060AbhBLJnF (ORCPT <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 12 Feb 2021 04:43:05 -0500
-IronPort-SDR: lPYGJ+9ptbt6E8sw+5wf+ZEfGovfRBxAFKUQA2b6+V/mAqQq4jC4Ywo5dAmhpJAATbtaTbgj9T
- VQZqg8qm4GIw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9892"; a="162144659"
+        id S229497AbhBLJqm (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Fri, 12 Feb 2021 04:46:42 -0500
+IronPort-SDR: zKHwKHEfXD32G1M6ecg3K5gW1LYisMYlxYqxhEmB8MX/sk972sgRE6tP9NvjgNmkBXSFS1nPbf
+ oKuDlG6lauJw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9892"; a="182458953"
 X-IronPort-AV: E=Sophos;i="5.81,173,1610438400"; 
-   d="scan'208";a="162144659"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2021 01:42:23 -0800
-IronPort-SDR: sca8ZBf4HtrOey+sAPZmxG11oslF9b+BS74PSL7BUSeR42FSa0n/tuV4Xzz58SMZpJVoK3TjyT
- ib3xdCOTHz/Q==
+   d="scan'208";a="182458953"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2021 01:46:00 -0800
+IronPort-SDR: VK1XWYuWz/RSvWJKt4rtTqGXJ82VKH5OhHmHuIwh9wqyEFC0/EE+QFflExeknadXoTPRz+sRGE
+ ihZM/UF23UYg==
 X-IronPort-AV: E=Sophos;i="5.81,173,1610438400"; 
-   d="scan'208";a="437525340"
-Received: from aaramire-mobl2.amr.corp.intel.com (HELO ldmartin-desk1) ([10.212.210.126])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2021 01:42:23 -0800
-Date:   Fri, 12 Feb 2021 01:42:23 -0800
+   d="scan'208";a="381387359"
+Received: from aaramire-mobl2.amr.corp.intel.com (HELO ldmartin-desk1.intel.com) ([10.212.210.126])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2021 01:45:59 -0800
 From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     Jiri Slaby <jirislaby@kernel.org>
-Cc:     linux-modules@vger.kernel.org
-Subject: Re: libkmod mishandles parameters re-quoted by grub2
-Message-ID: <20210212094223.yxxnnswhqhczk5an@ldmartin-desk1>
-X-Patchwork-Hint: comment
-References: <70f1ef6c-d016-de57-82a8-db9d9cc414ef@kernel.org>
+To:     linux-modules@vger.kernel.org
+Cc:     Jiri Slaby <jirislaby@kernel.org>, Jessica Yu <jeyu@kernel.org>,
+        Giovanni Gherdovich <ggherdovich@suse.cz>
+Subject: [PATCH 1/4] libkmod-config: revamp kcmdline parsing into a state machine
+Date:   Fri, 12 Feb 2021 01:45:21 -0800
+Message-Id: <20210212094524.170861-1-lucas.demarchi@intel.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <70f1ef6c-d016-de57-82a8-db9d9cc414ef@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Mon, Jan 25, 2021 at 09:49:13AM +0100, Jiri Slaby wrote:
->Hi,
->
->when one passes to the kernel a module parameter from grub2 such as:
->  parport.dyndbg="file drivers/parport/ieee1284_ops.c +mpf"
->the kernel receives:
->  "parport.dyndbg=file drivers/parport/ieee1284_ops.c +mpf"
->as grub2 handles quotes this way. It may be a bug in grub2, it was 
->even tried to be fixed, but there is no all-cases-working fix yet:
->  https://bugzilla.suse.com/show_bug.cgi?id=1181111#c10
->
->The kernel parses the parameter correctly, though:
->  parse_one: doing dyndbg params: parport.dyndbg='file 
->drivers/parport/ieee1284_ops.c +mpf'
->
->But libkmod doesn't. When parport is modprobe-d, this parameter is not 
->passed to it.
->
->kmod_config_parse_kcmdline ignores the parameter as:
->  if (is_quoted) {
->    /* don't consider a module until closing quotes */
->
->I am not sure how to fix this, can someone look into it and make the 
->parser similar to kernel's?
+The handling of spaces and quotes is becoming hard to maintain. Convert
+the parser into a state machine so we can check all the states. This
+should make it easier to fix a corner case we have right now:
+The kernel also accepts a quote before the module name instead of the
+value. But this additional is left for later. This is purely an
+algorithm change with no behavior change.
+---
+ libkmod/libkmod-config.c | 86 ++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 34 deletions(-)
 
-We have to ignore ill-formed kernel cmdline and that makes it harder.
+diff --git a/libkmod/libkmod-config.c b/libkmod/libkmod-config.c
+index 971f20b..d3cd10d 100644
+--- a/libkmod/libkmod-config.c
++++ b/libkmod/libkmod-config.c
+@@ -499,7 +499,14 @@ static int kmod_config_parse_kcmdline(struct kmod_config *config)
+ 	char buf[KCMD_LINE_SIZE];
+ 	int fd, err;
+ 	char *p, *modname,  *param = NULL, *value = NULL;
+-	bool is_quoted = false, is_module = true;
++	bool is_quoted = false, iter = true;
++	enum state {
++		STATE_IGNORE,
++		STATE_MODNAME,
++		STATE_PARAM,
++		STATE_VALUE,
++		STATE_COMPLETE,
++	} state;
+ 
+ 	fd = open("/proc/cmdline", O_RDONLY|O_CLOEXEC);
+ 	if (fd < 0) {
+@@ -516,54 +523,65 @@ static int kmod_config_parse_kcmdline(struct kmod_config *config)
+ 		return err;
+ 	}
+ 
+-	for (p = buf, modname = buf; *p != '\0' && *p != '\n'; p++) {
+-		if (*p == '"') {
++	state = STATE_MODNAME;
++	for (p = buf, modname = buf; iter; p++) {
++		switch (*p) {
++		case '"':
+ 			is_quoted = !is_quoted;
+-
+-			if (is_quoted) {
+-				/* don't consider a module until closing quotes */
+-				is_module = false;
+-			} else if (param != NULL && value != NULL) {
++			break;
++		case '\0':
++		case '\n':
++			/* Stop iterating on new chars */
++			iter = false;
++			/* fall-through */
++		case ' ':
++			if (is_quoted && state == STATE_VALUE) {
++				/* no state change*/;
++			} else if (is_quoted) {
++				/* spaces are only allowed in the value part */
++				state = STATE_IGNORE;
++			} else if (state == STATE_VALUE || state == STATE_PARAM) {
++				*p = '\0';
++				state = STATE_COMPLETE;
++			} else {
+ 				/*
+-				 * If we are indeed expecting a value and
+-				 * closing quotes, then this can be considered
+-				 * a valid option for a module
++				 * go to next option, ignoring any possible
++				 * partial match we have
+ 				 */
+-				is_module = true;
++				modname = p + 1;
++				state = STATE_MODNAME;
+ 			}
+-
+-			continue;
+-		}
+-		if (is_quoted)
+-			continue;
+-
+-		switch (*p) {
+-		case ' ':
+-			*p = '\0';
+-			if (is_module)
+-				kcmdline_parse_result(config, modname, param, value);
+-			param = value = NULL;
+-			modname = p + 1;
+-			is_module = true;
+ 			break;
+ 		case '.':
+-			if (param == NULL) {
++			if (state == STATE_MODNAME) {
+ 				*p = '\0';
+ 				param = p + 1;
++				state = STATE_PARAM;
++			} else if (state == STATE_PARAM) {
++				state = STATE_IGNORE;
+ 			}
+ 			break;
+ 		case '=':
+-			if (param != NULL)
++			if (state == STATE_PARAM) {
++				/*
++				 * Don't set *p to '\0': the value var shadows
++				 * param
++				 */
+ 				value = p + 1;
+-			else
+-				is_module = false;
++				state = STATE_VALUE;
++			} else if (state == STATE_MODNAME) {
++				state = STATE_IGNORE;
++			}
+ 			break;
+ 		}
+-	}
+ 
+-	*p = '\0';
+-	if (is_module)
+-		kcmdline_parse_result(config, modname, param, value);
++		if (state == STATE_COMPLETE) {
++			kcmdline_parse_result(config, modname, param, value);
++			/* start over on next iteration */
++			modname = p + 1;
++			state = STATE_MODNAME;
++		}
++	}
+ 
+ 	return 0;
+ }
+-- 
+2.30.0
 
-I threw out the current implementation and rewrote it into a state
-machine. It passes the tests, but it's unfortunate we have to do this,
-particularly because we have to re-quote it the "right way" to pass back
-to kernel, unmangling it.
-
-I will share the patch shortly.
-
-Lucas De Marchi
->
->thanks,
->-- 
->js
->suse labs
