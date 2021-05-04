@@ -2,95 +2,75 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C16EC3713DB
-	for <lists+linux-modules@lfdr.de>; Mon,  3 May 2021 12:54:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 587C73732ED
+	for <lists+linux-modules@lfdr.de>; Wed,  5 May 2021 01:58:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233137AbhECKz3 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 3 May 2021 06:55:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:27822 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233269AbhECKz1 (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 3 May 2021 06:55:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1620039274;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZpHwOorPVOQEgoP9pPEURGkgUYHqRyC5N/MgIxtiqJ4=;
-        b=Bc+duMtl+rXNCLpVfwloGETWxpAaUx8CBxynhqVEAWhWYKxP6850xromwCGtE5reOlCXpU
-        O/OwNEsvhsQxVzUBFocW2wTvccrY0br4khfff+BSTTo1x6d43FDBzq0muZSu+tSlSf/uAg
-        Amo9j1Jy6fZXiS0h2vnjEWbI4Z9TTLc=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-408-2l2H5YpCMXuaWHY3nFntYg-1; Mon, 03 May 2021 06:54:33 -0400
-X-MC-Unique: 2l2H5YpCMXuaWHY3nFntYg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com [10.5.11.16])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 32CBF6118F;
-        Mon,  3 May 2021 10:54:32 +0000 (UTC)
-Received: from rvarghes.bos.com (ovpn-112-56.phx2.redhat.com [10.3.112.56])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 5AC9B5C230;
-        Mon,  3 May 2021 10:54:31 +0000 (UTC)
-From:   Reuben Varghese <rvarghes@redhat.com>
-To:     linux-modules@vger.kernel.org
-Cc:     lucas.de.marchi@gmail.com, yauheni.kaliuta@redhat.com,
-        Reuben Varghese <rvarghes@redhat.com>
-Subject: [PATCH 2/2] Continue temporary support for Blacklist command with warnings
-Date:   Mon,  3 May 2021 03:53:47 -0700
-Message-Id: <20210503105347.979635-3-rvarghes@redhat.com>
-In-Reply-To: <20210503105347.979635-1-rvarghes@redhat.com>
-References: <20210503105347.979635-1-rvarghes@redhat.com>
+        id S229694AbhEDX7v (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 4 May 2021 19:59:51 -0400
+Received: from smtp2.axis.com ([195.60.68.18]:30771 "EHLO smtp2.axis.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229563AbhEDX7v (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Tue, 4 May 2021 19:59:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=axis.com; q=dns/txt; s=axis-central1; t=1620172736;
+  x=1651708736;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=jfOOcHL+mey+1TF82StxZqewdwk21A1kCM0L21mUzMI=;
+  b=VxsMFhLtr0ndmw+7xTSXQEoF0mKSFeOzygnazAky9Q5xP+8Av3cMNqK2
+   bL6KiXEhIP3fcpSVNHlwPamzKlHx5AiaFRSk11Io14mcMJMaXhagugPhd
+   ccPbPKufH9zz2rqM3cZj8MtbVshhjmJvzH4H7YkH29p4OhFKbsGdiVAwX
+   Yk9ifreiNm4rTjzFWPdhhSAZi+BW9egfeDMTiWm0my6MoAv2FPtwtRtFm
+   Cp6mTARv7P3Hsmo7nJ2DDQbV6R0iZkNUOUnvEKITbdhpUbaWklMPtK6X1
+   AkAZzbc+aEG1W/DlK++1gJxVeZAK94vWa2BVxEFFN5JaGtr8yBwobo9wG
+   Q==;
+From:   Peter Kjellerstedt <pkj@axis.com>
+To:     <linux-modules@vger.kernel.org>
+CC:     Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+Subject: [PATCH] libkmod: Always search modules.builtin if no alias has been found
+Date:   Wed, 5 May 2021 01:58:36 +0200
+Message-ID: <20210504235836.24246-1-pkj@axis.com>
+X-Mailer: git-send-email 2.21.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Since refactoring blacklist to blocklist without notice will surely
-result in a lot of broken systems, temporary support with a warning
-that the blacklist command is being deprecated and has been refactored
-to blocklist is added.
+Commit 89443220e broke the lookup for builtin modules. modules.builtin
+was no longer searched if kmod_lookup_alias_from_kernel_builtin_file()
+returned 0.
 
-Signed-off-by: Reuben Varghese <rvarghes@redhat.com>
+Signed-off-by: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
 ---
- libkmod/libkmod-config.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/libkmod/libkmod-config.c b/libkmod/libkmod-config.c
-index c2ce4cc..084947d 100644
---- a/libkmod/libkmod-config.c
-+++ b/libkmod/libkmod-config.c
-@@ -476,7 +476,11 @@ static void kcmdline_parse_result(struct kmod_config *config, char *modname,
- 
- 	DBG(config->ctx, "%s %s\n", modname, param);
- 
--	if (streq(modname, "modprobe") && !strncmp(param, "blocklist=", 10)) {
-+	if (streq(modname, "modprobe") && (!strncmp(param, "blocklist=", 10) ||
-+					   !strncmp(param, "blacklist=", 10))) {
-+		if (!strncmp(param, "blacklist=", 10)) {
-+			DBG(config->ctx, "Warning: Blacklist command is now deprecated and has been refactored to blocklist\n");
-+		}
- 		for (;;) {
- 			char *t = strsep(&value, ",");
- 			if (t == NULL)
-@@ -662,9 +666,13 @@ static int kmod_config_parse(struct kmod_config *config, int fd,
- 				goto syntax_error;
- 
- 			kmod_config_add_alias(config, alias, modname);
--		} else if (streq(cmd, "blocklist")) {
-+		} else if (streq(cmd, "blacklist") || streq(cmd, "blocklist")) {
- 			char *modname = strtok_r(NULL, "\t ", &saveptr);
- 
-+			if (streq(cmd, "blacklist"))
-+				DBG(config->ctx,
-+				    "Blacklist command is now deprecated and has been refactored to blocklist. Please edit your config file to reflect this change\n");
-+
- 			if (underscores(modname) < 0)
- 				goto syntax_error;
- 
--- 
-2.27.0
+I do not know if this is the correct thing to do, or if the commit
+message makes any sense. However, it solves the problem we were seeing.
+We use fuse, which installs /etc/modules-load.d/fuse.conf to load the
+fuse kernel module. However, we have fuse built-in. Normally, the
+following can be seen in the log:
 
+  systemd-modules-load[192]: Module 'fuse' is built in
+
+but after commit 89443220e, we instead got:
+
+  systemd-modules-load[193]: Failed to find module 'fuse'
+
+//Peter
+
+ libkmod/libkmod-module.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
+index 76a6dc3..6720930 100644
+--- a/libkmod/libkmod-module.c
++++ b/libkmod/libkmod-module.c
+@@ -577,7 +577,7 @@ KMOD_EXPORT int kmod_module_new_from_lookup(struct kmod_ctx *ctx,
+ 
+ 	DBG(ctx, "lookup modules.builtin.modinfo %s\n", alias);
+ 	err = kmod_lookup_alias_from_kernel_builtin_file(ctx, alias, list);
+-	if (err == -ENOSYS) {
++	if (err == 0 || err == -ENOSYS) {
+ 		/* Optional index missing, try the old one */
+ 		DBG(ctx, "lookup modules.builtin %s\n", alias);
+ 		err = kmod_lookup_alias_from_builtin_file(ctx, alias, list);
