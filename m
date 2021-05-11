@@ -2,34 +2,34 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C5B637ADC5
-	for <lists+linux-modules@lfdr.de>; Tue, 11 May 2021 20:06:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAFF637ADC3
+	for <lists+linux-modules@lfdr.de>; Tue, 11 May 2021 20:06:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231789AbhEKSHl (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        id S231561AbhEKSHl (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
         Tue, 11 May 2021 14:07:41 -0400
 Received: from mga03.intel.com ([134.134.136.65]:17395 "EHLO mga03.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231551AbhEKSHl (ORCPT <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 11 May 2021 14:07:41 -0400
-IronPort-SDR: BlNTZ/I2mEDT+0UZfZ6qSwR309Fnpk//AnR0FNxX69yE1qgTjzEAPcM7NBVTTe24PgkKPz/sL8
- 0eKjiMvear2A==
-X-IronPort-AV: E=McAfee;i="6200,9189,9981"; a="199562595"
+        id S231459AbhEKSHk (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Tue, 11 May 2021 14:07:40 -0400
+IronPort-SDR: BR++npvhxQqQSb3yjWpHXljUVsvuHNuLaVbSLSDkmDNxHKd3Kbhgg/VLbgpzT9EsDfEpOqqutU
+ zhk/Gj/xqjng==
+X-IronPort-AV: E=McAfee;i="6200,9189,9981"; a="199562599"
 X-IronPort-AV: E=Sophos;i="5.82,291,1613462400"; 
-   d="scan'208";a="199562595"
+   d="scan'208";a="199562599"
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
   by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2021 11:06:33 -0700
-IronPort-SDR: RwTEmXnl7md6fnURO3YDja7TDCqj8FAlwcTUJd1pKF30plu7cp24SRL7tSWNzjdw/M2h7oLwvY
- FkzvZyPcEHlA==
+IronPort-SDR: FDUgRtoAlwMgYE3ihFgztGnidlYyctIuc6F+bWzuOWaucf7mNuAmjsoT7086qtfhGvqwEyB/sj
+ HY0cyku4G/fw==
 X-IronPort-AV: E=Sophos;i="5.82,291,1613462400"; 
-   d="scan'208";a="609588620"
+   d="scan'208";a="609588624"
 Received: from yueqiaor-mobl.amr.corp.intel.com (HELO ldmartin-desk2.intel.com) ([10.254.1.104])
   by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2021 11:06:33 -0700
 From:   Lucas De Marchi <lucas.demarchi@intel.com>
 To:     linux-modules@vger.kernel.org
 Cc:     Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: [PATCH 1/3] Fix return value doc for kmod_module_get_info()
-Date:   Tue, 11 May 2021 11:06:13 -0700
-Message-Id: <20210511180615.400191-2-lucas.demarchi@intel.com>
+Subject: [PATCH 2/3] depmod: fix modules.builtin.alias.bin output
+Date:   Tue, 11 May 2021 11:06:14 -0700
+Message-Id: <20210511180615.400191-3-lucas.demarchi@intel.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210511180615.400191-1-lucas.demarchi@intel.com>
 References: <20210511180615.400191-1-lucas.demarchi@intel.com>
@@ -38,25 +38,27 @@ Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-We don't return 0 on success, we return the number of elements we added
-to the list.
+Due to wrong documentation on kmod_module_get_info() we ended up
+checking for 0 as return. Check for > 0 to decided if we want to write
+the index to the file, otherwise we would output a 0-sized index on
+success.
 ---
- libkmod/libkmod-module.c | 2 +-
+ tools/depmod.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
-index 76a6dc3..b6320cc 100644
---- a/libkmod/libkmod-module.c
-+++ b/libkmod/libkmod-module.c
-@@ -2277,7 +2277,7 @@ list_error:
-  *
-  * After use, free the @list by calling kmod_module_info_free_list().
-  *
-- * Returns: 0 on success or < 0 otherwise.
-+ * Returns: number of entries in @list on success or < 0 otherwise.
-  */
- KMOD_EXPORT int kmod_module_get_info(const struct kmod_module *mod, struct kmod_list **list)
- {
+diff --git a/tools/depmod.c b/tools/depmod.c
+index 170a1d8..eb810b8 100644
+--- a/tools/depmod.c
++++ b/tools/depmod.c
+@@ -2457,7 +2457,7 @@ static int output_builtin_alias_bin(struct depmod *depmod, FILE *out)
+ 
+ out:
+ 	/* do not bother writing the index if we are going to discard it */
+-	if (!ret)
++	if (ret > 0)
+ 		index_write(idx, out);
+ 
+ 	if (builtin)
 -- 
 2.31.1
 
