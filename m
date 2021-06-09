@@ -2,78 +2,85 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3552439EEB9
-	for <lists+linux-modules@lfdr.de>; Tue,  8 Jun 2021 08:29:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F7223A1B8B
+	for <lists+linux-modules@lfdr.de>; Wed,  9 Jun 2021 19:10:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbhFHGbZ (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 8 Jun 2021 02:31:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:43739 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229942AbhFHGbZ (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 8 Jun 2021 02:31:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1623133772;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=d0llFSsTx/qD5gM+s8gBBU01BKIGllkirAksdScauCw=;
-        b=P8HDzGNdT/f6jgFZKmItujU/3290r/zqoO88ajJXUvBxhyRXNHVKEYwqBivIAnJduUDF2a
-        Oph4nyumSE6i8Sp5tIKomVpGIWYt/v1hECMk1J67oS8fOV7MJQIPd6xdwyS5aYk5mIbBcG
-        KN23b47Ktl6Q2UHZeD3x2csrYbzD7mQ=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-519-ombDERraMSOUPDvp0jMIMg-1; Tue, 08 Jun 2021 02:29:30 -0400
-X-MC-Unique: ombDERraMSOUPDvp0jMIMg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.15])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 0A0131854E2A;
-        Tue,  8 Jun 2021 06:29:29 +0000 (UTC)
-Received: from astarta.redhat.com (ovpn-112-84.ams2.redhat.com [10.36.112.84])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id EEBA15D6D3;
-        Tue,  8 Jun 2021 06:29:27 +0000 (UTC)
-From:   Yauheni Kaliuta <ykaliuta@redhat.com>
-To:     linux-modules@vger.kernel.org
-Cc:     lucas.de.marchi@gmail.com, Yauheni Kaliuta <ykaliuta@redhat.com>
-Subject: [PATCH 2/2] libkmod-builtin: consider final NIL in name length check
-Date:   Tue,  8 Jun 2021 09:29:23 +0300
-Message-Id: <20210608062923.94017-2-ykaliuta@redhat.com>
-In-Reply-To: <20210608062923.94017-1-ykaliuta@redhat.com>
+        id S231171AbhFIRMw (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 9 Jun 2021 13:12:52 -0400
+Received: from mga12.intel.com ([192.55.52.136]:26547 "EHLO mga12.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230353AbhFIRMv (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Wed, 9 Jun 2021 13:12:51 -0400
+IronPort-SDR: Dp1IwVPcn0NlobsTdVhEv0GX8XIr+pJGaghv+3iP/3Nlj9SkNA0Gsm1OyuQdEY+Ne0HKHduZW0
+ xLHDIdgsWrCQ==
+X-IronPort-AV: E=McAfee;i="6200,9189,10010"; a="184807583"
+X-IronPort-AV: E=Sophos;i="5.83,261,1616482800"; 
+   d="scan'208";a="184807583"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2021 10:10:55 -0700
+IronPort-SDR: YShPSiKOIR+NfTt9bZM+rLHh7+OXA7XxvjSMMLrvErj2AOAkm3N8nvskEryz4JtWZLFjXFY1W0
+ gjkVHlfa8ldg==
+X-IronPort-AV: E=Sophos;i="5.83,261,1616482800"; 
+   d="scan'208";a="419350609"
+Received: from lfbrown-mobl.amr.corp.intel.com (HELO ldmartin-desk2) ([10.254.4.44])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2021 10:10:55 -0700
+Date:   Wed, 9 Jun 2021 10:10:53 -0700
+From:   Lucas De Marchi <lucas.demarchi@intel.com>
+To:     Yauheni Kaliuta <ykaliuta@redhat.com>
+Cc:     linux-modules@vger.kernel.org, lucas.de.marchi@gmail.com
+Subject: Re: [PATCH 2/2] libkmod-builtin: consider final NIL in name length
+ check
+Message-ID: <20210609171053.c72kzwcdkdrgcwpv@ldmartin-desk2>
+X-Patchwork-Hint: comment
 References: <20210608062859.93959-1-ykaliuta@redhat.com>
  <20210608062923.94017-1-ykaliuta@redhat.com>
+ <20210608062923.94017-2-ykaliuta@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20210608062923.94017-2-ykaliuta@redhat.com>
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-There is potential buffer overrun in kmod_builtin_iter_get_modname()
-for the name of length PATH_MAX. The required buffer size is
-PATH_MAX, so `modname[len] = '\0'` with len == PATH_MAX will write
-right beyond the buffer.
+On Tue, Jun 08, 2021 at 09:29:23AM +0300, Yauheni Kaliuta wrote:
+>There is potential buffer overrun in kmod_builtin_iter_get_modname()
+>for the name of length PATH_MAX. The required buffer size is
+>PATH_MAX, so `modname[len] = '\0'` with len == PATH_MAX will write
+>right beyond the buffer.
 
-Check the length against PATH_MAX - 1.
+this doesn't look correct. "with len == PATH_MAX" we will actually
+return an error. 
 
-Signed-off-by: Yauheni Kaliuta <ykaliuta@redhat.com>
----
- libkmod/libkmod-builtin.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+What indeed is happening is truncation: since we are not reserving 1
+char for NUL termination, we will truncate the name. If we update the
+commit message to state the right reasoning, then we can land this patch.
 
-diff --git a/libkmod/libkmod-builtin.c b/libkmod/libkmod-builtin.c
-index a002cb5ee2c6..3d4d77ab29b3 100644
---- a/libkmod/libkmod-builtin.c
-+++ b/libkmod/libkmod-builtin.c
-@@ -246,7 +246,7 @@ bool kmod_builtin_iter_get_modname(struct kmod_builtin_iter *iter,
- 
- 	len = dot - line;
- 
--	if (len >= PATH_MAX) {
-+	if (len >= PATH_MAX - 1) {
- 		sv_errno = ENAMETOOLONG;
- 		goto fail;
- 	}
--- 
-2.31.1
+I don't see any buffer overflow here, but I may be missing something.
 
+thanks
+LUcas De Marchi
+
+>
+>Check the length against PATH_MAX - 1.
+>
+>Signed-off-by: Yauheni Kaliuta <ykaliuta@redhat.com>
+>---
+> libkmod/libkmod-builtin.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>
+>diff --git a/libkmod/libkmod-builtin.c b/libkmod/libkmod-builtin.c
+>index a002cb5ee2c6..3d4d77ab29b3 100644
+>--- a/libkmod/libkmod-builtin.c
+>+++ b/libkmod/libkmod-builtin.c
+>@@ -246,7 +246,7 @@ bool kmod_builtin_iter_get_modname(struct kmod_builtin_iter *iter,
+>
+> 	len = dot - line;
+>
+>-	if (len >= PATH_MAX) {
+>+	if (len >= PATH_MAX - 1) {
+> 		sv_errno = ENAMETOOLONG;
+> 		goto fail;
+> 	}
+>-- 
+>2.31.1
+>
