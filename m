@@ -2,75 +2,121 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D58113A2ACA
-	for <lists+linux-modules@lfdr.de>; Thu, 10 Jun 2021 13:52:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04DCE3AFD03
+	for <lists+linux-modules@lfdr.de>; Tue, 22 Jun 2021 08:23:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbhFJLyp (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 10 Jun 2021 07:54:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbhFJLyo (ORCPT
+        id S229490AbhFVGZ0 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 22 Jun 2021 02:25:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:23592 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229501AbhFVGZ0 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 10 Jun 2021 07:54:44 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89FAEC061574
-        for <linux-modules@vger.kernel.org>; Thu, 10 Jun 2021 04:52:48 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id ci15so43715694ejc.10
-        for <linux-modules@vger.kernel.org>; Thu, 10 Jun 2021 04:52:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=yLUuWTNGS1KnT8fHdHJgwMCnNQ8uwH9tKJBb7oX0NdM=;
-        b=NEPI6ZhNAotIBsNtWuF1JhPvxd4VoAuCxWDSbRJEUOHDCYaFGFjY+w+L3ufTnDGsun
-         kyEkufHQVgpC2LLM12jsVvEJPsfncrKo6j4rsxoHwZBufl+cxFe/+3rQDi50Yfo/pzna
-         S4KAetgxAZ2KQvLxgWL56YOmFjy+c7iAdjXBRjxPvH0yVaxVH4VNaSVQFyrzwUJcswDV
-         EuisQtP36ycnsA8z3nUwFK8X8ePZOWI0oQNpTvN97LAtrxgYzbFePn0bwbfIR8WSTGs7
-         69x1TUkdrnjLGf3TeSxf3EPCnTU7E0meP0Uz2kiSrjPABOSUqba+Tk+Oir9zqfc/jfjR
-         U+gQ==
+        Tue, 22 Jun 2021 02:25:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1624342978;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=uc6FQnuMqMwU81G/FoXbSupO4CtSi2qrEVTYI5+Vk4M=;
+        b=dKbnq/r1bRO9qPJY4Se6hI/I9pp68ZKCwvSl6x1oxR6to10klzb/gRWV9tIGJG8MX5osnD
+        V3ZXyxpaQKbnHHQuaqEPUay7bNjt/fUabfSJzg//Tkl0rJ94HfWG3jrQPWLHsthVLAEUAS
+        4H6QX5WpaLmip5RKusT/NOkh9JNXCak=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-330-mMDdi_xQO32mX6jC7bizlQ-1; Tue, 22 Jun 2021 02:22:57 -0400
+X-MC-Unique: mMDdi_xQO32mX6jC7bizlQ-1
+Received: by mail-wr1-f69.google.com with SMTP id x5-20020adff0c50000b029011a7be832b7so6902681wro.18
+        for <linux-modules@vger.kernel.org>; Mon, 21 Jun 2021 23:22:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=yLUuWTNGS1KnT8fHdHJgwMCnNQ8uwH9tKJBb7oX0NdM=;
-        b=dFc1RjOcbv/lcNopJeQ/q6CsCBaJ6djZIUBApdiFxdfZxxCKgQeyuIE60MjT8+7PsY
-         g66o2FECd5zw3mXwKErRceQrWSU652ZWON2PI5tsXU/bjHMGMYFaQjyLGwDkoIbcWGpI
-         gTfXbQsbLrhMqWDX7D2jVfzaoBuE+Ag9KCv0UOMMuQsJtfFVTW+WEAZEQyO/XrFyN+pm
-         hRXkf9ELWGFB9gsKZ/Csv7hjr/UAC9zG9Ka1IyLZy7SrUQ7aDsUG+QcG/0lcBCXqIvjY
-         JQTjae6XBAx4JMBPYMVr0A1iVZY6ZDa8PDIdv8IXdsJ3jiCzqC5La9jYDwGBhZJVEOtB
-         x+BA==
-X-Gm-Message-State: AOAM5323uTOWLqPFt9pxfQjFdYKW9sTDynFaLoXhwVlOO1JQL3mDkkbv
-        OabZ/2tmxzXCcYgGQUS1zUDYdu3FfdegVqaD4sM=
-X-Google-Smtp-Source: ABdhPJwJjK/AcuYYrB8dOpeEwUP4KfOHNIlhin/PI6DGJMPoN92hc58vnSP4/LxQu2nGNwvlrCGNubARmUEhKAa02D4=
-X-Received: by 2002:a17:906:a95:: with SMTP id y21mr4143800ejf.522.1623325967017;
- Thu, 10 Jun 2021 04:52:47 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uc6FQnuMqMwU81G/FoXbSupO4CtSi2qrEVTYI5+Vk4M=;
+        b=Umi+nU4ShUa+ekxcZoZnQkHRzoGGtC58X+zBAdQkwExPyZiAX/41COcYCLSTZemNNz
+         Xc2OKk+Ux7+2qMc28d1+gNZ/ZuCiiDs/3Cv3T3rOt7e0dul9LKRcW39OFSgkDHLTKLQU
+         /kdE12ZhJsCgAHsXjAIgwDqJ4g0ScVngzYtRxHfIPbljQ9DLH+PErZp8idh0IAcrkYH0
+         HIFhGCNbbZRBuRH0rEC25saesj7ezV2xa2OM5uJtSHxsi7DW3irf3n91+SUYRdLnlDnE
+         v7DC6E7o9HZ3iPixO9//4kd1C5E9xIpnxLIFjtv+b6oF1WAEmR4S49amvl6rK2vEfG4x
+         HgwA==
+X-Gm-Message-State: AOAM533vIFo/6o8Qg6pY9v/8orcTt8/eaU4mHkSV7m+55T0/NUQDW+xN
+        bgkKpfMJnZnj3GxHMRW74OQYHoEIx8BB4DYtB0gwI/kNXCcgHIGsaMhSx04UpGapQAPkqvQK+Gx
+        T2pZ3siVF5XMCpPgop6q8WtX22tCI2TMkoZ+X9llIAw==
+X-Received: by 2002:a05:600c:3658:: with SMTP id y24mr2583660wmq.6.1624342976028;
+        Mon, 21 Jun 2021 23:22:56 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzVzwudfTKY0klAT7HT4kkwA981/6QzzeNLZPQJRUoN9iHt2LW8fMao7y0jzdRU2JVCaQ6AQDRFPg+N4F7Q2hg=
+X-Received: by 2002:a05:600c:3658:: with SMTP id y24mr2583647wmq.6.1624342975909;
+ Mon, 21 Jun 2021 23:22:55 -0700 (PDT)
 MIME-Version: 1.0
-Sender: marobert105@gmail.com
-Received: by 2002:a54:2dc3:0:0:0:0:0 with HTTP; Thu, 10 Jun 2021 04:52:46
- -0700 (PDT)
-From:   Alexandra Kelly <alexandrakelly779@gmail.com>
-Date:   Thu, 10 Jun 2021 12:52:46 +0100
-X-Google-Sender-Auth: LmkF8Q11WstZZdFMQBBQk8TqQPU
-Message-ID: <CAJXtFgxBkJkQH8gf+PbAFdwC-LDE+51mM84K3FoNVwYVpqp4Tg@mail.gmail.com>
-Subject: Urgent Response
-To:     undisclosed-recipients:;
+References: <20210608062859.93959-1-ykaliuta@redhat.com> <20210608062923.94017-1-ykaliuta@redhat.com>
+ <20210608062923.94017-2-ykaliuta@redhat.com> <20210609171053.c72kzwcdkdrgcwpv@ldmartin-desk2>
+In-Reply-To: <20210609171053.c72kzwcdkdrgcwpv@ldmartin-desk2>
+From:   Yauheni Kaliuta <ykaliuta@redhat.com>
+Date:   Tue, 22 Jun 2021 09:22:40 +0300
+Message-ID: <CANoWswki6jcArKf4Q54_acTbR7k9iVHYW8Kv+-ZoRMoZLRaOsA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] libkmod-builtin: consider final NIL in name length check
+To:     Lucas De Marchi <lucas.demarchi@intel.com>
+Cc:     linux-modules@vger.kernel.org, lucas.de.marchi@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Dear friend,
+Hi, Lucas!
 
-I am contacting you independently of my investigation in
-my bank and no one is informed of this communication. I need your
-urgent assistance in transferring the sum of $5.3 million dollars to
-your private account,that belongs to one of our foreign customers who
-died a longtime with his supposed NEXT OF KIN since July 22, 2003. The
-money has been here in our Bank lying dormant for years now without
-anybody coming for the claim of it.
+My filters missed your replies, sorry :(
 
-I want to release the money to you as the relative to our deceased
-customer , the Banking laws here does not allow such money to stay
-more than 18 years, because the money will be recalled to the Bank
-treasury account as unclaimed fund. I am ready to share with you 40%
-for you and 60% will be kept for me, by indicating your interest i
-will send you the full details on how the business will be executed, i
-will be waiting for your urgent response.
+
+On Wed, Jun 9, 2021 at 8:11 PM Lucas De Marchi <lucas.demarchi@intel.com> wrote:
+>
+> On Tue, Jun 08, 2021 at 09:29:23AM +0300, Yauheni Kaliuta wrote:
+> >There is potential buffer overrun in kmod_builtin_iter_get_modname()
+> >for the name of length PATH_MAX. The required buffer size is
+> >PATH_MAX, so `modname[len] = '\0'` with len == PATH_MAX will write
+> >right beyond the buffer.
+>
+> this doesn't look correct. "with len == PATH_MAX" we will actually
+> return an error.
+>
+> What indeed is happening is truncation: since we are not reserving 1
+> char for NUL termination, we will truncate the name. If we update the
+> commit message to state the right reasoning, then we can land this patch.
+>
+> I don't see any buffer overflow here, but I may be missing something.
+
+Yes, you are right. I see the actual overflow is fixed by
+1cab02ecf6ee ("libkmod: fix an overflow with wrong modules.builtin.modinfo")
+
+I should have checked some reports more carefully. Please, ignore the patch.
+
+> thanks
+> LUcas De Marchi
+>
+> >
+> >Check the length against PATH_MAX - 1.
+> >
+> >Signed-off-by: Yauheni Kaliuta <ykaliuta@redhat.com>
+> >---
+> > libkmod/libkmod-builtin.c | 2 +-
+> > 1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> >diff --git a/libkmod/libkmod-builtin.c b/libkmod/libkmod-builtin.c
+> >index a002cb5ee2c6..3d4d77ab29b3 100644
+> >--- a/libkmod/libkmod-builtin.c
+> >+++ b/libkmod/libkmod-builtin.c
+> >@@ -246,7 +246,7 @@ bool kmod_builtin_iter_get_modname(struct kmod_builtin_iter *iter,
+> >
+> >       len = dot - line;
+> >
+> >-      if (len >= PATH_MAX) {
+> >+      if (len >= PATH_MAX - 1) {
+> >               sv_errno = ENAMETOOLONG;
+> >               goto fail;
+> >       }
+> >--
+> >2.31.1
+> >
+>
+
+
+--
+WBR, Yauheni
+
