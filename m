@@ -2,494 +2,529 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15FC93C2B60
-	for <lists+linux-modules@lfdr.de>; Sat, 10 Jul 2021 00:26:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F7C23C3283
+	for <lists+linux-modules@lfdr.de>; Sat, 10 Jul 2021 06:08:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbhGIW3D (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 9 Jul 2021 18:29:03 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32]:8064 "EHLO
-        mx0a-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231312AbhGIW2v (ORCPT
-        <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 9 Jul 2021 18:28:51 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id 169MKqZ5028056;
-        Fri, 9 Jul 2021 22:26:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references :
- content-transfer-encoding : content-type : mime-version;
- s=corp-2020-01-29; bh=qqz42f9HY4Y3qac15HctYmJviY8V6r04OXLl1PSoXT0=;
- b=TZfmYY8ngIR4mg8f0+Ywdb9OTiM3wKO8askzfVC7v1qUAT4XX/Foqc+dtGseaqXHs+qY
- 03HCihIBuC9gPuwL98IOhlz5Ym4l8/9u61RlEKS1uu7FSWO7xb68qrLilaidV9ea10HQ
- Fw/G19G06nV/ytRYeNebUrCS38Dtt1NESUuI5Se0QUgvLA4x5b/2ak2e1pIUyM7Sd08T
- F90utQwTOWe11bq6twczJtgdD3EXumC103CE14OF0euj8Cw+soFLWUtLrM7FE83rRi3I
- 5csGJNK1aCbTouf/lUkkfjM3+iAU58hCaiUl0Jd2/0vmE7nSw063EIoQHqk3BfDRnX3e 6A== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-        by mx0b-00069f02.pphosted.com with ESMTP id 39pkn49cjn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 09 Jul 2021 22:26:04 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-        by userp3020.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 169MOmtj072029;
-        Fri, 9 Jul 2021 22:26:03 GMT
-Received: from nam04-dm6-obe.outbound.protection.outlook.com (mail-dm6nam08lp2041.outbound.protection.outlook.com [104.47.73.41])
-        by userp3020.oracle.com with ESMTP id 39k1p6qvyv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 09 Jul 2021 22:26:03 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gu98bK0vwkxyR6o/fjVvuMFmk8IPQ/QW3JlWQTyC1xyI1ohwT4KIhsczHyD3UnNJj0f+zaExG/AXZtyAQ8CdKtjdvdzRDDTEect4j0/HsHF/J0LKLdapd3wIt8fjcW1IqBCSPL1f4NlnfbFpS02Vnnqd7xi26gO29apWe8CTzb1eMxYI9wTawFnFzveRUAdQ0jI1tS0gV4NZ1hF2cbsTOeVwI/of8J4vSNfg3n9bh+TKvd9iqvrRXmVzRaRNOv8v6g3okEQy/83L/P5i2ZHOpawcm1flo96uxslO4HHz0Xhnzbt3/a6i0NyagwwjleoJfnC51bLF0lFQ7Ovx4ewDfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qqz42f9HY4Y3qac15HctYmJviY8V6r04OXLl1PSoXT0=;
- b=jTN+S1OlsobdUjrrpCju3+Qif67tnQcZ/sHDc9M7XUbNerQdsrowPGFVGW9KLwFcPgvjrzUahxih97Ab94vHelbYuvOimgK5CzoCctlo9unc64cVQgQJB4VHKwvbMXPW62omyDPJRx6Nb9nCYfVHsF+UxqBWVaDlF/ddtwdgItjiaAaMXcPq5S1p21eq1v8QrKigF8tzF+CjP6gHfMsWLc2jE60ANGe2UVVmVpvhWKVKDxbOaS9uTyXPcYTmlB2xSgoWFWHjgkYaqvDNq/a0Vz0JTEODHdJnzY9Wv175+3fn8QGDxnqycd2tEmhGRfmLvkYsHM9h85gz6iAsfwVkgQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qqz42f9HY4Y3qac15HctYmJviY8V6r04OXLl1PSoXT0=;
- b=cJFp8tlngm5d36De5cs5p1uQrVhZEqRiM9cJqDogBPjCmXcwT7acR1pvhjnSuN64WiHb+CVom5NWksKGjTQCjobmBQUpY2Tosl5h5GNbz1p5feoc6smzC3TDqeOFVSjV/cfTnnFGoANmG1as0IoSIjoeFJ8ljjaUSxoP5VmSqmY=
-Authentication-Results: kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=none action=none header.from=oracle.com;
-Received: from SA2PR10MB4715.namprd10.prod.outlook.com (2603:10b6:806:fb::10)
- by SN6PR10MB2927.namprd10.prod.outlook.com (2603:10b6:805:cb::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4287.33; Fri, 9 Jul
- 2021 22:26:01 +0000
-Received: from SA2PR10MB4715.namprd10.prod.outlook.com
- ([fe80::956e:3ceb:9de9:8854]) by SA2PR10MB4715.namprd10.prod.outlook.com
- ([fe80::956e:3ceb:9de9:8854%3]) with mapi id 15.20.4308.023; Fri, 9 Jul 2021
- 22:26:00 +0000
-From:   Nick Alcock <nick.alcock@oracle.com>
-To:     jeyu@kernel.org, masahiroy@kernel.org
-Cc:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
-        arnd@arndb.de, Eugene Loh <eugene.loh@oracle.com>
-Subject: [PATCH RFC 7/7] kallsyms: add reliable symbol size info
-Date:   Fri,  9 Jul 2021 23:25:23 +0100
-Message-Id: <20210709222523.17639-8-nick.alcock@oracle.com>
-X-Mailer: git-send-email 2.32.0.255.gd9b1d14a2a
-In-Reply-To: <20210709222523.17639-1-nick.alcock@oracle.com>
-References: <20210709222523.17639-1-nick.alcock@oracle.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: LO2P265CA0339.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:d::15) To SA2PR10MB4715.namprd10.prod.outlook.com
- (2603:10b6:806:fb::10)
+        id S229501AbhGJELD (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 10 Jul 2021 00:11:03 -0400
+Received: from mga05.intel.com ([192.55.52.43]:19289 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229500AbhGJELD (ORCPT <rfc822;linux-modules@vger.kernel.org>);
+        Sat, 10 Jul 2021 00:11:03 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10040"; a="295449912"
+X-IronPort-AV: E=Sophos;i="5.84,228,1620716400"; 
+   d="gz'50?scan'50,208,50";a="295449912"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2021 21:08:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.84,228,1620716400"; 
+   d="gz'50?scan'50,208,50";a="629068787"
+Received: from lkp-server01.sh.intel.com (HELO 4aae0cb4f5b5) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 09 Jul 2021 21:08:15 -0700
+Received: from kbuild by 4aae0cb4f5b5 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1m24Hm-000FMp-WD; Sat, 10 Jul 2021 04:08:15 +0000
+Date:   Sat, 10 Jul 2021 11:39:39 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Nick Alcock <nick.alcock@oracle.com>, jeyu@kernel.org,
+        masahiroy@kernel.org
+Cc:     clang-built-linux@googlegroups.com, kbuild-all@lists.01.org,
+        linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+        arnd@arndb.de
+Subject: Re: [PATCH 6/7] kallsyms: add /proc/kallmodsyms
+Message-ID: <202107101140.egiOSCAE-lkp@intel.com>
+References: <20210709222523.17639-7-nick.alcock@oracle.com>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from loom.srvr.nix (2001:8b0:1101:10::2) by LO2P265CA0339.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:d::15) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.20 via Frontend Transport; Fri, 9 Jul 2021 22:25:59 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 2fb220e4-cfe7-442e-68f6-08d9432887f2
-X-MS-TrafficTypeDiagnostic: SN6PR10MB2927:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <SN6PR10MB2927AC67604FC83D0559DFC48B189@SN6PR10MB2927.namprd10.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4502;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: nQye6tXN5ALIRyxuZEiFk0G0TETWisIOZjm8FPLlrMWRj45/warQbL0fNf0aLFz2E05bvtP6ligEpq6DpBY6GF6XZZUrWNKVzeSiwI2Smvv4WqKmicKx15MvuFfOl3LQh+aNj4DS8Am0c2VVv9TClY7zJ9BCLviXiZaKe1FTt478QqGFlf9akIIw+r623toEbxutgQMuvjcUjJ1AUcoZBOCNA8iSueb2HQm70jUxRMSgrErbY3xTe6rh9F1epllueAYeQH/5BecnhsMSh8PsIrdd2O/DK3qux73qN9naN5uFVHTKVV6NmiFk6Qa74l19Xt2/gVj06wIJ4+ezICOceNzUC3c3sHz/zib5kC4FLEgtvDysmek5Of3fXDqY8c8EZkl73RxWIY8kZGx2NS0UQIIyiwobEpHzbj80ucSLAC0N1L6G8S0hn1HWkAOWfFuo+zLlhUQ41IyERkb4AW2ATF/yk4YwJH4XMBhvZvK4a2NSgCOFHSAp4y/sjnQnKOvFfi0wjlrGkxxQP/D+8rmuGBNF3NFGPfy0vP2KzSiW2L7k57+o94pmhS5UrW6XHNsi7dnl67TEe2ld4H/IdwTcsDDbpYwbupRDaGc3MHqV0amUP2q67w6WWSuMuYGYs1/pQz+p/MvB33+SSiyQhJSy0w==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA2PR10MB4715.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(396003)(136003)(39860400002)(346002)(376002)(316002)(478600001)(66946007)(8936002)(66476007)(1076003)(44832011)(6666004)(107886003)(8676002)(83380400001)(2616005)(66556008)(6506007)(30864003)(86362001)(6486002)(2906002)(38100700002)(36756003)(5660300002)(4326008)(52116002)(6512007)(186003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?fjUohdFC/7jlywMhxuSE4xi+i8LPe9+cGkdXUNxtDeTKyZ34Kzy46jCpCkkp?=
- =?us-ascii?Q?0Z6NnXlNw9h7JQw6Hg69DFFHFeBI0/XkyYMFLqN9qlXhc2aZdvBcIsThUDqb?=
- =?us-ascii?Q?/0VkadCb8bz3v9Nj//wA2Va3ZmoiGPYQ+YHBSlbO/my6Ka6HrPD5q6LtS/Ti?=
- =?us-ascii?Q?vnd9Vz6m/4dUO0DwTie04539Sf7fJl2mDNfn21729yvM6D5l/33ZSbORXhAz?=
- =?us-ascii?Q?oFDAnY5Y2TsxrM9MMAUA9Bhbhip/miP2wkJ6w+j9Y/R9hJ+BcRHfN7ZsmiBU?=
- =?us-ascii?Q?Wkh+KE7neCUqyuGXK9D7OUnv9NXL0IayKTJ3nYMSM2TWRMNaavcIGp+KJgf8?=
- =?us-ascii?Q?nHvNuXGgbt2RqU0hZ75dMpJm6vpIx0cXdv4ckweJWCVKjgHl4SrFKxGUiVRd?=
- =?us-ascii?Q?erfHQsvJh0CJvAvBU34mmch+ohhSScbilA3u1A9Lt0Hbw5YG9YjSKb0zg2Xd?=
- =?us-ascii?Q?InIO6XnkDiWymljw6ybrAshrXQ4nv5ie9fEYSblJjdxRnsc5wvG/faDS3glj?=
- =?us-ascii?Q?BedphzPQbVl0Gsob98a8q0biGN1iFQUG43zmaSrTxquvTIDxk0FpLztLh2bY?=
- =?us-ascii?Q?9Te0b0y7AHxJkv5kQ3Fe9sThX+eZoIJS+8TjiZFd8AD3Rb6GORGFel+0R+wq?=
- =?us-ascii?Q?Gb+mYzSgDZQolcycloHv/TuVNZWu1FWLLghWbJ3YdTAf4FEzOuRjCSx02JOW?=
- =?us-ascii?Q?Xes12cDjlpS6whXu5yVpLqdkSJizoBQRt2X/d6RVsslM42udGzoONVVZd8fz?=
- =?us-ascii?Q?C47C75aJ/nhUxAXk313C+KH++/mu0fduBU9Lw8qmOqtYN2nwCcvGf5v6aEtw?=
- =?us-ascii?Q?E7ybHQWLU6oPu8sbMGN3lIMcpScFl2s9dCVeJRnpZtQhjX2oWxk+0sM45vu9?=
- =?us-ascii?Q?gHrraCeMBf7mL/hDaLs5AwqdefGPNCGOhtGqrIMWnAkN3N89nzC5bcIlBl74?=
- =?us-ascii?Q?tDmBUFaPxNnzvNEMYhTSHw9nIA4s67OHZVsEJE4u0f/a/LU8oT5SHR/4pKVu?=
- =?us-ascii?Q?/vy4N+GEawi1MuvYcVqVLsbBQGqo/cNaMOVuKRDO18lNW8ivOymYFFpTkik1?=
- =?us-ascii?Q?9TVnXt1/4whPXsyFYDdZ+K2gEM9Npk2iOVMKe//HCYli2174Fw9ua3YphldO?=
- =?us-ascii?Q?FlgzTk1XVTR3CbyEFJY8Mioj9+Y6kdW5FeOODcAduOcdLzQ17PU9jiamPl0y?=
- =?us-ascii?Q?aVLy35bXOaWAw9NUjyF8m/leoWDZeh0qvGoKXdapE8Yaddw+h7E6yDm6KwA+?=
- =?us-ascii?Q?JkwNokHgi5adYbsRwUO6kpihx0EeojXxePQeioeTBSY1lLibjO+I/p4xheuJ?=
- =?us-ascii?Q?0dKk/yXmAEP7zr1jjE7siHaBGpzpHgBpa+e2Ht+h7dOkBw=3D=3D?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2fb220e4-cfe7-442e-68f6-08d9432887f2
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4715.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2021 22:26:00.9254
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: a2pzUFIWssgXHJvSW6qltbBWgwiH1TgNNJ7mpowtH7pw+xVVlH9GOAoAORX2VIxlFTLZejC3xdZ4eKX99XzPNw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR10MB2927
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=10040 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 spamscore=0 phishscore=0
- adultscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2104190000
- definitions=main-2107090114
-X-Proofpoint-GUID: AsBwtSEFXTwMAgnbcdX0aiGtIM5fssCx
-X-Proofpoint-ORIG-GUID: AsBwtSEFXTwMAgnbcdX0aiGtIM5fssCx
+Content-Type: multipart/mixed; boundary="d6Gm4EdcadzBjdND"
+Content-Disposition: inline
+In-Reply-To: <20210709222523.17639-7-nick.alcock@oracle.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-The existing mechanisms in get_symbol_pos to determine the end of a
-symbol is an inaccurate heuristic.  By passing nm -S output into
-scripts/kallsyms.c and writing the symbol sizes to a new .kallsyms_sizes
-section, we can get accurate sizes and sort the symbols accordingly,
-reliably sorting zero-size symbols first (on the grounds that they are
-usually e.g. section markers, and other symbols at the same address are
-conceptually contained within them and should be sorted after them),
-then larger symbols before smaller ones (so that overlapping symbols
-print the containing symbol first, before its containees).  We can
-also use this to improve aliased symbol detection.
 
-Emit the size info as an extra column in /proc/kallmodsyms (since its
-format is not yet set in stone), and export it to iterator consumers.
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-The notable downside of this is that the new .kallsyms_sizes is pretty
-big: a PTR per symbol, so vmlinux.o grows by almost a megabyte, though
-it compresses pretty well, so bzImage grows by only a megabyte.
+Hi Nick,
 
-I'm not sure how to reduce this.  A simple scheme to reduce this might
-involve making the table sparse (pairs of symbol index/size), and recording
-explicit sizes only for those symbols that are not immediately followed by a
-subsequent symbol: but I have no real idea how effective this would be yet.
+Thank you for the patch! Perhaps something to improve:
 
-In the absence of a way to shrink things, this should probably be hidden
-behind a new config symbol if exposed at all, and kallmodsyms just shows
-zero sizes if it's configured out (but this is enough of an RFC that
-that's not yet done: possibly the benefits of this are too marginal to
-be worth it, even if they do let kall(mod)syms consumers distinguish
-symbols from padding, which was previously impossible).
+[auto build test WARNING on kbuild/for-next]
+[also build test WARNING on linus/master v5.13]
+[cannot apply to kbuild/kconfig next-20210709]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Signed-off-by: Nick Alcock <nick.alcock@oracle.com>
-Signed-off-by: Eugene Loh <eugene.loh@oracle.com>
+url:    https://github.com/0day-ci/linux/commits/Nick-Alcock/kbuild-bring-back-tristate-conf/20210710-072558
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/masahiroy/linux-kbuild.git for-next
+config: s390-randconfig-r012-20210709 (attached as .config)
+compiler: clang version 13.0.0 (https://github.com/llvm/llvm-project 8d69635ed9ecf36fd0ca85906bfde17949671cbe)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install s390 cross compiling tool for clang build
+        # apt-get install binutils-s390x-linux-gnu
+        # https://github.com/0day-ci/linux/commit/af04f89ab6ea4f6ffbd83ee71afe1e8a0df26ee1
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Nick-Alcock/kbuild-bring-back-tristate-conf/20210710-072558
+        git checkout af04f89ab6ea4f6ffbd83ee71afe1e8a0df26ee1
+        # save the attached .config to linux build tree
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=s390 
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from kernel/kallsyms.c:25:
+   In file included from include/linux/filter.h:13:
+   In file included from include/linux/skbuff.h:31:
+   In file included from include/linux/dma-mapping.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:464:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __raw_readb(PCI_IOBASE + addr);
+                             ~~~~~~~~~~ ^
+   include/asm-generic/io.h:477:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:36:59: note: expanded from macro '__le16_to_cpu'
+   #define __le16_to_cpu(x) __swab16((__force __u16)(__le16)(x))
+                                                             ^
+   include/uapi/linux/swab.h:102:54: note: expanded from macro '__swab16'
+   #define __swab16(x) (__u16)__builtin_bswap16((__u16)(x))
+                                                        ^
+   In file included from kernel/kallsyms.c:25:
+   In file included from include/linux/filter.h:13:
+   In file included from include/linux/skbuff.h:31:
+   In file included from include/linux/dma-mapping.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:490:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:34:59: note: expanded from macro '__le32_to_cpu'
+   #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
+                                                             ^
+   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
+   #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
+                                                        ^
+   In file included from kernel/kallsyms.c:25:
+   In file included from include/linux/filter.h:13:
+   In file included from include/linux/skbuff.h:31:
+   In file included from include/linux/dma-mapping.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:501:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writeb(value, PCI_IOBASE + addr);
+                               ~~~~~~~~~~ ^
+   include/asm-generic/io.h:511:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:521:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:609:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsb(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:617:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsw(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:625:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsl(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:634:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesb(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:643:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesw(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:652:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesl(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   kernel/kallsyms.c:581:12: warning: no previous prototype for function 'arch_get_kallsym' [-Wmissing-prototypes]
+   int __weak arch_get_kallsym(unsigned int symnum, unsigned long *value,
+              ^
+   kernel/kallsyms.c:581:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int __weak arch_get_kallsym(unsigned int symnum, unsigned long *value,
+   ^
+   static 
+>> kernel/kallsyms.c:688:7: warning: variable 'mod_idx' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+                   if (kallsyms_module_offsets)
+                       ^~~~~~~~~~~~~~~~~~~~~~~
+   kernel/kallsyms.c:708:35: note: uninitialized use occurs here
+                   iter->hint_builtin_module_idx = mod_idx;
+                                                   ^~~~~~~
+   kernel/kallsyms.c:688:3: note: remove the 'if' if its condition is always true
+                   if (kallsyms_module_offsets)
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   kernel/kallsyms.c:675:23: note: initialize the variable 'mod_idx' to silence this warning
+           unsigned long mod_idx;
+                                ^
+                                 = 0
+   14 warnings generated.
+
+
+vim +688 kernel/kallsyms.c
+
+   580	
+ > 581	int __weak arch_get_kallsym(unsigned int symnum, unsigned long *value,
+   582				    char *type, char *name)
+   583	{
+   584		return -EINVAL;
+   585	}
+   586	
+   587	static int get_ksymbol_arch(struct kallsym_iter *iter)
+   588	{
+   589		int ret = arch_get_kallsym(iter->pos - kallsyms_num_syms,
+   590					   &iter->value, &iter->type,
+   591					   iter->name);
+   592	
+   593		if (ret < 0) {
+   594			iter->pos_arch_end = iter->pos;
+   595			return 0;
+   596		}
+   597	
+   598		return 1;
+   599	}
+   600	
+   601	static int get_ksymbol_mod(struct kallsym_iter *iter)
+   602	{
+   603		int ret = module_get_kallsym(iter->pos - iter->pos_arch_end,
+   604					     &iter->value, &iter->type,
+   605					     iter->name, iter->module_name,
+   606					     &iter->exported);
+   607		iter->builtin_module_names = NULL;
+   608	
+   609		if (ret < 0) {
+   610			iter->pos_mod_end = iter->pos;
+   611			return 0;
+   612		}
+   613	
+   614		return 1;
+   615	}
+   616	
+   617	/*
+   618	 * ftrace_mod_get_kallsym() may also get symbols for pages allocated for ftrace
+   619	 * purposes. In that case "__builtin__ftrace" is used as a module name, even
+   620	 * though "__builtin__ftrace" is not a module.
+   621	 */
+   622	static int get_ksymbol_ftrace_mod(struct kallsym_iter *iter)
+   623	{
+   624		int ret = ftrace_mod_get_kallsym(iter->pos - iter->pos_mod_end,
+   625						 &iter->value, &iter->type,
+   626						 iter->name, iter->module_name,
+   627						 &iter->exported);
+   628		iter->builtin_module_names = NULL;
+   629	
+   630		if (ret < 0) {
+   631			iter->pos_ftrace_mod_end = iter->pos;
+   632			return 0;
+   633		}
+   634	
+   635		return 1;
+   636	}
+   637	
+   638	static int get_ksymbol_bpf(struct kallsym_iter *iter)
+   639	{
+   640		int ret;
+   641	
+   642		strlcpy(iter->module_name, "bpf", MODULE_NAME_LEN);
+   643		iter->exported = 0;
+   644		iter->builtin_module_names = NULL;
+   645		ret = bpf_get_kallsym(iter->pos - iter->pos_ftrace_mod_end,
+   646				      &iter->value, &iter->type,
+   647				      iter->name);
+   648		if (ret < 0) {
+   649			iter->pos_bpf_end = iter->pos;
+   650			return 0;
+   651		}
+   652	
+   653		return 1;
+   654	}
+   655	
+   656	/*
+   657	 * This uses "__builtin__kprobes" as a module name for symbols for pages
+   658	 * allocated for kprobes' purposes, even though "__builtin__kprobes" is not a
+   659	 * module.
+   660	 */
+   661	static int get_ksymbol_kprobe(struct kallsym_iter *iter)
+   662	{
+   663		strlcpy(iter->module_name, "__builtin__kprobes", MODULE_NAME_LEN);
+   664		iter->exported = 0;
+   665		iter->builtin_module_names = NULL;
+   666		return kprobe_get_kallsym(iter->pos - iter->pos_bpf_end,
+   667					  &iter->value, &iter->type,
+   668					  iter->name) < 0 ? 0 : 1;
+   669	}
+   670	
+   671	/* Returns space to next name. */
+   672	static unsigned long get_ksymbol_core(struct kallsym_iter *iter, int kallmodsyms)
+   673	{
+   674		unsigned off = iter->nameoff;
+   675		unsigned long mod_idx;
+   676	
+   677		iter->exported = 0;
+   678		iter->value = kallsyms_sym_address(iter->pos);
+   679	
+   680		iter->type = kallsyms_get_symbol_type(off);
+   681	
+   682		iter->module_name[0] = '\0';
+   683		iter->builtin_module_names = NULL;
+   684	
+   685		off = kallsyms_expand_symbol(off, iter->name, ARRAY_SIZE(iter->name));
+   686	#ifdef CONFIG_KALLMODSYMS
+   687		if (kallmodsyms) {
+ > 688			if (kallsyms_module_offsets)
+   689				mod_idx =
+   690				  get_builtin_module_idx(iter->value,
+   691							 iter->hint_builtin_module_idx);
+   692	
+   693			/*
+   694			 * This is a built-in module iff the tables of built-in modules
+   695			 * (address->module name mappings) and module names are known,
+   696			 * and if the address was found there, and if the corresponding
+   697			 * module index is nonzero.  All other cases mean off the end of
+   698			 * the binary or in a non-modular range in between one or more
+   699			 * modules.  (Also guard against a corrupt kallsyms_objfiles
+   700			 * array pointing off the end of kallsyms_modules.)
+   701			 */
+   702			if (kallsyms_modules != NULL && kallsyms_module_names != NULL &&
+   703			    mod_idx != (unsigned long) -1 &&
+   704			    kallsyms_modules[mod_idx] != 0 &&
+   705			    kallsyms_modules[mod_idx] < kallsyms_module_names_len)
+   706				iter->builtin_module_names =
+   707				  &kallsyms_module_names[kallsyms_modules[mod_idx]];
+   708			iter->hint_builtin_module_idx = mod_idx;
+   709		}
+   710	#endif
+   711		return off - iter->nameoff;
+   712	}
+   713	
+
 ---
- include/linux/module.h  |  7 ++--
- kernel/kallsyms.c       | 74 ++++++++++++++++++++++-------------------
- kernel/module.c         |  4 ++-
- scripts/kallsyms.c      | 29 +++++++++++++---
- scripts/link-vmlinux.sh |  7 +++-
- 5 files changed, 77 insertions(+), 44 deletions(-)
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 
-diff --git a/include/linux/module.h b/include/linux/module.h
-index 8100bb477d86..8b5d1a7f6d9e 100644
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -579,7 +579,8 @@ struct module *find_module(const char *name);
- /* Returns 0 and fills in value, defined and namebuf, or -ERANGE if
-    symnum out of range. */
- int module_get_kallsym(unsigned int symnum, unsigned long *value, char *type,
--			char *name, char *module_name, int *exported);
-+		       char *name, char *module_name, unsigned long *size,
-+		       int *exported);
- 
- /* Look for this name: can be of form module:name. */
- unsigned long module_kallsyms_lookup_name(const char *name);
-@@ -756,8 +757,8 @@ static inline int lookup_module_symbol_attrs(unsigned long addr, unsigned long *
- }
- 
- static inline int module_get_kallsym(unsigned int symnum, unsigned long *value,
--					char *type, char *name,
--					char *module_name, int *exported)
-+				     char *type, char *name, char *module_name,
-+				     unsigned long *size, int *exported)
- {
- 	return -ERANGE;
- }
-diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-index ac095691008a..e72d4eacab07 100644
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -33,6 +33,7 @@
-  */
- extern const unsigned long kallsyms_addresses[] __weak;
- extern const int kallsyms_offsets[] __weak;
-+extern const unsigned long kallsyms_sizes[] __weak;
- extern const u8 kallsyms_names[] __weak;
- 
- /*
-@@ -254,12 +255,24 @@ int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
- }
- #endif /* CONFIG_LIVEPATCH */
- 
-+/*
-+ * The caller passes in an address, and we return an index to the symbol --
-+ * potentially also size and offset information.
-+ * But an address might map to multiple symbols because:
-+ *   - some symbols might have zero size
-+ *   - some symbols might be aliases of one another
-+ *   - some symbols might span (encompass) others
-+ * The symbols should already be ordered so that, for a particular address,
-+ * we first have the zero-size ones, then the biggest, then the smallest.
-+ * So we find the index by:
-+ *   - finding the last symbol with the target address
-+ *   - backing the index up so long as both the address and size are unchanged
-+ */
- static unsigned long get_symbol_pos(unsigned long addr,
- 				    unsigned long *symbolsize,
- 				    unsigned long *offset)
- {
--	unsigned long symbol_start = 0, symbol_end = 0;
--	unsigned long i, low, high, mid;
-+	unsigned long low, high, mid;
- 
- 	/* This kernel should never had been booted. */
- 	if (!IS_ENABLED(CONFIG_KALLSYMS_BASE_RELATIVE))
-@@ -280,36 +293,17 @@ static unsigned long get_symbol_pos(unsigned long addr,
- 	}
- 
- 	/*
--	 * Search for the first aliased symbol. Aliased
--	 * symbols are symbols with the same address.
-+	 * Search for the first aliased symbol.
- 	 */
--	while (low && kallsyms_sym_address(low-1) == kallsyms_sym_address(low))
-+	while (low
-+	    && kallsyms_sym_address(low-1) == kallsyms_sym_address(low)
-+	    && kallsyms_sizes[low-1] == kallsyms_sizes[low])
- 		--low;
- 
--	symbol_start = kallsyms_sym_address(low);
--
--	/* Search for next non-aliased symbol. */
--	for (i = low + 1; i < kallsyms_num_syms; i++) {
--		if (kallsyms_sym_address(i) > symbol_start) {
--			symbol_end = kallsyms_sym_address(i);
--			break;
--		}
--	}
--
--	/* If we found no next symbol, we use the end of the section. */
--	if (!symbol_end) {
--		if (is_kernel_inittext(addr))
--			symbol_end = (unsigned long)_einittext;
--		else if (IS_ENABLED(CONFIG_KALLSYMS_ALL))
--			symbol_end = (unsigned long)_end;
--		else
--			symbol_end = (unsigned long)_etext;
--	}
--
- 	if (symbolsize)
--		*symbolsize = symbol_end - symbol_start;
-+		*symbolsize = kallsyms_sizes[low];
- 	if (offset)
--		*offset = addr - symbol_start;
-+		*offset = addr - kallsyms_sym_address(low);
- 
- 	return low;
- }
-@@ -569,6 +563,7 @@ struct kallsym_iter {
- 	loff_t pos_bpf_end;
- 	unsigned long value;
- 	unsigned int nameoff; /* If iterating in core kernel symbols. */
-+	unsigned long size;
- 	char type;
- 	char name[KSYM_NAME_LEN];
- 	char module_name[MODULE_NAME_LEN];
-@@ -603,7 +598,7 @@ static int get_ksymbol_mod(struct kallsym_iter *iter)
- 	int ret = module_get_kallsym(iter->pos - iter->pos_arch_end,
- 				     &iter->value, &iter->type,
- 				     iter->name, iter->module_name,
--				     &iter->exported);
-+				     &iter->size, &iter->exported);
- 	iter->builtin_module_names = NULL;
- 
- 	if (ret < 0) {
-@@ -677,6 +672,7 @@ static unsigned long get_ksymbol_core(struct kallsym_iter *iter, int kallmodsyms
- 	iter->exported = 0;
- 	iter->value = kallsyms_sym_address(iter->pos);
- 
-+	iter->size = kallsyms_sizes[iter->pos];
- 	iter->type = kallsyms_get_symbol_type(off);
- 
- 	iter->module_name[0] = '\0';
-@@ -793,12 +789,14 @@ static int s_show_internal(struct seq_file *m, void *p, int kallmodsyms)
- {
- 	void *value;
- 	struct kallsym_iter *iter = m->private;
-+	unsigned long size;
- 
- 	/* Some debugging symbols have no name.  Ignore them. */
- 	if (!iter->name[0])
- 		return 0;
- 
- 	value = iter->show_value ? (void *)iter->value : NULL;
-+	size = iter->show_value ? iter->size : 0;
- 
- 	/*
- 	 * Real module, or built-in module and /proc/kallsyms being shown.
-@@ -818,15 +816,15 @@ static int s_show_internal(struct seq_file *m, void *p, int kallmodsyms)
- 			 * /proc/kallmodsyms, built as a module.
- 			 */
- 			if (iter->builtin_module_names == NULL)
--				seq_printf(m, "%px %c %s\t[%s]\n", value,
--					   type, iter->name,
-+				seq_printf(m, "%px %lx %c %s\t[%s]\n", value,
-+					   size, type, iter->name,
- 					   iter->module_name);
- 			/*
- 			 * /proc/kallmodsyms, single-module symbol.
- 			 */
- 			else if (*iter->builtin_module_names != '\0')
--				seq_printf(m, "%px %c %s\t[%s]\n", value,
--					   type, iter->name,
-+				seq_printf(m, "%px %lx %c %s\t[%s]\n", value,
-+					   size, type, iter->name,
- 					   iter->builtin_module_names);
- 			/*
- 			 * /proc/kallmodsyms, multimodule symbol.  Formatted
-@@ -837,8 +835,8 @@ static int s_show_internal(struct seq_file *m, void *p, int kallmodsyms)
- 				size_t i = *(char *)(iter->builtin_module_names + 1);
- 				const char *walk = iter->builtin_module_names + 2;
- 
--				seq_printf(m, "%px %c %s\t[%s]", value,
--					   type, iter->name, walk);
-+				seq_printf(m, "%px %lx %c %s\t[%s]", value,
-+					   size, type, iter->name, walk);
- 
-                                 while (--i > 0) {
- 					walk += strlen(walk) + 1;
-@@ -850,7 +848,13 @@ static int s_show_internal(struct seq_file *m, void *p, int kallmodsyms)
- #endif /* CONFIG_KALLMODSYMS */
- 			seq_printf(m, "%px %c %s\t[%s]\n", value,
- 				   type, iter->name, iter->module_name);
--	} else
-+	/*
-+	 * Non-modular, /proc/kallmodsyms -> print size.
-+	 */
-+	} else if (kallmodsyms)
-+		seq_printf(m, "%px %lx %c %s\n", value, size,
-+			   iter->type, iter->name);
-+	else
- 		seq_printf(m, "%px %c %s\n", value,
- 			   iter->type, iter->name);
- 	return 0;
-diff --git a/kernel/module.c b/kernel/module.c
-index 927d46cb8eb9..0229d91241d1 100644
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -4332,7 +4332,8 @@ int lookup_module_symbol_attrs(unsigned long addr, unsigned long *size,
- }
- 
- int module_get_kallsym(unsigned int symnum, unsigned long *value, char *type,
--			char *name, char *module_name, int *exported)
-+		       char *name, char *module_name, unsigned long *size,
-+		       int *exported)
- {
- 	struct module *mod;
- 
-@@ -4351,6 +4352,7 @@ int module_get_kallsym(unsigned int symnum, unsigned long *value, char *type,
- 			strlcpy(name, kallsyms_symbol_name(kallsyms, symnum), KSYM_NAME_LEN);
- 			strlcpy(module_name, mod->name, MODULE_NAME_LEN);
- 			*exported = is_exported(name, *value, mod);
-+			*size = kallsyms->symtab[symnum].st_size;
- 			preempt_enable();
- 			return 0;
- 		}
-diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-index 93fdf0dcf587..fcb1d706809c 100644
---- a/scripts/kallsyms.c
-+++ b/scripts/kallsyms.c
-@@ -5,7 +5,7 @@
-  * This software may be used and distributed according to the terms
-  * of the GNU General Public License, incorporated herein by reference.
-  *
-- * Usage: nm -n vmlinux
-+ * Usage: nm -n -S vmlinux
-  *        | scripts/kallsyms [--all-symbols] [--absolute-percpu]
-  *             [--base-relative] [--builtin=modules_thick.builtin]
-  *        > symbols.S
-@@ -38,6 +38,7 @@
- 
- struct sym_entry {
- 	unsigned long long addr;
-+	unsigned long long size;
- 	unsigned int len;
- 	unsigned int start_pos;
- 	unsigned int percpu_absolute;
-@@ -394,6 +395,7 @@ static bool is_ignored_symbol(const char *name, char type)
- 		"kallsyms_addresses",
- 		"kallsyms_offsets",
- 		"kallsyms_relative_base",
-+		"kallsyms_sizes",
- 		"kallsyms_num_syms",
- 		"kallsyms_num_modules",
- 		"kallsyms_names",
-@@ -507,10 +509,11 @@ static struct sym_entry *read_symbol(FILE *in)
- 	unsigned long long addr;
- 	unsigned int len;
- 	struct sym_entry *sym;
--	int rc;
-+	int rc = 0;
-+	unsigned long long size;
- 
--	rc = fscanf(in, "%llx %c %499s\n", &addr, &type, name);
--	if (rc != 3) {
-+	rc = fscanf(in, "%llx %llx %c %499s\n", &addr, &size, &type, name);
-+	if (rc != 4) {
- 		if (rc != EOF && fgets(name, 500, in) == NULL)
- 			fprintf(stderr, "Read error or end of file.\n");
- 		return NULL;
-@@ -548,6 +551,7 @@ static struct sym_entry *read_symbol(FILE *in)
- 	sym->sym[0] = type;
- 	strcpy(sym_name(sym), name);
- 	sym->percpu_absolute = 0;
-+	sym->size = size;
- 
- 	return sym;
- }
-@@ -932,6 +936,11 @@ static void write_src(void)
- 		printf("\n");
- 	}
- 
-+	output_label("kallsyms_sizes");
-+	for (i = 0; i < table_cnt; i++)
-+		printf("\tPTR\t%#llx\n", table[i]->size);
-+	printf("\n");
-+
- #ifdef CONFIG_KALLMODSYMS
- 	output_kallmodsyms_modules();
- 	output_kallmodsyms_objfiles();
-@@ -1189,6 +1198,18 @@ static int compare_symbols(const void *a, const void *b)
- 	if (sa->addr < sb->addr)
- 		return -1;
- 
-+	/* zero-size markers before nonzero-size symbols */
-+	if (sa->size > 0 && sb->size == 0)
-+		return 1;
-+	if (sa->size == 0 && sb->size > 0)
-+		return -1;
-+
-+	/* sort by size (large size preceding symbols it encompasses) */
-+	if (sa->size < sb->size)
-+		return 1;
-+	if (sa->size > sb->size)
-+		return -1;
-+
- 	/* sort by "weakness" type */
- 	wa = (sa->sym[0] == 'w') || (sa->sym[0] == 'W');
- 	wb = (sb->sym[0] == 'w') || (sb->sym[0] == 'W');
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 00ad1b4b0055..85a2754fdb6a 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -288,7 +288,12 @@ kallsyms()
- 	fi
- 
- 	info KSYMS ${2}
--	${NM} -n ${1} | scripts/kallsyms ${kallsymopt} > ${2}
-+	# "nm -S" does not print symbol size when size is 0
-+	# Therefore use awk to regularize the data:
-+	#   - when there are only three fields, add an explicit "0"
-+	#   - when there are already four fields, pass through as is
-+	${NM} -n -S ${1} | ${AWK} 'NF==3 {print $1, 0, $2, $3}; NF==4' | \
-+	    scripts/kallsyms ${kallsymopt} > ${2}
- }
- 
- # Perform one step in kallsyms generation, including temporary linking of
--- 
-2.32.0.255.gd9b1d14a2a
+--d6Gm4EdcadzBjdND
+Content-Type: application/gzip
+Content-Disposition: attachment; filename=".config.gz"
+Content-Transfer-Encoding: base64
 
+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
+
+--d6Gm4EdcadzBjdND--
