@@ -2,77 +2,81 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80BCB3ECDEC
-	for <lists+linux-modules@lfdr.de>; Mon, 16 Aug 2021 07:09:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCE1E3F028D
+	for <lists+linux-modules@lfdr.de>; Wed, 18 Aug 2021 13:22:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbhHPFJd (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 16 Aug 2021 01:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbhHPFJc (ORCPT
+        id S235143AbhHRLWr (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 18 Aug 2021 07:22:47 -0400
+Received: from smtp-out1.suse.de ([195.135.220.28]:59090 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234913AbhHRLWr (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 16 Aug 2021 01:09:32 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8840C061764
-        for <linux-modules@vger.kernel.org>; Sun, 15 Aug 2021 22:09:01 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id bj40so25199570oib.6
-        for <linux-modules@vger.kernel.org>; Sun, 15 Aug 2021 22:09:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=cyucrwPVNGZyNumDuGRRj+KuoGUEWJ9ms+cZ4FKa890=;
-        b=gxl88txRbAeQnFDkCgOZyS8SIb6zcFmkMv8amvlT4y2gtVL3OAibDWVpxsUb1AIXx3
-         b+BfWg9cyDqGOulbZmr5vqwWApzNz91+MjGcndGpX/rWMjHd17cEwaLwFWbbuqSoThYe
-         FXHPZShdmowY4rLpLKV6Sih2DLiQuDnaCDNxTXTzuuNgsV7FYyPYysvpj8LTHzPFjyN6
-         etUBVFsT67EyzaKqPgBtvDBofDQNK6h4zJypjJtg61flDsrdpZ+Ym3iQMjT6emQ/f5lb
-         E5x+kApML8TEi1eaTw2tWQCdHvOEtooNvT8LsE6ifGTThNUQHghMka4NbLak/oBh9W+C
-         DkQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=cyucrwPVNGZyNumDuGRRj+KuoGUEWJ9ms+cZ4FKa890=;
-        b=d+5XG50N5c6n59HE1uPr9KWx2j0n5u4uVKeJRQ1wsE48dP7ZLYUMQ8VH2CGGkiAbhf
-         Ea7eX4I/eDJOkmLIuRe3i/H+WQuBlN5uL2nhq2kxxuDVjGy95iDJPS7xZCeF9jLVKXbr
-         d+Nv78CMt6xP/f9zTImV937Btu32rdlWPZCfSMqZjBvopCxJF9jSCdTpsA/YQd0Ev/lI
-         sIuDx7dH3n1xAtDiKzhpb28Z8jO6GoyYWczs+LPuBZHjOaoQrrQ68Y5uQB9XjyT5GfW+
-         l9ftGWH83zAQJOzOFRGJrv8VfKksH69dGXPfD76cjvWBvpEES6iakXBkRfR/CCItdgtv
-         5Q1Q==
-X-Gm-Message-State: AOAM532l/M1bcEyAhnmz9KoGzHw8hLxK6GnfrC+hkkbEolEz0tt4dEIS
-        TJ2QEZ7mbV3+X0VxHQVwVaHQxtXdicXUuyZSz/s=
-X-Google-Smtp-Source: ABdhPJzO/8NAsWTGhS9LYVa0Pr2oWuVKFRHnjYCzOLUunHBpqYUnLN+VsrXzt5qi5c9N+nZl6+UTUGQKbf/FYxEXAqk=
-X-Received: by 2002:aca:59c6:: with SMTP id n189mr10917997oib.44.1629090540739;
- Sun, 15 Aug 2021 22:09:00 -0700 (PDT)
+        Wed, 18 Aug 2021 07:22:47 -0400
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out1.suse.de (Postfix) with ESMTP id D9894218EF
+        for <linux-modules@vger.kernel.org>; Wed, 18 Aug 2021 11:22:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1629285731; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=97WYgRQ+J3f7A53JHUlfjhbW2MbmuoNIXVFmGJVcFqc=;
+        b=sWQV4oDR0Jq4mfRQxItPB6cNV32ye39cpmrrcTt8XO4HvqhyraO28EJHhJ1eGUoXY15IfR
+        hmALrTmRXWM2/HjlSuLaLf3axRrawZx5w9HFb25AZlEE2lAj17y+oCJ6RipbpR4ROmLBAt
+        nJVWLoOHagItCMrsTwxMziZ4SR1pWPU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1629285731;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=97WYgRQ+J3f7A53JHUlfjhbW2MbmuoNIXVFmGJVcFqc=;
+        b=5DXx7CqpDUq61Smspe8rkR9jhx5tsMQy94TMWzyE9RyYh2Mv6l+aggrYJqFokmnkYUhExf
+        dsZ2w+ZR87AiRbDQ==
+Received: from alsa1.nue.suse.com (alsa1.suse.de [10.160.4.42])
+        by relay2.suse.de (Postfix) with ESMTP id D359BA3B91;
+        Wed, 18 Aug 2021 11:22:11 +0000 (UTC)
+From:   Takashi Iwai <tiwai@suse.de>
+To:     linux-modules@vger.kernel.org
+Cc:     =?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.cz>
+Subject: [PATCH] modinfo: don't parse built-in for explicitly given module files
+Date:   Wed, 18 Aug 2021 13:22:03 +0200
+Message-Id: <20210818112203.24863-1-tiwai@suse.de>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Received: by 2002:a05:6830:1ad3:0:0:0:0 with HTTP; Sun, 15 Aug 2021 22:09:00
- -0700 (PDT)
-Reply-To: bof.mandiri@yahoo.com
-From:   Shandi Cabrera <davidgoldfein00@gmail.com>
-Date:   Sun, 15 Aug 2021 22:09:00 -0700
-Message-ID: <CADaG122C132FEAuVB5NnRx3VXykRCSybQ0FrqepDtvSSs-smwg@mail.gmail.com>
-Subject: your response.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
+A recent bug report showed that modinfo doesn't give the signature
+information for certain modules, and it turned out to happen only on
+the modules that are built-in on the running kernel; then modinfo
+skips the signature check, as if the target module file never exists.
+The behavior is, however, inconsistent when modinfo is performed for
+external modules (no matter which kernel version is) and the module
+file path is explicitly given by a command-line argument, which
+guarantees the presence of the module file itself.
+
+This patch addresses the regression by checking the presence of the
+module path at first before checking the built-in module.
+
+Fixes: e7e2cb61fa9f ("modinfo: Show information about built-in modules")
+BugLink: https://bugzilla.opensuse.org/show_bug.cgi?id=1189537
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ libkmod/libkmod-module.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
+index 6e0ff1a99604..9e878a5345a1 100644
+--- a/libkmod/libkmod-module.c
++++ b/libkmod/libkmod-module.c
+@@ -2292,7 +2292,8 @@ KMOD_EXPORT int kmod_module_get_info(const struct kmod_module *mod, struct kmod_
+ 	assert(*list == NULL);
+ 
+ 	/* remove const: this can only change internal state */
+-	if (kmod_module_is_builtin((struct kmod_module *)mod)) {
++	if (!kmod_module_get_path(mod) &&
++	    kmod_module_is_builtin((struct kmod_module *)mod)) {
+ 		count = kmod_builtin_get_modinfo(mod->ctx,
+ 						kmod_module_get_name(mod),
+ 						&strings);
 -- 
-Hi,
+2.26.2
 
-
-I am a USMC on a special redeployment. I am looking for a good looking
-and intelligent person for a relationship. Or a person who can accept
-to take custody of an amount being proceed of a raid we carried out
-here. If you are interested mail me back with your picture. All
-communication must be through an end-to-end encrypted means. It is
-important that you must have WhatsApp for easy communication. And I
-assure you that your privacy will be protected too.
-
-
-I got your email contact through an opt-in consumer directory. I
-expect your response.
-
-
-Shandi Cabrera
-Email: bof.mandiri@yahoo.com
-US Marine Corps.
