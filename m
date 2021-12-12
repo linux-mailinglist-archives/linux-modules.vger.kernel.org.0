@@ -2,72 +2,60 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 368784706B7
-	for <lists+linux-modules@lfdr.de>; Fri, 10 Dec 2021 18:09:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5A75471B68
+	for <lists+linux-modules@lfdr.de>; Sun, 12 Dec 2021 16:39:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240272AbhLJRNI (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 10 Dec 2021 12:13:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38640 "EHLO
+        id S231394AbhLLPjO (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 12 Dec 2021 10:39:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234606AbhLJRNH (ORCPT
+        with ESMTP id S231310AbhLLPjH (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 10 Dec 2021 12:13:07 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FD7DC061746;
-        Fri, 10 Dec 2021 09:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=BMp/3Rxta5vGEmVQKQULL2D7UCjIkk1uGCPfneb0M1c=; b=3u+xKPuVA1Ux5lCsk1++m00Cbs
-        o5SugFMIHU9UntwI/Kl35zgQoa9y0vCAlfBS2u18GBvG3yb5dm6krKBt95iT41L5p9GWMC+aQQNGi
-        H6IBH/+W9306+wbiNVY0Wqp0+o5JFErORWYJLU6wcWbyXP/HaBANXAs/U/zs3EnvpTfsd9jaQOoG+
-        n05KIhDloKPjF1pu/Ssercr806x/RSei0Swhf5NBFGVKQR73RebiPpacCPpTCpbWExM1ynOMNa63n
-        7XbYJQUDpV6B/ofn0yJQGysn7HAIMkH1+gmueW6+az6ileYmadQbfYECyEUHrFUYMzkKc4baEthuJ
-        TeeDGphg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1mvjOd-002k3D-PT; Fri, 10 Dec 2021 17:09:23 +0000
-Date:   Fri, 10 Dec 2021 09:09:23 -0800
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Aaron Tomlin <atomlin@redhat.com>
-Cc:     Petr Mladek <pmladek@suse.com>, Christoph Lameter <cl@linux.com>,
-        Miroslav Benes <mbenes@suse.cz>,
-        Andrew Morton <akpm@linux-foundation.org>, jeyu@kernel.org,
-        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
-        atomlin@atomlin.com, ghalat@redhat.com
-Subject: Re: [RFC PATCH] module: Introduce module unload taint tracking
-Message-ID: <YbOJw4B4p7V+bfPU@bombadil.infradead.org>
-References: <20211124173327.3878177-1-atomlin@redhat.com>
- <YbEZ4HgSYQEPuRmS@bombadil.infradead.org>
- <20211209153131.a54fdfbci4qnyy6h@ava.usersys.com>
- <YbKUUJUtjBk/n913@bombadil.infradead.org>
- <YbMlVFwBiRujKdEX@alley>
- <20211210160931.ftvxpulno73a2l7c@ava.usersys.com>
+        Sun, 12 Dec 2021 10:39:07 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C280C061A72
+        for <linux-modules@vger.kernel.org>; Sun, 12 Dec 2021 07:39:07 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id j6-20020a17090a588600b001a78a5ce46aso12953294pji.0
+        for <linux-modules@vger.kernel.org>; Sun, 12 Dec 2021 07:39:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=CScZ3wgwAoNcP2hDnqXlix5UDGrDiarDd6PNIGLyspo=;
+        b=nW34jVsv56Ss5jLoooIeVciA93Clw83n+wCeADNfCEpcC+rdzdpKO/LYgFQaULd1OH
+         U8TXUuQSIh4yHtn8e56U2OR9tvVaBrIbZqVXXTO9qyu2ymRftWSklBAq1tsUV/ZwQyli
+         OQNIJmsnRTWXVSmhooYoNI3mrca0uQe4Qvw2po2hRHk49IphRRBl7/cc79IWCwq/knSD
+         jAnxigACSUDasTs+EUStoKgNQ9kt9Efz64Sltjg2RvPSjES1dEb3Rnabml57kHg8BYan
+         0xGZn+cZ+L22txoY5kcj47AS69tJiBQ/eAoB9E7bJT52uVrJV5T2gB+PKNcvh9Cn0hK0
+         5YnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=CScZ3wgwAoNcP2hDnqXlix5UDGrDiarDd6PNIGLyspo=;
+        b=aLt/8K2CKVMh/DVeSZWKTY04LFY2pmAnooGtrL+wn8Oe3myHg+IJO1YUzO0BEuaXs5
+         ge9vfse29850okIsC5xsaa7rmfSwvAHdE7FBf8IljS2nriIL1/OEWy/xVQuhWupCiTC1
+         LIaeN9V9qGxIOiApTGO1QQC1qw4it59Zn933eIL3bLGSlvmkO2bnEnLPvDUSnZN8GjbW
+         HIyLP+UQFuymqmQLD+0Yx5mhNRRDOKg7q1ZES5dVIhBwbo16vCg+7dIZrJWiesWn4nXA
+         O430w+hW2WUhUl/r8LJL6wn/9w4RsKxwUdqFkhhoR+0SYGy5IR8T4bdqlU/3xlgVBUq0
+         u9Mg==
+X-Gm-Message-State: AOAM530tFA5oG5RSWpEpK5c7shCThnr8SEXxiuvsGFmG1TS4NGbSbPq/
+        wp3crCuEuPdl2gkS1p8SVTfp6kS58lWwHt6tr5w=
+X-Google-Smtp-Source: ABdhPJxsBJYooaMgLjqzimk0hrl//BEpZRFhZTgaDxYyJHLKhaJGvTFjIF0TvE7MIczQ9k5dw4plILBX5bRdp3Gs0bY=
+X-Received: by 2002:a17:90b:33d0:: with SMTP id lk16mr38626959pjb.7.1639323545943;
+ Sun, 12 Dec 2021 07:39:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211210160931.ftvxpulno73a2l7c@ava.usersys.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Received: by 2002:a17:90b:4c51:0:0:0:0 with HTTP; Sun, 12 Dec 2021 07:39:05
+ -0800 (PST)
+Reply-To: mrsisabelladz@gmail.com
+From:   Mrs Isabella <zaidn8225@gmail.com>
+Date:   Sun, 12 Dec 2021 16:39:05 +0100
+Message-ID: <CAMU20GMeochfDfA+tFFMDmQu2qHHMSRkoPHpA3GKtw8UP0dvgw@mail.gmail.com>
+Subject: From Mrs. Isabella Dzsesszika
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Fri, Dec 10, 2021 at 04:09:31PM +0000, Aaron Tomlin wrote:
-> On Fri 2021-12-10 11:00 +0100, Petr Mladek wrote:
-> This is an interesting suggestion. Albeit, as per the subject, I prefer to
-> just keep track of any module that tainted the kernel. That being said,
-> Petr, if you'd prefer to track each module unload/or deletion event, then I
-> would suggest for instance to remove a module once it has been reintroduced
-> or maintain an unload count as suggested by Luis.
-
-Come to think of this again, although at first it might be enticing to
-keep track of module unloads (without taint), we have to ask ourselves
-who would need / enable such a feature. And I think Aaron is right that
-this might be better tracked in userspace.
-
-The taint though, that seems critical due to the potential harm.
-
-Maybe how many unloads one has done though, that might be useful
-debugging information and does not create a huge overhead like a
-pontential -ENOMEM.
-
-  Luis
+GOOD MORNING DEAR. MY NAME IS Isabella Dzsesszika. I AM CONTACTING YOU
+FOR IMPORTANT ISSUE I WILL LIKE TO DISCUS WITH YOU. PLEASE GET BACK TO
+ME IF YOU READ THIS MAIL.  YOURS, Isabella Dzsesszika
