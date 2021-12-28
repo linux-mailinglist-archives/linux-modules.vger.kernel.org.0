@@ -2,60 +2,130 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AB1947C8DD
-	for <lists+linux-modules@lfdr.de>; Tue, 21 Dec 2021 22:44:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28AE0480D69
+	for <lists+linux-modules@lfdr.de>; Tue, 28 Dec 2021 22:30:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232458AbhLUVoz (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 21 Dec 2021 16:44:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230251AbhLUVoz (ORCPT
+        id S237508AbhL1Vat (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 28 Dec 2021 16:30:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:56138 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237469AbhL1Var (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 21 Dec 2021 16:44:55 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B8CC061574;
-        Tue, 21 Dec 2021 13:44:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=g1DkaflNqTMfxBW6qRpkoRfxi8Y3JweVReOmR5YEtKQ=; b=WZU3q5IjyNqsUUkfGy2TwqqGkk
-        I2pvMTNamhaxV1g9GOWAAtC04k5Td7tN8h3NmdaEnwMw3DykrIpeRjyUmqElwo4Cz1iZB1owVndni
-        Bk1HwV8OryLhaFFA3UcFMf9qfqhK9AEOIrYBW25XnscPA8gpl4S13OH4SOMl3HuCi4e4FFI7j+5ht
-        O+FZg3EWyZJlMmd7HjC0TfGNxf0UUFsTZUhqEntmSCnJv+/st63pi9BsRRbzEueVKI2L3HkQkuMYl
-        ZuEUGWLvGWMcQBT3kBOWILToGdxouPtbxfMaK3nvCIu589QYawrnHY/+4JrQUH7wj4AtNjq4Szkfz
-        /KTHSopA==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1mzmwI-008ZSK-3J; Tue, 21 Dec 2021 21:44:54 +0000
-Date:   Tue, 21 Dec 2021 13:44:54 -0800
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Eliyam Levy <eliyamlevy@gmail.com>
-Cc:     linux-modules@vger.kernel.org, linux-newbie@vger.kernel.org
-Subject: Re: INVALID ELF STRUCTURES
-Message-ID: <YcJK1rPwQVu/pX+S@bombadil.infradead.org>
-References: <CAD9KO1=gjhe1sc3MNyc3QawQgJAgwptFgsTZE903PCi3_DEyPg@mail.gmail.com>
+        Tue, 28 Dec 2021 16:30:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1640727046;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=TmPHzOmiJGVn1hY9fDWt3sR60NPPlr53zTWB5QI+n2c=;
+        b=U6MtJ/jYHjj5yIZ56Yuv02kSr16VgsIztMRqHt3bLpuVjSv3mNmi8/rrWxdnsqC6GqO8Yu
+        PgrWdrVQ2+HyKnSfoNvMik6Rh5fh8kMjIHoY1mmgQAn8PnuiNOHH3owDYW4AtLwYR9zEh4
+        XOYCIiZN8RDJeuYHmk+75mWta0HxuVQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-578-R-1QLqsdPJyc9guEtPbVbQ-1; Tue, 28 Dec 2021 16:30:43 -0500
+X-MC-Unique: R-1QLqsdPJyc9guEtPbVbQ-1
+Received: by mail-wr1-f71.google.com with SMTP id h12-20020adfa4cc000000b001a22dceda69so4293812wrb.16
+        for <linux-modules@vger.kernel.org>; Tue, 28 Dec 2021 13:30:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TmPHzOmiJGVn1hY9fDWt3sR60NPPlr53zTWB5QI+n2c=;
+        b=ie/1nG2ckeMJi97QWSnNQwD4TGTBsEE+/ace4vGXqz6yhtBxeKIs+y3iJMGcteb/mR
+         wetWVEUuQwXcDLJ8ZMXrJ36JfPoDJse02dgsP60oyB8AzjrTlJuUcch0jwYCFps8eDBf
+         WB07nu3lm0EVnj//BqjVPzS+I6IqhXbHnef0TrylYmuNshwI4/Ksl1aYVtgglT+hoHFQ
+         ZZiloNhUz6tQnff6MLPJILi50BOHqFRJowh1FHBNdx4ez6bL7qBDB/afMxixOPomKu4j
+         qeaQz2CT6Zwgg2J5nQtF/lx3ANWn/HMZ4hkR7dMWFjImMxiSW9lp6Vzwe1j7mYgq5ySr
+         NAWg==
+X-Gm-Message-State: AOAM531YBdoKt4VZuIZ2Nh4Douap8Wy7qJORHTROus2PTa/uuY8cazfc
+        R+cffA9L+SOPiM8T8saPp11WkAhay9USoYajVLmlzQodrpmALonj/95vzCnQ9y6vUmaxGEFsv/m
+        b8XAp/IWN0K+m430ijObj1sqV
+X-Received: by 2002:a05:600c:1c9f:: with SMTP id k31mr18947008wms.159.1640727042283;
+        Tue, 28 Dec 2021 13:30:42 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJx/sBfzQCmEJF1DFkeaNfOzI/ZDHKguyW+zTfeINumJYsB9/PKw21OUwgIAYdhdX64aJ8zwuA==
+X-Received: by 2002:a05:600c:1c9f:: with SMTP id k31mr18947000wms.159.1640727042133;
+        Tue, 28 Dec 2021 13:30:42 -0800 (PST)
+Received: from localhost (cpc111743-lutn13-2-0-cust979.9-3.cable.virginm.net. [82.17.115.212])
+        by smtp.gmail.com with ESMTPSA id az15sm18319172wmb.47.2021.12.28.13.30.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Dec 2021 13:30:41 -0800 (PST)
+From:   Aaron Tomlin <atomlin@redhat.com>
+To:     mcgrof@kernel.org
+Cc:     cl@linux.com, pmladek@suse.com, mbenes@suse.cz,
+        akpm@linux-foundation.org, jeyu@kernel.org,
+        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
+        atomlin@atomlin.com, ghalat@redhat.com
+Subject: [RFC PATCH 00/12] module: core code clean up
+Date:   Tue, 28 Dec 2021 21:30:29 +0000
+Message-Id: <20211228213041.1356334-1-atomlin@redhat.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <YbKUUJUtjBk/n913@bombadil.infradead.org>
+References: <YbKUUJUtjBk/n913@bombadil.infradead.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD9KO1=gjhe1sc3MNyc3QawQgJAgwptFgsTZE903PCi3_DEyPg@mail.gmail.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Tue, Dec 21, 2021 at 11:54:09AM -0500, Eliyam Levy wrote:
-> Hi,
-> 
-> I'm on Ubuntu 20.04 with kernel version 5.11 and I keep hitting the
-> "Module has invalid ELF structures" error on a kernel module I'm
-> building. I know this is related to the "harden ELF info handling"
-> patch that was introduced. Are there any useful ways to debug this? Is
-> there anything I should be mindful of when building the kernel module
-> to avoid this?
+Hi Luis, Allen,
 
-Look for the already merged patch, "module: change to print useful
-messages from elf_validity_check()".
+I had some free time so decided to make a quick start.
+There is more outstanding; albeit, I wanted to share what
+was accomplished thus far. Unfortunately, nothing has been
+thoroughly tested yet. Please let me know your thoughts.
 
-$ git describe --contains 7fd982f394c42f25a73fe9dfbf1e6b11fa26b40a
-v5.16-rc1~95^2    
 
-  Luis
+Aaron Tomlin (12):
+  module: Move all into module/
+  module: Simple refactor in preparation for split
+  module: Move livepatch support to a separate file
+  module: Move latched RB-tree support to a separate file
+  module: Move arch strict rwx support to a separate file
+  module: Move strict rwx support to a separate file
+  module: Move extra signature support out of core code
+  module: Move kmemleak support to a separate file
+  module: Move kallsyms support into a separate file
+  module: Move procfs support into a separate file
+  module: Move sysfs support into a separate file
+  module: Move kdb_modules list out of core code
+
+ include/linux/module.h                        |   76 +-
+ kernel/Makefile                               |    4 +-
+ kernel/debug/kdb/kdb_main.c                   |    5 +
+ kernel/module-internal.h                      |   31 -
+ kernel/module/Makefile                        |   16 +
+ kernel/module/arch_strict_rwx.c               |   44 +
+ kernel/module/debug_kmemleak.c                |   30 +
+ kernel/module/internal.h                      |  121 ++
+ kernel/module/kallsyms.c                      |  506 ++++++
+ kernel/module/livepatch.c                     |   75 +
+ kernel/{module.c => module/main.c}            | 1616 +----------------
+ kernel/module/procfs.c                        |  111 ++
+ .../signature.c}                              |    0
+ kernel/module/signing.c                       |  120 ++
+ kernel/module/strict_rwx.c                    |   83 +
+ kernel/module/sysfs.c                         |  426 +++++
+ kernel/module/tree_lookup.c                   |  108 ++
+ kernel/module_signing.c                       |   45 -
+ 18 files changed, 1751 insertions(+), 1666 deletions(-)
+ delete mode 100644 kernel/module-internal.h
+ create mode 100644 kernel/module/Makefile
+ create mode 100644 kernel/module/arch_strict_rwx.c
+ create mode 100644 kernel/module/debug_kmemleak.c
+ create mode 100644 kernel/module/internal.h
+ create mode 100644 kernel/module/kallsyms.c
+ create mode 100644 kernel/module/livepatch.c
+ rename kernel/{module.c => module/main.c} (66%)
+ create mode 100644 kernel/module/procfs.c
+ rename kernel/{module_signature.c => module/signature.c} (100%)
+ create mode 100644 kernel/module/signing.c
+ create mode 100644 kernel/module/strict_rwx.c
+ create mode 100644 kernel/module/sysfs.c
+ create mode 100644 kernel/module/tree_lookup.c
+ delete mode 100644 kernel/module_signing.c
+
+-- 
+2.31.1
+
