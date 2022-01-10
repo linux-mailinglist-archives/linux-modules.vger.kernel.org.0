@@ -2,116 +2,84 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2645486DFA
-	for <lists+linux-modules@lfdr.de>; Fri,  7 Jan 2022 00:43:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4198489B6D
+	for <lists+linux-modules@lfdr.de>; Mon, 10 Jan 2022 15:39:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245730AbiAFXnv (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 6 Jan 2022 18:43:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:49164 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1343578AbiAFXnh (ORCPT
+        id S235638AbiAJOjC (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 10 Jan 2022 09:39:02 -0500
+Received: from mail-qv1-f43.google.com ([209.85.219.43]:45844 "EHLO
+        mail-qv1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231196AbiAJOjB (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 6 Jan 2022 18:43:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1641512616;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=F1lOBRpMAGkWz55gR1tG3JnxjneKMph16mPglikuVp0=;
-        b=A6M+HOLwnuwkj2SRIXZgEkD4a1o4htB4XXh6yB7RUjgcv6SC7QbbqJXnyUft3cnjAuLKTz
-        ap3B8EV6bX6hEuD4gwclck62kxq8w4UhsPozHx0q0hOyc0NrauV2F7eTEHJzMa3bMju6Wy
-        qornxwflcGvXt5rDADR8nfRa2t5FEgw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-296-T-xifXzuOFa1An6DFGXusA-1; Thu, 06 Jan 2022 18:43:35 -0500
-X-MC-Unique: T-xifXzuOFa1An6DFGXusA-1
-Received: by mail-wm1-f71.google.com with SMTP id az9-20020a05600c600900b0034692565ca8so2690422wmb.9
-        for <linux-modules@vger.kernel.org>; Thu, 06 Jan 2022 15:43:35 -0800 (PST)
+        Mon, 10 Jan 2022 09:39:01 -0500
+Received: by mail-qv1-f43.google.com with SMTP id a9so14599906qvd.12;
+        Mon, 10 Jan 2022 06:39:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=F1lOBRpMAGkWz55gR1tG3JnxjneKMph16mPglikuVp0=;
-        b=hm/2MpzeI6fYZNYjmuXlzkCI6nJYrN52A+myxgTXmRxAqF36KfbMYdzuPQ3hYgGKp8
-         wv2pgFH8YlDE4v8NjsrocO5rRDcJ1RJFMU5SJTm9H0ME+/l12rVVUg15mpUYVfPf5+GV
-         eblhU1rCt7K2H2iR6smBIsBQNJqKebsE7PhktYWYFVH2i+9uh//pZNzW4ZePGy8oNfrp
-         vnRgeb4ifa7A8OLnvzfAQ/BM1twlzoQBsWmdgjiMHQNcSswRTXRiCLAuLYHpoTIxIpk6
-         w09qtb1xJ2gntbJotXWNtDRkbhVvk/C5o5hpDXJfJ+ZyuEGGi2bXuU8VgNgMK8JpSsnh
-         tfyQ==
-X-Gm-Message-State: AOAM532U6jLW/PtP+RX9Dxv+Niwql8EX/qMkmRv6siAWugRF8XWdEBTI
-        PA0uT3HaLl6IwtQdCoI+llSaDrwkXJqMGF6iZDVkg4wS8oKSqa8JxXTm7OETFtGJHyv8nV9BaXy
-        5enrJNyRIjd2GC+OVjOZOmv1v
-X-Received: by 2002:a1c:3b86:: with SMTP id i128mr8934055wma.50.1641512613951;
-        Thu, 06 Jan 2022 15:43:33 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxm34Qkm/iu5cTZq8D+bvs0YhUr+bS4xpiu0coZNklUOksu0Ub+seGzIiaUugWtOgo0PTEvuQ==
-X-Received: by 2002:a1c:3b86:: with SMTP id i128mr8934043wma.50.1641512613780;
-        Thu, 06 Jan 2022 15:43:33 -0800 (PST)
-Received: from localhost (cpc111743-lutn13-2-0-cust979.9-3.cable.virginm.net. [82.17.115.212])
-        by smtp.gmail.com with ESMTPSA id b16sm3289165wmq.41.2022.01.06.15.43.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pO7pYeF0q/KOlSDXskK/am/odc2RYkvEzSsdTjA4sWM=;
+        b=gRTbjgJmxjdCUi7JMQk7WGmiyclPZeWwmgoeu2VyXeCHGgJ9Vz7o/Dk5ijtymrXntb
+         g3M65jKF9TnEdtGpgstLScFbD4OBJfzVwHaHynhg6OUOW2zpVqM+fKYFocDJyUuHeoDz
+         HPsQlsqJihg/rjA2LxB7MUL03k/IavUEby7njHPZa/Ve/31HezB6CLE2qMPxgZ7Z2SwP
+         2tSJtiFZ4XzqzojNTd78hDXNo6bCETKkNsOlyT9wcKu1Zh4EUITJrZjnJhkzUQaLtFTm
+         9JILxMwCgKBv4A89KFQtI1cE1QRvWGn6reomc2kuoOhD6l0QzYx/HFeZcy463gNcMCbF
+         g1Fw==
+X-Gm-Message-State: AOAM533vUXmtCoff9+QHKY+wIY/A0NkDKQMHKO7qVIqr9G7UD4S426mP
+        SwOybfGK2YepZxnpwxHmPsTtROvv6fmNxg==
+X-Google-Smtp-Source: ABdhPJym7QBoq8Zjc+aKSJ0iSTaFS10mpRbgvEa+KZAl3mkEJk7GZpOWuY2DnxGzvLYA1H/MIZou1A==
+X-Received: by 2002:a05:6214:2a88:: with SMTP id jr8mr69282684qvb.18.1641825540470;
+        Mon, 10 Jan 2022 06:39:00 -0800 (PST)
+Received: from dev0025.ash9.facebook.com (fwdproxy-ash-006.fbsv.net. [2a03:2880:20ff:6::face:b00c])
+        by smtp.gmail.com with ESMTPSA id k8sm4931234qtx.35.2022.01.10.06.38.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 15:43:33 -0800 (PST)
-From:   Aaron Tomlin <atomlin@redhat.com>
-To:     mcgrof@kernel.org
-Cc:     cl@linux.com, pmladek@suse.com, mbenes@suse.cz,
-        akpm@linux-foundation.org, jeyu@kernel.org,
-        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
-        atomlin@atomlin.com, ghalat@redhat.com, allen.lkml@gmail.com
-Subject: [RFC PATCH v2 12/13] module: Move kdb_modules list out of core code
-Date:   Thu,  6 Jan 2022 23:43:18 +0000
-Message-Id: <20220106234319.2067842-13-atomlin@redhat.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20220106234319.2067842-1-atomlin@redhat.com>
-References: <20220106234319.2067842-1-atomlin@redhat.com>
+        Mon, 10 Jan 2022 06:39:00 -0800 (PST)
+Date:   Mon, 10 Jan 2022 06:38:58 -0800
+From:   David Vernet <void@manifault.com>
+To:     Petr Mladek <pmladek@suse.com>
+Cc:     live-patching@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jpoimboe@redhat.com, jikos@kernel.org, mbenes@suse.cz,
+        joe.lawrence@redhat.com, linux-modules@vger.kernel.org,
+        mcgrof@kernel.org, jeyu@kernel.org, bpf@vger.kernel.org,
+        ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org,
+        kafai@fb.com, songliubraving@fb.com, yhs@fb.com,
+        john.fastabend@gmail.com, kpsingh@kernel.org,
+        netdev@vger.kernel.org, memxor@gmail.com, clm@fb.com
+Subject: Re: [PATCH] livepatch: Avoid CPU hogging with cond_resched
+Message-ID: <YdxFAshozmxfiLd/@dev0025.ash9.facebook.com>
+References: <Yc0yskk0m2bePLu6@dev0025.ash9.facebook.com>
+ <YdMej8L0bqe+XetW@alley>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YdMej8L0bqe+XetW@alley>
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-No functional change.
+Apologies all for the delayed response -- I was still on holiday last week.
 
-This patch migrates kdb_modules list to core kdb code
-since the list of added/or loaded modules is no longer
-private.
+Petr Mladek <pmladek@suse.com> wrote on Mon [2022-Jan-03 17:04:31 +0100]:
+> > > It turns out that symbol lookups often take up the most CPU time when
+> > > enabling and disabling a patch, and may hog the CPU and cause other tasks
+> > > on that CPU's runqueue to starve -- even in paths where interrupts are
+> > > enabled.  For example, under certain workloads, enabling a KLP patch with
+> > > many objects or functions may cause ksoftirqd to be starved, and thus for
+>     ^^^^^^^^^^^^^^^^^^^^^^^^^
+> This suggests that a single kallsyms_on_each_symbol() is not a big
+> problem. cond_resched() might be called non-necessarily often there.
+> I wonder if it would be enough to add cond_resched() into the two
+> loops calling klp_find_object_symbol().
 
-Signed-off-by: Aaron Tomlin <atomlin@redhat.com>
----
- kernel/debug/kdb/kdb_main.c | 5 +++++
- kernel/module/main.c        | 4 ----
- 2 files changed, 5 insertions(+), 4 deletions(-)
+In the initial version of the patch I was intending to send out, I actually
+had the cond_resched() in klp_find_object_symbol(). Having it there did
+appear to fix the ksoftirqd starvation issue, but I elected to put it in
+klp_find_object_symbol() after Chris (cc'd) suggested it because
+cond_resched() is so lightweight, and it didn't affect the runtime for
+livepatching in my experiments.
 
-diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
-index d8ee5647b732..ef61fb65671a 100644
---- a/kernel/debug/kdb/kdb_main.c
-+++ b/kernel/debug/kdb/kdb_main.c
-@@ -60,6 +60,11 @@ EXPORT_SYMBOL(kdb_grepping_flag);
- int kdb_grep_leading;
- int kdb_grep_trailing;
- 
-+#ifdef CONFIG_MODULES
-+extern struct list_head modules;
-+struct list_head *kdb_modules = &modules; /* kdb needs the list of modules */
-+#endif /* CONFIG_MODULES */
-+
- /*
-  * Kernel debugger state flags
-  */
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 354fb2697188..09012246907a 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -95,10 +95,6 @@ static void mod_update_bounds(struct module *mod)
- 		__mod_update_bounds(mod->init_layout.base, mod->init_layout.size);
- }
- 
--#ifdef CONFIG_KGDB_KDB
--struct list_head *kdb_modules = &modules; /* kdb needs the list of modules */
--#endif /* CONFIG_KGDB_KDB */
--
- static void module_assert_mutex_or_preempt(void)
- {
- #ifdef CONFIG_LOCKDEP
--- 
-2.31.1
+> That said, kallsyms_on_each_symbol() is a slow path and there might
+> be many symbols. So, it might be the right place.
 
+Yes, my thinking was that because it didn't seem to affect throughput, and
+because it would could potentially cause the same ssue to occur if it were
+ever called elsewhere, that this was the correct place for it.
