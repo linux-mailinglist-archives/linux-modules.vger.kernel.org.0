@@ -2,227 +2,170 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D4734B8265
-	for <lists+linux-modules@lfdr.de>; Wed, 16 Feb 2022 08:57:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D97534B8646
+	for <lists+linux-modules@lfdr.de>; Wed, 16 Feb 2022 11:57:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbiBPH4Y (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 16 Feb 2022 02:56:24 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:55310 "EHLO
+        id S231184AbiBPK5C (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 16 Feb 2022 05:57:02 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231344AbiBPH4W (ORCPT
+        with ESMTP id S231208AbiBPK5A (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 16 Feb 2022 02:56:22 -0500
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5311F637C
-        for <linux-modules@vger.kernel.org>; Tue, 15 Feb 2022 23:56:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1644998169; x=1676534169;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=MpJOH/t0Sfkzz+a6Bqj3h/Tiy4jt+r250Ls7GYE+VjA=;
-  b=Q9Y6GNCPSwzBhGubjM0ts9he96GfUaCl5A4qmcWyNcw6GLpalAaeYgko
-   WEwtqQM5LRQDk/fo6PI8yWxWKVK+fvvPiIwtRfaeDFRIKjWDBaE4gSDV+
-   PMPEiFqJ8JWZmjGSocUqf8SrHJYfY2qg7UfIIYh5pmx/CTrsVLjbPDfBO
-   BaYvu95dujaO4zBTKa7uaE3vmIcH0C8M1YO+DYEikFIB3w1JcR9a/eIfg
-   usMcFesapmqDq+cw00GFmBHg8/PQQ5nFFczt7GFmOLvXecLGbN5rjT6CJ
-   yNd9RScR0fEdNclzbMDam5Kn+869KE9KPBmAWI+oTytrvabqJ7xu50BI1
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10259"; a="311286606"
-X-IronPort-AV: E=Sophos;i="5.88,373,1635231600"; 
-   d="scan'208";a="311286606"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 23:56:04 -0800
-X-IronPort-AV: E=Sophos;i="5.88,373,1635231600"; 
-   d="scan'208";a="636377652"
-Received: from dcanchal-mobl1.ger.corp.intel.com (HELO ldmartin-desk2.intel.com) ([10.212.233.152])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 23:56:04 -0800
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     linux-modules@vger.kernel.org
-Cc:     Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 8/8] modinfo: Allow to force arg as module name
-Date:   Tue, 15 Feb 2022 23:55:33 -0800
-Message-Id: <20220216075533.185693-9-lucas.demarchi@intel.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220216075533.185693-1-lucas.demarchi@intel.com>
-References: <20220216075533.185693-1-lucas.demarchi@intel.com>
+        Wed, 16 Feb 2022 05:57:00 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2B19659E;
+        Wed, 16 Feb 2022 02:56:48 -0800 (PST)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out2.suse.de (Postfix) with ESMTP id 87FBA1F394;
+        Wed, 16 Feb 2022 10:56:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1645009007; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=czkTwuPVNY+CGK+iaNWgAo7tiJWsOUPbMC8dAAd2acc=;
+        b=J3Y97nwkpCZ7yBjFC/lwyP8P7M39QAd1xriK7UqEWU1S4SAFOX5hHDTKY6IppSIb7v5pLE
+        YtYkKR7imTavHOTWbDb3xYh6hHquisyVI9D9jWX1PrfmGfAfIFPdBQDWqLFXQi5uUUSWB1
+        DvuPKc5K1aRC0+f/HCsc4auYBCVHABA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1645009007;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=czkTwuPVNY+CGK+iaNWgAo7tiJWsOUPbMC8dAAd2acc=;
+        b=XoXSVg9x0SbI71JVqNQjmgQuHmwkjv1Dt86matdSZvHZIoNH6UqIwN7/vkuQn6Aen4DpRr
+        pd4rSLFRsHDSFxAA==
+Received: from kunlun.suse.cz (unknown [10.100.128.76])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by relay2.suse.de (Postfix) with ESMTPS id 0BC1BA3B88;
+        Wed, 16 Feb 2022 10:56:47 +0000 (UTC)
+Date:   Wed, 16 Feb 2022 11:56:45 +0100
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Mimi Zohar <zohar@linux.ibm.com>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Philipp Rudo <prudo@redhat.com>, Baoquan He <bhe@redhat.com>,
+        Alexander Egorenkov <egorenar@linux.ibm.com>,
+        AKASHI Takahiro <takahiro.akashi@linaro.org>,
+        James Morse <james.morse@arm.com>,
+        Dave Young <dyoung@redhat.com>,
+        Kairui Song <kasong@redhat.com>,
+        Martin Schwidefsky <schwidefsky@de.ibm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-modules@vger.kernel.org,
+        keyrings@vger.kernel.org, linux-security-module@vger.kernel.org,
+        stable@kernel.org, Eric Snowberg <eric.snowberg@oracle.com>
+Subject: Re: [PATCH 4/4] module, KEYS: Make use of platform keyring for
+ signature verification
+Message-ID: <20220216105645.GS3113@kunlun.suse.cz>
+References: <cover.1644953683.git.msuchanek@suse.de>
+ <840433bc93a58d6dfc4d96c34c0c3b158a0e669d.1644953683.git.msuchanek@suse.de>
+ <3e39412657a4b0839bcf38544d591959e89877b8.camel@linux.ibm.com>
+ <20220215204730.GQ3113@kunlun.suse.cz>
+ <c3f6f6c8a9db34cc1cdc1000f9272c2b36445e15.camel@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_FILL_THIS_FORM_SHORT,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <c3f6f6c8a9db34cc1cdc1000f9272c2b36445e15.camel@linux.ibm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-If the Linux kernel or userspace sets an alias with the same name as a
-module, they force the tools to use that. However in some situations it
-may be desired to query the module itself. Getting the module
-information through modinfo is one such situation. So, add a option to
-modinfo to explicitly instruct it to handle the argument as a module
-name.
+On Tue, Feb 15, 2022 at 05:12:32PM -0500, Mimi Zohar wrote:
+> On Tue, 2022-02-15 at 21:47 +0100, Michal Suchánek wrote:
+> > Hello,
+> > 
+> > On Tue, Feb 15, 2022 at 03:08:18PM -0500, Mimi Zohar wrote:
+> > > [Cc'ing Eric Snowberg]
+> > > 
+> > > Hi Michal,
+> > > 
+> > > On Tue, 2022-02-15 at 20:39 +0100, Michal Suchanek wrote:
+> > > > Commit 278311e417be ("kexec, KEYS: Make use of platform keyring for signature verify")
+> > > > adds support for use of platform keyring in kexec verification but
+> > > > support for modules is missing.
+> > > > 
+> > > > Add support for verification of modules with keys from platform keyring
+> > > > as well.
+> > > 
+> > > Permission for loading the pre-OS keys onto the "platform" keyring and
+> > > using them is limited to verifying the kexec kernel image, nothing
+> > > else.
+> > 
+> > Why is the platform keyring limited to kexec, and nothing else?
+> > 
+> > It should either be used for everything or for nothing. You have the
+> > option to compile it in and then it should be used, and the option to
+> > not compile it in and then it cannot be used.
+> > 
+> > There are two basic use cases:
+> > 
+> > (1) there is a vendor key which is very hard to use so you sign
+> > something small and simple like shim with the vendor key, and sign your
+> > kernel and modules with your own key that's typically enrolled with shim
+> > MOK, and built into the kernel.
+> > 
+> > (2) you import your key into the firmware, and possibly disable the
+> > vendor key. You can load the kernel directly without shim, and then your
+> > signing key is typically in the platform keyring and built into the
+> > kernel.
+> > 
+> > In neither case do I see any reason to use some keyrings for kexec and
+> > other keyrings for modules.
+> 
+> When building your own kernel there isn't a problem.  Additional keys
+> may be built into the kernel image, which are loaded onto the
+> ".builtin_trusted_keys" keyring, and may be stored in MOK.  Normally
+> different keys are used for signing the kernel image and kernel
 
-Example, when trying to output information about the crc32 module that
-is builtin:
+That's actually not normal.
 
-	$ modinfo crc32
-	filename:       /lib/modules/5.15.19-1-MANJARO/kernel/arch/x86/crypto/crc32-pclmul.ko.zst
-	alias:          crypto-crc32-pclmul
-	alias:          crc32-pclmul
-	alias:          crypto-crc32
-	alias:          crc32
-	license:        GPL
-	author:         Alexander Boyko <alexander_boyko@xyratex.com>
-	srcversion:     B6B2FF9236731E69418A2E5
-	alias:          cpu:type:x86,ven*fam*mod*:feature:*0081*
-	depends:
-	retpoline:      Y
-	intree:         Y
-	name:           crc32_pclmul
-	vermagic:       5.15.19-1-MANJARO SMP preempt mod_unload
-	sig_id:         PKCS#7
-	signer:         Build time autogenerated kernel key
-	sig_key:        77:FB:AA:BD:48:78:A4:C6:56:18:9A:7E:A6:F3:29:3E:C5:6B:E9:37
-	sig_hashalgo:   sha512
-	signature:      30:65:02:31:00:B0:D4:49:9D:1D:F1:71:4C:3C:BB:70:B2:3E:46:5D:
-			38:5A:F1:00:95:FD:7A:96:C4:2C:24:35:A2:1B:0B:A8:1C:29:6F:02:
-			7A:68:EE:BA:A4:1C:01:4B:86:39:15:3E:66:02:30:7F:7A:66:5E:F2:
-			2F:98:73:3D:AD:96:66:81:8B:94:6E:F3:3F:44:0F:85:E1:73:3A:9E:
-			F9:C4:BE:9B:88:02:BD:83:04:B9:2E:72:0B:93:BC:82:B6:A1:1B:6A:
-			C2:ED:8C
-	filename:       /lib/modules/5.15.19-1-MANJARO/kernel/crypto/crc32_generic.ko.zst
-	alias:          crypto-crc32-generic
-	alias:          crc32-generic
-	alias:          crypto-crc32
-	alias:          crc32
-	license:        GPL
-	description:    CRC32 calculations wrapper for lib/crc32
-	author:         Alexander Boyko <alexander_boyko@xyratex.com>
-	srcversion:     F08036C38DDB06BCD1E6091
-	depends:
-	retpoline:      Y
-	intree:         Y
-	name:           crc32_generic
-	vermagic:       5.15.19-1-MANJARO SMP preempt mod_unload
-	sig_id:         PKCS#7
-	signer:         Build time autogenerated kernel key
-	sig_key:        77:FB:AA:BD:48:78:A4:C6:56:18:9A:7E:A6:F3:29:3E:C5:6B:E9:37
-	sig_hashalgo:   sha512
-	signature:      30:65:02:31:00:E3:9E:C8:80:15:0E:D7:74:96:B5:25:EA:32:F7:DF:
-			E9:FC:3C:82:D9:B9:B9:37:C5:20:8D:06:31:02:62:B3:54:E8:DF:F2:
-			7E:E2:7C:A4:CF:49:17:CB:75:DF:2C:7A:2F:02:30:25:DE:7C:2A:2C:
-			97:3F:65:16:76:B3:71:FB:62:DB:8F:F3:33:65:77:98:F3:57:ED:D7:
-			87:78:FF:C2:04:55:70:00:10:63:1E:B2:FE:22:D8:E5:6D:5F:95:4E:
-			7D:2C:6B
+> modules.  Kernel modules can be signed by the build time ephemeral
+> kernel module signing key, which is built into the kernel and
+> automatically loaded onto the ".builtin_trusted_keys" keyring.
 
-That is because the Linux kernel exports "crc32" as an alias to those modules,
-besides being a module itself:
+Right, there is this advice to use ephemeral key to sign modules.
 
-	$ grep crc32 /lib/modules/$(uname -r)/modules.builtin
-	kernel/lib/crc32.ko
-	$ $ grep "alias crc32 " /lib/modules/$(uname -r)/modules.alias
-	alias crc32 crc32_pclmul
-	alias crc32 crc32_generic
+I don't think that's a sound advice in general. It covers only the
+special case when you build the kernel once, only rebuild the whole
+kernel and never just one module, don't use any 3rd party module, don't
+bother signing firmware (I am not sure that is supported right now but
+if you are into integrity and stuff you can see that it makes sense to
+sign it, too).
 
-With the new -m|--modname option it's possible to query the information about this (builtin):
+And you need to manage the key you use for the kernel signing, anyway.
+Sure, you could use the same ephemeral key as for the modules, enroll
+it, and shred it but then it is NOT a key different from the one you use
+for modules.
 
-	$ modinfo --modname crc32
-	module explicitly:
-	name:           crc32
-	filename:       (builtin)
-	license:        GPL
-	file:           lib/crc32
-	description:    Various CRC32 calculations
-	author:         Matt Domsch <Matt_Domsch@dell.com>
----
- tools/modinfo.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+Or you could maintain a long-lived key for the kernel, but if you do I
+do NOT see any reason to not use it also for modules, in-tree and
+out-of-tree.
 
-diff --git a/tools/modinfo.c b/tools/modinfo.c
-index f51b7e4..d0aab20 100644
---- a/tools/modinfo.c
-+++ b/tools/modinfo.c
-@@ -293,6 +293,24 @@ static int modinfo_path_do(struct kmod_ctx *ctx, const char *path)
- 	return err;
- }
- 
-+static int modinfo_name_do(struct kmod_ctx *ctx, const char *name)
-+{
-+	struct kmod_module *mod = NULL;
-+	int err;
-+
-+	err = kmod_module_new_from_name_lookup(ctx, name, &mod);
-+	if (err < 0 || mod == NULL) {
-+		ERR("Module name %s not found.\n", name);
-+		return err < 0 ? err : -ENOENT;
-+	}
-+
-+	err = modinfo_do(mod);
-+	kmod_module_unref(mod);
-+
-+	return err;
-+}
-+
-+
- static int modinfo_alias_do(struct kmod_ctx *ctx, const char *alias)
- {
- 	struct kmod_list *l, *list = NULL;
-@@ -318,7 +336,7 @@ static int modinfo_alias_do(struct kmod_ctx *ctx, const char *alias)
- 	return err;
- }
- 
--static const char cmdopts_s[] = "adlpn0F:k:b:Vh";
-+static const char cmdopts_s[] = "adlpn0mF:k:b:Vh";
- static const struct option cmdopts[] = {
- 	{"author", no_argument, 0, 'a'},
- 	{"description", no_argument, 0, 'd'},
-@@ -326,6 +344,7 @@ static const struct option cmdopts[] = {
- 	{"parameters", no_argument, 0, 'p'},
- 	{"filename", no_argument, 0, 'n'},
- 	{"null", no_argument, 0, '0'},
-+	{"modname", no_argument, 0, 'm'},
- 	{"field", required_argument, 0, 'F'},
- 	{"set-version", required_argument, 0, 'k'},
- 	{"basedir", required_argument, 0, 'b'},
-@@ -345,6 +364,7 @@ static void help(void)
- 		"\t-p, --parameters            Print only 'parm'\n"
- 		"\t-n, --filename              Print only 'filename'\n"
- 		"\t-0, --null                  Use \\0 instead of \\n\n"
-+		"\t-m, --modname               Handle argument as module name instead of alias or filename\n"
- 		"\t-F, --field=FIELD           Print only provided FIELD\n"
- 		"\t-k, --set-version=VERSION   Use VERSION instead of `uname -r`\n"
- 		"\t-b, --basedir=DIR           Use DIR as filesystem root for /lib/modules\n"
-@@ -372,6 +392,7 @@ static int do_modinfo(int argc, char *argv[])
- 	const char *kversion = NULL;
- 	const char *root = NULL;
- 	const char *null_config = NULL;
-+	bool arg_is_modname = false;
- 	int i, err;
- 
- 	for (;;) {
-@@ -398,6 +419,9 @@ static int do_modinfo(int argc, char *argv[])
- 		case '0':
- 			separator = '\0';
- 			break;
-+		case 'm':
-+			arg_is_modname = true;
-+			break;
- 		case 'F':
- 			field = optarg;
- 			break;
-@@ -454,7 +478,9 @@ static int do_modinfo(int argc, char *argv[])
- 		const char *name = argv[i];
- 		int r;
- 
--		if (is_module_filename(name))
-+		if (arg_is_modname)
-+			r = modinfo_name_do(ctx, name);
-+		else if (is_module_filename(name))
- 			r = modinfo_path_do(ctx, name);
- 		else
- 			r = modinfo_alias_do(ctx, name);
--- 
-2.35.1
+> Similarly distros build the kernel module signing key into the kernel,
+> which is built into the kernel and loaded onto the
+> ".builtin_trusted_keys" keyring.  By loading the pre-OS keys onto the
+> ".platform" keyring,  kexec may verify the distro or other signed
+> kernel images.
 
+Which are signed by the same key as the modules so there is no reason to
+load the platform key at all. I don't think loading shim with kexec is
+supported.
+
+Thanks
+
+Michal
