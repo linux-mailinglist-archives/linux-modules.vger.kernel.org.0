@@ -2,83 +2,74 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D25C4BB409
-	for <lists+linux-modules@lfdr.de>; Fri, 18 Feb 2022 09:20:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E221A4BBC36
+	for <lists+linux-modules@lfdr.de>; Fri, 18 Feb 2022 16:31:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232458AbiBRIVG (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 18 Feb 2022 03:21:06 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55348 "EHLO
+        id S237041AbiBRPcA convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 18 Feb 2022 10:32:00 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230221AbiBRIVD (ORCPT
+        with ESMTP id S237042AbiBRPb6 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 18 Feb 2022 03:21:03 -0500
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB82E25B2F7;
-        Fri, 18 Feb 2022 00:20:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645172446; x=1676708446;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5ejHrB5B466U6W+fI4GxsWg/8qpDAbd2bstCAFg1MpY=;
-  b=DesFvz0AAfxYpo6A+wazO9ViMVpCMtIHCj1JdwxvlrAtsy0eUxAKnK4F
-   IBtT6QHvmG26x/5RwHAAtGkHRDIIMcRPX4YJUB7VVlaOXLv9KH2LDVq3n
-   +qrQ5H5+jCSjmcdIwT1zNojTZeLZFzlHLq47Gt/Zf1o0pMzClZyoTSL/b
-   ++xBBTjlKepEMH+63dwB1jnZuVv8KvaIYERQzJCWXxbViMr0z+pccBf18
-   zzBZRV8lNF4oSQwVGj0dYeNHDS6fxN298X9JX4RhA48Uguf2CpfOCGkmY
-   o/YCKamHNNro54raPMJIgv+SR29OqXcn5IR63E2+JAoZW+wEIq/poHM39
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10261"; a="275675307"
-X-IronPort-AV: E=Sophos;i="5.88,378,1635231600"; 
-   d="scan'208";a="275675307"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 00:20:46 -0800
-X-IronPort-AV: E=Sophos;i="5.88,378,1635231600"; 
-   d="scan'208";a="505115448"
-Received: from svaddara-mobl.amr.corp.intel.com (HELO ldmartin-desk2) ([10.212.147.37])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 00:20:45 -0800
-Date:   Fri, 18 Feb 2022 00:20:46 -0800
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     Luis Chamberlain <mcgrof@kernel.org>
-Cc:     Lucas De Marchi <lucas.de.marchi@gmail.com>,
-        linux-modules <linux-modules@vger.kernel.org>,
-        live-patching@vger.kernel.org, fstests@vger.kernel.org,
-        linux-block@vger.kernel.org, hare@suse.de, dgilbert@interlog.com,
-        Jessica Yu <jeyu@kernel.org>, osandov@fb.com,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 0/3] kmod: add patient module removal support
-Message-ID: <20220218082046.c33zz64owau3oiln@ldmartin-desk2>
-X-Patchwork-Hint: comment
-References: <20210810051602.3067384-1-mcgrof@kernel.org>
- <YUIwKUXc7YbVAqut@bombadil.infradead.org>
- <CAKi4VAKbN31hqfg5EHZO=T_Hdkv3uhzarFLuEZO4b5Zm+TF77Q@mail.gmail.com>
- <Yg4Djc+vqRbMFRto@bombadil.infradead.org>
+        Fri, 18 Feb 2022 10:31:58 -0500
+Received: from fjxxll.cn (unknown [IPv6:240e:37a:2bb:f700:211:32ff:fe2c:a785])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5885B115D
+        for <linux-modules@vger.kernel.org>; Fri, 18 Feb 2022 07:31:40 -0800 (PST)
+Received: from Unknown (unknown [186.211.187.50])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by fjxxll.cn (Postfix) with ESMTPSA id 2E356654F10A;
+        Thu, 17 Feb 2022 22:20:52 +0800 (CST)
+Message-ID: <D7D264373CE8C675A9ACE558BC94578E@rbyvuhz>
+Reply-To: "Fredrik Elvebakk" <fcresswell9@gmail.com>
+From:   "Fredrik Elvebakk" <investment@dnb.no>
+Subject: Re:
+Date:   Thu, 17 Feb 2022 06:18:41 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <Yg4Djc+vqRbMFRto@bombadil.infradead.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+        format=flowed;
+        charset="windows-1251";
+        reply-type=original
+Content-Transfer-Encoding: 8BIT
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Live Mail 15.4.3538.513
+X-MimeOLE: Produced By Microsoft MimeOLE V15.4.3538.513
+X-Spam-Status: Yes, score=7.6 required=5.0 tests=BAYES_50,
+        FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,MISSING_HEADERS,
+        RDNS_NONE,REPLYTO_WITHOUT_TO_CC,SPF_HELO_NONE,SPF_SOFTFAIL,
+        STOX_REPLY_TYPE,T_SCC_BODY_TEXT_LINE,XPRIO autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.4 STOX_REPLY_TYPE No description available.
+        *  1.0 MISSING_HEADERS Missing To: header
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [fcresswell9[at]gmail.com]
+        *  0.7 SPF_SOFTFAIL SPF: sender does not match SPF record (softfail)
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  1.6 REPLYTO_WITHOUT_TO_CC No description available.
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.8 RDNS_NONE Delivered to internal network by a host with no rDNS
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+        *  0.0 XPRIO Has X-Priority header
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu, Feb 17, 2022 at 12:13:01AM -0800, Luis Chamberlain wrote:
->On Mon, Sep 20, 2021 at 10:51:46PM -0700, Lucas De Marchi wrote:
->> On Wed, Sep 15, 2021 at 10:41 AM Luis Chamberlain <mcgrof@kernel.org> wrote:
->> >
->> > *Friendly poke*
->>
->> Sorry for the delay. Let me take a look in detail tomorrow.
->
->*Friendly poke*
+Hello,
 
-oh, I dropped the ball here, sorry. Then I got busy with i915 and other
-projects. Let me take a look again at your implementation and respin it
+Am Fredrik Elvebakk an Investment Manager from Norway. I wish to solicit 
+your interest in an investment project that is currently ongoing in my 
+company (DNB); It is a short term investment with good returns. Simply 
+reply for me to confirm the validity of your email so i shall give you 
+comprehensive details about the project.
 
-Lucas De Marchi
->
->  Luis
+Best Regards,
+Fredrik Elvebakk
+Business Consultant
