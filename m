@@ -2,66 +2,59 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE184BF5DD
-	for <lists+linux-modules@lfdr.de>; Tue, 22 Feb 2022 11:33:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C1404BF63A
+	for <lists+linux-modules@lfdr.de>; Tue, 22 Feb 2022 11:40:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231153AbiBVKdS (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 22 Feb 2022 05:33:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59122 "EHLO
+        id S231350AbiBVKkE (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 22 Feb 2022 05:40:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbiBVKdQ (ORCPT
+        with ESMTP id S231338AbiBVKkC (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:33:16 -0500
+        Tue, 22 Feb 2022 05:40:02 -0500
 Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D59159E9C;
-        Tue, 22 Feb 2022 02:32:51 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35DDF1520E8;
+        Tue, 22 Feb 2022 02:39:37 -0800 (PST)
 Received: from localhost (mailhub3.si.c-s.fr [172.26.127.67])
-        by localhost (Postfix) with ESMTP id 4K2wV94QtFz9sSj;
-        Tue, 22 Feb 2022 11:32:49 +0100 (CET)
+        by localhost (Postfix) with ESMTP id 4K2wdj50Q3z9sT5;
+        Tue, 22 Feb 2022 11:39:21 +0100 (CET)
 X-Virus-Scanned: amavisd-new at c-s.fr
 Received: from pegase2.c-s.fr ([172.26.127.65])
         by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id KhXs1n8nazcn; Tue, 22 Feb 2022 11:32:49 +0100 (CET)
+        with ESMTP id jHFHTioKnTHE; Tue, 22 Feb 2022 11:39:21 +0100 (CET)
 Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-        by pegase2.c-s.fr (Postfix) with ESMTP id 4K2wV93ZFcz9sS4;
-        Tue, 22 Feb 2022 11:32:49 +0100 (CET)
+        by pegase2.c-s.fr (Postfix) with ESMTP id 4K2wdb75Wnz9sT7;
+        Tue, 22 Feb 2022 11:39:15 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id 678BE8B781;
-        Tue, 22 Feb 2022 11:32:49 +0100 (CET)
+        by messagerie.si.c-s.fr (Postfix) with ESMTP id DD0808B779;
+        Tue, 22 Feb 2022 11:39:15 +0100 (CET)
 X-Virus-Scanned: amavisd-new at c-s.fr
 Received: from messagerie.si.c-s.fr ([127.0.0.1])
         by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id aAHTjz21EQky; Tue, 22 Feb 2022 11:32:49 +0100 (CET)
+        with ESMTP id AkWqTYERrSeL; Tue, 22 Feb 2022 11:39:15 +0100 (CET)
 Received: from PO20335.IDSI0.si.c-s.fr (unknown [172.25.230.108])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id 290468B77B;
-        Tue, 22 Feb 2022 11:32:49 +0100 (CET)
+        by messagerie.si.c-s.fr (Postfix) with ESMTP id A466F8B778;
+        Tue, 22 Feb 2022 11:39:15 +0100 (CET)
 Received: from PO20335.IDSI0.si.c-s.fr (localhost [127.0.0.1])
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.16.1) with ESMTPS id 21MAWiFp1075982
+        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.16.1) with ESMTPS id 21MAd6mW1076201
         (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-        Tue, 22 Feb 2022 11:32:44 +0100
+        Tue, 22 Feb 2022 11:39:06 +0100
 Received: (from chleroy@localhost)
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.17.1/Submit) id 21MAWhg21075981;
-        Tue, 22 Feb 2022 11:32:43 +0100
+        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.17.1/Submit) id 21MAd61Y1076200;
+        Tue, 22 Feb 2022 11:39:06 +0100
 X-Authentication-Warning: PO20335.IDSI0.si.c-s.fr: chleroy set sender to christophe.leroy@csgroup.eu using -f
 From:   Christophe Leroy <christophe.leroy@csgroup.eu>
 To:     Aaron Tomlin <atomlin@redhat.com>,
         Luis Chamberlain <mcgrof@kernel.org>,
-        Jessica Yu <jeyu@kernel.org>
+        linux-modules@vger.kernel.org
 Cc:     Christophe Leroy <christophe.leroy@csgroup.eu>,
-        linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        kgdb-bugreport@lists.sourceforge.net, linux-mm@kvack.org,
-        linux-arch@vger.kernel.org, linux-modules@vger.kernel.org,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>
-Subject: [PATCH v4 6/6] powerpc: Select ARCH_WANTS_MODULES_DATA_IN_VMALLOC on book3s/32 and 8xx
-Date:   Tue, 22 Feb 2022 11:32:20 +0100
-Message-Id: <bb3d7fa8b4f52d0942240b5d95041be8909a7daa.1645525635.git.christophe.leroy@csgroup.eu>
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/6] Miscellaneous cleanups
+Date:   Tue, 22 Feb 2022 11:38:54 +0100
+Message-Id: <cover.1645526008.git.christophe.leroy@csgroup.eu>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1645525635.git.christophe.leroy@csgroup.eu>
-References: <cover.1645525635.git.christophe.leroy@csgroup.eu>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1645525928; l=1645; s=20211009; h=from:subject:message-id; bh=K04OWtjguCoft4Etc2/16pdJhJKZWZgWbhOpnNSgE7U=; b=hpk03SBCszNo742+2VK/eQLT92kOJCrSS+maM/ldh4eoCtbxQ0D87Y7BYTqu+2LyHwxlc99CUMOc cc433DAAB/dzMLBXJGZIifit9O7AQfafd+1sMzIYAzRMqytJi3zJ
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1645526317; l=1607; s=20211009; h=from:subject:message-id; bh=cKv9KKgoBNSylrpIT7tpBILHSR+/VwOi4Ee53d73y/M=; b=3G8kaiPC30bMdAc7W04K5X+LfCarmXMwNbhA7Rw1TOD784E36VjuZ2j4ZyQJIjRfbd3WZhncdg3T 7oGR42phCX2F6ScuKbctOZ8xOUz6xS1TFRysSYjSC9fgYtorsCSy
 X-Developer-Key: i=christophe.leroy@csgroup.eu; a=ed25519; pk=HIzTzUj91asvincQGOFx6+ZF5AoUuP9GdOtQChs7Mm0=
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
@@ -72,47 +65,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-book3s/32 and 8xx have a separate area for allocating modules,
-defined by MODULES_VADDR / MODULES_END.
+This series applies on top of my series "Allocate module text and data separately" v4.
 
-On book3s/32, it is not possible to protect against execution
-on a page basis. A full 256M segment is either Exec or NoExec.
-The module area is in an Exec segment while vmalloc area is
-in a NoExec segment.
+It contains some cleanups to the module core.
 
-In order to protect module data against execution, select
-ARCH_WANTS_MODULES_DATA_IN_VMALLOC.
+First patch brings back signature.c out of kernel/module/ as this file
+is not directly linked to modules. Ideally this change should be squashed
+in first patch of Aaron's series.
 
-For the 8xx (and possibly other 32 bits platform in the future),
-there is no such constraint on Exec/NoExec protection, however
-there is a critical distance between kernel functions and callers
-that needs to remain below 32Mbytes in order to avoid costly
-trampolines. By allocating data outside of module area, we
-increase the chance for module text to remain within acceptable
-distance from kernel core text.
+Second patch moves Kconfig's module related stuff in a dedicated Kconfig.
 
-So select ARCH_WANTS_MODULES_DATA_IN_VMALLOC for 8xx as well.
+Patches 3-6 do some cleanup around the settling of modules's layout page flags.
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Paul Mackerras <paulus@samba.org>
----
- arch/powerpc/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+Christophe Leroy (6):
+  module: Have kernel/module/ dedicated to CONFIG_MODULES
+  module: Move module's Kconfig item in kernel/module/
+  module: Make module_enable_x() independent of
+    CONFIG_ARCH_HAS_STRICT_MODULE_RWX
+  module: Move module_enable_x() and frob_text() in strict_rwx.c
+  module: Rework layout alignment to avoid BUG_ON()s
+  module: Rename debug_align() as strict_align()
 
-diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index 28e4047e99e8..478ee49a4fb4 100644
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -156,6 +156,7 @@ config PPC
- 	select ARCH_WANT_IPC_PARSE_VERSION
- 	select ARCH_WANT_IRQS_OFF_ACTIVATE_MM
- 	select ARCH_WANT_LD_ORPHAN_WARN
-+	select ARCH_WANTS_MODULES_DATA_IN_VMALLOC	if PPC_BOOK3S_32 || PPC_8xx
- 	select ARCH_WEAK_RELEASE_ACQUIRE
- 	select BINFMT_ELF
- 	select BUILDTIME_TABLE_SORT
+ init/Kconfig                                  | 286 +-----------------
+ kernel/Makefile                               |   3 +-
+ kernel/module/Kconfig                         | 286 ++++++++++++++++++
+ kernel/module/Makefile                        |   6 +-
+ kernel/module/internal.h                      |  26 +-
+ kernel/module/kallsyms.c                      |   4 +-
+ kernel/module/main.c                          |  58 +---
+ kernel/module/strict_rwx.c                    |  76 ++++-
+ .../signature.c => module_signature.c}        |   0
+ 9 files changed, 377 insertions(+), 368 deletions(-)
+ create mode 100644 kernel/module/Kconfig
+ rename kernel/{module/signature.c => module_signature.c} (100%)
+
 -- 
 2.34.1
 
