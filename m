@@ -2,102 +2,218 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB4CD4BF989
-	for <lists+linux-modules@lfdr.de>; Tue, 22 Feb 2022 14:37:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 293734BFA81
+	for <lists+linux-modules@lfdr.de>; Tue, 22 Feb 2022 15:13:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230521AbiBVNhk (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 22 Feb 2022 08:37:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38646 "EHLO
+        id S232729AbiBVONf (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 22 Feb 2022 09:13:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231535AbiBVNhj (ORCPT
+        with ESMTP id S232146AbiBVONe (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 22 Feb 2022 08:37:39 -0500
-Received: from p3plsmtpa07-06.prod.phx3.secureserver.net (p3plsmtpa07-06.prod.phx3.secureserver.net [173.201.192.235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC6C11C0C
-        for <linux-modules@vger.kernel.org>; Tue, 22 Feb 2022 05:37:11 -0800 (PST)
-Received: from localhost ([82.17.115.212])
-        by :SMTPAUTH: with ESMTPA
-        id MVLonjBopdsXDMVLpnM6Jf; Tue, 22 Feb 2022 06:37:10 -0700
-X-CMAE-Analysis: v=2.4 cv=ZLASJV3b c=1 sm=1 tr=0 ts=6214e706
- a=9gipVNR6X1CoIeAWHwLoWw==:117 a=9gipVNR6X1CoIeAWHwLoWw==:17
- a=IkcTkHD0fZMA:10 a=20KFwNOVAAAA:8 a=j-GoWnyPFWeJtNoJgLoA:9 a=QEXdDO2ut3YA:10
-X-SECURESERVER-ACCT: atomlin@atomlin.com
-Date:   Tue, 22 Feb 2022 13:37:08 +0000
-From:   Aaron Tomlin <atomlin@atomlin.com>
-To:     Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc:     Aaron Tomlin <atomlin@redhat.com>,
-        "mcgrof@kernel.org" <mcgrof@kernel.org>,
-        "cl@linux.com" <cl@linux.com>,
-        "pmladek@suse.com" <pmladek@suse.com>,
-        "mbenes@suse.cz" <mbenes@suse.cz>,
-        "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-        "jeyu@kernel.org" <jeyu@kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
-        "void@manifault.com" <void@manifault.com>,
-        "allen.lkml@gmail.com" <allen.lkml@gmail.com>,
-        "joe@perches.com" <joe@perches.com>,
-        "msuchanek@suse.de" <msuchanek@suse.de>,
-        "oleksandr@natalenko.name" <oleksandr@natalenko.name>
-Subject: Re: [PATCH v7 05/13] module: Move latched RB-tree support to a
- separate file
-Message-ID: <20220222133708.tew4wxhkf5hpkg2u@ava.usersys.com>
-References: <20220222130911.1348513-1-atomlin@redhat.com>
- <20220222130911.1348513-6-atomlin@redhat.com>
- <8ed19f41-625a-154f-096c-ae7ea19a9649@csgroup.eu>
+        Tue, 22 Feb 2022 09:13:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E726FB150D
+        for <linux-modules@vger.kernel.org>; Tue, 22 Feb 2022 06:13:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1645539187;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=02ymn/XEvYvBzFbN4yBoqldynqVeEzBnhxvdpCXzyNc=;
+        b=YM3FbMgI2704PUih7sej6OJ+3oUOZGIBgjg26dSg+XrE62UihBGId8MbMaWubwrVe6h7aK
+        ku6wdY2xHRWi1HoJ3oFCU2x2NcT4HAdIcl8fAs/KjFEDDHz8adNFu3VeN0zUz0mmF3uf+8
+        AV1MTUXaXF3JaM6x1QrrtF+OyO7xMH8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-613-_gOqL_5yPHK40T-fwXdtlQ-1; Tue, 22 Feb 2022 09:13:05 -0500
+X-MC-Unique: _gOqL_5yPHK40T-fwXdtlQ-1
+Received: by mail-wm1-f70.google.com with SMTP id i188-20020a1c3bc5000000b0037bb9f6feeeso903326wma.5
+        for <linux-modules@vger.kernel.org>; Tue, 22 Feb 2022 06:13:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=02ymn/XEvYvBzFbN4yBoqldynqVeEzBnhxvdpCXzyNc=;
+        b=gMibtJCKhgHKAT8i2NO3wGbuc7jgxcXGmrqHOhmHOF3YS8vjaQSDLexiM4UKj1kfse
+         4NRJOoK/UpqJE5I1rExU7IhhRlQAQM2Y4AU5XZqX3nGn1acmaV4BUQ6rAETRMgdBzqHs
+         6yhjg5zWxLf96TBm/2RZN16g567/l9ggMXlatMMLjykSo+YnfwO+F3U+fcZWOZAFmmL/
+         BkivRvFXMSpCA+11b8udj+b6MrwCmjSA5E8sZcC0PF4REEpCKTufuWNoSdB2HKfAmSqy
+         5RKRuCYiAjLTTLT1ijnrgbcpQOpJOes4hSLTN0gwadfjN1/NmxfFmEjSJcHUqpieLT8T
+         VG5A==
+X-Gm-Message-State: AOAM530N1yudF/EWzqk9Lw2jJXtuMvcoSV2VgtIp0ixao++kU5STHOiO
+        +nUOTEqIjn4qBH9dJnQgCeiFuvl5MKddY/6bSdn/ZZd40ELR7AvSwAJi7R4SmO+ZgxlHtGieH8q
+        cB5jvuANbNILCTBL4ZXt0WcOd
+X-Received: by 2002:adf:ea01:0:b0:1ea:8200:8ae5 with SMTP id q1-20020adfea01000000b001ea82008ae5mr3441165wrm.607.1645539184512;
+        Tue, 22 Feb 2022 06:13:04 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyPITrbu04/IMwADLxvvV/E4qGkQtr4RhbecqJ9WGvxB+gMYUjiFc/jqpBUoGgSNjcw0opXYw==
+X-Received: by 2002:adf:ea01:0:b0:1ea:8200:8ae5 with SMTP id q1-20020adfea01000000b001ea82008ae5mr3441153wrm.607.1645539184316;
+        Tue, 22 Feb 2022 06:13:04 -0800 (PST)
+Received: from localhost (cpc111743-lutn13-2-0-cust979.9-3.cable.virginm.net. [82.17.115.212])
+        by smtp.gmail.com with ESMTPSA id a17-20020a05600c069100b0037ddbe6da71sm2408103wmn.20.2022.02.22.06.13.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 06:13:03 -0800 (PST)
+From:   Aaron Tomlin <atomlin@redhat.com>
+To:     mcgrof@kernel.org, christophe.leroy@csgroup.eu
+Cc:     cl@linux.com, pmladek@suse.com, mbenes@suse.cz,
+        akpm@linux-foundation.org, jeyu@kernel.org,
+        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
+        void@manifault.com, atomlin@atomlin.com, allen.lkml@gmail.com,
+        joe@perches.com, msuchanek@suse.de, oleksandr@natalenko.name
+Subject: [PATCH v8 00/13] module: core code clean up
+Date:   Tue, 22 Feb 2022 14:12:50 +0000
+Message-Id: <20220222141303.1392190-1-atomlin@redhat.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8ed19f41-625a-154f-096c-ae7ea19a9649@csgroup.eu>
-X-CMAE-Envelope: MS4xfH8N2fumSewoTMn9SJibgCg3aysMctgxzFqQ0FzPkDdCexLi5prNkq9ZxW8LQvuNr9W0hZTqRUOIvOuTVrBRkjd84KNOVluyHcTLuWkiDbgLIObPT5PY
- Eo45c5/nKDApOLEQMD5uDSYNISMNXaLM/QSJmNbPmeFZUOwCaTgtOvV43/NaHkMNyZkHorNjCwm0x6/JNQuUtcoiGd8rdZq/W7VlAAjA0lGZvtvhEAp8cphP
- jOKhOH5Lz+54qf30GP9O5uDWMw1lNyDVnIvvELlHF85TZ9NPkVfsker4g12wG6A5IXY5qXGqNuwr5OqSnLJXbXM5rmQ4ymyW5gsvDZfM4mEbjEFyCaBJjy7C
- 0Ybl1asxwjhrSb6kxKzZMHwCAuljUdW2vOgPEx05bLTZ6ZE7p4+Ub8W1adlgEyfUumk0RJdBwnS3p7PWLOlxXYsh9a/xp8esdceOiqUIg8JsfqC8ZmhmQ564
- lLPYmGWO0ltHmetZ67ktaQWAIMoMB1Z/9g3d9QqrhYVOk4FOL9pNTUYZmVLAYMJ0R6nnN7PknMxPjJIDhnbk29IuweH4NJyQqpF/4R6PKkSStrJEAwf4bxb8
- fkwZD0rJ1HxlSuKxuEMf4lOqnGD6OTINVFN1fgFWD7AkcQ==
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Tue 2022-02-22 13:32 +0000, Christophe Leroy wrote:
-> Le 22/02/2022 à 14:09, Aaron Tomlin a écrit :
-> > No functional change.
-> > 
-> > This patch migrates module latched RB-tree support
-> > (e.g. see __module_address()) from core module code
-> > into kernel/module/tree_lookup.c.
-> > 
-> > Signed-off-by: Aaron Tomlin <atomlin@redhat.com>
-> > ---
-> >   kernel/module/Makefile      |   3 +
-> >   kernel/module/internal.h    |  33 +++++++++
-> >   kernel/module/main.c        | 130 ++----------------------------------
-> >   kernel/module/tree_lookup.c | 109 ++++++++++++++++++++++++++++++
-> >   4 files changed, 149 insertions(+), 126 deletions(-)
-> >   create mode 100644 kernel/module/tree_lookup.c
-> > 
-> > diff --git a/kernel/module/Makefile b/kernel/module/Makefile
-> > index ed3aacb04f17..e8413975bf1d 100644
-> > --- a/kernel/module/Makefile
-> > +++ b/kernel/module/Makefile
-> > @@ -11,3 +11,6 @@ obj-y += main.o
-> >   obj-$(CONFIG_MODULE_DECOMPRESS) += decompress.o
-> >   obj-$(CONFIG_MODULE_SIG) += signing.o
-> >   obj-$(CONFIG_LIVEPATCH) += livepatch.o
-> > +ifdef CONFIG_MODULES
-> 
-> This ifdef is not needed anymore.
-> 
-> > +obj-$(CONFIG_MODULES_TREE_LOOKUP) += tree_lookup.o
-> > +endif
+Hi Luis, Christophe,
 
-Oops! Apologies this was an oversight.
+As per your suggestion [1], this is an attempt to refactor and split
+optional code out of core module support code into separate components.
+This version is based on Linus' commit 7993e65fdd0f ("Merge tag
+'mtd/fixes-for-5.17-rc5' of
+git://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux").
 
+Hopefully this iteration is all right. Please let me know your thoughts.
+
+Changes since v7 [2]
+
+ - Removed redundant ifdef CONFIG_MODULES and endif pairing from
+   kernel/module/Makefile
+
+Changes since v6 [3]
+
+ - Moved KCOV_INSTRUMENT_module.o out of kernel/Makefile into
+   kernel/module/Makefile (Christophe Leroy)
+ - Moved kernel/module/signature.c back into kernel/
+   (Christophe Leroy)
+ - Fixed Oops in add_kallsyms() due to an invalid pointer assignment
+   (Christophe Leroy)
+
+Changes since v5 [4]:
+
+ - Updated MAINTAINERS to include the entire kernel/module/ directory
+   (Christophe Leroy)
+ - Reintroduce commit a97ac8cb24a3 ("module: fix signature check failures
+   when using in-kernel decompression") (Michal Suchánek)
+ - Refactored code to address some (i.e.
+   --ignore=MULTIPLE_ASSIGNMENTS,ASSIGN_IN_IF was used) style violations
+   e.g. "Alignment should match open parenthesis", reported by
+   scripts/checkpatch.pl --strict (Christophe Leroy)
+ - Used PAGE_ALIGN() and PAGE_ALIGNED() instead (Christophe Leroy)
+ - Removed sig_enforce from include/linux/module.h as it is only
+   used in kernel/module/signing.c (Christophe Leroy)
+ - Added static keyword for anything not used outside a source file
+   (Christophe Leroy)
+ - Moved mod_sysfs_teardown() to kernel/module/sysfs.c (Christophe Leroy)
+ - Removed kdb_modules from kernel/debug/kdb/kdb_private.h
+   (Christophe Leroy)
+
+Changes since v4 [5]:
+
+ - Moved is_livepatch_module() and set_livepatch_module() to
+   kernel/module/livepatch.c
+ - Addressed minor compiler warning concerning
+   kernel/module/internal.h (0-day)
+ - Resolved style violations reported by scripts/checkpatch.pl
+ - Dropped patch 5 [6] so external patch [7] can be applied at
+   a later date post merge into module-next (Christophe Leroy)
+
+Changes since v3 [8]:
+
+ - Refactored both is_livepatch_module() and set_livepatch_module(),
+   respectively, to use IS_ENABLED(CONFIG_LIVEPATCH) (Joe Perches)
+ - Addressed various compiler warnings e.g., no previous prototype (0-day)
+
+Changes since v2 [9]:
+
+ - Moved module decompress support to a separate file
+ - Made check_modinfo_livepatch() generic (Petr Mladek)
+ - Removed filename from each newly created file (Luis Chamberlain)
+ - Addressed some (i.e. --ignore=ASSIGN_IN_IF,AVOID_BUG was used)
+   minor scripts/checkpatch.pl concerns e.g., use strscpy over
+   strlcpy and missing a blank line after declarations (Allen)
+
+Changes since v1 [10]:
+
+  - Moved module version support code into a new file
+
+[1]: https://lore.kernel.org/lkml/YbEZ4HgSYQEPuRmS@bombadil.infradead.org/
+[2]: https://lore.kernel.org/lkml/20220222130911.1348513-1-atomlin@redhat.com/
+[3]: https://lore.kernel.org/lkml/20220218212511.887059-1-atomlin@redhat.com/
+[4]: https://lore.kernel.org/lkml/20220209170358.3266629-1-atomlin@redhat.com/
+[5]: https://lore.kernel.org/lkml/20220130213214.1042497-1-atomlin@redhat.com/
+[6]: https://lore.kernel.org/lkml/20220130213214.1042497-6-atomlin@redhat.com/
+[7]: https://lore.kernel.org/lkml/203348805c9ac9851d8939d15cb9802ef047b5e2.1643919758.git.christophe.leroy@csgroup.eu/
+[8]: https://lore.kernel.org/lkml/20220128203934.600247-1-atomlin@redhat.com/
+[9]: https://lore.kernel.org/lkml/20220106234319.2067842-1-atomlin@redhat.com/
+[10]: https://lore.kernel.org/lkml/20211228213041.1356334-1-atomlin@redhat.com/
+
+Aaron Tomlin (13):
+  module: Move all into module/
+  module: Simple refactor in preparation for split
+  module: Make internal.h and decompress.c more compliant
+  module: Move livepatch support to a separate file
+  module: Move latched RB-tree support to a separate file
+  module: Move strict rwx support to a separate file
+  module: Move extra signature support out of core code
+  module: Move kmemleak support to a separate file
+  module: Move kallsyms support into a separate file
+  module: Move procfs support into a separate file
+  module: Move sysfs support into a separate file
+  module: Move kdb_modules list out of core code
+  module: Move version support into a separate file
+
+ MAINTAINERS                                   |    2 +-
+ include/linux/module.h                        |    9 +-
+ kernel/Makefile                               |    5 +-
+ kernel/debug/kdb/kdb_main.c                   |    5 +
+ kernel/debug/kdb/kdb_private.h                |    4 -
+ kernel/module-internal.h                      |   50 -
+ kernel/module/Makefile                        |   20 +
+ kernel/module/debug_kmemleak.c                |   30 +
+ .../decompress.c}                             |    5 +-
+ kernel/module/internal.h                      |  275 +++
+ kernel/module/kallsyms.c                      |  506 +++++
+ kernel/module/livepatch.c                     |   74 +
+ kernel/{module.c => module/main.c}            | 1856 +----------------
+ kernel/module/procfs.c                        |  142 ++
+ kernel/module/signing.c                       |  122 ++
+ kernel/module/strict_rwx.c                    |   85 +
+ kernel/module/sysfs.c                         |  436 ++++
+ kernel/module/tree_lookup.c                   |  109 +
+ kernel/module/version.c                       |  109 +
+ kernel/module_signing.c                       |   45 -
+ 20 files changed, 2007 insertions(+), 1882 deletions(-)
+ delete mode 100644 kernel/module-internal.h
+ create mode 100644 kernel/module/Makefile
+ create mode 100644 kernel/module/debug_kmemleak.c
+ rename kernel/{module_decompress.c => module/decompress.c} (99%)
+ create mode 100644 kernel/module/internal.h
+ create mode 100644 kernel/module/kallsyms.c
+ create mode 100644 kernel/module/livepatch.c
+ rename kernel/{module.c => module/main.c} (64%)
+ create mode 100644 kernel/module/procfs.c
+ create mode 100644 kernel/module/signing.c
+ create mode 100644 kernel/module/strict_rwx.c
+ create mode 100644 kernel/module/sysfs.c
+ create mode 100644 kernel/module/tree_lookup.c
+ create mode 100644 kernel/module/version.c
+ delete mode 100644 kernel/module_signing.c
+
+
+base-commit: 7993e65fdd0fe07beb9f36f998f9bbef2c0ee391
 -- 
-Aaron Tomlin
+2.34.1
+
