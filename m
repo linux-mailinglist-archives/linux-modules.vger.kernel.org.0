@@ -2,116 +2,110 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 126CA4C1224
-	for <lists+linux-modules@lfdr.de>; Wed, 23 Feb 2022 13:02:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 051294C1928
+	for <lists+linux-modules@lfdr.de>; Wed, 23 Feb 2022 17:57:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240269AbiBWMDM (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 23 Feb 2022 07:03:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34928 "EHLO
+        id S242983AbiBWQ6G (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 23 Feb 2022 11:58:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240275AbiBWMDL (ORCPT
+        with ESMTP id S242823AbiBWQ5x (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 23 Feb 2022 07:03:11 -0500
-Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BFD69A4EA;
-        Wed, 23 Feb 2022 04:02:37 -0800 (PST)
-Received: from localhost (mailhub3.si.c-s.fr [172.26.127.67])
-        by localhost (Postfix) with ESMTP id 4K3ZRD4f4jz9sSs;
-        Wed, 23 Feb 2022 13:02:32 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from pegase2.c-s.fr ([172.26.127.65])
-        by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id C7xzbR6pV4X9; Wed, 23 Feb 2022 13:02:32 +0100 (CET)
-Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-        by pegase2.c-s.fr (Postfix) with ESMTP id 4K3ZRC0Qfsz9sSg;
-        Wed, 23 Feb 2022 13:02:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id F272C8B763;
-        Wed, 23 Feb 2022 13:02:30 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from messagerie.si.c-s.fr ([127.0.0.1])
-        by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id AMKOnWc9Kg8a; Wed, 23 Feb 2022 13:02:30 +0100 (CET)
-Received: from PO20335.IDSI0.si.c-s.fr (unknown [192.168.7.201])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id 686C38B779;
-        Wed, 23 Feb 2022 13:02:30 +0100 (CET)
-Received: from PO20335.IDSI0.si.c-s.fr (localhost [127.0.0.1])
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.16.1) with ESMTPS id 21NC2NXC1148205
-        (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-        Wed, 23 Feb 2022 13:02:23 +0100
-Received: (from chleroy@localhost)
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.17.1/Submit) id 21NC2MVk1148202;
-        Wed, 23 Feb 2022 13:02:22 +0100
-X-Authentication-Warning: PO20335.IDSI0.si.c-s.fr: chleroy set sender to christophe.leroy@csgroup.eu using -f
-From:   Christophe Leroy <christophe.leroy@csgroup.eu>
-To:     Luis Chamberlain <mcgrof@kernel.org>,
-        Aaron Tomlin <atomlin@redhat.com>
-Cc:     Christophe Leroy <christophe.leroy@csgroup.eu>,
-        linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        kgdb-bugreport@lists.sourceforge.net, linux-mm@kvack.org,
-        linux-arch@vger.kernel.org, linux-modules@vger.kernel.org,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Paul Mackerras <paulus@samba.org>
-Subject: [PATCH v6 6/6] powerpc: Select ARCH_WANTS_MODULES_DATA_IN_VMALLOC on book3s/32 and 8xx
-Date:   Wed, 23 Feb 2022 13:02:16 +0100
-Message-Id: <100cc6b63ba31d527d94674453ceae201af0072e.1645607143.git.christophe.leroy@csgroup.eu>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1645607143.git.christophe.leroy@csgroup.eu>
-References: <cover.1645607143.git.christophe.leroy@csgroup.eu>
+        Wed, 23 Feb 2022 11:57:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C861D4F46A
+        for <linux-modules@vger.kernel.org>; Wed, 23 Feb 2022 08:57:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1645635442;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=9lYnlwo80ekeXGGRVop7tuYwutJe1OPkYrSCkXet1IY=;
+        b=PCg75THXWbN9SdgPA9/08lLwPNi8562PamPzUMr8FNxuO43TGJVs9of23M+ehtz4mHMsvY
+        5O008fO6zLfevyDuPYDRcRF6bYdw9jc4mBGelLq5BOJZMv4QmeUc4z3D2Fb9Yd9RkCyuG3
+        5z1NOVHmfD6XqUZdI62W3RcOTNEslE8=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-357-tP0ThhiLNSa8Fihkgz3KTg-1; Wed, 23 Feb 2022 11:57:21 -0500
+X-MC-Unique: tP0ThhiLNSa8Fihkgz3KTg-1
+Received: by mail-lf1-f72.google.com with SMTP id m13-20020a19520d000000b00443423ff116so3347908lfb.11
+        for <linux-modules@vger.kernel.org>; Wed, 23 Feb 2022 08:57:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9lYnlwo80ekeXGGRVop7tuYwutJe1OPkYrSCkXet1IY=;
+        b=CoWHGPVoPeASxJHy6Qc1TPJeDTY3n8N6Ksx+LgHJQjN7yDGgrP3vwj97NoO9IgYX88
+         yS5Bo7TLuSSea+CdMuExCkh8Tbu4v9WOH8xgVPQb0LP2rdxD66ZNYGf+BjT94evpdXGw
+         WvTXBZPpe8T7dPCU3CDzGsy3w+JmFbtPj3mRHKFHvNoPIo9r4x3HWkh0X+Ersbkte7TK
+         ZubAbcvLycwaflUQomJ/QtnPkirCft/fLP+eOhaZjW2oPoMmB5mt7z7FK/YxhlQouJPB
+         HLd5j4167oJFVVyZh/Vhgr+qVXFCdv1XMZGX9UA6F2s/vb65tVvHd7SEok6g8eqaRCM8
+         2PpQ==
+X-Gm-Message-State: AOAM533SYIvhVtU4qJlbiU3swVosZF5pkj482jlcbbOPcixEnhHV/SY1
+        HPkq0YgUnWy8Du7vED92XjLp4j9GCncUrS7ddfBGIDRKxYGCC9UiFiUl8Gz1GWPXR1/nJpY6RCE
+        WrYpCGaK4ANXlfESVsPl755QqyafP8PwVMmrhdQk2
+X-Received: by 2002:a05:6512:3e14:b0:429:6e79:ca87 with SMTP id i20-20020a0565123e1400b004296e79ca87mr373907lfv.163.1645635440063;
+        Wed, 23 Feb 2022 08:57:20 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJz8y+omW9xDDExHxhQDd6HLWNp9jDmHi7Vn79thFemSUK3HSORLo1ni7xvXLOo+Lt62XO3uuANFgjglrY2gMK4=
+X-Received: by 2002:a05:6512:3e14:b0:429:6e79:ca87 with SMTP id
+ i20-20020a0565123e1400b004296e79ca87mr373887lfv.163.1645635439848; Wed, 23
+ Feb 2022 08:57:19 -0800 (PST)
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1645617734; l=1645; s=20211009; h=from:subject:message-id; bh=K04OWtjguCoft4Etc2/16pdJhJKZWZgWbhOpnNSgE7U=; b=lS6FQSg3tE3yCPJb+g8j9OCMrPJZvVdMsuJ8tcj5aft81NhPKgwAmf/bVK2FEsMsiwQfML/oGvzt tov5L7ZdB3TPP3OUovRNJLUJrLCD9XnmUvNS+Aa8E9lK3jAt9Su+
-X-Developer-Key: i=christophe.leroy@csgroup.eu; a=ed25519; pk=HIzTzUj91asvincQGOFx6+ZF5AoUuP9GdOtQChs7Mm0=
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220218212511.887059-1-atomlin@redhat.com> <20220218212511.887059-2-atomlin@redhat.com>
+ <69fcaad3-e48c-11ca-ed50-7a18831e3e91@csgroup.eu> <CANfR36js06qG8HkQBPPz8bnYzcBRUtiZJAqhynt4XJcfcFXAQg@mail.gmail.com>
+ <YhWK4woM1g2fAq72@bombadil.infradead.org>
+In-Reply-To: <YhWK4woM1g2fAq72@bombadil.infradead.org>
+From:   Aaron Tomlin <atomlin@redhat.com>
+Date:   Wed, 23 Feb 2022 16:57:08 +0000
+Message-ID: <CANfR36jtiq86FpONCFPOsh6x=eLnC9js+LewtUTSfZxoHoMb6w@mail.gmail.com>
+Subject: Re: [PATCH v6 01/13] module: Move all into module/
+To:     Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Thiago Jung Bauermann <bauerman@linux.ibm.com>,
+        Mimi Zohar <zohar@linux.ibm.com>,
+        Heiko Carstens <heiko.carstens@de.ibm.com>,
+        Philipp Rudo <prudo@linux.ibm.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        "cl@linux.com" <cl@linux.com>,
+        "pmladek@suse.com" <pmladek@suse.com>,
+        "mbenes@suse.cz" <mbenes@suse.cz>,
+        "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+        "jeyu@kernel.org" <jeyu@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
+        "live-patching@vger.kernel.org" <live-patching@vger.kernel.org>,
+        "atomlin@atomlin.com" <atomlin@atomlin.com>,
+        "ghalat@redhat.com" <ghalat@redhat.com>,
+        "allen.lkml@gmail.com" <allen.lkml@gmail.com>,
+        "joe@perches.com" <joe@perches.com>,
+        "msuchanek@suse.de" <msuchanek@suse.de>,
+        "oleksandr@natalenko.name" <oleksandr@natalenko.name>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-book3s/32 and 8xx have a separate area for allocating modules,
-defined by MODULES_VADDR / MODULES_END.
+On Tue 2022-02-22 17:16 -0800, Luis Chamberlain wrote:
+> How about:
+>
+> obj-$(CONFIG_MODULE_SIG_FORMAT) += module/module_signature.o
+>
+>   Luis
 
-On book3s/32, it is not possible to protect against execution
-on a page basis. A full 256M segment is either Exec or NoExec.
-The module area is in an Exec segment while vmalloc area is
-in a NoExec segment.
+Hi Luis,
 
-In order to protect module data against execution, select
-ARCH_WANTS_MODULES_DATA_IN_VMALLOC.
+Please see v8 [1].
 
-For the 8xx (and possibly other 32 bits platform in the future),
-there is no such constraint on Exec/NoExec protection, however
-there is a critical distance between kernel functions and callers
-that needs to remain below 32Mbytes in order to avoid costly
-trampolines. By allocating data outside of module area, we
-increase the chance for module text to remain within acceptable
-distance from kernel core text.
+[1]: https://lore.kernel.org/all/20220222141303.1392190-1-atomlin@redhat.com/
 
-So select ARCH_WANTS_MODULES_DATA_IN_VMALLOC for 8xx as well.
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Paul Mackerras <paulus@samba.org>
----
- arch/powerpc/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+Kind regards,
 
-diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index 28e4047e99e8..478ee49a4fb4 100644
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -156,6 +156,7 @@ config PPC
- 	select ARCH_WANT_IPC_PARSE_VERSION
- 	select ARCH_WANT_IRQS_OFF_ACTIVATE_MM
- 	select ARCH_WANT_LD_ORPHAN_WARN
-+	select ARCH_WANTS_MODULES_DATA_IN_VMALLOC	if PPC_BOOK3S_32 || PPC_8xx
- 	select ARCH_WEAK_RELEASE_ACQUIRE
- 	select BINFMT_ELF
- 	select BUILDTIME_TABLE_SORT
 -- 
-2.34.1
+Aaron Tomlin
 
