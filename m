@@ -2,94 +2,100 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7612C4EFEB5
-	for <lists+linux-modules@lfdr.de>; Sat,  2 Apr 2022 06:42:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 900604F0B78
+	for <lists+linux-modules@lfdr.de>; Sun,  3 Apr 2022 19:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239267AbiDBEny (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sat, 2 Apr 2022 00:43:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42832 "EHLO
+        id S240557AbiDCRHQ (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 3 Apr 2022 13:07:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236401AbiDBEnx (ORCPT
+        with ESMTP id S234629AbiDCRHQ (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sat, 2 Apr 2022 00:43:53 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CD311EFE39
-        for <linux-modules@vger.kernel.org>; Fri,  1 Apr 2022 21:42:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648874522; x=1680410522;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=mLtKOBmfYTyBq8UeNFZEOum/Th/5mK8pIGuIJ537vWU=;
-  b=Lrj0ZYkH7m56PVAwDvlYD1/+8aJV/AlvQD12DHsHTaJKXM4WIu0dbf5Y
-   LMLT6HBf94qOGQFLNLPJtDhfZdKmcP642Muh9hpU/f2IKQtWm3LxoHfj1
-   3RqYNvuzEft0Af/zMoRg//jp4+Sux/FkMpNt9tHqQs216lMQ8kEGdBQmM
-   H5waU0VJQ0sQTU08Bv/LVGLgby9Koqk/j/BiSgD+knT7/kR2SooKrb7jv
-   FtBiXXMSsTuo26Nr2xIF0lBkUoqK//1MitiUmS4zBkRgz/qQuxCuM6kS/
-   KdSknG8LQHAR27rWHF0Q473pQQtvKbJbh66iihXHN92TIGtT1dEBAJqav
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10304"; a="259104644"
-X-IronPort-AV: E=Sophos;i="5.90,229,1643702400"; 
-   d="scan'208";a="259104644"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2022 21:42:01 -0700
-X-IronPort-AV: E=Sophos;i="5.90,229,1643702400"; 
-   d="scan'208";a="548054985"
-Received: from kdurai-mobl.amr.corp.intel.com (HELO ldmartin-desk2) ([10.212.134.219])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2022 21:42:01 -0700
-Date:   Fri, 1 Apr 2022 21:42:01 -0700
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     Saul Wold <saul.wold@windriver.com>
-Cc:     linux-modules@vger.kernel.org
-Subject: Re: [PATCH v2] depmod: Add support for excluding a directory
-Message-ID: <20220402044201.uexkieiyg2zoih4f@ldmartin-desk2>
-X-Patchwork-Hint: comment
-References: <20220331215628.70679-1-saul.wold@windriver.com>
+        Sun, 3 Apr 2022 13:07:16 -0400
+X-Greylist: delayed 199 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 03 Apr 2022 10:05:21 PDT
+Received: from condef-02.nifty.com (condef-02.nifty.com [202.248.20.67])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B2D33890
+        for <linux-modules@vger.kernel.org>; Sun,  3 Apr 2022 10:05:21 -0700 (PDT)
+Received: from conssluserg-03.nifty.com ([10.126.8.82])by condef-02.nifty.com with ESMTP id 233GwjEM023619
+        for <linux-modules@vger.kernel.org>; Mon, 4 Apr 2022 01:58:46 +0900
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175]) (authenticated)
+        by conssluserg-03.nifty.com with ESMTP id 233GwUXY007222
+        for <linux-modules@vger.kernel.org>; Mon, 4 Apr 2022 01:58:30 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 233GwUXY007222
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+        s=dec2015msa; t=1649005110;
+        bh=wdLsMn3mkFndeGhF9m4eudBm04hLi1EuvuWjt+slEX4=;
+        h=References:In-Reply-To:From:Date:Subject:To:From;
+        b=Za2xx9nLUO7x1ngbTyaerj/TwKaDMOXyibx/L6FHRN0YTohhRHXLDw3b+SEgOZLn2
+         +vMQR/F8VLv7W2PUXXxUTTN28il8s3kI9AylTwaT0S/HZVTQl9vnkyUyBacp089MnB
+         YtpT8DNtUWZFhUKDPJiFpat5Ucn1J1Nta/hQ81bMePsNruBgq0ACSawiXax6Ls2aXA
+         GI4mYFxWOAJtQQusuHpKK73c3V0ZJlJdFF7WcIhGy+2I9PH54wdJ4fGGlEyZMfPSLe
+         Fvd6nH4mqdWeKdZhODnn5mkSCf4a03PJeE/f7E6m9u+4sbWJDVuboGeAruOFSYM6jt
+         S/eGNv7k1BOWQ==
+X-Nifty-SrcIP: [209.85.210.175]
+Received: by mail-pf1-f175.google.com with SMTP id b13so6934590pfv.0
+        for <linux-modules@vger.kernel.org>; Sun, 03 Apr 2022 09:58:30 -0700 (PDT)
+X-Gm-Message-State: AOAM533MSqaUrWUr4trMXyjDe15xB+o9y+mUq/bd0n9c8vvbPFtRPDdi
+        +ePFhQznIITDFfUXXJjtp4Oktjk9/kX4clLN534=
+X-Google-Smtp-Source: ABdhPJwqQBz0KzsPUqWzGsRHmUNAJA6Vx3lLH1SsdbTH0d7GXH4kVeRytuJKys4nVmfpJHNQ1i9xitYBEfcZedGrznA=
+X-Received: by 2002:a05:6a00:24d2:b0:4fb:1b6d:ee7d with SMTP id
+ d18-20020a056a0024d200b004fb1b6dee7dmr20150333pfv.36.1649005109626; Sun, 03
+ Apr 2022 09:58:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220331215628.70679-1-saul.wold@windriver.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220210021423.3388827-1-masahiroy@kernel.org>
+In-Reply-To: <20220210021423.3388827-1-masahiroy@kernel.org>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Mon, 4 Apr 2022 01:57:41 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAS+NK7dmBcqpO3x_MOhqjWyt3SLkwJE1O-zvGUH255ZsA@mail.gmail.com>
+Message-ID: <CAK7LNAS+NK7dmBcqpO3x_MOhqjWyt3SLkwJE1O-zvGUH255ZsA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] modprobe: fix the NULL-termination of new_argv
+To:     linux-modules <linux-modules@vger.kernel.org>,
+        Lucas De Marchi <lucas.demarchi@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu, Mar 31, 2022 at 02:56:28PM -0700, Saul Wold wrote:
->This adds support to depmod to enable a new exclude directive in
->the depmod.d/*.conf configuration file. Currently depmod
->already excludes directories named source or build. This change
->will allow additional directories like .debug to be excluded also
->via a new exclude directive.
+Hi Lucas,
+
+Ping?
+
+
+On Thu, Feb 10, 2022 at 11:14 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
 >
->depmod.d/exclude.conf example:
->exclude	.debug
+> The number of new arguments is (i + argc - 1) as it is set to *p_argc
+> one line below.
 >
->Upstream-Status: Submitted
+> The correct location of NULL termination is new_argv[i + argc - 1].
 >
->Signed-off-by: Saul Wold <saul.wold@windriver.com>
+> Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+> ---
+>
+>  tools/modprobe.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tools/modprobe.c b/tools/modprobe.c
+> index 9387537..b6b2947 100644
+> --- a/tools/modprobe.c
+> +++ b/tools/modprobe.c
+> @@ -743,7 +743,7 @@ static char **prepend_options_from_env(int *p_argc, char **orig_argv)
+>         }
+>
+>         memcpy(new_argv + i, orig_argv + 1, sizeof(char *) * (argc - 1));
+> -       new_argv[i + argc] = NULL;
+> +       new_argv[i + argc - 1] = NULL;
+>         *p_argc = i + argc - 1;
+>
+>         return new_argv;
+> --
+> 2.32.0
+>
 
-tools/depmod.c: In function ‘depmod_modules_search_dir’:
-tools/depmod.c:1302:46: warning: passing argument 1 of ‘should_exclude_dir’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
-  1302 |                 if (should_exclude_dir(depmod->cfg, name))
-       |                                        ~~~~~~^~~~~
-tools/depmod.c:1273:43: note: expected ‘struct cfg *’ but argument is of type ‘const struct cfg *’
-  1273 | static int should_exclude_dir(struct cfg *cfg, char *name)
-       |                               ~~~~~~~~~~~~^~~
-tools/depmod.c:1302:53: warning: passing argument 2 of ‘should_exclude_dir’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
-  1302 |                 if (should_exclude_dir(depmod->cfg, name))
-       |                                                     ^~~~
-tools/depmod.c:1273:54: note: expected ‘char *’ but argument is of type ‘const char *’
-  1273 | static int should_exclude_dir(struct cfg *cfg, char *name)
-       |                                                ~~~~~~^~~~
 
-
-I fixed the warnings and changed should_exclude_dir() to return bool.
-
-Applied, thanks.
-
-Lucas De Marchi
+-- 
+Best Regards
+Masahiro Yamada
