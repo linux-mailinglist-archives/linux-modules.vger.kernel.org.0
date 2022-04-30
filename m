@@ -2,178 +2,135 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D68BE514FF1
-	for <lists+linux-modules@lfdr.de>; Fri, 29 Apr 2022 17:53:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B49EC515C42
+	for <lists+linux-modules@lfdr.de>; Sat, 30 Apr 2022 12:31:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378273AbiD2P4l (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 29 Apr 2022 11:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58646 "EHLO
+        id S1382582AbiD3Keg (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 30 Apr 2022 06:34:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232880AbiD2P4k (ORCPT
+        with ESMTP id S1382577AbiD3Kef (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 29 Apr 2022 11:56:40 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D13CE10F;
-        Fri, 29 Apr 2022 08:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651247601; x=1682783601;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=v3xHt04zUoM51m57wES9OEH4SBADCPxc9G7xtsUo2b0=;
-  b=SjLJi9WGQa+2fBsBQZ+iP6CnjRh4AsWjaLMZALplkkpKvmrmplw1/O9v
-   Y1FMeVs3wz2RklkEz0ddL0ALrnkQrVT34AABBeeDOMvMKzA/X1tcj4UAk
-   Y5P84xf2VajX2YnbJAyxhJ5L1Vh8wxN+oUxrEaFk9MUcylnPAxafnRx+z
-   4/9VlCqvyVQvdLkq8aGX9dtRY9gWCVdiqIjxjnidIImuJypIPaUdoILiO
-   mQXfJU+jpv2dI/mfX0Ce66Ltd3GknkEiKzrSka+XQgXwnh8ZJYK6xq3NI
-   0w3gLQChbC8A55L+N1kJW2weq6vZ40nKaQWTRwWCeM6xfjjUthNcj/2qz
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10332"; a="329623786"
-X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; 
-   d="scan'208";a="329623786"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 08:52:21 -0700
-X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; 
-   d="scan'208";a="706606733"
-Received: from vpareek-mobl1.amr.corp.intel.com (HELO ldmartin-desk2) ([10.209.103.56])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2022 08:52:20 -0700
-Date:   Fri, 29 Apr 2022 08:52:20 -0700
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Greg KH <gregkh@linuxfoundation.org>,
+        Sat, 30 Apr 2022 06:34:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7696A44A12;
+        Sat, 30 Apr 2022 03:31:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 46E8060F74;
+        Sat, 30 Apr 2022 10:31:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D37C385AF;
+        Sat, 30 Apr 2022 10:31:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651314668;
+        bh=6mrXqkGtPpcgemTiiATDVZ7XE8ok/9wW2Vk/4+SypUc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=p9m2Rbz/wxewOHRcZURI01kopZP08YV0c/d/09+uMir1kdo2NQlLMHJLQToHFbJVw
+         wQBe6xXi3E3fWWxujyrx05cGG1K4BFWIIn3br0xrw/iwy1ozkP8jKjiUd8SZdn6HEm
+         CGE/IVxSjWOGhzAJ28YK4YP8AP7Yb3XLEDS94Vk3cJcZYiXfoEPFqIm+RXrecqVhS1
+         r3IBmmVN8oawA4C6KaFPKZSFCFZCK7OQ9Dkvp5IaVNQwZ4qTILjd6ErKbDiOxtUoB5
+         t8RIicrGR9E0TTkNq+q1y3Iik0kkx+sBCVQvd0aLSRl69Hf0KFAWuP4DrX17wcI36S
+         yRN/hoQXLypeQ==
+Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
+        (envelope-from <mchehab@kernel.org>)
+        id 1nkkNQ-001lBL-FK; Sat, 30 Apr 2022 11:31:00 +0100
+From:   Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
+        mauro.chehab@linux.intel.com, Greg KH <gregkh@linuxfoundation.org>,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
         Kai Vehmanen <kai.vehmanen@intel.com>,
-        intel-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Luis Chamberlain <mcgrof@kernel.org>, mauro.chehab@intel.com,
-        Dan Williams <dan.j.williams@intel.com>,
-        linux-modules@vger.kernel.org,
-        Pierre-Louis Bossart <pierre-louis.bossart@intel.com>
-Subject: Re: [Intel-gfx] [PATCH 1/2] module: add a function to add module
- references
-Message-ID: <20220429155220.6k63lt5knhertj3g@ldmartin-desk2>
-X-Patchwork-Hint: comment
-References: <cover.1651212016.git.mchehab@kernel.org>
- <a078eb2e46d00ec59c8a91ea0afa5190730c9e58.1651212016.git.mchehab@kernel.org>
- <YmuZovuDaCYDDG4c@phenom.ffwll.local>
- <20220429090757.1acb943a@sal.lan>
- <YmuiKcHgl+nABvo/@kroah.com>
- <20220429101503.4048db5b@sal.lan>
- <Ymu5f8EjdC1Mawzt@kroah.com>
- <20220429112351.0e044950@sal.lan>
+        Pierre-Louis Bossart <pierre-louis.bossart@intel.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>
+Subject: [PATCH v2 0/2] Let userspace know when snd-hda-intel needs i915
+Date:   Sat, 30 Apr 2022 11:30:57 +0100
+Message-Id: <cover.1651314499.git.mchehab@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20220429112351.0e044950@sal.lan>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Fri, Apr 29, 2022 at 11:23:51AM +0100, Mauro Carvalho Chehab wrote:
->Em Fri, 29 Apr 2022 12:10:07 +0200
->Greg KH <gregkh@linuxfoundation.org> escreveu:
->
->> On Fri, Apr 29, 2022 at 10:15:03AM +0100, Mauro Carvalho Chehab wrote:
->> > HI Greg,
->> >
->> > Em Fri, 29 Apr 2022 10:30:33 +0200
->> > Greg KH <gregkh@linuxfoundation.org> escreveu:
->> >
->> > > On Fri, Apr 29, 2022 at 09:07:57AM +0100, Mauro Carvalho Chehab wrote:
->> > > > Hi Daniel,
->> > > >
->> > > > Em Fri, 29 Apr 2022 09:54:10 +0200
->> > > > Daniel Vetter <daniel@ffwll.ch> escreveu:
->> > > >
->> > > > > On Fri, Apr 29, 2022 at 07:31:15AM +0100, Mauro Carvalho Chehab wrote:
->> > > > > > Sometimes, device drivers are bound using indirect references,
->> > > > > > which is not visible when looking at /proc/modules or lsmod.
->> > > > > >
->> > > > > > Add a function to allow setting up module references for such
->> > > > > > cases.
->> > > > > >
->> > > > > > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
->> > > > > > Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
->> > > > >
->> > > > > This sounds like duct tape at the wrong level. We should have a
->> > > > > device_link connecting these devices, and maybe device_link internally
->> > > > > needs to make sure the respective driver modules stay around for long
->> > > > > enough too. But open-coding this all over the place into every driver that
->> > > > > has some kind of cross-driver dependency sounds terrible.
->> > > > >
->> > > > > Or maybe the bug is that the snd driver keeps accessing the hw/component
->> > > > > side when that is just plain gone. Iirc there's still fundamental issues
->> > > > > there on the sound side of things, which have been attempted to paper over
->> > > > > by timeouts and stuff like that in the past instead of enforcing a hard
->> > > > > link between the snd and i915 side.
->> > > >
->> > > > I agree with you that the device link between snd-hda and the DRM driver
->> > > > should properly handle unbinding on both directions. This is something
->> > > > that require further discussions with ALSA and DRM people, and we should
->> > > > keep working on it.
->> > > >
->> > > > Yet, the binding between those drivers do exist, but, despite other
->> > > > similar inter-driver bindings being properly reported by lsmod, this one
->> > > > is invisible for userspace.
->> > > >
->> > > > What this series does is to make such binding visible. As simple as that.
->> > >
->> > > It also increases the reference count, and creates a user/kernel api
->> > > with the symlinks, right?  Will the reference count increase prevent the
->> > > modules from now being unloadable?
->> > >
->> > > This feels like a very "weak" link between modules that should not be
->> > > needed if reference counting is implemented properly (so that things are
->> > > cleaned up in the correct order.)
->> >
->> > The refcount increment exists even without this patch, as
->> > hda_component_master_bind() at sound/hda/hdac_component.c uses
->> > try_module_get() when it creates the device link.
->>
->> Ok, then why shouldn't try_module_get() be creating this link instead of
->> having to manually do it this way again?  You don't want to have to go
->> around and add this call to all users of that function, right?
->
->Works for me, but this is not a too trivial change, as the new
->try_module_get() function will require two parameters, instead of one:
->
->	- the module to be referenced;
->	- the module which will reference it.
->
->On trivial cases, one will be THIS_MODULE, but, in the specific case
->of snd_hda, the binding is done via an ancillary routine under
->snd_hda_core, but the actual binding happens at snd_hda_intel.
->
->Ok, we could add a __try_module_get() (or whatever other name that
->would properly express what it does) with two parameters, and then
->define try_module_get() as:
->
->	#define try_module_get(mod) __try_module_get(mod, THIS_MODULE)
+Currently, kernel/module annotates module dependencies when
+request_symbol is used, but it doesn't cover more complex inter-driver
+dependencies that are subsystem and/or driver-specific.
 
-agree that this should be done at this level rather than open coding it
-at every driver. Main improvement being fixed here regardless of the
-snd-hda-intel issue is to properly annotate what is holding a module.
+In the case of hdmi sound, depending on the CPU/GPU, sometimes the
+snd_hda_driver can talk directly with the hardware, but sometimes, it
+uses the i915 driver. When the snd_hda_driver uses i915, it should
+first be unbind/rmmod, as otherwise trying to unbind/rmmod the i915
+driver cause driver issues, as as reported by CI tools with different
+GPU models:
 
-Right now we have 1) symbol module dependencies; 2) kernel references;
-3) userspace references. With (2) and (3) being unknown to the user from
-lsmod pov. Handling this any time try_module_get() is called would make
-(2) visible to lsmod.
+	https://intel-gfx-ci.01.org/tree/drm-tip/IGT_6415/fi-tgl-1115g4/igt@core_hotunplug@unbind-rebind.html
+	https://intel-gfx-ci.01.org/tree/drm-tip/CI_DRM_11495/bat-adlm-1/igt@i915_module_load@reload.html
 
-Paired with fixes to the (unreleased) kmod 30[1], this allows `modprobe
--r --remove-holders <module>` to also try removing the holders before
-removing the module itself.
+In the past, just a few CPUs were doing such bindings, but this issue now
+applies to all "modern" Intel CPUs  that have onboard graphics, as well as
+to the  newer discrete GPUs.
 
-thanks
-Lucas De Marchi
+With the discrete GPU case, the HDA controller is physically separate and
+requires i915 to power on the hardware for all hardware  access. In this
+case, the issue is hit basicly 100% of the time.
 
-[1] https://lore.kernel.org/linux-modules/20220329090912.geymr6xk7taq4rtq@ldmartin-desk2.jf.intel.com/T/#t
+With on-board graphics, i915 driver is needed only when the display
+codec is accessed. If i915 is unbind during runtime suspend, while
+snd-hda-intel is still bound, nothing bad happens, but unbinding i915
+on other situations may also cause issues.
+
+So, add support at kernel/modules to allow snd-hda drivers to properly
+annotate when a dependency on a DRM driver dependencies exists,
+and add a call to such new function at the snd-hda driver when it
+successfully binds into the DRM driver.
+
+This would allow userspace tools to check and properly remove the
+audio driver before trying to remove or unbind the GPU driver.
+
+It should be noticed that this series conveys the hidden module
+dependencies. Other changes are needed in order to allow
+removing or unbinding the i915 driver while keeping the snd-hda-intel
+driver loaded/bound. With that regards, there are some discussions on
+how to improve this at alsa-devel a while  back:
+
+https://mailman.alsa-project.org/pipermail/alsa-devel/2021-September/190099.html
+
+So, future improvements on both in i915 and the audio drivers could be made.
+E.g. with  discrete GPUs, it's the only codec of the card, so it seems feasible
+to detach the ALSA card if i915 is bound (using infra made for VGA
+switcheroo), but,  until these improvements are done and land in
+upstream, audio drivers needs to be unbound if i915 driver goes unbind.
+
+Yet, even if such fixes got merged, this series is still needed, as it makes
+such dependencies more explicit and easier to debug.
+
+PS.: This series was generated against next-20220428.
+
+---
+
+v2: the dependencies are now handled directly at try_module_get().
 
 
->
->Would that work for you?
->
->Regards,
->Mauro
+Mauro Carvalho Chehab (2):
+  module: update dependencies at try_module_get()
+  ALSA: hda - identify when audio is provided by a video driver
+
+ include/linux/module.h     |  4 +++-
+ kernel/module/main.c       | 35 +++++++++++++++++++++++++++++++++--
+ sound/hda/hdac_component.c |  2 +-
+ 3 files changed, 37 insertions(+), 4 deletions(-)
+
+-- 
+2.35.1
+
+
