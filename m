@@ -2,106 +2,56 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA80F51B6C3
-	for <lists+linux-modules@lfdr.de>; Thu,  5 May 2022 05:53:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B3C51B7C0
+	for <lists+linux-modules@lfdr.de>; Thu,  5 May 2022 08:07:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241847AbiEED5I (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 4 May 2022 23:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52466 "EHLO
+        id S231769AbiEEGK7 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 5 May 2022 02:10:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234446AbiEED5H (ORCPT
+        with ESMTP id S230306AbiEEGK6 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 4 May 2022 23:57:07 -0400
-Received: from conuserg-08.nifty.com (conuserg-08.nifty.com [210.131.2.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A435614027;
-        Wed,  4 May 2022 20:53:27 -0700 (PDT)
-Received: from grover.sesame (133-32-177-133.west.xps.vectant.ne.jp [133.32.177.133]) (authenticated)
-        by conuserg-08.nifty.com with ESMTP id 2453qiRH021346;
-        Thu, 5 May 2022 12:52:46 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conuserg-08.nifty.com 2453qiRH021346
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1651722766;
-        bh=24jtj+UYB0xv342M0DAJe77XkxPBb78c2WJx0IEENiY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=dIbXKrf05r1Y4YxHOmc4jtJgcvH4V+h2lx5ydXY+efkZW+vFlpmpz0Pa2wesNvy9C
-         G3kHE50VhBIPpkY3VpBTrH1/UaxIW8MBAuWDETlbm8RDSnQNFYwsYcQ0xr6qVRvCv/
-         3kK0DC4XvlpHbFuGyAtj7JGMWeWv4I8wbfax9SFg7Z/TQVS772fWmv2wou9U24CWrn
-         buhad7efVW3TKU0u/DyZiGmuPsnv9lVpA6puXgyZXQID+jI9DFB4p9jSJRUufangcN
-         wVzllHHxmylVOvz+smzYoY4/z3S493lVMisRiUiFY501rYnVyzJoPoki9Lznfjt+Vd
-         NsWhkgufBfuwA==
-X-Nifty-SrcIP: [133.32.177.133]
-From:   Masahiro Yamada <masahiroy@kernel.org>
-To:     Luis Chamberlain <mcgrof@kernel.org>,
-        linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH v2 3/3] module: merge check_exported_symbol() into find_exported_symbol_in_section()
-Date:   Thu,  5 May 2022 12:52:12 +0900
-Message-Id: <20220505035212.1130858-4-masahiroy@kernel.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220505035212.1130858-1-masahiroy@kernel.org>
+        Thu, 5 May 2022 02:10:58 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948E837BC0;
+        Wed,  4 May 2022 23:07:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=2Qpucw3oLv2CRbRUcWob5k8MPLSfidQ+h1vDMyl/0sg=; b=wAME08WBqMGroIuoojj2vANlMm
+        nzWTwW0VDOPHh9E70noMJvBFAtyB6Qi08bFjbBQ8Nw0Ro8InFvuJs7dHqHPbHdQevLJFDLfg2G9G8
+        wWAU9D5KurOawNpsLcGlJg2c6RcxIyFb1/3ea2yYXiLbSMDfbhjrA4ykx53CLHLV/MwlZy681CbNw
+        H2mMLfeEsaMa2bPYZsoKPnQFdv8efdQ5tnRRUAfk3R9+67JPG8IEoAGN3E7jVi8DkSMgMw+SL5BUk
+        na+QvMVdrUmK83xemQwmR+/7n+7NfSVZ9fRVYJIhssXE9V2LbGtf494wNwW9n4jsdCMgtN/Hz9TWR
+        ntz6wTXA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1nmUe0-00E8uy-8A; Thu, 05 May 2022 06:07:20 +0000
+Date:   Wed, 4 May 2022 23:07:20 -0700
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Masahiro Yamada <masahiroy@kernel.org>
+Cc:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] module: trivial cleanups for symbol search
+Message-ID: <YnNpmGmDD0xnC06j@bombadil.infradead.org>
 References: <20220505035212.1130858-1-masahiroy@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220505035212.1130858-1-masahiroy@kernel.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Now check_exported_symbol() always succeeds.
+On Thu, May 05, 2022 at 12:52:09PM +0900, Masahiro Yamada wrote:
+> V2: rebase on module-next.
 
-Merge it into find_exported_symbol_in_search() to make the code concise.
+Thanks! Pushed onto modules-testing, if there are no issues reported
+I'll move to modules-next.
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
----
-
- kernel/module/main.c | 22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
-
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 22a860d42c16..14686571d4fc 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -243,17 +243,6 @@ static __maybe_unused void *any_section_objs(const struct load_info *info,
- #define symversion(base, idx) ((base != NULL) ? ((base) + (idx)) : NULL)
- #endif
- 
--static bool check_exported_symbol(const struct symsearch *syms,
--				  struct module *owner, unsigned int symnum,
--				  struct find_symbol_arg *fsa)
--{
--	fsa->owner = owner;
--	fsa->crc = symversion(syms->crcs, symnum);
--	fsa->sym = &syms->start[symnum];
--	fsa->license = syms->license;
--	return true;
--}
--
- static const char *kernel_symbol_name(const struct kernel_symbol *sym)
- {
- #ifdef CONFIG_HAVE_ARCH_PREL32_RELOCATIONS
-@@ -290,12 +279,15 @@ static bool find_exported_symbol_in_section(const struct symsearch *syms,
- 
- 	sym = bsearch(fsa->name, syms->start, syms->stop - syms->start,
- 			sizeof(struct kernel_symbol), cmp_name);
-+	if (!sym)
-+		return false;
- 
--	if (sym != NULL && check_exported_symbol(syms, owner,
--						 sym - syms->start, fsa))
--		return true;
-+	fsa->owner = owner;
-+	fsa->crc = symversion(syms->crcs, sym - syms->start);
-+	fsa->sym = sym;
-+	fsa->license = syms->license;
- 
--	return false;
-+	return true;
- }
- 
- /*
--- 
-2.32.0
-
+  Luis
