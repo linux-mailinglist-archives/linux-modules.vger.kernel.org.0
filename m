@@ -2,109 +2,115 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D6CC51F050
-	for <lists+linux-modules@lfdr.de>; Sun,  8 May 2022 21:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD57F51F290
+	for <lists+linux-modules@lfdr.de>; Mon,  9 May 2022 03:55:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbiEHTWH (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 8 May 2022 15:22:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39660 "EHLO
+        id S229639AbiEIBxa (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 8 May 2022 21:53:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231652AbiEHTTF (ORCPT
+        with ESMTP id S234784AbiEIBq0 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 8 May 2022 15:19:05 -0400
-Received: from conuserg-09.nifty.com (conuserg-09.nifty.com [210.131.2.76])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A2A12637;
-        Sun,  8 May 2022 12:11:46 -0700 (PDT)
-Received: from grover.sesame (133-32-177-133.west.xps.vectant.ne.jp [133.32.177.133]) (authenticated)
-        by conuserg-09.nifty.com with ESMTP id 248J8qSb030019;
-        Mon, 9 May 2022 04:09:08 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conuserg-09.nifty.com 248J8qSb030019
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1652036949;
-        bh=kEJzb0HV+D+/XrwgoxTro+DuX7He9WiLcsjIpQbmj1I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qukJg56KBZ9tZ03DmIaB9J1P4O7T2033NPHrrIrxUDw+CxtspATGP01RIt7e5lRW7
-         Z8d0neV5tpH0H3TYmv0hMpJxAL9VAxXFzSQF/5g3A1IjTi29mpDwgfF06WWsZSX5Im
-         yDb1xo+Xai3ITqVXuc0tRlGv9PFYYTlh16npzqtGNUCBMoVpF4TzSRhmI053U+0Kmw
-         wyggrDnu5+Ia8Gr8loCssyY4pFSbbT80GGZPVSnGJforCXrcRDvyitQ5GwCx0KhjaM
-         DL7xFka0yMQBpnZa4OptbEq1Zpd1lu0vQNHcLPJIofLQeG1/BA9PY8WRI6Vdl4WfIv
-         mbiloPzfyyMUQ==
-X-Nifty-SrcIP: [133.32.177.133]
-From:   Masahiro Yamada <masahiroy@kernel.org>
-To:     linux-kbuild@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Peter Zijlstra <peterz@infradead.org>,
-        linux-modules@vger.kernel.org, linux-s390@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, clang-built-linux@googlegroups.com,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Sami Tolvanen <samitolvanen@google.com>,
-        Masahiro Yamada <masahiroy@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Josh Poimboeuf <jpoimboe@redhat.com>
-Subject: [PATCH v4 14/14] kbuild: rebuild multi-object modules when objtool is updated
-Date:   Mon,  9 May 2022 04:06:31 +0900
-Message-Id: <20220508190631.2386038-15-masahiroy@kernel.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220508190631.2386038-1-masahiroy@kernel.org>
-References: <20220508190631.2386038-1-masahiroy@kernel.org>
+        Sun, 8 May 2022 21:46:26 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A129E3BF9D;
+        Sun,  8 May 2022 18:42:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=NuGSALwoLk4dQeQSKTaMdHjmaUOrXItUM4Q9Ls2i1Oc=; b=st/9uAHX4XrWNsxGP0umYxBgg/
+        DrgyN0OrxK18w0lI8wKiK3F1D/ZSideEp6TClnHVf4bXj+DnLOprzL/kpcYX20rNnZtFUAETXnACI
+        NrR4dBKGcooh3o9pbYIL1sabjC/6C2u0qFbVrjmqt84jvw/ZBz1QJTJFugwHJ0YbOagNKbrERb7Xj
+        DC1/myYrbNRTE/3NKFrZPd6gi+AT5VS30OQ/+7+Vym0Hg84QwjQhsA/ZM0YwTHLW5nRPoBHW/aok7
+        S9gIxHOFhwaM6UnAi2Y5imadRrfhgPHUxG598VPJ3svXo/ekU30ulT9nLgyxLha257KeazjdpJuMG
+        YL/cNS4g==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1nnsPs-00BzTe-Q1; Mon, 09 May 2022 01:42:28 +0000
+Date:   Sun, 8 May 2022 18:42:28 -0700
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc:     Herbert Xu <herbert@gondor.apana.org.au>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
+        linuxppc-dev <linuxppc-dev@ozlabs.org>,
+        "fnovak@us.ibm.com" <fnovak@us.ibm.com>
+Subject: Re: request_module DoS
+Message-ID: <YnhxhIsSTCwSPphy@bombadil.infradead.org>
+References: <YnXiuhdZ49pKL/dK@gondor.apana.org.au>
+ <77ecde32-e868-5804-d9a5-3bb22d314777@csgroup.eu>
+ <YnYnjLXm6atlznPT@bombadil.infradead.org>
+ <YnbFJ0fn5gLTRLX7@bombadil.infradead.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YnbFJ0fn5gLTRLX7@bombadil.infradead.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-When CONFIG_LTO_CLANG or CONFIG_X86_KERNEL_IBT is enabled, objtool for
-multi-object modules is postponed until the objects are linked together.
+On Sat, May 07, 2022 at 12:14:47PM -0700, Luis Chamberlain wrote:
+> On Sat, May 07, 2022 at 01:02:20AM -0700, Luis Chamberlain wrote:
+> > You can try to reproduce by using adding a new test type for crypto-aegis256
+> > on lib/test_kmod.c. These tests however can try something similar but other
+> > modules.
+> > 
+> > /tools/testing/selftests/kmod/kmod.sh -t 0008
+> > /tools/testing/selftests/kmod/kmod.sh -t 0009
+> > 
+> > I can't decipher this yet.
+> 
+> Without testing it... but something like this might be an easier
+> reproducer:
+> 
+> +	config_set_driver crypto-aegis256
 
-Make sure to re-run objtool and re-link multi-object modules when
-objtool is updated.
+If the module is not present though nothing really happens, and so
+is it possible this is another issue?
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Josh Poimboeuf <jpoimboe@redhat.com>
----
+Below a bogus module request.
 
-Changes in v4:
-  - New
-    Resent of my previous submission
-    https://lore.kernel.org/linux-kbuild/20210831074004.3195284-11-masahiroy@kernel.org/
-
- scripts/Makefile.build | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index f546b5f1f33f..4e6902e099e8 100644
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -404,13 +404,18 @@ $(obj)/modules.order: $(obj-m) FORCE
- $(obj)/lib.a: $(lib-y) FORCE
- 	$(call if_changed,ar)
+diff --git a/tools/testing/selftests/kmod/kmod.sh b/tools/testing/selftests/kmod/kmod.sh
+index afd42387e8b2..a747ad549940 100755
+--- a/tools/testing/selftests/kmod/kmod.sh
++++ b/tools/testing/selftests/kmod/kmod.sh
+@@ -65,6 +66,7 @@ ALL_TESTS="$ALL_TESTS 0010:1:1"
+ ALL_TESTS="$ALL_TESTS 0011:1:1"
+ ALL_TESTS="$ALL_TESTS 0012:1:1"
+ ALL_TESTS="$ALL_TESTS 0013:1:1"
++ALL_TESTS="$ALL_TESTS 0014:150:1"
  
--quiet_cmd_link_multi-m = LD [M]  $@
--      cmd_link_multi-m = $(LD) $(ld_flags) -r -o $@ @$(patsubst %.o,%.mod,$@) $(cmd_objtool)
-+quiet_cmd_ld_multi_m = LD [M]  $@
-+      cmd_ld_multi_m = $(LD) $(ld_flags) -r -o $@ @$(patsubst %.o,%.mod,$@) $(cmd_objtool)
+ # Kselftest framework requirement - SKIP code is 4.
+ ksft_skip=4
+@@ -504,6 +506,17 @@ kmod_test_0013()
+ 		"cat /sys/module/${DEFAULT_KMOD_DRIVER}/sections/.*text | head -n1"
+ }
+ 
++kmod_test_0014()
++{
++	kmod_defaults_driver
++	MODPROBE_LIMIT=$(config_get_modprobe_limit)
++	let EXTRA=$MODPROBE_LIMIT/6
++	config_set_driver bogus_module_does_not_exist
++	config_num_thread_limit_extra $EXTRA
++	config_trigger ${FUNCNAME[0]}
++	config_expect_result ${FUNCNAME[0]} MODULE_NOT_FOUND
++}
 +
-+define rule_ld_multi_m
-+	$(call cmd_and_savecmd,ld_multi_m)
-+	$(call cmd,gen_objtooldep)
-+endef
+ list_tests()
+ {
+ 	echo "Test ID list:"
+@@ -525,6 +538,7 @@ list_tests()
+ 	echo "0011 x $(get_test_count 0011) - test completely disabling module autoloading"
+ 	echo "0012 x $(get_test_count 0012) - test /proc/modules address visibility under CAP_SYSLOG"
+ 	echo "0013 x $(get_test_count 0013) - test /sys/module/*/sections/* visibility under CAP_SYSLOG"
++	echo "0014 x $(get_test_count 0014) - multithreaded - push kmod_concurrent over max_modprobes for request_module() for a missing module"
+ }
  
- $(multi-obj-m): objtool-enabled := $(delay-objtool)
- $(multi-obj-m): part-of-module := y
- $(multi-obj-m): %.o: %.mod FORCE
--	$(call if_changed,link_multi-m)
-+	$(call if_changed_rule,ld_multi_m)
- $(call multi_depend, $(multi-obj-m), .o, -objs -y -m)
- 
- targets := $(filter-out $(PHONY), $(targets))
--- 
-2.32.0
-
+ usage()
