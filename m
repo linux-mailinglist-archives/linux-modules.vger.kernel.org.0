@@ -2,151 +2,207 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37F0E52E48A
-	for <lists+linux-modules@lfdr.de>; Fri, 20 May 2022 07:54:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CF2E52E7BF
+	for <lists+linux-modules@lfdr.de>; Fri, 20 May 2022 10:39:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345654AbiETFw2 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 20 May 2022 01:52:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59148 "EHLO
+        id S1347232AbiETIjA (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 20 May 2022 04:39:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345649AbiETFwW (ORCPT
+        with ESMTP id S1347207AbiETIi7 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 20 May 2022 01:52:22 -0400
-X-Greylist: delayed 4754 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 19 May 2022 22:52:17 PDT
-Received: from CN01-SHA-obe.outbound.protection.partner.outlook.cn (mail-shahn0097.outbound.protection.partner.outlook.cn [42.159.164.97])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64819C1EFC;
-        Thu, 19 May 2022 22:52:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DX4UnTXi8sRPaIS5JqMekK15TFuEpVcgZ5bqHTdFbOc+ilpNNCIZ1NIUSjf2eymHa8fLCYRGYmAE8QJ15oLDWnHIeSrW/Nb1jsJaQVlo/kgKURGhtvLtGRqvQ3EcZWuMsbWvyN44lSBJ+g0VLS9PTr4s2O483w4RJisQ06AwmFklaZnZH2S1Sv4+LgBx+YqCKRjGuoqHsIuYv3V/zgYnsEhysAIUo/yv5WUhtsvNQgyUXU3Vyd5jwN2A4WAqy6Ys4fDXGzA840RorAn49yuf+NWpHXskgTNTH6C0lp/19cGgnk9NlWTEXa4RcB4UzOkSyjzvteXrRtU23NteFaCRUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XHa7Vpxtm/u3S4otqoZTmpXUuVJNGmaT4A6UJUMDuKo=;
- b=DRwHzouMHJQX+Wau6tf8vC5A5jxLAxOavAyuukUMgnG9zJC+Bwr32gVpF6q9r6ZH31aDyFL9CAZA3Sg3m1DMnLVbxnR75WW3I2eTKsySdZ/ppcV2Hmytqadqz1QeagRQZmUGyTBOSR0a/ks+ABQ3Am7kaLoXi1UKLtOXGwwwO9GBMl103TXITNbmSmmd2utSAbzIlzoa8X8b5zqYlRAKOhW7Zj7nErbHtNcofpQO+h2rIEGlh3IWHqYKcNLgHCVFGcL8p1TzWOpuHmQ59wowx8AYe5CtEZCD3TzEeM/asM9dOAaFC/XMW7qvzzhPliWZkdg1RU7Y73eGFBoOJCQS1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gientech.com; dmarc=pass action=none header.from=gientech.com;
- dkim=pass header.d=gientech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gientech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XHa7Vpxtm/u3S4otqoZTmpXUuVJNGmaT4A6UJUMDuKo=;
- b=vzBiclE5ophprcwR2331A/u/jsRArUK2caAu2QmwaGSShxVHosg+ZrPe8zZ56kEzzr/rwKZriAW7Y+Dqpq/vq3Xadai61ajkctcjmgWEtOOrghDi4vbSfQUpznsItcwAKJLkU3cfadFRG7jyA9BAJD2SjJFX/yudZBxTGlZisLUlMFPP4YEfZkExt1PqX6zh51jd6j3yG9nVaHd+ATh8fGPk5W4BgO/mpnGEOJBIBpHWQfxmKbps4Tengger3Es2ezXleFNKR5GteYRwiIn9OsJhYd79sLLgcFv0+Ctl+1xVi2+EKo0pNlvzHDYaRZr23LnNUg7VujPiT6ko1mDtTg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gientech.com;
-Received: from SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn (10.43.110.19) by
- SHXPR01MB0877.CHNPR01.prod.partner.outlook.cn (10.43.109.144) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5273.14; Fri, 20 May 2022 04:18:30 +0000
-Received: from SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn ([10.43.110.19])
- by SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn ([10.43.110.19]) with mapi
- id 15.20.5273.017; Fri, 20 May 2022 04:18:30 +0000
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Ree
-To:     Recipients <cuidong.liu@gientech.com>
-From:   "J Wu" <cuidong.liu@gientech.com>
-Date:   Wed, 18 May 2022 21:19:10 +0000
-Reply-To: contact@jimmywu.online
-X-ClientProxiedBy: BJSPR01CA0023.CHNPR01.prod.partner.outlook.cn
- (10.43.34.163) To SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn
- (10.43.110.19)
-Message-ID: <SHXPR01MB0623BF122EDC6B68AD5F893189D19@SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn>
+        Fri, 20 May 2022 04:38:59 -0400
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 793E69D4CF;
+        Fri, 20 May 2022 01:38:57 -0700 (PDT)
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20220520083855epoutp016fa069d66602b42f61964cb062d9f8d5~ww2zHyyO_2633026330epoutp013;
+        Fri, 20 May 2022 08:38:55 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20220520083855epoutp016fa069d66602b42f61964cb062d9f8d5~ww2zHyyO_2633026330epoutp013
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1653035935;
+        bh=oZhGlLI83t5qJYIpB4tYvwEL1hnzUFffSLhokei+vZw=;
+        h=From:To:Cc:Subject:Date:References:From;
+        b=ipd4KLW4NM9s1EshcHiVYcOCkwPMINX24v6Ff8vxhss0aRvGT3BAM+Z2tgxqYcKw0
+         qNjaNJkTm0uxpL6ti92DZ17Gaf4U+g4fYaLnhavWvPgve8gXKSklZoHPvBd1TT+SfT
+         rBmVRrBfDNF483ylhq7Vc+97bXV0LRsjU1ieKMag=
+Received: from epsmges5p3new.samsung.com (unknown [182.195.42.75]) by
+        epcas5p3.samsung.com (KnoxPortal) with ESMTP id
+        20220520083854epcas5p3cf9401d13a42a8134d2a52391dcc4d89~ww2yiZHpG2034420344epcas5p37;
+        Fri, 20 May 2022 08:38:54 +0000 (GMT)
+Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
+        epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        73.83.09762.E9357826; Fri, 20 May 2022 17:38:54 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+        20220520083715epcas5p400b11adef4d540756c985feb20ba29bc~ww1WSNe9p1594815948epcas5p4w;
+        Fri, 20 May 2022 08:37:15 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20220520083715epsmtrp2a62dfe8d18384a72c2a4ccacc969621e~ww1WQg0-r1034110341epsmtrp2B;
+        Fri, 20 May 2022 08:37:15 +0000 (GMT)
+X-AuditID: b6c32a4b-1fdff70000002622-1d-6287539e2b57
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+        72.F7.08924.B3357826; Fri, 20 May 2022 17:37:15 +0900 (KST)
+Received: from localhost.localdomain (unknown [107.109.224.44]) by
+        epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+        20220520083707epsmtip27d956809dfd1d7b7f768b3f968c214b2~ww1O1WuqV2442924429epsmtip2f;
+        Fri, 20 May 2022 08:37:07 +0000 (GMT)
+From:   Maninder Singh <maninder1.s@samsung.com>
+To:     keescook@chromium.org, pmladek@suse.com, bcain@quicinc.com,
+        mpe@ellerman.id.au, benh@kernel.crashing.org, paulus@samba.org,
+        hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com,
+        borntraeger@linux.ibm.com, svens@linux.ibm.com, satishkh@cisco.com,
+        sebaddel@cisco.com, kartilak@cisco.com, jejb@linux.ibm.com,
+        martin.petersen@oracle.com, mcgrof@kernel.org,
+        jason.wessel@windriver.com, daniel.thompson@linaro.org,
+        dianders@chromium.org, naveen.n.rao@linux.ibm.com,
+        anil.s.keshavamurthy@intel.com, davem@davemloft.net,
+        mhiramat@kernel.org, peterz@infradead.org, mingo@redhat.com,
+        will@kernel.org, longman@redhat.com, boqun.feng@gmail.com,
+        rostedt@goodmis.org, senozhatsky@chromium.org,
+        andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk,
+        akpm@linux-foundation.org, arnd@arndb.de
+Cc:     linux-hexagon@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        linux-modules@vger.kernel.org,
+        kgdb-bugreport@lists.sourceforge.net, v.narang@samsung.com,
+        onkarnath.1@samsung.com, Maninder Singh <maninder1.s@samsung.com>
+Subject: [PATCH 0/5] kallsyms: make kallsym APIs more safe with scnprintf
+Date:   Fri, 20 May 2022 14:06:56 +0530
+Message-Id: <20220520083701.2610975-1-maninder1.s@samsung.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 223188e6-8e06-4dce-f958-08da39141aa1
-X-MS-TrafficTypeDiagnostic: SHXPR01MB0877:EE_
-X-Microsoft-Antispam-PRVS: <SHXPR01MB0877ABA187963398D693EA8189D39@SHXPR01MB0877.CHNPR01.prod.partner.outlook.cn>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?m38naA0wN8tdg4CorXN3v1YimLjiqvDqMqCp9Zv9jdEdJCRqs8XxJIQkoO?=
- =?iso-8859-1?Q?aPM1jMKXGSYfZPtJLmP7AqZnYgraH7qLWJfMwn1EY6WcG0rGrTZFsPcA7z?=
- =?iso-8859-1?Q?xIp1WShI5woFVWAEMHstuLBx/uaaBJ6IPqTTWWVuI3QUjIZ4fn3ThPsE5a?=
- =?iso-8859-1?Q?A5klon/RaimKeX/ELx71tJUHWXuJ666bDNJGrQ60FdA8dqp1IbmXXyjkI6?=
- =?iso-8859-1?Q?2AdjcXpw8+mbsUWWI/aa7ygoOkU6/kSxQh9yQHt2gEF0pm3+h9Iq+X8KSO?=
- =?iso-8859-1?Q?mm8vXu7Wz3pCEbT4gL9LckR3hIqjYUMZ/1kdCMR+ju1Fh9uFOObGp2E0b5?=
- =?iso-8859-1?Q?WmZS8hUCL2aeAZTydEmicrmaJJdDTPfHtniP2vyQ3d8tBsFOhVKz9Xmk1l?=
- =?iso-8859-1?Q?xhpI1OBzCrEldNTvoYRT7pugUkrCqRZyihYSSJJLboEO4wCzEc/dsThlxh?=
- =?iso-8859-1?Q?N/LUrpdch7PZq61RLIesN811uDAD0zTq6p6dALG6dUJ8V14gygdHdszzKi?=
- =?iso-8859-1?Q?qdGF4z872m9glnnlgAmOzC6LDV78EzW9kngGgCaTU96340evIC3cDBDCz9?=
- =?iso-8859-1?Q?ZxnVF7gRKbMZ0WJHLN+aG8QeNXQazGM5QSXMd0w5MwjjGGQisV4T4VUJwR?=
- =?iso-8859-1?Q?d2fyKIFIs0euOWsJCR75BimTaf4nH8SWpqvko+P1tr3IWtbwiI54ONwnOe?=
- =?iso-8859-1?Q?DKhGqvMKIWT9ufRxtrdvj1fg3r6cPhZjmDVbJtYyyw2JQD803kkOrH3vxj?=
- =?iso-8859-1?Q?1LdM0DAX3qSprhSNUAQWicPT/OD6xfz7eKZ3S8b2iSV/ZXPLZ6jxkZRTs6?=
- =?iso-8859-1?Q?hAMt9Dvb6piwQkBfUrkaCpfwuEpX7DBVgFCSy/YWmjMKqxm+NaH2GQwkgf?=
- =?iso-8859-1?Q?LUhr1s09laDI7r+Y6fwDgZxlW4PFhqrlWa1hba2Z89HT48VUQI45PdRYgt?=
- =?iso-8859-1?Q?x94SAwe6//GaE3r6UbRMaO01vwcyhzj+2oiSIUgk5PNNItQuLWBcz0TPfR?=
- =?iso-8859-1?Q?UOy1ZmbojOZdJJLhrpCiJIGVd2hCyQ5QnFGCIggoKrDTi4MuV9Te7E7gAs?=
- =?iso-8859-1?Q?ow=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn;PTR:;CAT:OSPM;SFS:(13230001)(366004)(19618925003)(6200100001)(33656002)(26005)(4270600006)(7116003)(38350700002)(38100700002)(9686003)(86362001)(55016003)(40160700002)(6862004)(8676002)(3480700007)(66476007)(66946007)(66556008)(508600001)(2906002)(186003)(558084003)(7366002)(7406005)(7416002)(7696005)(52116002)(8936002)(40180700001)(6666004)(62346012);DIR:OUT;SFP:1501;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?kuLjE4NM3wQhG6CkIXvp0pTjx1a4MHJLPYXlcKN6rUj6Wg7RCyDzRtZk6Y?=
- =?iso-8859-1?Q?i5tUiF1YYVcay6wSvhbTY0CLZO6Q1ZmpThBht2WGwYoi+0k3aNnIohxx/a?=
- =?iso-8859-1?Q?f/ZyZLzrK1MNKwulZmzCRvh9LUa1iBCo5jmq2G9xJHR9pvPzt5/u2sgk/A?=
- =?iso-8859-1?Q?FLFOmxH3VqXtVJBnMQBQCwYNANrqDCjBoFR0mN0EuMHI+89UE9UwhneQOn?=
- =?iso-8859-1?Q?IkUz12Hj5vH0XPEdR+J6RXpR1jAmklz640iTPA8TOsLA0ug0hhQ2JM+New?=
- =?iso-8859-1?Q?BbtPJFvMwaEI4JlgugWq3tbqsBnHummnj67d643H2sGMx01VRCm2XsWBAc?=
- =?iso-8859-1?Q?RhGrUGep/auViQFpktIsMwFe4rmD5dxcRcVthXPrOZRzmBTjASpPOgL2Wr?=
- =?iso-8859-1?Q?r523AqlQjNuSqnJ5CzM13QAARJRdiicihgO7ajbDg6xjiUw703T2fzoxa8?=
- =?iso-8859-1?Q?DJNmKhaeyWxDENgn9eobBN1qV6CcFwCbePqpiciEnB/g+ECyehUOg/GQnc?=
- =?iso-8859-1?Q?oD/fJU4/FWO8gbQq8Gpp2+6nIgRadzbacK9QXgGXMmH5/lhDZf3pQsmvHD?=
- =?iso-8859-1?Q?5DAIvH9VT5n+AiwXz5+0bo+iF24sDGSoyKE3YPx0meTnzbNLtUF6QwOJlp?=
- =?iso-8859-1?Q?RGWvA+ye7Jyjy1dD0VFFl+v710ic1BpqkcL0+VK7qotliBKg/vsrBbZzo1?=
- =?iso-8859-1?Q?ry5YoUStUjBs4FtUvG6dVX8ZoKKwiTfxb/SkEKyZAvLI+HVe9N0uhoiTJS?=
- =?iso-8859-1?Q?9YTmLdv2vIVBJmwXT42yaugcUoh8heMG39RqDP0D0Opfd0fsSHSas6sFZP?=
- =?iso-8859-1?Q?WLcvFVV403/9AOrKm26/XOaoQ2mmwUAF7ZNbcbFc3vwHsZN0/rEEreQY75?=
- =?iso-8859-1?Q?6KhdA03Vbw8EZgU2WxAvLUfjuPP8nmTZevGdJ1i692rb1NjbkbaXFb/NW0?=
- =?iso-8859-1?Q?c2YcpwJTGrA+CsA2AWxkmM00bbmqNgYp0UXaGEX0b1d9r/LZk9krcxE3GU?=
- =?iso-8859-1?Q?6+v7DSZ6LPwVE+4Equh3dvtmRv1D8cvoEurJNID60ChS0m4TQhbuCvf4z3?=
- =?iso-8859-1?Q?mifV3n3O1722DlRH+VTHH2yiT3HTy8rvLjpXv1n1mCDqRQ8e9FU9rGa5Cg?=
- =?iso-8859-1?Q?jPhwIOZbOUbJCN0YHqcENB7Aa+0nqM3vF+h8Fsk+zwnw2W9bInHjiau0QK?=
- =?iso-8859-1?Q?S6XK81L1CwS1vDbIMCMUd4RinNlv5w5SRWv5sxs0I/8WZIkydlph/j5bw5?=
- =?iso-8859-1?Q?WkBBoyZS20BcFgr32WPpGITnZu6p9IoZahboXACiN8yNzByrf3GMHsMcpY?=
- =?iso-8859-1?Q?qZbLfLAhqhgb7Wq1egu38RgG/pGysx4VD4fOkUWxEpFNVd6Unung/qItV3?=
- =?iso-8859-1?Q?YCxcQdboQDhOZXBmJztJkOcLUGe/IT2sunpc9sZh42Q82ztNGAoHRjcInA?=
- =?iso-8859-1?Q?ZV0YObC6Gcc6ZVqq7KPum8u5FEQHphCJM8tf5d+9R66/v92EkPwKdQbpT/?=
- =?iso-8859-1?Q?Stla7w6K1yAQXFDO6DdVfALVLGPvIBPpcmqIipwoUDjTOkj1HgTvRn86nL?=
- =?iso-8859-1?Q?kOZEIZjv08OPuoPKcZ2w1fpwPlSKshtQ1/Bw9Xyy3DswSrRNEoCOl6Pjii?=
- =?iso-8859-1?Q?Z5D6xxULmhAm9w6itIolEXsDHXfPj8c5m+51Jn0s+k6KYmIIoEtqXYOzk4?=
- =?iso-8859-1?Q?2nhbPtgo8g4TnzaLOKRXtxavf3S5Uect2cbMj/dcp/tw7e11U+jU/U6v3A?=
- =?iso-8859-1?Q?87Rw=3D=3D?=
-X-OriginatorOrg: gientech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 223188e6-8e06-4dce-f958-08da39141aa1
-X-MS-Exchange-CrossTenant-AuthSource: SHXPR01MB0623.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2022 21:19:33.6392
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 89592e53-6f9d-4b93-82b1-9f8da689f1b4
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3wrl+RAHjHvYxBm70E+SQ0zWv+AGgFAhWqFULh9uOXbcHgh/1WSk0RqnirQhMDwhohJdf2BwL2QaRHIlvmbcdohC0W6BslP/hxO+Rd5lm90=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SHXPR01MB0877
-X-Spam-Status: Yes, score=7.4 required=5.0 tests=BAYES_50,DATE_IN_PAST_24_48,
-        DKIM_INVALID,DKIM_SIGNED,FORGED_SPF_HELO,KHOP_HELO_FCRDNS,
-        RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_PSBL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: *  1.3 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in
-        *      bl.spamcop.net
-        *      [Blocked - see <https://www.spamcop.net/bl.shtml?42.159.164.97>]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4704]
-        *  2.7 RCVD_IN_PSBL RBL: Received via a relay in PSBL
-        *      [42.159.164.97 listed in psbl.surriel.com]
-        *  0.0 SPF_NONE SPF: sender does not publish an SPF Record
-        * -0.0 SPF_HELO_PASS SPF: HELO matches SPF record
-        *  1.3 DATE_IN_PAST_24_48 Date: is 24 to 48 hours before Received:
-        *      date
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  0.1 DKIM_INVALID DKIM or DK signature exists, but is not valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  1.0 FORGED_SPF_HELO No description available.
-        *  0.0 KHOP_HELO_FCRDNS Relay HELO differs from its IP's reverse DNS
-X-Spam-Level: *******
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Ta0xTVxzPuff2tnR2uytkO1RUwkQD28rMYDl7iSZuuWwjSkYyJyPSjg7I
+        KLAW1KHMAp0wsNIQUCnl1fIaD6FQGqDlIRgKAlEw4zEhOAED2k0esxCeoxQyv/3+v2fOh8PC
+        uWskjxURFSuSRAki3Ug2Yej0OPxu/tcpwvfyjC5I1ztLInVNFYkUSTcwZJx5SKD1zC4m+sso
+        J9Bc0q84qtInYmhyvYNEfZZxJlLf2xL6S2+T6L7KykDP8isAmuzSY0gzYsDQaKUU9aWLkVw3
+        wECmlh4CPZc3kuhBs5pEstwlBlIWJeMofXiLm1Tlk2h1aYOBeru6CdRZcIVAZeYNDI0opwHS
+        lh1Cg+2FGNLLtpYrs9aZqPzqHANV3dEykVnRjqHNyRcM1Jr6CEN9JbkApa/kAGTUaUhUWlPN
+        RB09eQDJx3yO8enVlUxA58oGCDprVceg9b+PYrRmVkbQTapxJi1v/ZNJ15d70lrTLEZftcgZ
+        dF3FbyQ9NmQi6e6bqwSt1LQDOr8ngL53swic4p1hfxIqiow4J5J4HQ1hh1sqLXhMivOF6ZQ1
+        QgZ0jmnAgQUpb/h3RjEzDbBZXMoIYOGzuzvHAoDd1Q92jkUASzM1YDfS8mQY2IVmABs7c3eO
+        fwGsrryO21wkxYcVzSbChp0oHQmtff42E06NY/DWzBzTJjhSfrBMMb1dS1DusHXw4VaYxeJQ
+        R+FCtq997QDMGVzatnOo12FPztR2J77FJzfk4rZOSJWw4cSQnmkPnIB3MtUMO3aET827PA8u
+        /tNC2vohdR42KC/bs3IA29RZpN3jC6cGihg2D055wJpmLzu9D2bfvYXZd1+FitUpzM5zYGP+
+        LnaH8tHandm9cHF+nrBP0fCx/mMb5FLBMLn+ohIcUL30GNVLj1H9v1sI8ArgLIqRisNEUp+Y
+        96NE5/lSgVgaFxXG/z5aXAe2P4jnl43g8aM5fgfAWKADQBbu5sQBYrmQywkV/BwvkkSflcRF
+        iqQdYC+LcHuTQ20mCrlUmCBW9KNIFCOS7KoYy4Enw4bu11x0fxqe4a0fWc6e+OUtS+FPAtX8
+        6XX1kYgI5yrF5ZMT1m+DSL+459MfmBNPJAT1v7GMr7har8cZvhK+nebaJl5GKWeD/D46dOpg
+        aydMDT4Xy4kO4XxzzYDJPPMSis/4vUgP9bW47H8loGXPjFDOKcjW1GdYef7j15IrjiWZVYZq
+        3oVPg09f+a4qULuRl2XEhqxU+/GsguBh7jvdT4rZGuEPvZccm14jxoL2x8etJZnnnL3E3Abl
+        cv/BoEsf8pcCQuoVTlzHL3wcjnuMle+L35Na8rnBOn647bPNhNqyJqNJz5HFZtz4w9tX21t7
+        2991MzBwITn0pIru19aZXJDKjZCGC4544hKp4D/+IEYEjwQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Sa0xTdxyG/Z9bW5KarjA90iUkNSOs27q57PJLFAWzjLMsjl1gWVyiFHoG
+        QluwB2FjwVXpALmlcxqkIEIbbqULFAoyKAQKQxogSN2Qa5yDwohsEjJAQcoKZInf3rzPk7xf
+        Xj4uriID+ec0qaxWo1BJKT+itVca9PrRz3Ni3xx+Igbb4CIFZQ1WCgovF2PQ8dcUAVtX+3nw
+        sENPwPLlH3Cw2i9hMLvlpGBoaYYHZSM+MFzdQ8Fd4xoJj8otCGb77RiYxlsxmKjnYChfDXrb
+        KAmOThcBj/VtFNxrL6NAV7pOgqEyC4f8+75u1lhOwea6l4TB/gECem9lE1Bzx4vBuMGDwFwT
+        DO7uCgzsOt9y/bUtHtQWLJNg7TPz4E5hNwbbs6skdOX+gcFQVSmC/I0SBB02EwXVDT/zwOm6
+        iUA//U6YnNncuIqYUt0owVzbtJGMvW4CY0yLOoL5xTjDY/RdkzymuVbGmB2LGFOwpCeZJssV
+        ipkec1DMwI1NgjGYuhFT7vqUGblRiT4JPO13TMmqzqWx2jeOx/glLNUv4Sk5h77x5DwjdMjm
+        n4cEfFr0Nt05fx/lIT++WNSGaI/1NrkHJPRT72NiL/vTdd4F3p60gujuvsVdiRLJaUu7g9gB
+        AaIZip7PKdq1cNECRjc+HMB3LH/Rh3RNoQftZEL0Mt3lnvL1fL5QdJxeuX5ibyGILnGv83ay
+        UPQC7SqZ213GfX1WSyluQPuNzyHjc6gCYRZ0iE3h1PFq7kjKWxo2Xc4p1NwFTbw8LlndhHaf
+        JJO1IYdlWe5EGB85Ec3HpQFCpNbHioVKxbcZrDb5rPaCiuWcSMInpAeFd/NcZ8WieEUqm8Sy
+        Kaz2f4rxBYE6TBl5JrQn8mQdZWprHjC3Ty6EasaehECG6StBbnhvgHtx9TPFAc9c+gcZf2oT
+        PzpVfzizgpWlBX33IuH9N4bbyAx/r7l1X/XKUPIrYWOPrsdc/PW0pyri/ds9Xw5FbWUeXYsw
+        qCA+XIGtPohOiEqUBzTT549dsv5mnZIIOv85IWny339R15hl/VFqn7xXHjZofElX9H19SFrt
+        9vmbcX2HX9uOyf89KnY4+0FWZVK1UvJqyy230fJFanZqy0bInLJL8nGkI/rdqL/nlsf3BZsT
+        CxqiPaPcMHdKQNYeaHyGvo4rnnYczD0jJGzFI/NrKlN6X1GoLjj6p6TMCRfjJ2vFI65ICS5B
+        cUSGaznFfwD17ma4AwAA
+X-CMS-MailID: 20220520083715epcas5p400b11adef4d540756c985feb20ba29bc
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+X-CMS-RootMailID: 20220520083715epcas5p400b11adef4d540756c985feb20ba29bc
+References: <CGME20220520083715epcas5p400b11adef4d540756c985feb20ba29bc@epcas5p4.samsung.com>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Can you do a job with me?
+kallsyms functionality depends on KSYM_NAME_LEN directly.
+but if user passed array length lesser than it, sprintf
+can cause issues of buffer overflow attack.
+
+So changing *sprint* and *lookup* APIs in this patch set
+to have buffer size as an argument and replacing sprintf with
+scnprintf.
+
+patch 1 and 2 can be clubbed, but then it will be difficult
+to review, so patch 1 changes prototype only and patch 2
+includes passed argument usage.
+
+Patch 3 and patch 5 are bug fixes.
+Patch 1, 2 and 4 are changing prorotypes.
+
+Tried build and kallsyms test on ARM64 environment.
+APIs are called at multiple places. So build can
+be failed if updation missed at any place.
+lets see if autobot reports any build failure
+with any config combination.
+
+[   12.247313] ps function_check [crash]
+[   12.247906] pS function_check+0x4/0x40 [crash]
+[   12.247999] pSb function_check+0x4/0x40 [crash df48d71893b7fb2688ac9739346449e89e8a76ca]
+[   12.248092] pB function_check+0x4/0x40 [crash]
+[   12.248190] pBb function_check+0x4/0x40 [crash df48d71893b7fb2688ac9739346449e89e8a76ca]
+...
+[   12.261175] Call trace:
+[   12.261361]  function_2+0x74/0x88 [crash df48d71893b7fb2688ac9739346449e89e8a76ca]
+[   12.261859]  function_1+0x10/0x1c [crash df48d71893b7fb2688ac9739346449e89e8a76ca]
+[   12.262237]  hello_init+0x24/0x34 [crash df48d71893b7fb2688ac9739346449e89e8a76ca]
+[   12.262603]  do_one_initcall+0x54/0x1c8
+[   12.262803]  do_init_module+0x44/0x1d0
+[   12.262992]  load_module+0x1688/0x19f0
+[   12.263179]  __do_sys_init_module+0x1a0/0x210
+[   12.263387]  __arm64_sys_init_module+0x1c/0x28
+[   12.263596]  invoke_syscall+0x44/0x108
+[   12.263788]  el0_svc_common.constprop.0+0x44/0xf0
+[   12.264014]  do_el0_svc_compat+0x1c/0x50
+[   12.264209]  el0_svc_compat+0x2c/0x88
+[   12.264397]  el0t_32_sync_handler+0x90/0x140
+[   12.264600]  el0t_32_sync+0x190/0x194
+
+
+Maninder Singh, Onkarnath (5):
+  kallsyms: pass buffer size in sprint_* APIs
+  kallsyms: replace sprintf with scprintf
+  arch:hexagon/powerpc: use KSYM_NAME_LEN as array size
+  kallsyms: pass buffer size argument in *lookup* APIs
+  kallsyms: remove unsed API lookup_symbol_attrs
+
+ arch/hexagon/kernel/traps.c        |  4 +-
+ arch/powerpc/xmon/xmon.c           |  6 +-
+ arch/s390/lib/test_unwind.c        |  2 +-
+ drivers/scsi/fnic/fnic_trace.c     |  8 +--
+ fs/proc/base.c                     |  2 +-
+ include/linux/kallsyms.h           | 34 +++++------
+ include/linux/module.h             | 14 ++---
+ init/main.c                        |  2 +-
+ kernel/debug/kdb/kdb_support.c     |  2 +-
+ kernel/kallsyms.c                  | 92 ++++++++++++------------------
+ kernel/kprobes.c                   |  4 +-
+ kernel/locking/lockdep.c           |  8 +--
+ kernel/locking/lockdep_internals.h |  2 +-
+ kernel/locking/lockdep_proc.c      |  4 +-
+ kernel/module/kallsyms.c           | 36 ++----------
+ kernel/trace/ftrace.c              |  9 +--
+ kernel/trace/trace_kprobe.c        |  2 +-
+ kernel/trace/trace_output.c        |  4 +-
+ kernel/trace/trace_syscalls.c      |  2 +-
+ lib/vsprintf.c                     | 10 ++--
+ 20 files changed, 93 insertions(+), 154 deletions(-)
+
+-- 
+2.17.1
+
