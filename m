@@ -2,136 +2,109 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 425D7533AFF
-	for <lists+linux-modules@lfdr.de>; Wed, 25 May 2022 12:53:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 502745344F6
+	for <lists+linux-modules@lfdr.de>; Wed, 25 May 2022 22:35:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232894AbiEYKx2 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 25 May 2022 06:53:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34876 "EHLO
+        id S1345081AbiEYUfQ (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 25 May 2022 16:35:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232603AbiEYKxY (ORCPT
+        with ESMTP id S1345090AbiEYUfO (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 25 May 2022 06:53:24 -0400
-Received: from conssluserg-03.nifty.com (conssluserg-03.nifty.com [210.131.2.82])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2971F9FE1;
-        Wed, 25 May 2022 03:53:19 -0700 (PDT)
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49]) (authenticated)
-        by conssluserg-03.nifty.com with ESMTP id 24PAqdlx027069;
-        Wed, 25 May 2022 19:52:40 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 24PAqdlx027069
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-        s=dec2015msa; t=1653475960;
-        bh=MtfOTBQmTIo5gTOtbY0pPCrvlLY0X0Y8Np1AC0lw+eQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ANejoCLa+JDY7f/QB+aEMkxCqqDRpGJEjfMrNqahapNxAEVC0xF1w5CQsnCL2lS2O
-         1gX3hq/+f+XudCW1fgQzPL47JwdLvbzHvhyX8mJKCHPF2mSwe3Vq0ISv4YiyHKIZIv
-         leBsblGAqcve8Hkc8vS7kamj6WfzeqTIBXvVYMjZHFlpDXO9x9fRxV3FvCfHIzmkm6
-         6ekMWG561FH5H/cIwmvT1IwvSn3PoF5YGsB2EnjObBC+V2xQ8C9PtYbYqcWCEuUTXe
-         FtvL3ESR85ykxh7vzqD+dtq/iEIgS9wLg2QKTL+7ak7YPZEvhuxVk9D9iBFuLCSERp
-         vapW+WHt4GTdA==
-X-Nifty-SrcIP: [209.85.216.49]
-Received: by mail-pj1-f49.google.com with SMTP id ds11so19398988pjb.0;
-        Wed, 25 May 2022 03:52:40 -0700 (PDT)
-X-Gm-Message-State: AOAM533XlS6M7Y/KNExiIldB1TZ0Puh2rZcT+uYdBc7oV3m5P+cR01IU
-        4xJaXuVp6XnW4Xlvk2c4vdCWre6LyEo6GiZqjMs=
-X-Google-Smtp-Source: ABdhPJwTb+MeL125OS2dBICYlt3qN+vGKJTfy+DMPZOd5L6Xfe4wzuDX6+FP55+i15sov9sLfellQ9730AqgGSrqPB0=
-X-Received: by 2002:a17:90a:e004:b0:1e0:7a66:fb3a with SMTP id
- u4-20020a17090ae00400b001e07a66fb3amr7988416pjy.119.1653475959363; Wed, 25
- May 2022 03:52:39 -0700 (PDT)
+        Wed, 25 May 2022 16:35:14 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7146FB0D15
+        for <linux-modules@vger.kernel.org>; Wed, 25 May 2022 13:35:13 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id m20so43914134ejj.10
+        for <linux-modules@vger.kernel.org>; Wed, 25 May 2022 13:35:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=jF4MxsPSKKSAh34A0y7fWqFeFSCCDQ9NCjS0um7aELU=;
+        b=VocQsthp4kr71VkA6y/yGQ8r7PzvrX8S0kDee5bYwGXinCWOEWzdKcvX7qcajQQvGu
+         FO46yq2dNFoJHRXEn1midlW/oMmMAE/tH12+3dL6eCDwk/aXnzFoZCoXYF7Tr2XdXAWF
+         A14RSJ7nwmV5Qn/QoKcAQnffjrruBdZQi5J4nFon7T4xNFyrzXHYChC8X8Q7vV/O0l3G
+         Z6kSQfj+bwrSd9gDnvGTu2FkqtNFM/AKycKz8EdP1s6K6YZjA9EDOUYTL090EYLi69Jx
+         FPI6DZKF09Tmz0hCD4UJidqzxCTHlRf+WFpdOUsf3yKhZ6hLlPG8x7UCYJ8ts18QQbpn
+         zECA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=jF4MxsPSKKSAh34A0y7fWqFeFSCCDQ9NCjS0um7aELU=;
+        b=F/5RTMmjom4amq8+vSpkrkvh1iOqC/MAZ1NrjvcP8eoy2iC/7ujAWy3PLETHc24Axi
+         mwaHmVsr7qHFkDwAKZs4GQZVqxg3SDsHCWKUeg168xG1gr3TXeA2sGW1Znc6LW9KzdXY
+         Px+e1BZJq6tVYHMXmG02NquLH9o7Ssz3FPKvSUE12cum9Gn6/wgGMyTRrXch3mXbuVZo
+         pVsU7akF8nYWuambGh2ZX3IgJA2RXkcPqILFcjiMX1Nkqp+86FIDdYO/gD6Zd02p4dA7
+         UYNfuBRnydaOMbuQbtXAZt5hVq3dx1vRnYN9CmaPz4U9LL9VDugVLVAomzqP827xH9iW
+         Vpdg==
+X-Gm-Message-State: AOAM531kqy8uYHDd7djyuqBUdzm64M13YO8kexzQEH19ew23eSIRSTq3
+        +KW9RPUwqNUZVre4mEhw5fVoEnFsXFGpYAuf4MU=
+X-Google-Smtp-Source: ABdhPJydmv+bbHARzEgvyIwdIWejEqbES0XbtJbkAtabvPybUWLA8/SV0kCjBlZCGBxZXSvZwXoaS3LA/pCN6q+ewUw=
+X-Received: by 2002:a17:907:7242:b0:6f5:2904:5354 with SMTP id
+ ds2-20020a170907724200b006f529045354mr32161701ejc.452.1653510911898; Wed, 25
+ May 2022 13:35:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220513113930.10488-1-masahiroy@kernel.org> <20220513113930.10488-7-masahiroy@kernel.org>
- <20220525083142.GA1952409@roeck-us.net>
-In-Reply-To: <20220525083142.GA1952409@roeck-us.net>
-From:   Masahiro Yamada <masahiroy@kernel.org>
-Date:   Wed, 25 May 2022 19:51:17 +0900
-X-Gmail-Original-Message-ID: <CAK7LNATifx2c877yEX5VkTQ5h7_7iSnTB0nkR5i98PEBHb=DuQ@mail.gmail.com>
-Message-ID: <CAK7LNATifx2c877yEX5VkTQ5h7_7iSnTB0nkR5i98PEBHb=DuQ@mail.gmail.com>
-Subject: Re: [PATCH v6 06/10] kbuild: check static EXPORT_SYMBOL* by script
- instead of modpost
-To:     Guenter Roeck <linux@roeck-us.net>
-Cc:     Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        Peter Zijlstra <peterz@infradead.org>,
-        linux-modules <linux-modules@vger.kernel.org>,
-        clang-built-linux <llvm@lists.linux.dev>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Sami Tolvanen <samitolvanen@google.com>
+Received: by 2002:ab4:a26b:0:0:0:0:0 with HTTP; Wed, 25 May 2022 13:35:11
+ -0700 (PDT)
+From:   Luisa Donstin <luisadonstin@gmail.com>
+Date:   Wed, 25 May 2022 22:35:11 +0200
+Message-ID: <CA+QBM2rd1NojOmQ247cmwY+sk9R4hWU6pMA3fqAMrkMrBDEUUw@mail.gmail.com>
+Subject: Bitte kontaktaufnahme Erforderlich !!! Please Contact Required !!!
+To:     contact@firstdiamondbk.com
+Cc:     info@firstdiamondbk.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Wed, May 25, 2022 at 5:31 PM Guenter Roeck <linux@roeck-us.net> wrote:
->
-> On Fri, May 13, 2022 at 08:39:26PM +0900, Masahiro Yamada wrote:
-> > The 'static' specifier and EXPORT_SYMBOL() are an odd combination.
-> >
-> > Commit 15bfc2348d54 ("modpost: check for static EXPORT_SYMBOL*
-> > functions") tried to detect it, but this check has false negatives.
-> >
-> > Here is the sample code.
-> >
-> >   Makefile:
-> >
-> >     obj-y += foo1.o foo2.o
-> >
-> >   foo1.c:
-> >
-> >     #include <linux/export.h>
-> >     static void foo(void) {}
-> >     EXPORT_SYMBOL(foo);
-> >
-> >   foo2.c:
-> >
-> >     void foo(void) {}
-> >
-> > foo1.c exports the static symbol 'foo', but modpost cannot catch it
-> > because it is fooled by foo2.c, which has a global symbol with the
-> > same name.
-> >
-> > s->is_static is cleared if a global symbol with the same name is found
-> > somewhere, but EXPORT_SYMBOL() and the global symbol do not necessarily
-> > belong to the same compilation unit.
-> >
-> > This check should be done per compilation unit, but I do not know how
-> > to do it in modpost. modpost runs against vmlinux.o or modules, which
-> > merges multiple objects, then forgets their origin.
-> >
-> > It is true modpost gets access to the lists of all the member objects
-> > (.vmlinux.objs and *.mod), but modpost cannot parse individual objects
-> > because they may not be ELF but LLVM IR when CONFIG_LTO_CLANG=y.
-> >
-> > Add a simple bash script to parse the output from ${NM}. This works for
-> > CONFIG_LTO_CLANG=y because llvm-nm can dump symbols of LLVM IR files.
-> >
->
-> On parisc builds, this patch results in:
->
-> Building parisc:allnoconfig ... failed
-> --------------
-> Error log:
-> scripts/check-local-export: sh /opt/buildbot/slave/next-next/build/arch/parisc/nm failed
->
-> Guenter
+Guten Tag,
 
-Thanks for the report.
+Ich habe mich nur gefragt, ob Sie meine vorherige E-Mail bekommen
 
-parisc overrides NM:
+haben ?
 
-NM              = sh $(srctree)/arch/parisc/nm
+Ich habe versucht, Sie per E-Mail zu erreichen.
 
+Kommen Sie bitte schnell zu mir zur=C3=BCck, es ist sehr wichtig.
 
-I will fix the script to return the correct exit code.
+Danke
+
+Luisa Donstin
+
+luisadonstin@gmail.com
 
 
 
--- 
-Best Regards
-Masahiro Yamada
+
+
+
+
+
+
+----------------------------------
+
+
+
+
+Good Afternoon,
+
+I was just wondering if you got my Previous E-mail
+have ?
+
+I tried to reach you by E-mail.
+
+Please come back to me quickly, it is very Important.
+
+Thanks
+
+Luisa Donstin
+
+luisadonstin@gmail.com
