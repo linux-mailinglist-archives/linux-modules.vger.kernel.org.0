@@ -2,57 +2,57 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A327547AD2
-	for <lists+linux-modules@lfdr.de>; Sun, 12 Jun 2022 17:33:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 526C6547B48
+	for <lists+linux-modules@lfdr.de>; Sun, 12 Jun 2022 19:51:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236423AbiFLPdf (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 12 Jun 2022 11:33:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59372 "EHLO
+        id S229941AbiFLRpE (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 12 Jun 2022 13:45:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237740AbiFLPdd (ORCPT
+        with ESMTP id S231931AbiFLRoo (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 12 Jun 2022 11:33:33 -0400
+        Sun, 12 Jun 2022 13:44:44 -0400
 Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F30C71FCDD;
-        Sun, 12 Jun 2022 08:33:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41518636D;
+        Sun, 12 Jun 2022 10:44:43 -0700 (PDT)
 Received: from localhost (mailhub3.si.c-s.fr [172.26.127.67])
-        by localhost (Postfix) with ESMTP id 4LLdyL4Wxdz9tND;
-        Sun, 12 Jun 2022 17:33:30 +0200 (CEST)
+        by localhost (Postfix) with ESMTP id 4LLhsg2xgfz9tNF;
+        Sun, 12 Jun 2022 19:44:39 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at c-s.fr
 Received: from pegase2.c-s.fr ([172.26.127.65])
         by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id eknzzkiQ2Vxt; Sun, 12 Jun 2022 17:33:30 +0200 (CEST)
+        with ESMTP id hz7mTX_y_0za; Sun, 12 Jun 2022 19:44:39 +0200 (CEST)
 Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-        by pegase2.c-s.fr (Postfix) with ESMTP id 4LLdyL3R5Fz9tFn;
-        Sun, 12 Jun 2022 17:33:30 +0200 (CEST)
+        by pegase2.c-s.fr (Postfix) with ESMTP id 4LLhsf28KJz9tNG;
+        Sun, 12 Jun 2022 19:44:38 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id 5C6FF8B76D;
-        Sun, 12 Jun 2022 17:33:30 +0200 (CEST)
+        by messagerie.si.c-s.fr (Postfix) with ESMTP id 34CA98B76D;
+        Sun, 12 Jun 2022 19:44:38 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at c-s.fr
 Received: from messagerie.si.c-s.fr ([127.0.0.1])
         by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-        with ESMTP id bcVSCS3LNj_0; Sun, 12 Jun 2022 17:33:30 +0200 (CEST)
+        with ESMTP id JAt_bVPXGUS8; Sun, 12 Jun 2022 19:44:38 +0200 (CEST)
 Received: from PO20335.IDSI0.si.c-s.fr (po16064.idsi0.si.c-s.fr [192.168.6.194])
-        by messagerie.si.c-s.fr (Postfix) with ESMTP id 24C0C8B767;
-        Sun, 12 Jun 2022 17:33:30 +0200 (CEST)
+        by messagerie.si.c-s.fr (Postfix) with ESMTP id E87A88B767;
+        Sun, 12 Jun 2022 19:44:37 +0200 (CEST)
 Received: from PO20335.IDSI0.si.c-s.fr (localhost [127.0.0.1])
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.16.1) with ESMTPS id 25CFXKk9070302
+        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.16.1) with ESMTPS id 25CHiSBY082468
         (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-        Sun, 12 Jun 2022 17:33:20 +0200
+        Sun, 12 Jun 2022 19:44:28 +0200
 Received: (from chleroy@localhost)
-        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.17.1/Submit) id 25CFXKG7070301;
-        Sun, 12 Jun 2022 17:33:20 +0200
+        by PO20335.IDSI0.si.c-s.fr (8.17.1/8.17.1/Submit) id 25CHiRSG082467;
+        Sun, 12 Jun 2022 19:44:27 +0200
 X-Authentication-Warning: PO20335.IDSI0.si.c-s.fr: chleroy set sender to christophe.leroy@csgroup.eu using -f
 From:   Christophe Leroy <christophe.leroy@csgroup.eu>
 To:     Luis Chamberlain <mcgrof@kernel.org>, linux-modules@vger.kernel.org
 Cc:     Christophe Leroy <christophe.leroy@csgroup.eu>,
-        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-Subject: [PATCH] module: Fix "warning: variable 'exit' set but not used"
-Date:   Sun, 12 Jun 2022 17:33:20 +0200
-Message-Id: <a7e1cf121cc52969878d0450b273e7fa10043835.1655047991.git.christophe.leroy@csgroup.eu>
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] module: Fix ERRORs reported by checkpatch.pl
+Date:   Sun, 12 Jun 2022 19:44:25 +0200
+Message-Id: <ad08695b528a812c83ff563d3bcaf3f7038fecb0.1655055854.git.christophe.leroy@csgroup.eu>
 X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1655047996; l=1716; s=20211009; h=from:subject:message-id; bh=LQHsvDZxdtPGyxK4kLcZMc4XILopXjVtdWTqz6awXSw=; b=YFO6mFFEmb/uqVSKc0m9nMFOGGjxNbXBbzNKiZoPPpTUrut+sQwptrE57lcDC5BfFQP0PuWGkT8h TAqf8Im6C7BPFSEV23+u+5daSNdSVVo0Xtj6bvzXX4/wj5QQ4T1G
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1655055865; l=2617; s=20211009; h=from:subject:message-id; bh=/NbpAV1FJWQCDWmmp4q8rCj2ZqxtZl4UOu7nYWHPdH8=; b=Kwn5MW9s3AcTHHmKG5lSnyO6JcaHqdaW7sveD1oWmdTHbFGve4nT9hukSCnwMcqHmrb7SNMSG7vD jQErwX6aCPTUfH0XVoFQorz1uYGYo+0PezX7xPYTSRqqFQCjsAXc
 X-Developer-Key: i=christophe.leroy@csgroup.eu; a=ed25519; pk=HIzTzUj91asvincQGOFx6+ZF5AoUuP9GdOtQChs7Mm0=
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
@@ -63,58 +63,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-When CONFIG_MODULE_UNLOAD is not selected, 'exit' is
-set but never used.
+Checkpatch reports following errors:
 
-It is not possible to replace the #ifdef CONFIG_MODULE_UNLOAD by
-IS_ENABLED(CONFIG_MODULE_UNLOAD) because mod->exit doesn't exist
-when CONFIG_MODULE_UNLOAD is not selected.
+ERROR: do not use assignment in if condition
++	if ((colon = strnchr(name, MODULE_NAME_LEN, ':')) != NULL) {
 
-And because of the rcu_read_lock_sched() section it is not easy
-to regroup everything in a single #ifdef. Let's regroup partially
-and add missing #ifdef to completely opt out the use of
-'exit' when CONFIG_MODULE_UNLOAD is not selected.
+ERROR: do not use assignment in if condition
++		if ((mod = find_module_all(name, colon - name, false)) != NULL)
 
-Reported-by: kernel test robot <lkp@intel.com>
+ERROR: do not use assignment in if condition
++			if ((ret = find_kallsyms_symbol_value(mod, name)) != 0)
+
+ERROR: do not initialise globals to 0
++int modules_disabled = 0;
+
+ERROR: do not use assignment in if condition
++	if (wait_event_interruptible_timeout(module_wq,
+
+Fix them.
+
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 ---
- kernel/module/main.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/module/kallsyms.c | 9 ++++++---
+ kernel/module/main.c     | 6 +++---
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
+diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
+index 3e11523bc6f6..fe3636bde605 100644
+--- a/kernel/module/kallsyms.c
++++ b/kernel/module/kallsyms.c
+@@ -457,14 +457,17 @@ unsigned long module_kallsyms_lookup_name(const char *name)
+ 
+ 	/* Don't lock: we're in enough trouble already. */
+ 	preempt_disable();
+-	if ((colon = strnchr(name, MODULE_NAME_LEN, ':')) != NULL) {
+-		if ((mod = find_module_all(name, colon - name, false)) != NULL)
++	colon = strnchr(name, MODULE_NAME_LEN, ':');
++	if (colon) {
++		mod = find_module_all(name, colon - name, false);
++		if (mod)
+ 			ret = find_kallsyms_symbol_value(mod, colon + 1);
+ 	} else {
+ 		list_for_each_entry_rcu(mod, &modules, list) {
+ 			if (mod->state == MODULE_STATE_UNFORMED)
+ 				continue;
+-			if ((ret = find_kallsyms_symbol_value(mod, name)) != 0)
++			ret = find_kallsyms_symbol_value(mod, name);
++			if (ret)
+ 				break;
+ 		}
+ 	}
 diff --git a/kernel/module/main.c b/kernel/module/main.c
-index fed58d30725d..0548151dd933 100644
+index 0548151dd933..36747941817f 100644
 --- a/kernel/module/main.c
 +++ b/kernel/module/main.c
-@@ -2939,24 +2939,25 @@ static void cfi_init(struct module *mod)
- {
- #ifdef CONFIG_CFI_CLANG
- 	initcall_t *init;
-+#ifdef CONFIG_MODULE_UNLOAD
- 	exitcall_t *exit;
-+#endif
+@@ -119,7 +119,7 @@ static void mod_update_bounds(struct module *mod)
+ }
  
- 	rcu_read_lock_sched();
- 	mod->cfi_check = (cfi_check_fn)
- 		find_kallsyms_symbol_value(mod, "__cfi_check");
- 	init = (initcall_t *)
- 		find_kallsyms_symbol_value(mod, "__cfi_jt_init_module");
--	exit = (exitcall_t *)
--		find_kallsyms_symbol_value(mod, "__cfi_jt_cleanup_module");
--	rcu_read_unlock_sched();
--
- 	/* Fix init/exit functions to point to the CFI jump table */
- 	if (init)
- 		mod->init = *init;
- #ifdef CONFIG_MODULE_UNLOAD
-+	exit = (exitcall_t *)
-+		find_kallsyms_symbol_value(mod, "__cfi_jt_cleanup_module");
- 	if (exit)
- 		mod->exit = *exit;
- #endif
-+	rcu_read_unlock_sched();
+ /* Block module loading/unloading? */
+-int modules_disabled = 0;
++int modules_disabled;
+ core_param(nomodule, modules_disabled, bint, 0);
  
- 	cfi_module_add(mod, mod_tree.addr_min);
- #endif
+ /* Waiting for a module to finish initializing? */
+@@ -1111,9 +1111,9 @@ resolve_symbol_wait(struct module *mod,
+ 	const struct kernel_symbol *ksym;
+ 	char owner[MODULE_NAME_LEN];
+ 
++	ksym = resolve_symbol(mod, info, name, owner);
+ 	if (wait_event_interruptible_timeout(module_wq,
+-			!IS_ERR(ksym = resolve_symbol(mod, info, name, owner))
+-			|| PTR_ERR(ksym) != -EBUSY,
++			!IS_ERR(ksym) || PTR_ERR(ksym) != -EBUSY,
+ 					     30 * HZ) <= 0) {
+ 		pr_warn("%s: gave up waiting for init of module %s.\n",
+ 			mod->name, owner);
 -- 
 2.35.3
 
