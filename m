@@ -2,190 +2,201 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C6CE54B0C5
-	for <lists+linux-modules@lfdr.de>; Tue, 14 Jun 2022 14:37:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C7454B107
+	for <lists+linux-modules@lfdr.de>; Tue, 14 Jun 2022 14:38:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237483AbiFNMbT (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 14 Jun 2022 08:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59186 "EHLO
+        id S245324AbiFNMfn (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 14 Jun 2022 08:35:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245049AbiFNM24 (ORCPT
+        with ESMTP id S245307AbiFNMfP (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 14 Jun 2022 08:28:56 -0400
-Received: from loongson.cn (mail.loongson.cn [114.242.206.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C267E23165;
-        Tue, 14 Jun 2022 05:28:53 -0700 (PDT)
-Received: from [192.168.1.133] (unknown [112.20.110.105])
-        by mail.loongson.cn (Coremail) with SMTP id AQAAf9DxX07zfqhiLj5BAA--.3602S3;
-        Tue, 14 Jun 2022 20:28:39 +0800 (CST)
-Subject: Re: [PATCH] doc: module: update file references
-To:     Masahiro Yamada <masahiroy@kernel.org>,
+        Tue, 14 Jun 2022 08:35:15 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204E6EE11;
+        Tue, 14 Jun 2022 05:32:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C0085B81645;
+        Tue, 14 Jun 2022 12:32:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006F7C3411E;
+        Tue, 14 Jun 2022 12:32:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1655209940;
+        bh=W2sdPNt5QO+c07eblDbvqWaVVydbhsc88fMjavxRvLc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=me5b3HflgfNPbzThidZLk/NpjxYMr1MIV58YPR12wvSBdHzsLaMlV/NtSyN3Mvxzy
+         q/GQ27TdyekMRI85J0EPo25NyzBYG/7DXsgJqqx53V0yZLugeCXbvHchBgy+aWmDgJ
+         zq3bm685/JwRx2pfzDZjuQbP0P2UMWZgEu7IQTpQLmc55Rpow6KKCSosEaWb9Q2lt4
+         VAevK8pEYMsSMSej4B6ggZ6VDFKyabVWyDrAE2n+hj2Y7uPJitwqbNTfs2uxIM/kJ1
+         dI9UAk45zfY7wpqElhs1CMY3pn+itMY3aqhl+K0F9W8r6YJeEeRsD9vrexqZwsnBnl
+         cllYjiYrXM3UA==
+Date:   Tue, 14 Jun 2022 15:30:14 +0300
+From:   Jarkko Sakkinen <jarkko@kernel.org>
+To:     Masami Hiramatsu <mhiramat@kernel.org>
+Cc:     Song Liu <song@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
+        Jarkko Sakkinen <jarkko@profian.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Nathaniel McCallum <nathaniel@profian.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+        Helge Deller <deller@gmx.de>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+        Dave Hansen <dave.hansen@linux.intel.com>,
+        X86 ML <x86@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
+        "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+        Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
         Luis Chamberlain <mcgrof@kernel.org>,
-        linux-modules@vger.kernel.org
-Cc:     Josh Poimboeuf <jpoimboe@kernel.org>,
-        Jiri Kosina <jikos@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Kees Cook <keescook@chromium.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Josh Poimboeuf <jpoimboe@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        Marco Elver <elver@google.com>,
+        Dan Li <ashimida@linux.alibaba.com>,
+        Sami Tolvanen <samitolvanen@google.com>,
+        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Chen Zhongjin <chenzhongjin@huawei.com>,
+        Nicolas Pitre <nico@fluxnic.net>,
+        Mark Brown <broonie@kernel.org>,
+        Luis Machado <luis.machado@linaro.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Andrey Konovalov <andreyknvl@gmail.com>,
+        Kefeng Wang <wangkefeng.wang@huawei.com>,
+        Atsushi Nemoto <anemo@mba.ocn.ne.jp>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Dave Anglin <dave.anglin@bell.net>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Alexei Starovoitov <ast@kernel.org>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Daniel Axtens <dja@axtens.net>,
+        "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+        Jordan Niethe <jniethe5@gmail.com>,
+        Guo Ren <guoren@kernel.org>, Anup Patel <anup@brainfault.org>,
+        Atish Patra <atishp@atishpatra.org>,
+        Changbin Du <changbin.du@intel.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Liao Chang <liaochang1@huawei.com>,
+        Philipp Tomsich <philipp.tomsich@vrull.eu>,
+        Wu Caize <zepan@sipeed.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Alexander Egorenkov <egorenar@linux.ibm.com>,
+        Thomas Richter <tmricht@linux.ibm.com>,
+        Tobias Huschle <huschle@linux.ibm.com>,
+        Ilya Leoshkevich <iii@linux.ibm.com>,
+        Tom Lendacky <thomas.lendacky@amd.com>,
+        Daniel Bristot de Oliveira <bristot@redhat.com>,
+        Michael Roth <michael.roth@amd.com>,
+        "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
         Miroslav Benes <mbenes@suse.cz>,
-        Petr Mladek <pmladek@suse.com>,
-        Joe Lawrence <joe.lawrence@redhat.com>,
-        live-patching@vger.kernel.org, Alex Shi <alexs@kernel.org>,
-        Federico Vaga <federico.vaga@vaga.pv.it>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Matthias Maennich <maennich@google.com>,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220613081741.1699713-1-masahiroy@kernel.org>
-From:   Yanteng Si <siyanteng@loongson.cn>
-Message-ID: <027dcfc9-be47-5fb5-7ea8-26eb19122095@loongson.cn>
-Date:   Tue, 14 Jun 2022 20:28:35 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        =?iso-8859-1?Q?Andr=E9?= Almeida <andrealmeid@igalia.com>,
+        Tiezhu Yang <yangtiezhu@loongson.cn>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Aaron Tomlin <atomlin@redhat.com>,
+        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        sparclinux@vger.kernel.org, linux-modules@vger.kernel.org
+Subject: Re: [PATCH] kprobes: Enable tracing for mololithic kernel images
+Message-ID: <Yqh/Vp7d0/kqfJGc@iki.fi>
+References: <20220608000014.3054333-1-jarkko@profian.com>
+ <CAMj1kXFsdEq6XZ6eOuf8Ks-F4qgneVxFeLYNN_S4JaPy8koEyw@mail.gmail.com>
+ <CAPhsuW7NZXepczZGyV2Ti4hNSupLBoKgA64K=zJN4uVBTxN37g@mail.gmail.com>
+ <20220612213041.b1ec5d1ec3426e90e669c495@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20220613081741.1699713-1-masahiroy@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf9DxX07zfqhiLj5BAA--.3602S3
-X-Coremail-Antispam: 1UD129KBjvJXoW3Gw18urW8WF45Gr4fGFy3Jwb_yoWxWw1fpa
-        s2kryfXan7JryUCw18Wr12gF17GFyxWF4DW3Z5Jwn3ZFn8AFy0yF47tr9Y9a4jgry0yFW8
-        XF4xtFyjy34jvrUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUU9mb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-        0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-        A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-        jxv20xvEc7CjxVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I
-        8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-        64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
-        Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
-        c7I2V7IY0VAS07AlzVAYIcxG8wCY02Avz4vE14v_Xr1l42xK82IYc2Ij64vIr41l4I8I3I
-        0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWU
-        GVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI
-        0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0
-        rVWrZr1j6s0DMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr
-        0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07bOXd8UUUUU=
-X-CM-SenderInfo: pvl1t0pwhqwqxorr0wxvrqhubq/
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220612213041.b1ec5d1ec3426e90e669c495@kernel.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On 2022/6/13 下午4:17, Masahiro Yamada wrote:
-> Adjust documents to the file moves made by commit cfc1d277891e ("module:
-> Move all into module/").
+On Sun, Jun 12, 2022 at 09:30:41PM +0900, Masami Hiramatsu wrote:
+> On Wed, 8 Jun 2022 11:19:19 -0700
+> Song Liu <song@kernel.org> wrote:
 > 
-> Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Yanteng Si <siyanteng@loongson.cn>
-> ---
+> > On Wed, Jun 8, 2022 at 9:28 AM Ard Biesheuvel <ardb@kernel.org> wrote:
+> > >
+> > > Hello Jarkko,
+> > >
+> > > On Wed, 8 Jun 2022 at 02:02, Jarkko Sakkinen <jarkko@profian.com> wrote:
+> > > >
+> > > > Tracing with kprobes while running a monolithic kernel is currently
+> > > > impossible because CONFIG_KPROBES is dependent of CONFIG_MODULES.  This
+> > > > dependency is a result of kprobes code using the module allocator for the
+> > > > trampoline code.
+> > > >
+> > > > Detaching kprobes from modules helps to squeeze down the user space,
+> > > > e.g. when developing new core kernel features, while still having all
+> > > > the nice tracing capabilities.
+> > > >
+> > > > For kernel/ and arch/*, move module_alloc() and module_memfree() to
+> > > > module_alloc.c, and compile as part of vmlinux when either CONFIG_MODULES
+> > > > or CONFIG_KPROBES is enabled.  In addition, flag kernel module specific
+> > > > code with CONFIG_MODULES.
+> > > >
+> > > > As the result, kprobes can be used with a monolithic kernel.
+> > >
+> > > I think I may have mentioned this the previous time as well, but I
+> > > don't think this is the right approach.
+> > >
+> > > Kprobes uses alloc_insn_page() to allocate executable memory, but the
+> > > requirements for this memory are radically different compared to
+> > > loadable modules, which need to be within an arch-specific distance of
+> > > the core kernel, need KASAN backing etc etc.
+> > 
+> > I think the distance of core kernel requirement is the same for kprobe
+> > alloc_insn_page and modules, no?
 > 
-> I did not touch
+> This strongly depends on how kprobes (software breakpoint and
+> single-step) is implemented on the arch. For example, x86 implements
+> the so-called "kprobe-booster" which jumps back from the single
+> stepping trampoline buffer. Then the buffer address must be within
+> the range where it can jump to the original address.
+> However, if the arch implements single-step as an instruction
+> emulation, it has no such limitation. As far as I know, arm64
+> will do emulation for the instructions which change PC register
+> and will do direct execution with another software breakpoint
+> for other instructions.
 > 
->    Documentation/translations/zh_CN/core-api/kernel-api.rst
-diff --git a/Documentation/translations/zh_CN/core-api/kernel-api.rst 
-b/Documentation/translations/zh_CN/core-api/kernel-api.rst
-index e45fe80d1cd8..962d31d019d7 100644
---- a/Documentation/translations/zh_CN/core-api/kernel-api.rst
-+++ b/Documentation/translations/zh_CN/core-api/kernel-api.rst
-@@ -224,7 +224,7 @@ kernel/kmod.c
-  模块接口支持
-  ------------
+> Why I'm using module_alloc() for a generic function, is that
+> can cover the limitation most widely.
+> Thus, if we have CONFIG_ARCH_HAVE_ALLOC_INSN_PAGE flag and
+> kprobes can check it instead of using __weak function, the
+> kprobes may not need to depend on module_alloc() in general.
 
--更多信息请参考文件kernel/module.c。
-+更多信息请参阅kernel/module/目录下的文件。
+OK, I guess this is what Luis meant. 
 
-  硬件接口
-  ========
+I'll try to carve up something based on this.
 
-> 
-> because I cannot modify it.Let me help you, it's my pleasure.  :)
-
-Thanks,
-Yanteng
-> 
->   Documentation/core-api/kernel-api.rst                  |  2 +-
->   Documentation/core-api/symbol-namespaces.rst           |  4 ++--
->   Documentation/livepatch/module-elf-format.rst          | 10 +++++-----
->   .../translations/it_IT/core-api/symbol-namespaces.rst  |  6 +++---
->   .../translations/zh_CN/core-api/symbol-namespaces.rst  |  2 +-
->   5 files changed, 12 insertions(+), 12 deletions(-)
-> 
-> diff --git a/Documentation/core-api/kernel-api.rst b/Documentation/core-api/kernel-api.rst
-> index d6b3f94b9f1f..0793c400d4b0 100644
-> --- a/Documentation/core-api/kernel-api.rst
-> +++ b/Documentation/core-api/kernel-api.rst
-> @@ -223,7 +223,7 @@ Module Loading
->   Inter Module support
->   --------------------
->   
-> -Refer to the file kernel/module.c for more information.
-> +Refer to the files in kernel/module/ for more information.
->   
->   Hardware Interfaces
->   ===================
-> diff --git a/Documentation/core-api/symbol-namespaces.rst b/Documentation/core-api/symbol-namespaces.rst
-> index 5ad9e0abe42c..12e4aecdae94 100644
-> --- a/Documentation/core-api/symbol-namespaces.rst
-> +++ b/Documentation/core-api/symbol-namespaces.rst
-> @@ -51,8 +51,8 @@ namespace ``USB_STORAGE``, use::
->   The corresponding ksymtab entry struct ``kernel_symbol`` will have the member
->   ``namespace`` set accordingly. A symbol that is exported without a namespace will
->   refer to ``NULL``. There is no default namespace if none is defined. ``modpost``
-> -and kernel/module.c make use the namespace at build time or module load time,
-> -respectively.
-> +and kernel/module/main.c make use the namespace at build time or module load
-> +time, respectively.
->   
->   2.2 Using the DEFAULT_SYMBOL_NAMESPACE define
->   =============================================
-> diff --git a/Documentation/livepatch/module-elf-format.rst b/Documentation/livepatch/module-elf-format.rst
-> index dbe9b400e39f..7347638895a0 100644
-> --- a/Documentation/livepatch/module-elf-format.rst
-> +++ b/Documentation/livepatch/module-elf-format.rst
-> @@ -210,11 +210,11 @@ module->symtab.
->   =====================================
->   Normally, a stripped down copy of a module's symbol table (containing only
->   "core" symbols) is made available through module->symtab (See layout_symtab()
-> -in kernel/module.c). For livepatch modules, the symbol table copied into memory
-> -on module load must be exactly the same as the symbol table produced when the
-> -patch module was compiled. This is because the relocations in each livepatch
-> -relocation section refer to their respective symbols with their symbol indices,
-> -and the original symbol indices (and thus the symtab ordering) must be
-> +in kernel/module/kallsyms.c). For livepatch modules, the symbol table copied
-> +into memory on module load must be exactly the same as the symbol table produced
-> +when the patch module was compiled. This is because the relocations in each
-> +livepatch relocation section refer to their respective symbols with their symbol
-> +indices, and the original symbol indices (and thus the symtab ordering) must be
->   preserved in order for apply_relocate_add() to find the right symbol.
->   
->   For example, take this particular rela from a livepatch module:::
-> diff --git a/Documentation/translations/it_IT/core-api/symbol-namespaces.rst b/Documentation/translations/it_IT/core-api/symbol-namespaces.rst
-> index 42f5d04e38ec..0f6898860d6d 100644
-> --- a/Documentation/translations/it_IT/core-api/symbol-namespaces.rst
-> +++ b/Documentation/translations/it_IT/core-api/symbol-namespaces.rst
-> @@ -50,9 +50,9 @@ Di conseguenza, nella tabella dei simboli del kernel ci sarà una voce
->   rappresentata dalla struttura ``kernel_symbol`` che avrà il campo
->   ``namespace`` (spazio dei nomi) impostato. Un simbolo esportato senza uno spazio
->   dei nomi avrà questo campo impostato a ``NULL``. Non esiste uno spazio dei nomi
-> -di base. Il programma ``modpost`` e il codice in kernel/module.c usano lo spazio
-> -dei nomi, rispettivamente, durante la compilazione e durante il caricamento
-> -di un modulo.
-> +di base. Il programma ``modpost`` e il codice in kernel/module/main.c usano lo
-> +spazio dei nomi, rispettivamente, durante la compilazione e durante il
-> +caricamento di un modulo.
->   
->   2.2 Usare il simbolo di preprocessore DEFAULT_SYMBOL_NAMESPACE
->   ==============================================================
-> diff --git a/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst b/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst
-> index 6abf7ed534ca..bb16f0611046 100644
-> --- a/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst
-> +++ b/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst
-> @@ -52,7 +52,7 @@
->   
->   相应的 ksymtab 条目结构体 ``kernel_symbol`` 将有相应的成员 ``命名空间`` 集。
->   导出时未指明命名空间的符号将指向 ``NULL`` 。如果没有定义命名空间，则默认没有。
-> -``modpost`` 和kernel/module.c分别在构建时或模块加载时使用名称空间。
-> +``modpost`` 和kernel/module/main.c分别在构建时或模块加载时使用名称空间。
->   
->   2.2 使用DEFAULT_SYMBOL_NAMESPACE定义
->   ====================================
-> 
-
+BR, Jarkko
