@@ -2,79 +2,142 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 359D454FAC6
-	for <lists+linux-modules@lfdr.de>; Fri, 17 Jun 2022 18:06:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E26F85503B8
+	for <lists+linux-modules@lfdr.de>; Sat, 18 Jun 2022 11:53:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383004AbiFQQGW (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 17 Jun 2022 12:06:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52960 "EHLO
+        id S231834AbiFRJDk (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 18 Jun 2022 05:03:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382943AbiFQQGT (ORCPT
+        with ESMTP id S232503AbiFRJDd (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 17 Jun 2022 12:06:19 -0400
-X-Greylist: delayed 1496 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Jun 2022 09:06:18 PDT
-Received: from sv220.xserver.jp (sv220.xserver.jp [202.226.39.121])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B03186F5;
-        Fri, 17 Jun 2022 09:06:18 -0700 (PDT)
-X-Virus-Status: clean(F-Secure/fsigk_smtp/521/virusgw2.xserver.jp)
-Received: from webmail.xserver.ne.jp (webmail.xserver.ne.jp [210.188.201.183])
-        by sv220.xserver.jp (Postfix) with ESMTPA id 038CD12025F434;
-        Sat, 18 Jun 2022 00:16:31 +0900 (JST)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 17 Jun 2022 23:16:31 +0800
-From:   Steve Dibenedetto <y-kitsuya@bell-group.co.jp>
-To:     undisclosed-recipients:;
-Subject: THIS IS VERY CONFIDENTIAL
-Reply-To: stevedibenedetto17@gmail.com
-Mail-Reply-To: stevedibenedetto17@gmail.com
-Message-ID: <ec1bb68d0d72aa3e007bad8b0e72f08f@bell-group.co.jp>
-X-Sender: y-kitsuya@bell-group.co.jp
-User-Agent: Roundcube Webmail/1.2.0
-X-Spam-Status: Yes, score=6.9 required=5.0 tests=BAYES_50,
-        FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,ODD_FREEM_REPTO,
-        SPF_HELO_PASS,SPF_SOFTFAIL,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        * -0.0 SPF_HELO_PASS SPF: HELO matches SPF record
-        *  0.7 SPF_SOFTFAIL SPF: sender does not match SPF record (softfail)
-        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [stevedibenedetto17[at]gmail.com]
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.6 ODD_FREEM_REPTO Has unusual reply-to header
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-X-Spam-Level: ******
+        Sat, 18 Jun 2022 05:03:33 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 659A8245A0
+        for <linux-modules@vger.kernel.org>; Sat, 18 Jun 2022 02:03:31 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id c10-20020a170903234a00b00168b5f7661bso3751499plh.6
+        for <linux-modules@vger.kernel.org>; Sat, 18 Jun 2022 02:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=ptVKPuGcbB2+la+8ZiODjieQiW7k/oxo/Oz/EdgWumA=;
+        b=UIxQ5FEc5KUGjUFI0jmR+pzVeOpPYkxsewDr7QpplKnl9i8FqbhtassrfzcyyW/VG4
+         q4zTZ1jlJegFa1PmQn4JCa7rgZpA9GXdHeGc7DZThZ3KQpZ5ijja2/D22gi939kN75as
+         w19ZMHfgy7cHjfLdCoqYjwhPvt3gyoPZQIRTlpXEuBVi1hRUi93DrwXHyRyr6uPntB+C
+         f5qLDoDNzx+/aL9DTUn2OsNZ3Fo0QayufVMnNZ/CwjjPTMgirdUroVvDRqUjhR2FhpvJ
+         nwHs/ieBLMWCoE89Zwm+PIiFZpaoTHinYCTLH2LFGLCAwEinnlsS9UG+rWKeGDt9sn12
+         wlLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=ptVKPuGcbB2+la+8ZiODjieQiW7k/oxo/Oz/EdgWumA=;
+        b=QVRZhePP16I2/NtnUAD50F/Rr5mkVchzFwHRCf9Mc6+NLyQ/kdhoyOjgaxair3tWQx
+         0S22swlJ3Yr6lQKRml+VzDEs9qyf4bVkF9L+yRvoxhUmSbE1d3Wd4nDuqhxuEvWv9FBN
+         Cc1KLhnBETVfiRecmOsYe8/1BDdtXbGU3SEa5dCJb5etlSdOePeFxbIc2s/GPLbfggfl
+         EN7QT14oXtBWyNOr3aviMaGmShNzjH+uHzQlDnV9wFsqrXh1ge8ERLbhPwVlJvmmlrqi
+         lkE2zP/91LeYc8qVmvfq7dMGz/cPiC1PEjjId9aPu2xDzG6QPuvJlVpcSVVXc8c/BhEl
+         tYqQ==
+X-Gm-Message-State: AJIora9oAN0mawrmPrsqhDDn0mwVy5HGwKzML32zLJ3y3K+8qRcS70ZO
+        m/8vb0QVJe40ZHEG7qxKJBpIFDJNrkQq6Q==
+X-Google-Smtp-Source: AGRyM1sH2PfcGj8ViDV0lllmFpU71ukSxzCtMA3vIatOWbHB6KvOeV6QomY8XXQV6nt0d4lCuh4I6QRng8JeMg==
+X-Received: from slicestar.c.googlers.com ([fda3:e722:ac3:cc00:4f:4b78:c0a8:20a1])
+ (user=davidgow job=sendgmr) by 2002:a17:903:11cc:b0:168:eae:da4a with SMTP id
+ q12-20020a17090311cc00b001680eaeda4amr13290211plh.21.1655543010775; Sat, 18
+ Jun 2022 02:03:30 -0700 (PDT)
+Date:   Sat, 18 Jun 2022 17:03:05 +0800
+Message-Id: <20220618090310.1174932-1-davidgow@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.36.1.476.g0c4daa206d-goog
+Subject: [PATCH 0/5] Rework KUnit test execution in modules
+From:   David Gow <davidgow@google.com>
+To:     Brendan Higgins <brendanhiggins@google.com>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Jeremy Kerr <jk@codeconstruct.com.au>,
+        Daniel Latypov <dlatypov@google.com>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Andra Paraschiv <andraprs@amazon.com>,
+        Longpeng <longpeng2@huawei.com>
+Cc:     David Gow <davidgow@google.com>, kunit-dev@googlegroups.com,
+        linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "=?UTF-8?q?Ma=C3=ADra=20Canal?=" <maira.canal@usp.br>,
+        linux-mmc@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org,
+        linux-modules@vger.kernel.org,
+        Matt Johnston <matt@codeconstruct.com.au>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
+This patch series makes two changes to how KUnit test suites are stored
+and executed:
+- The .kunit_test_suites section is now used for tests in modules (in
+  lieu of a module_init funciton), as well as for built-in tests. The
+  module loader will now trigger test execution. This frees up the
+  module_init function for other uses.
+- Instead of storing an array of arrays of suites, have the
+  kunit_test_suite() and kunit_test_suites() macros append to one global
+  (or per-module) list of test suites. This removes a needless layer of
+  indirection.
 
+The upshot of this is that it should now be possible to use the
+kunit_test_suite() and kunit_test_suites() macros to register test
+suites even from within modules which otherwise had module_init
+functions. This was proving to be quite a common issue, resulting in
+several modules calling into KUnit's private suite execution functions
+to run their tests (often introducing incompatibilities with the KUnit
+tooling).
+
+This series also fixes the thunderbolt, nitro_enclaves, and
+sdhci-of-aspeed tests to use kunit_test_suite() now that it works.
+
+Huge thanks to Jeremy Kerr, who designed and implemented the module
+loader changes, and to Daniel Latypov for pushing the simplification of
+the nested arrays in .kunit_test_suites.
+
+I've tested this series both with builtin tests, and with modules on
+x86_64, but there's always the possibility that there's something subtle
+and nasty on another architecture, so please test!
+
+Cheers,
+-- David
+
+Daniel Latypov (1):
+  kunit: flatten kunit_suite*** to kunit_suite** in .kunit_test_suites
+
+David Gow (3):
+  thunderbolt: test: Use kunit_test_suite() macro
+  nitro_enclaves: test: Use kunit_test_suite() macro
+  mmc: sdhci-of-aspeed: test: Use kunit_test_suite() macro
+
+Jeremy Kerr (1):
+  kunit: unify module and builtin suite definitions
+
+ drivers/mmc/host/Kconfig                      |   5 +-
+ drivers/mmc/host/sdhci-of-aspeed-test.c       |   8 +-
+ drivers/mmc/host/sdhci-of-aspeed.c            |  27 ----
+ drivers/thunderbolt/Kconfig                   |   5 +-
+ drivers/thunderbolt/domain.c                  |   3 -
+ drivers/thunderbolt/tb.h                      |   8 -
+ drivers/thunderbolt/test.c                    |  12 +-
+ drivers/virt/nitro_enclaves/Kconfig           |   5 +-
+ drivers/virt/nitro_enclaves/ne_misc_dev.c     |  27 ----
+ .../virt/nitro_enclaves/ne_misc_dev_test.c    |   5 +-
+ include/kunit/test.h                          |  60 ++------
+ include/linux/module.h                        |   5 +
+ kernel/module/main.c                          |   6 +
+ lib/kunit/executor.c                          | 117 ++++-----------
+ lib/kunit/executor_test.c                     | 139 +++++-------------
+ lib/kunit/test.c                              |  54 ++++++-
+ 16 files changed, 152 insertions(+), 334 deletions(-)
 
 -- 
-Hello,
+2.36.1.476.g0c4daa206d-goog
 
-My name is Steve Dibenedetto.I apologize to have contacted you this way
-without a direct relationship. There is an opportunity to collaborate
-with me in the sourcing of some materials needed by our company for
-production of the different medicines we are researching.
-
-I'm aware that this might be totally outside your professional
-specialization, but it will be a great source for generating extra
-revenue. I  discovered a manufacturer who can supply us at a lower rate
-than our company's previous purchases.
-I will give you more specific details when/if I receive feedback from
-you showing interest.
-
-Warm Regards
-Steve Dibenedetto
-Production & Control Manager,
-Green Field Laboratories
-Gothic House, Barker Gate,
-Nottingham, NG1 1JU,
-United Kingdom.
