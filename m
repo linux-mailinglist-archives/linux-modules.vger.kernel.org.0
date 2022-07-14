@@ -2,97 +2,111 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0971257472A
-	for <lists+linux-modules@lfdr.de>; Thu, 14 Jul 2022 10:37:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AA70574A63
+	for <lists+linux-modules@lfdr.de>; Thu, 14 Jul 2022 12:16:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237367AbiGNIhy (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 14 Jul 2022 04:37:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60280 "EHLO
+        id S237857AbiGNKQk (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 14 Jul 2022 06:16:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbiGNIhN (ORCPT
+        with ESMTP id S237801AbiGNKQj (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 14 Jul 2022 04:37:13 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4731E3FA1E
-        for <linux-modules@vger.kernel.org>; Thu, 14 Jul 2022 01:37:12 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id bp17so1652516lfb.3
-        for <linux-modules@vger.kernel.org>; Thu, 14 Jul 2022 01:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=H3bGT1ZyGPu3PRQJlJHyQI9TvTjBPuNSyHjFOzNfiP0=;
-        b=gaDZ6UkvWmoGLPkb5BiwWKXrxZqJRKNx4T2fn6EvGAM0nTMCvTzxyP4EuJ913j6Iv+
-         SvMX4/pvx4tmhR/0cDdL9pbkcCOAwg/dZQZJjKvYYHG5zoS6pTup2xrhZON7aPFodE61
-         jbdbe7f5x1iqsxnbqtRGk5VVyYe+GfguXyW53v/Jtk7m9BRLrugVau1mwPBhoM15I1rO
-         FgfB/JoMGOti2QefdfOSOcdpcygQeBiN0idXo3yCL6hW5Cz+uWpratECqWcSagxAB5xP
-         zT+sUZ3pJE3RjDVpLi/6z/hZ8yL43zLlaxwdm4ILJ3e9Bke6wVp5k2l7GAKtdogOGzmZ
-         5LQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=H3bGT1ZyGPu3PRQJlJHyQI9TvTjBPuNSyHjFOzNfiP0=;
-        b=W+nMN2qTjT6Mg5/5uvXTpk8MABfTfqMKLrsvNmdScBIkYWUO+BUIMgAlWL6GGG/aUf
-         JpowbewbXD/0Ev9PwEBNdExKx64A6OkLAkvx0SeDWkPJjL+VD5zRmfhESEBS3pNzeaYH
-         JjBNN0CIGnkkW0Gw1hh0ILCfvy9cAAjRd5o600tBR+2DEJgQUzuusM7aw3lb6+KAm2uw
-         GqKWHB5CgUnaFm9tVidPF1ZmPRHn8RWXK7f7BEPeMjJ7FOtGidAvM5W7NmHEOL97JMmq
-         WmAsMKDmHRGJ2PxJUZ+gUrqV3mJpZ7o+raKofIiCuf1Nu0O5J5YbF9cKMLCFHvagGh59
-         yp+A==
-X-Gm-Message-State: AJIora+ckUgw6Uirhk6Gpr0CRRzkawzZ6HlYPlAO57JVJGc448liTUPr
-        /ciV/UiuF4KlxIn5P5PC7JvHjif/WlQLavPLX0bgnHT5kh4cIA==
-X-Google-Smtp-Source: AGRyM1vX4Zd9WIWDxqKGtP81mt11peMiDiT310/qUqT5enM4eeA2HoIqQaHp0s5sIeDBZVZu8TIFwya2pg7lDHDFDeo=
-X-Received: by 2002:a05:6512:4004:b0:48a:12dc:7f63 with SMTP id
- br4-20020a056512400400b0048a12dc7f63mr2033540lfb.131.1657787820892; Thu, 14
- Jul 2022 01:37:00 -0700 (PDT)
+        Thu, 14 Jul 2022 06:16:39 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 586DB120A5;
+        Thu, 14 Jul 2022 03:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=0Gkk0NC34K+apqrYO+RTe0+nfUNqT3lfjLteCbnILho=; b=UFnSe+fhAVY6yhXjV2wPJ61iZ8
+        2Zw0OYv0osZnIIxvRy4gbl9Ye5kgg+qtQKMQkvhFyAK32I4SIz8biMp+cQChL4nwYrIOG6C9ex0Ef
+        f8U+9j9tY1bXIkJVNz+BPOChOnGQrY3uTbXPb+H8mB29/YqRxwsKepdNGgjXhQGGRQAiaiCXQXaCR
+        fpHfR8jE+VDhlrnJsDgRZjQMdGT1qeIdRxvz6Re/H0sOAKr8FKrB+YaDbMcUjAbbDYwWHaeq77Jdg
+        /X5bj3osOCoUykMSaOAx17CzfJkkDvSFWE1X4eNNlbC4Qk3E0NHW17ULmCJInK+jjxGJdV7o3rS7d
+        pVljFdig==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=worktop.programming.kicks-ass.net)
+        by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1oBvsy-009HkF-C2; Thu, 14 Jul 2022 10:15:56 +0000
+Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
+        id E144A980120; Thu, 14 Jul 2022 12:10:36 +0200 (CEST)
+Date:   Thu, 14 Jul 2022 12:10:36 +0200
+From:   Peter Zijlstra <peterz@infradead.org>
+To:     Song Liu <songliubraving@fb.com>
+Cc:     Song Liu <song@kernel.org>, bpf <bpf@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Linux-MM <linux-mm@kvack.org>,
+        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        "naveen.n.rao@linux.ibm.com" <naveen.n.rao@linux.ibm.com>,
+        "davem@davemloft.net" <davem@davemloft.net>,
+        "anil.s.keshavamurthy@intel.com" <anil.s.keshavamurthy@intel.com>,
+        "keescook@chromium.org" <keescook@chromium.org>,
+        "hch@infradead.org" <hch@infradead.org>,
+        "dave@stgolabs.net" <dave@stgolabs.net>,
+        "daniel@iogearbox.net" <daniel@iogearbox.net>,
+        Kernel Team <Kernel-team@fb.com>,
+        "x86@kernel.org" <x86@kernel.org>,
+        "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+        "rick.p.edgecombe@intel.com" <rick.p.edgecombe@intel.com>,
+        "akpm@linux-foundation.org" <akpm@linux-foundation.org>
+Subject: Re: [PATCH bpf-next 1/3] mm/vmalloc: introduce vmalloc_exec which
+ allocates RO+X memory
+Message-ID: <Ys/rnFf/ewPA85Iz@worktop.programming.kicks-ass.net>
+References: <20220713071846.3286727-1-song@kernel.org>
+ <20220713071846.3286727-2-song@kernel.org>
+ <Ys6cWUMHO8XwyYgr@hirez.programming.kicks-ass.net>
+ <7C927986-3665-4BD6-A339-D3FE4A71E3D4@fb.com>
+ <Ys8qfRwkTbUYwmKM@worktop.programming.kicks-ass.net>
+ <78A18945-0841-4CCE-8A33-6C09ECBFF7E1@fb.com>
 MIME-Version: 1.0
-Received: by 2002:a2e:9041:0:0:0:0:0 with HTTP; Thu, 14 Jul 2022 01:37:00
- -0700 (PDT)
-Reply-To: abdwabbomaddahm@gmail.com
-From:   Abdwabbo Maddah <abdwabbomaddah746@gmail.com>
-Date:   Thu, 14 Jul 2022 09:37:00 +0100
-Message-ID: <CAFC-3ieta-vbGq7=-xp9Wgp2Sr8SYhFWTPWR2J6JsyQ_pZJxLQ@mail.gmail.com>
-Subject: Get back to me... URGENT
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2a00:1450:4864:20:0:0:0:133 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4924]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [abdwabbomaddah746[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [abdwabbomaddah746[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.2 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78A18945-0841-4CCE-8A33-6C09ECBFF7E1@fb.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
--- 
-Dear,
-I had sent you a mail but i don't think you received it that's why am
-writing you again.It is important you get back to me as soon as you
-can.
-Abd-Wabbo Maddah
+On Wed, Jul 13, 2022 at 09:20:55PM +0000, Song Liu wrote:
+> 
+> 
+> > On Jul 13, 2022, at 1:26 PM, Peter Zijlstra <peterz@infradead.org> wrote:
+> > 
+> > On Wed, Jul 13, 2022 at 03:48:35PM +0000, Song Liu wrote:
+> > 
+> >>> So how about instead we separate them? Then much of the problem goes
+> >>> away, you don't need to track these 2M chunks at all.
+> >> 
+> >> If we manage the memory in < 2MiB granularity, either 4kB or smaller, 
+> >> we still need some way to track which parts are being used, no? I mean
+> >> the bitmap.  
+> > 
+> > I was thinking the vmalloc vmap_area tree could help out there.
+> 
+> Interesting. vmap_area tree indeed keeps a lot of useful information. 
+> 
+> Currently, powerpc supports CONFIG_ARCH_WANTS_MODULES_DATA_IN_VMALLOC, 
+
+Only PPC32; and it's due to a constraint in their MMU vs page
+protections.
+
+> which leaves module_alloc just for module text. If this works, we get
+> separation between RO+X and RW memory. What would it take to enable
+> CONFIG_ARCH_WANTS_MODULES_DATA_IN_VMALLOC for x86_64? 
+
+The VM_TOPDOWN_VMAP flag and ensuring the data and code regions never
+overlap. Once you have that you can enable it.
+
+Specifically the problem is that data needs to be in the s32 immediate
+range just like code, so we're constrained to the module range. Given
+that constraint, the easiest solution is to use the different ends of
+that range.
