@@ -2,136 +2,133 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CEDB575209
-	for <lists+linux-modules@lfdr.de>; Thu, 14 Jul 2022 17:39:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56DD75754C1
+	for <lists+linux-modules@lfdr.de>; Thu, 14 Jul 2022 20:16:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240218AbiGNPjz (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 14 Jul 2022 11:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
+        id S238579AbiGNSQE (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 14 Jul 2022 14:16:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240383AbiGNPjp (ORCPT
+        with ESMTP id S232100AbiGNSQD (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 14 Jul 2022 11:39:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D09BDCDA
-        for <linux-modules@vger.kernel.org>; Thu, 14 Jul 2022 08:39:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1657813183;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=zXjUnaumkR0TOxe9lPH1tSh7D3NCENEIHeJQmON/pbA=;
-        b=jADFrhz72RzL6wZGzqlfB/mH0W5CzQhMN7e3gpSKMjJueQt25f1ia3eYUMiR1aE3opS4He
-        RkfZTN9EqhJHcnTEQkANo5dEHNuuC6BN1591TEFb7gXS/1h3hVB2Y0boUDUbxjOLh1javw
-        N3Zft5t4XTPOPfrsMyjKvcnnvg2pNow=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-287-4TQ0Kp1aNDGpl-TJGT8Zhg-1; Thu, 14 Jul 2022 11:39:42 -0400
-X-MC-Unique: 4TQ0Kp1aNDGpl-TJGT8Zhg-1
-Received: by mail-wm1-f69.google.com with SMTP id q15-20020a05600c040f00b003a2e5c8fca3so2808432wmb.7
-        for <linux-modules@vger.kernel.org>; Thu, 14 Jul 2022 08:39:42 -0700 (PDT)
+        Thu, 14 Jul 2022 14:16:03 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CD067CAA;
+        Thu, 14 Jul 2022 11:16:02 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id w2so3099462ljj.7;
+        Thu, 14 Jul 2022 11:16:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2QX/Lxw1dM3em+AdcVNETTOfkI14eEfg7V1aSOQdTQM=;
+        b=cL80WLc/zql6U7gVA/bMoRIaeyJja2A7Hl+8eM1sjIXk66Z69jRPAKragoT+s5oy5k
+         1a8lc7LUo/0ZDCf2dAYC7YpNREsVd0CncKUzvRERTqnIbl3jCZT/M+6Mlz90DZP0LPBn
+         cf7++pETwaA0ZfmkxaCN/CL2O2mgZP+X6tA3x+MxPdsIhW2wvuAEQjL0l4mloz5KY2uk
+         HbSkdnKi7NbTpl4TVaQnbMbMDVLWqeE9PTKvc1LDsEBZDNUeWqyY+Rf1n3G/9Zmj34gZ
+         PP5eWPuOXKBifT8R/noIRJY4rZywnQduq1Rncu2XnGHyRKmzuXz2etugNPmcDSmBV6ws
+         tBPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zXjUnaumkR0TOxe9lPH1tSh7D3NCENEIHeJQmON/pbA=;
-        b=DymSmjQ+x8RUn3uCSNqyP/xH4N1LGupWGLRvv4pa9CXb/05+bNG9Y/3W+NwZA/2Dxb
-         Fveb5P8LHG92h0Ya0Q3/OYa+ZtncSCgW5t/N1r6x2uQYK8ZMQHyRUqKoBj7LEy9zDYAF
-         9yqm5rU4hD+VEA5GHNXqK+KifOpfaI8lqRT3W1Xi7hpi1Wx5Pu3h9YbbshIuAyStJFZ1
-         x4P4dOD9eQUIKsYs4e9rGCpX1+MNE6agr7QJS4gZgKDerjiXof/f9bNyi75EE1gicGoJ
-         ve0QRkjAh4sdms1ob5xcPPDIw+MklbJQopjJpCksdwTZuuvJfrybGVwGWac24NtzVuSa
-         DT2A==
-X-Gm-Message-State: AJIora9/uS0JeXRcE4BnLpzcgZCvpLDxcSeFOrWgvER5nhTKIdwRCG8g
-        NZidf2CF1jF9WjW2lMUDmblwp4O74ky83Mvi6vcgCp2hydhD6GHojgyz34uo0L5GEu0rm4mhIcu
-        56Vj8Y3XHi95vF7pAudQafZhD
-X-Received: by 2002:a05:600c:206:b0:3a2:e224:da6f with SMTP id 6-20020a05600c020600b003a2e224da6fmr16099545wmi.167.1657813181598;
-        Thu, 14 Jul 2022 08:39:41 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1umKj6lyufc2E/Zv8r5bdD3dbXIXniFnzkwkp6SxSbe6WGK2L1R/iMwFMU8NMI5GYg/lzZAtQ==
-X-Received: by 2002:a05:600c:206:b0:3a2:e224:da6f with SMTP id 6-20020a05600c020600b003a2e224da6fmr16099535wmi.167.1657813181427;
-        Thu, 14 Jul 2022 08:39:41 -0700 (PDT)
-Received: from localhost (cpc111743-lutn13-2-0-cust979.9-3.cable.virginm.net. [82.17.115.212])
-        by smtp.gmail.com with ESMTPSA id a15-20020adffb8f000000b0021dbac444a7sm1742198wrr.59.2022.07.14.08.39.39
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2QX/Lxw1dM3em+AdcVNETTOfkI14eEfg7V1aSOQdTQM=;
+        b=NBIqa2uPmu4FOQsfyZXBLExLsE8ki7pkd/69xduT0fpiHbSjXavA5XhwhNsB53gjYx
+         dLMAIQD0bqKsx4mW/lyXv9+uFwYOsGuRmoEZre2vza1BidGUUezQMSl85B6hepXW7+jJ
+         BvIna74YyOcnjrxy5OUyMad0WzLGMVuFHBxq2Fc1RJdD82/fFJFaSBnyb8WD9kQhsJEU
+         0euIgznbgKSUyS3YoAR4K+ZvCXYvfMCWLu80LQeyaoKOcEW6vlKURg/bAOpafuMWJV7a
+         E0tQ1XqK697eI9EtdZRSUihTOWiO1JS3831rjzmQ5SC5Kb2JxLEoXPubBn+wV5GsTLqE
+         XoOQ==
+X-Gm-Message-State: AJIora9pylqZUe3wqix7wi0GtMMnBELGnN3c0xindONjVDGm2rL9NUpi
+        A1BmjTpbc+bn1RX40hfW4Pw=
+X-Google-Smtp-Source: AGRyM1tpHk0AhqgOpToqpDTVrMgKe6SHJxLYZZJu+FPz/pCXoZQpyRbm608wTJYHdeLLsSOS4dK+hQ==
+X-Received: by 2002:a05:651c:158c:b0:250:a23d:2701 with SMTP id h12-20020a05651c158c00b00250a23d2701mr5429808ljq.475.1657822560608;
+        Thu, 14 Jul 2022 11:16:00 -0700 (PDT)
+Received: from pc636 (host-90-235-11-208.mobileonline.telia.com. [90.235.11.208])
+        by smtp.gmail.com with ESMTPSA id bi32-20020a05651c232000b0025bbd5e3febsm386358ljb.132.2022.07.14.11.15.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jul 2022 08:39:40 -0700 (PDT)
-From:   Aaron Tomlin <atomlin@redhat.com>
-To:     mcgrof@kernel.org, christophe.leroy@csgroup.eu
-Cc:     linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
-        atomlin@atomlin.com, oleksandr@natalenko.name, neelx@redhat.com
-Subject: [PATCH v2 3/3] module: Show the last unloaded module's taint flag(s)
-Date:   Thu, 14 Jul 2022 16:39:33 +0100
-Message-Id: <20220714153933.2095776-4-atomlin@redhat.com>
-X-Mailer: git-send-email 2.34.3
-In-Reply-To: <20220714153933.2095776-1-atomlin@redhat.com>
-References: <20220714153933.2095776-1-atomlin@redhat.com>
+        Thu, 14 Jul 2022 11:15:59 -0700 (PDT)
+From:   Uladzislau Rezki <urezki@gmail.com>
+X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
+Date:   Thu, 14 Jul 2022 20:15:56 +0200
+To:     Song Liu <songliubraving@fb.com>
+Cc:     Christoph Hellwig <hch@infradead.org>, Song Liu <song@kernel.org>,
+        bpf <bpf@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-mm@kvack.org" <linux-mm@kvack.org>,
+        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
+        "mcgrof@kernel.org" <mcgrof@kernel.org>,
+        "peterz@infradead.org" <peterz@infradead.org>,
+        "rostedt@goodmis.org" <rostedt@goodmis.org>,
+        "tglx@linutronix.de" <tglx@linutronix.de>,
+        "mingo@redhat.com" <mingo@redhat.com>,
+        "bp@alien8.de" <bp@alien8.de>,
+        "mhiramat@kernel.org" <mhiramat@kernel.org>,
+        "naveen.n.rao@linux.ibm.com" <naveen.n.rao@linux.ibm.com>,
+        "davem@davemloft.net" <davem@davemloft.net>,
+        "anil.s.keshavamurthy@intel.com" <anil.s.keshavamurthy@intel.com>,
+        "keescook@chromium.org" <keescook@chromium.org>,
+        "dave@stgolabs.net" <dave@stgolabs.net>,
+        "daniel@iogearbox.net" <daniel@iogearbox.net>,
+        Kernel Team <Kernel-team@fb.com>,
+        "x86@kernel.org" <x86@kernel.org>,
+        "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+        "rick.p.edgecombe@intel.com" <rick.p.edgecombe@intel.com>,
+        "akpm@linux-foundation.org" <akpm@linux-foundation.org>
+Subject: Re: [PATCH bpf-next 1/3] mm/vmalloc: introduce vmalloc_exec which
+ allocates RO+X memory
+Message-ID: <YtBdSYbCyGJeIHHO@pc636>
+References: <20220713071846.3286727-1-song@kernel.org>
+ <20220713071846.3286727-2-song@kernel.org>
+ <Ys6ZkDUhRZcmvPYy@infradead.org>
+ <BE896037-B79C-4B38-B777-96002C5861F5@fb.com>
+ <Ys+aVKFJaQd130Pn@infradead.org>
+ <8AC2399B-F3B2-4F91-B18C-D9D3D5085471@fb.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8AC2399B-F3B2-4F91-B18C-D9D3D5085471@fb.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-For diagnostic purposes, this patch, in addition to keeping a record/or
-track of the last known unloaded module, we now will include the
-module's taint flag(s) too e.g: " [last unloaded: fpga_mgr_mod(OE)]"
+On Thu, Jul 14, 2022 at 04:54:40AM +0000, Song Liu wrote:
+> 
+> 
+> > On Jul 13, 2022, at 9:23 PM, Christoph Hellwig <hch@infradead.org> wrote:
+> > 
+> > On Wed, Jul 13, 2022 at 03:49:45PM +0000, Song Liu wrote:
+> >> 
+> >> 
+> >>> On Jul 13, 2022, at 3:08 AM, Christoph Hellwig <hch@infradead.org> wrote:
+> >>> 
+> >>> NAK.  This is not something that should be an exported public API
+> >>> ever.
+> >> 
+> >> Hmm.. I will remove EXPORT_SYMBOL_GPL (if we ever do a v2 of this..)
+> > 
+> > Even without that it really is not a vmalloc API anyway.  
+> 
+> This ...
+> 
+> > Executable
+> > memory needs to be written first, so we should allocate it in that state
+> > and only mark it executable after that write has completed.
+> 
+> ... and this are two separate NAKs.
+> 
+> For the first NAK, I agree that my version is another layer on top of 
+> vmalloc. But what do you think about Peter's idea? AFAICT, that fits
+> well in vmalloc logic. 
+> 
+I am not able to find the patch/change to see what you have done. But
+please do not build a new allocator on top of vmalloc code. We have
+three different ones what make things to be complicated :)
 
-Signed-off-by: Aaron Tomlin <atomlin@redhat.com>
----
- kernel/module/main.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index c5db13d06995..96ec7f94228d 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -524,7 +524,10 @@ static struct module_attribute modinfo_##field = {                    \
- MODINFO_ATTR(version);
- MODINFO_ATTR(srcversion);
- 
--static char last_unloaded_module[MODULE_NAME_LEN+1];
-+static struct {
-+	char name[MODULE_NAME_LEN + 1];
-+	char taints[MODULE_FLAGS_BUF_SIZE];
-+} last_unloaded_module;
- 
- #ifdef CONFIG_MODULE_UNLOAD
- 
-@@ -694,6 +697,7 @@ SYSCALL_DEFINE2(delete_module, const char __user *, name_user,
- {
- 	struct module *mod;
- 	char name[MODULE_NAME_LEN];
-+	char buf[MODULE_FLAGS_BUF_SIZE];
- 	int ret, forced = 0;
- 
- 	if (!capable(CAP_SYS_MODULE) || modules_disabled)
-@@ -753,8 +757,9 @@ SYSCALL_DEFINE2(delete_module, const char __user *, name_user,
- 
- 	async_synchronize_full();
- 
--	/* Store the name of the last unloaded module for diagnostic purposes */
--	strscpy(last_unloaded_module, mod->name, sizeof(last_unloaded_module));
-+	/* Store the name and taints of the last unloaded module for diagnostic purposes */
-+	strscpy(last_unloaded_module.name, mod->name, sizeof(last_unloaded_module.name));
-+	strscpy(last_unloaded_module.taints, module_flags(mod, buf, false), sizeof(last_unloaded_module.taints));
- 
- 	free_module(mod);
- 	/* someone could wait for the module in add_unformed_module() */
-@@ -3128,7 +3133,8 @@ void print_modules(void)
- 
- 	print_unloaded_tainted_modules();
- 	preempt_enable();
--	if (last_unloaded_module[0])
--		pr_cont(" [last unloaded: %s]", last_unloaded_module);
-+	if (last_unloaded_module.name[0])
-+		pr_cont(" [last unloaded: %s%s]", last_unloaded_module.name,
-+			last_unloaded_module.taints);
- 	pr_cont("\n");
- }
--- 
-2.34.3
-
+--
+Uladzislau Rezki
