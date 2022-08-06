@@ -2,204 +2,228 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC4C158A593
-	for <lists+linux-modules@lfdr.de>; Fri,  5 Aug 2022 07:30:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3736D58B431
+	for <lists+linux-modules@lfdr.de>; Sat,  6 Aug 2022 09:24:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231181AbiHEF36 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 5 Aug 2022 01:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
+        id S238941AbiHFHYU (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 6 Aug 2022 03:24:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229820AbiHEF35 (ORCPT
+        with ESMTP id S231799AbiHFHYT (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 5 Aug 2022 01:29:57 -0400
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com [67.231.153.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881026E2D7;
-        Thu,  4 Aug 2022 22:29:55 -0700 (PDT)
-Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
-        by mx0a-00082601.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 274MOCUs030800;
-        Thu, 4 Aug 2022 22:29:54 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com; h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : mime-version; s=facebook;
- bh=tcw0iKQ+LULZHMxNxXemHJ434FM7qOFD78/RQdhsHlM=;
- b=C7VmWaVebc6MSXs/BT3RvyM/en6p3GyVsszRsQrjGZeRjAnrP9rqVIklVwS7MjEi11wx
- VxuHQ+M0LU/E0t/UMWfTmX3OI0yvubV3vwqfjkR2xFof4xf9DseM6QQRtMkMP0umlkMX
- vCJLF6X8N9e+ClDdpyv3qg/8hnYSVJua59U= 
-Received: from nam02-sn1-obe.outbound.protection.outlook.com (mail-sn1anam02lp2042.outbound.protection.outlook.com [104.47.57.42])
-        by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 3hrb6nek89-2
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 Aug 2022 22:29:54 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=f1TTWDVyaVm06aNgUwIiSTt3RaZeMps9qpbsOLS3JLkv5S6lsOcr2QaVgwI0nOaNmsJ48QBHdwOxKxUjlc8zPJZxzPONo5z6oNCAJG5PdAZ56+IFhcglKGpXPSiENcxNo9oYSc4SFZpYnTphVGY0iR7nvyU9CYeAeK6XGFK062mqzKaL06LaEHQM77kB1NglqrOxJTwkCG1mhIyM+1bgETB0n/FcpOQFNaO1zrVnUu7LcP6JErsWYz4zpFtqx4hsh1ovxJ3arKsRWrO5arUJH4Z9XUjXw2Hi9U0YZNTXWUV5ZPYHzZwlnbXIqoAbsHWtcUelXjVxIWcjo2oNkQT+NA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tcw0iKQ+LULZHMxNxXemHJ434FM7qOFD78/RQdhsHlM=;
- b=PXJEvaf9acbT7KX1rt+GboJ12rMk72S7udmiFS/pdr2C55oY/j0LVmhuNioBHtpgHWSi26GB5U7gFVtc+vCU1h9he2hOZQ24vyq+pqcWjQ7GobZBGHOCZf9fdQCE8mPYoqgQyUBZAFkVKq1Nt9QC1fXAe6KeT6pW/pU0yiNIvroXqWO9CHyOAzicnx/hDj6Vni7VnBI4ztpAveIW3q55U7XD6Ug8MBfZnFFsE8mWkahN9u/uIg1IhwkkY12jc4gMZ09z9eOWFYvqaGvopHA/nmmiCmnv3WT4F/gstvlJlIJEcgWZjv9TkFPMLWB+quV/X3jJ6FdeOOZTYHDfoudaQA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-Received: from SA1PR15MB5109.namprd15.prod.outlook.com (2603:10b6:806:1dc::10)
- by DM6PR15MB4056.namprd15.prod.outlook.com (2603:10b6:5:2b9::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5504.16; Fri, 5 Aug
- 2022 05:29:51 +0000
-Received: from SA1PR15MB5109.namprd15.prod.outlook.com
- ([fe80::c488:891f:57b:d5da]) by SA1PR15MB5109.namprd15.prod.outlook.com
- ([fe80::c488:891f:57b:d5da%9]) with mapi id 15.20.5504.016; Fri, 5 Aug 2022
- 05:29:51 +0000
-From:   Song Liu <songliubraving@fb.com>
-To:     Peter Zijlstra <peterz@infradead.org>
-CC:     Song Liu <song@kernel.org>, bpf <bpf@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-mm@kvack.org" <linux-mm@kvack.org>,
-        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
-        "mcgrof@kernel.org" <mcgrof@kernel.org>,
-        "rostedt@goodmis.org" <rostedt@goodmis.org>,
-        "tglx@linutronix.de" <tglx@linutronix.de>,
-        "mingo@redhat.com" <mingo@redhat.com>,
-        "bp@alien8.de" <bp@alien8.de>,
-        "mhiramat@kernel.org" <mhiramat@kernel.org>,
-        "naveen.n.rao@linux.ibm.com" <naveen.n.rao@linux.ibm.com>,
-        "davem@davemloft.net" <davem@davemloft.net>,
-        "anil.s.keshavamurthy@intel.com" <anil.s.keshavamurthy@intel.com>,
-        "keescook@chromium.org" <keescook@chromium.org>,
-        "hch@infradead.org" <hch@infradead.org>,
-        "dave@stgolabs.net" <dave@stgolabs.net>,
-        "daniel@iogearbox.net" <daniel@iogearbox.net>,
-        Kernel Team <Kernel-team@fb.com>,
-        "x86@kernel.org" <x86@kernel.org>,
-        "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-        "rick.p.edgecombe@intel.com" <rick.p.edgecombe@intel.com>,
-        "akpm@linux-foundation.org" <akpm@linux-foundation.org>
-Subject: Re: [PATCH bpf-next 1/3] mm/vmalloc: introduce vmalloc_exec which
- allocates RO+X memory
-Thread-Topic: [PATCH bpf-next 1/3] mm/vmalloc: introduce vmalloc_exec which
- allocates RO+X memory
-Thread-Index: AQHYlpK25UY5kW1ND0S/krM8qG//OK18FxyAgCPUggA=
-Date:   Fri, 5 Aug 2022 05:29:51 +0000
-Message-ID: <14D6DBA0-0572-44FB-A566-464B1FF541E0@fb.com>
-References: <20220713071846.3286727-1-song@kernel.org>
- <20220713071846.3286727-2-song@kernel.org>
- <Ys6cWUMHO8XwyYgr@hirez.programming.kicks-ass.net>
-In-Reply-To: <Ys6cWUMHO8XwyYgr@hirez.programming.kicks-ass.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3696.120.41.1.1)
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9e8beff1-706b-450e-3c27-08da76a38528
-x-ms-traffictypediagnostic: DM6PR15MB4056:EE_
-x-fb-source: Internal
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: blaEldDfVk+UMaZEMV8Z44eHI9xEf7heabKji/7dgSP/JgJnoSI41yn0XZv6jmt7QNlaP58c5/S7s3QaqoBYsav8oHoTUq3xjhrtjH7zsyrQhTPqYJrLu3H0suzLsO338t9VTfqMwnzV377X9YqenRMU8icpsOYkqT8rw5+TEPS3tfEb/s99L9fuwU0FqSYNpFEhwSdDm9r9MDhv2DLDHOWmkz2hDbDtuy81XY65md3RUSWqqJfuBOwg0Wtfh6XUHtfnAouaeEebkaI1uz2iznrAXnkaunNeb5cf2/laiNSD4noeakiOGUjKs9CaM1gTj6CrKSL9gw6LnMh7aG5jAkmR/5Jtr54adUgfJh68iKJ6GjEQ6i7YnFXYYHMEmSYCh56dDjUQoEoK4ee+XwmdF5U8YCB2WSwwCiKX3OvimNTxMVE2ahs4D4LJnQ7DGc1cnAncMtpRcrSBUAbpgP3XMWH7Jm9KxEl+ihny4riKXIyTDxLl4ZkCuKdhazYb5Ys4b4UGEEb2xrS0tjrGkoSySCBcwp5oRIl7wPZs+2HcvtqjHONx/IpiRlGNr6riI9munS0mWIZxHBLLjk3orCj66zNH+XO642uRwCU7VKRwEnIHHDNt3Ozea+ZNwaS/Lx1T6jR4DaJfsB/ngrcXY+TwUJgJ8NYiYLjSZ32vn+XJIW838FuzkBqPH3esyQN6NNDn5LXLAlvB0owXsLvtSc2Ij23QhvrJO527Oxu+eBVxXCCxTCGMLQFMVQLTFv3QNJO320+DtF+30v2DdIokDbVUPKVQN5hMOf7RbPu20IlBh24Q4vdGhtjVfI9HK+J8CJ60SIYHlWEQ4bMVC9Dl1w+2Uw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR15MB5109.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(346002)(366004)(376002)(136003)(39860400002)(396003)(6506007)(2906002)(6512007)(41300700001)(53546011)(478600001)(36756003)(7416002)(6486002)(38070700005)(8936002)(33656002)(122000001)(316002)(6916009)(4326008)(8676002)(2616005)(38100700002)(186003)(5660300002)(86362001)(64756008)(66556008)(66476007)(66446008)(71200400001)(66946007)(54906003)(91956017)(76116006)(45980500001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?sv1e07CyyKYLOqxEzMpR2cCC0AljLAbvHMJXWIbnZq3ASl8ciTSirYJTy6ju?=
- =?us-ascii?Q?KZMnDcttJbczCQomg0BJaC93eISI3WP1tzhevY5Xnm7RH2DP6B89VqCxtB3l?=
- =?us-ascii?Q?+KIsxFK8CKv746aFZ71IKk2TbO1XmdbsfCvSH2Yz6gqpSR4n7ZQt96FIiFoy?=
- =?us-ascii?Q?XQdSKRtxJL/dHUpXOG5xHasIxHOEWEaPoig1Vi9lm6augRWCu5sDg8TKrAoR?=
- =?us-ascii?Q?dESy0ATzwjcti06BriPIIbGGaETLbHZ4hkLzx44lJca1C478X/F4AXulPE09?=
- =?us-ascii?Q?cnrTWELDuvliUwyDmdirNbdPo8h7uViDavuCTArZBAuYyewMmjKNlqsQ7U+M?=
- =?us-ascii?Q?ub0v0385s/4s4xoBOP5yr1TfOgM2NhLzYaDvEwH02Nu+pdXwtSDVG5P3sGZo?=
- =?us-ascii?Q?LEFg+Hq6tNY9pPHRSvohdv+lFB1NkJZDaB5m4vNQIxz0By+Vf8GrIplUu3u/?=
- =?us-ascii?Q?OAMyCRfNGhYLaAeskG5YKov30ZCDEUyBb5ly5AmY/jjj0I6m6/vRV/DzheMz?=
- =?us-ascii?Q?iVU+XzMGELX3BldbALJhpc3xV2+shZhamAGouBJVStLBPIawcMMRgHm1P348?=
- =?us-ascii?Q?TN9PfGYiI1mmtYYRh9eNGaenw8As+jQWg3tjaU40LhUq4yZWQBoWa7a8vi9H?=
- =?us-ascii?Q?ZWOKjHVCLC+JNf0LK2hwYGaOb4TWUWdVcqiEjPmOcS1qmj12IQ+bNDafv4Ap?=
- =?us-ascii?Q?BMpo/jCUFZAkYF1Oi9bKIG3aFLN7fGJsUBKsul3joo36EBZinvPWYNwBf7q5?=
- =?us-ascii?Q?Ogw1ndH/ctuPm2pY6pkOKQoDyTWmpJ7LiOE393X+ntF3aZKHVI1bETZKImtY?=
- =?us-ascii?Q?T87qMyR3OjYhXQM+WbP26rIxNxi3CHFwigx722+CTxYi7+hRMtPuyHWDPO0U?=
- =?us-ascii?Q?vGqT9wGoJbWXyJqMf/rTPmiaE82bIh47ms4PvH4M37AAKAgP1jxJa3zvARHx?=
- =?us-ascii?Q?jNHhD5mn82ve87gF+4v7V7vL8ejFqo4F0wAWYAZPC5H/ITnwG78qCz4/7wYv?=
- =?us-ascii?Q?ZP5QpAHASYv2Qv/uuhRwG8AHAuPzdV1BzqhFue6AwF9qOtCpgnsVu8pVKDZZ?=
- =?us-ascii?Q?qCKegko61Q0ccbKpmGBWILYTANzVvIq7HSaNF/ML0js0rr8gLOOuxjEe4B++?=
- =?us-ascii?Q?qLZ4q0DJaXtSQ7emGGo7Xyfq+R96aSoxG3tazPubQRSTTcA6sLrEK19SzUW2?=
- =?us-ascii?Q?mMjaDDS8jLT6eYY2qPfxqzwBvg/GlpMaVrn8EjCU/G2gYoCpGZQXrqepxTcG?=
- =?us-ascii?Q?xViUGbfk74xDEaCYSz2Bo4aoH1wH9cnyWq/UWtAqP2g72BSELkdY/WrXrhTq?=
- =?us-ascii?Q?qsSLNRvYKizdZv2lpbG0g6aslBVYPVO2D0X5WmMADBOhqTYVC/y/SMpYy72y?=
- =?us-ascii?Q?5nKySY42l8v6zAeQjgnVR51VljXE1FI4HaAmPI/TA5Fd1zX38IhflZ1hOomV?=
- =?us-ascii?Q?H97puqXb+pet2loyxwRuVOgBG5G5OSVt9NGnGuTmP7s8k+fJoGphQ1vWdcu0?=
- =?us-ascii?Q?CXFiRnxFiVkHRL6b4GOQ6gs7R0CLC/m1I57MabUOgJFz6SpncYW3o616YXKB?=
- =?us-ascii?Q?AeVnSlgobSsZimz867xoiQSrqPcEv/wKRuyjv2UhMPz334VwJ11tq58gmXVF?=
- =?us-ascii?Q?Mrp6Xow1GNhrfJxivCfaOKo=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <ECECF3FB1B796A48BD63D2AE2B3B6FB5@namprd15.prod.outlook.com>
+        Sat, 6 Aug 2022 03:24:19 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D362CDD8;
+        Sat,  6 Aug 2022 00:24:17 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id r195so118066oie.6;
+        Sat, 06 Aug 2022 00:24:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=DqLHDIJbDfQP8RYZFwuqrU0lfisp6NcZ+Sa72zIHLtM=;
+        b=dgooMi6em5wkFiLP/ep+hNtXssvR7dzv2HAj/FjYe+9vnEWLFNkJLloGfHgAVuknKA
+         sL7eBPnTv3M/xLl9UTGaQqRV2di84y6+5rIUa4C8rCRAwIdSI8wfy0i0xthVt1LoRaP5
+         6Ojj0u+GNaRHMkN0So9CJSBgocM1s7Ct4AKezY7svu/ls19hSwIdjP1/pjIYlsYv8do8
+         LVWKvV03XkeAmtcyaCya3UnVpOoTPBE7oFaTwc0a0Ed/rCdhpfHNxVuqTOREQo7fiZKY
+         0ZaiiaYnVTyilez6NvweP/pB8va+1BwRDf1+2yB+x1L8Uyr8I+QpL0vaugu90uPSD3dR
+         7BSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=DqLHDIJbDfQP8RYZFwuqrU0lfisp6NcZ+Sa72zIHLtM=;
+        b=pTxlUEIof4vvCZ+XOY9sy9VcCX2oAPRkh1diLSnzRW79obFcjLF253iBr6wbANSjrm
+         YJN+8naiPim4VLlM8/H/mTRswOSrgMMQtwfgwD1hHCRL1yXxCku//Col3Y0I9gABQt8g
+         EjOl+SffuOa99HnO+FUDCaswm7ZhMrRCgZcbVQP1rO8DgFzM7eRtEXqVOa7uvG5wNUlc
+         BTAKVBnVMe/TdsR13qv4abIWZRg93vzXiA+/JwjV8dUQ6ryDxqro2Dm1+ZVSzdO1hEvz
+         jIlS61J/tCx74w0SQalbWUfPG5sItVTsosjrqIPOtWfUdcMYngUTYV8xZcY92obPYiMR
+         Up7w==
+X-Gm-Message-State: ACgBeo0Bk33fWNugZoVHyxRV4KvED2wMk9PfXjSZk7yMDFzoy3NT8jZv
+        MjWUhu3FyyAnlfJq4+OVx4HRcFWN5RiR8Z+uPl4=
+X-Google-Smtp-Source: AA6agR5Yu1m8zB1puiKvJ657y6RpT3Ebe3CqbFQsTWNqXhlg8TYDAqsExpUC4iQtTM/QUWB6iZqBjqBxLxMR2e0Z18c=
+X-Received: by 2002:a05:6808:bd5:b0:33f:dd8:c545 with SMTP id
+ o21-20020a0568080bd500b0033f0dd8c545mr4458971oik.252.1659770656469; Sat, 06
+ Aug 2022 00:24:16 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: fb.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR15MB5109.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e8beff1-706b-450e-3c27-08da76a38528
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Aug 2022 05:29:51.1787
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4/Fjl/U7gjFiPJzJMuIUCwavS3yJVvtzQbbSvN577LJicw5huuVxiuKAVT8oQ4Sjd16RcIGIdannJPZCLGUdeg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR15MB4056
-X-Proofpoint-ORIG-GUID: quOIp4Kurz8vOSovoShN41zN0ffaJA7-
-X-Proofpoint-GUID: quOIp4Kurz8vOSovoShN41zN0ffaJA7-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-04_06,2022-08-04_02,2022-06-22_01
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+References: <20220513113930.10488-1-masahiroy@kernel.org> <CAK7LNAQvneCi11myLpkikuXh=i5PLtTaLe0nGpDZXgv_Q1L0Ow@mail.gmail.com>
+ <2c496d24174e63b27ec047f383df6700@matoro.tk>
+In-Reply-To: <2c496d24174e63b27ec047f383df6700@matoro.tk>
+Reply-To: sedat.dilek@gmail.com
+From:   Sedat Dilek <sedat.dilek@gmail.com>
+Date:   Sat, 6 Aug 2022 09:23:40 +0200
+Message-ID: <CA+icZUWkDEZhJ+fVGPJ3LE5p9k0yWjg-XtAk7evES2crjbADUA@mail.gmail.com>
+Subject: Re: [PATCH v6 00/10] kbuild: yet another series of cleanups (modpost,
+ LTO, MODULE_REL_CRCS, export.h)
+To:     matoro <matoro_mailinglist_kernel@matoro.tk>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        Peter Zijlstra <peterz@infradead.org>,
+        linux-modules <linux-modules@vger.kernel.org>,
+        clang-built-linux <llvm@lists.linux.dev>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Sami Tolvanen <samitolvanen@google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Hi Peter,
+On Sat, Aug 6, 2022 at 1:40 AM matoro
+<matoro_mailinglist_kernel@matoro.tk> wrote:
+>
+> Hi Masahiro, I'm sorry to raise this after release but this seems to be
+> broken on SOME architectures.  So far I have tested:
+>
+> Affected - sparc, alpha
+> Unaffected - riscv, ia64
+>
 
-> On Jul 13, 2022, at 3:20 AM, Peter Zijlstra <peterz@infradead.org> wrote:
-> 
+What do you mean by "release"?
 
-[...]
+Checking the kernel-version from your paste-URLs:
 
-> 
-> So how about instead we separate them? Then much of the problem goes
-> away, you don't need to track these 2M chunks at all.
-> 
-> Start by adding VM_TOPDOWN_VMAP, which instead of returning the lowest
-> (leftmost) vmap_area that fits, picks the higests (rightmost).
-> 
-> Then add module_alloc_data() that uses VM_TOPDOWN_VMAP and make
-> ARCH_WANTS_MODULE_DATA_IN_VMALLOC use that instead of vmalloc (with a
-> weak function doing the vmalloc).
-> 
-> This gets you bottom of module range is RO+X only, top is shattered
-> between different !X types.
-> 
-> Then track the boundary between X and !X and ensure module_alloc_data()
-> and module_alloc() never cross over and stay strictly separated.
-> 
-> Then change all module_alloc() users to expect RO+X memory, instead of
-> RW.
-> 
-> Then make sure any extention of the X range is 2M aligned.
-> 
-> And presto, *everybody* always uses 2M TLB for text, modules, bpf,
-> ftrace, the lot and nobody is tracking chunks.
-> 
-> Maybe migration can be eased by instead providing module_alloc_text()
-> and ARCH_WANTS_MODULE_ALLOC_TEXT.
+# Automatically generated file; DO NOT EDIT.
+# Linux/sparc64 5.18.16-gentoo Kernel Configuration
 
-I finally got some time to look into the code. A few questions:
+# Automatically generated file; DO NOT EDIT.
+# Linux/alpha 5.18.15-gentoo Kernel Configuration
 
-1. AFAICT, vmap_area tree only works with PAGE_SIZE aligned addresses. 
-   For the sharing to be more efficient, I think we need to go with
-   smaller granularity. Will this work? Shall we pick a smaller 
-   granularity, say 64 bytes? Or shall we go all the way to 1 byte?
+# Automatically generated file; DO NOT EDIT.
+# Linux/riscv 5.19.0-gentoo Kernel Configuration
 
-2. I think we will need multiple vmap_area's sharing the same vm_struct. 
-   Do we need to add refcount to vm_struct?
+# Automatically generated file; DO NOT EDIT.
+# Linux/ia64 5.19.0-gentoo Kernel Configuration
 
-Thanks,
-Song
+Maybe you should try "Affected - sparc, alpha" with Linux v5.19.0
+instead of 5.18.x :-)?
 
+-Sedat-
 
+> The affected systems are unable to load modules, similar to the
+> previously reported issue.  All module loading fails with "disagrees
+> about version of symbol module_layout".
+>
+> Bisect blames 7b4537199a4a8480b8c3ba37a2d44765ce76cd9b, but this does
+> not revert cleanly.  Presumably CONFIG_MODVERSIONS=n would fix, but this
+> is a pretty core feature.
+>
+> Unlike the issue Sedat reported, this is on a GNU toolchain, no clang
+> involved.
+>
+> Here are the configs I am using (with make olddefconfig on upgrade to
+> 5.19):
+>
+> Broken - sparc - https://dpaste.com/5A8F2JD6U
+> Broken - alpha - https://dpaste.com/FYKK23L9X
+> Working - riscv - https://dpaste.com/HV6Y4V6NT
+> Working - ia64 - https://dpaste.com/HDLDNEAK4
+>
+> Please let me know if there's anything I can do to help track down this
+> regression.
+>
+>
+> -------- Original Message --------
+> Subject: Re: [PATCH v6 00/10] kbuild: yet another series of cleanups
+> (modpost, LTO, MODULE_REL_CRCS, export.h)
+> Date: 2022-05-13 08:20
+>  From: Masahiro Yamada <masahiroy@kernel.org>
+> To: Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+>
+> On Fri, May 13, 2022 at 8:42 PM Masahiro Yamada <masahiroy@kernel.org>
+> wrote:
+> >
+> >
+> > This is the third batch of cleanups in this development cycle.
+> >
+>
+>
+> This series is available at
+> git://git.kernel.org/pub/scm/linux/kernel/git/masahiroy/linux-kbuild.git
+>   lto-cleanup-v6
+>
+>
+> >
+> > Changes in v6:
+> >   - Fix false-positive warnings when CONFIG_TRIM_UNUSED_KSYMS=y
+> >
+> > Changes in v5:
+> >   - Fix the build error when CONFIG_DEBUG_INFO_BTF=y (reported by
+> > Nathan)
+> >   - Clean up arch/m68k/include/asm/export.h (Nick)
+> >   - Keep gen_symversions (and will be removed by a later patch)
+> >   - Add more comments in the script
+> >
+> > Changes in v4:
+> >   - Rename .vmlinux-symver.c to .vmlinux.export.c
+> >     because I notice this approach is useful for further cleanups,
+> >     not only for modversioning but also for overall EXPORT_SYMBOL.
+> >   - New patch
+> >   - New.
+> >     Resent of my previous submission.
+> >
+> > https://lore.kernel.org/all/20210831074004.3195284-10-masahiroy@kernel.org/
+> >   - New
+> >     Resent of my previous submission
+> >
+> > https://lore.kernel.org/linux-kbuild/20210831074004.3195284-11-masahiroy@kernel.org/
+> >
+> > Changes in v3:
+> >   - New patch
+> >
+> > Changes in v2:
+> >   - Simplify the implementation (parse .cmd files after ELF)
+> >   - New patch
+> >  - replace the chain of $(if ...) with $(and )
+> >   - New patch
+> >   - New patch
+> >
+> > Masahiro Yamada (10):
+> >   modpost: extract symbol versions from *.cmd files
+> >   kbuild: link symbol CRCs at final link, removing
+> >     CONFIG_MODULE_REL_CRCS
+> >   kbuild: stop merging *.symversions
+> >   genksyms: adjust the output format to modpost
+> >   kbuild: do not create *.prelink.o for Clang LTO or IBT
+> >   kbuild: check static EXPORT_SYMBOL* by script instead of modpost
+> >   kbuild: make built-in.a rule robust against too long argument error
+> >   kbuild: make *.mod rule robust against too long argument error
+> >   kbuild: add cmd_and_savecmd macro
+> >   kbuild: rebuild multi-object modules when objtool is updated
+> >
+> >  arch/m68k/include/asm/Kbuild    |   1 +
+> >  arch/m68k/include/asm/export.h  |   2 -
+> >  arch/powerpc/Kconfig            |   1 -
+> >  arch/s390/Kconfig               |   1 -
+> >  arch/um/Kconfig                 |   1 -
+> >  include/asm-generic/export.h    |  22 ++-
+> >  include/linux/export-internal.h |  16 +++
+> >  include/linux/export.h          |  30 ++--
+> >  init/Kconfig                    |   4 -
+> >  kernel/module.c                 |  10 +-
+> >  scripts/Kbuild.include          |  10 +-
+> >  scripts/Makefile.build          | 134 ++++++------------
+> >  scripts/Makefile.lib            |   7 -
+> >  scripts/Makefile.modfinal       |   5 +-
+> >  scripts/Makefile.modpost        |   9 +-
+> >  scripts/check-local-export      |  64 +++++++++
+> >  scripts/genksyms/genksyms.c     |  18 +--
+> >  scripts/link-vmlinux.sh         |  33 ++---
+> >  scripts/mod/modpost.c           | 236 +++++++++++++++++++++-----------
+> >  19 files changed, 320 insertions(+), 284 deletions(-)
+> >  delete mode 100644 arch/m68k/include/asm/export.h
+> >  create mode 100644 include/linux/export-internal.h
+> >  create mode 100755 scripts/check-local-export
+> >
+> > --
+> > 2.32.0
+> >
+>
