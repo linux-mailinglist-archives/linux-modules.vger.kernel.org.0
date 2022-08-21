@@ -2,83 +2,104 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8741259B610
-	for <lists+linux-modules@lfdr.de>; Sun, 21 Aug 2022 20:48:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E471A59B6A9
+	for <lists+linux-modules@lfdr.de>; Mon, 22 Aug 2022 00:59:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbiHUSqd (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 21 Aug 2022 14:46:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47674 "EHLO
+        id S231852AbiHUW7O (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 21 Aug 2022 18:59:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbiHUSqc (ORCPT
+        with ESMTP id S229948AbiHUW7N (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 21 Aug 2022 14:46:32 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A99D20F58
-        for <linux-modules@vger.kernel.org>; Sun, 21 Aug 2022 11:46:31 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id a133so2212378oif.4
-        for <linux-modules@vger.kernel.org>; Sun, 21 Aug 2022 11:46:31 -0700 (PDT)
+        Sun, 21 Aug 2022 18:59:13 -0400
+Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB2511EC41
+        for <linux-modules@vger.kernel.org>; Sun, 21 Aug 2022 15:59:12 -0700 (PDT)
+Received: by mail-vs1-xe2c.google.com with SMTP id h67so8536436vsc.11
+        for <linux-modules@vger.kernel.org>; Sun, 21 Aug 2022 15:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc;
-        bh=8EoJLa1Ds4DMOa6PyKONK+af45DsIQQA41++HEec4cs=;
-        b=OsSnf3s9YW9yL+Bf/0lz8YdYiaAdNN6EwgDLNAFSZo0C4pO22Wc0ZZMHCtmbKUIqDU
-         thyU4kNspL9jh9rKuN9cZPwoqqAdTkonIiRWg9agp/AGQKhDiWft52k7lzzY1JspnfJw
-         7XdY7XAPIZpjeaDzspL4Bg+vFffuPh1J6c8iIMQqlSPElJ10EOXZjyP1ysubLbuwCOoV
-         ZaRgAArMyANCFJoqeYI4J4SpeSMy3MchpSHGOC84kQpT0x+c2tPYmCkymqq9zpk33rvd
-         JYaM25i7XaLZYlQMATcc/sLLYXwGV4YhilnwTeB4Sa0J+C9EudY2Tun95ovKfL0ifPXp
-         QF+Q==
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc;
+        bh=OSBmu32vO8aIFQ/hG4uWOrgGUsLPqq8FeuPiazd3PBo=;
+        b=UrSpcQbHkQE52cZPG9O9TczfQS2tHy0GqpP0OS05tfKCJzpNZyqdvsyuO4iR9oW/cV
+         XQ+5sgVludPBrRnirutfoqqwSRc2n5pfBZVdBAv9EA2K/RmSc59lmj0cbgcNoEsFGhVZ
+         Xmp1hGOZ3oYT8zCyQNyJsrSi/21a/1aNjZcuxKLlKgtXMpIPJyoijOhEmt1vCVul0xr+
+         NtT93sE7SbyZGtGSQkINHd3uxFNATzRXHXbx8qxIzv1n/5eeqosUSLeN2w923G2NMr1u
+         pMCYsX2AZHOIBlASN+6iBg5X7Ttsi04aSUsdpHeej/YH7dhhriK4tjXwlxTR2gs18PoE
+         fQXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc;
-        bh=8EoJLa1Ds4DMOa6PyKONK+af45DsIQQA41++HEec4cs=;
-        b=EC79U6XLsaGSyxoekEkWFqFQ+IzjRihfHqiFvFrF2OwldXYD2yrGZubktmNnjex8Lg
-         iJQJrfr+NplII4gvimaCwEEHBq/Ip/WeY0HEV86d0eCPIiqTyJG2GZwmVPbXEEzR+HaU
-         XzCx7E+FQrnU32wq9KRNzmnoQnJw54/5hKMzoeaFAcau+Vf2PZkuqKmhZlSxZCT9Xf4o
-         BQARZbRcQ8NXcXMVOsS/e2TVQdYWT8n+g1iBYmcfORer90Pu8NNaDJaThpaWYU+u0H5g
-         j2veGnbYqLIF7N9QqHdWKH+7wT0cDNS92nlQ7PUWkpnV/mVeHlgQTp2eq3q8NWUjT/Ox
-         LeMA==
-X-Gm-Message-State: ACgBeo311ztkAh4eeg8S1bylZQVC1wmY3rMjBGjV5k2ssoA3PAJ8t1pA
-        0Pu2XDshdLt0wLpfCo9JmRe2FrlEjcE=
-X-Google-Smtp-Source: AA6agR6u3mCv193elrgPA50nMccWGAO2LVNM/OY7UAXo9OPu3p7Qy2ho0HGDvgnVcy8Cj+GtPw4EmA==
-X-Received: by 2002:aca:3882:0:b0:343:57cf:7bba with SMTP id f124-20020aca3882000000b0034357cf7bbamr9315221oia.140.1661107590926;
-        Sun, 21 Aug 2022 11:46:30 -0700 (PDT)
-Received: from [172.31.250.1] ([47.184.51.90])
-        by smtp.gmail.com with ESMTPSA id p39-20020a05687056a700b0010d5d5c3fc3sm2641933oao.8.2022.08.21.11.46.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 Aug 2022 11:46:30 -0700 (PDT)
-Message-ID: <148c7e0e-3de9-e3ad-81a3-5444864e9bfe@gmail.com>
-Date:   Sun, 21 Aug 2022 13:46:29 -0500
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=OSBmu32vO8aIFQ/hG4uWOrgGUsLPqq8FeuPiazd3PBo=;
+        b=hzPz1uWCcuNGYYuvzuZvcYlktinQ03ZERf17VK6RrzLM4l6XKu5ghsw9f0gL2RlfGF
+         HkygP0fJ+wPWAi4vpEe/aIE0KzDD9+QqWPvFITxJEmLvACNi+M1sosHhCwR34ZAJA0Gg
+         9aRMqsY6iF+k4oY7Na+PxuSkve4/iA/NaeL+zyJOkQ+OU9B8XgI6ZnbSzRvl66ZXX9+E
+         dHrc+oekzE8khNeOMSyKiahBT/cR/8uZHd7jH6ez8ZYja5FJCk8aLumBhNmqKxn+9tDM
+         GVnra41rU9lnVqgAI5Ls7PATaWyURWdanF9wmVZltjlYeDoGyGbO1BW2oQYaR+tUTKNE
+         t4/A==
+X-Gm-Message-State: ACgBeo2b8o+8BPn+LkwpOh+lzTPj1Djmez0ZUD/AZ134z/+0RNVFeis9
+        Ls8gHb9vsHpDo/xdCQPWCgsl4eIs/Eue3GsfMBI=
+X-Google-Smtp-Source: AA6agR4WLloXL0x1QNzMdXd9ox+47BUwm1K7n/hZ2EWW4B3Y5owHqr3vhO9DmtPrKuBC0NIhbCcXtPJjnFB+O0rgOLM=
+X-Received: by 2002:a67:d70b:0:b0:390:1e0d:b6ba with SMTP id
+ p11-20020a67d70b000000b003901e0db6bamr5530136vsj.9.1661122751605; Sun, 21 Aug
+ 2022 15:59:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Content-Language: en-US
-To:     kernelnewbies@kernelnewbies.org, linux-modules@vger.kernel.org
-From:   Ian Pilcher <arequipeno@gmail.com>
-Subject: Faster, incremental depmod when adding modules?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:612c:59f:b0:2eb:ac02:6150 with HTTP; Sun, 21 Aug 2022
+ 15:59:11 -0700 (PDT)
+Reply-To: azimprejimighty@gmail.com
+From:   Azim Premji <ukpacharlesmikel@gmail.com>
+Date:   Sun, 21 Aug 2022 15:59:11 -0700
+Message-ID: <CAHJoZEGUKv2fRmMPeQi_O-+ZNBAMd=e7+hNRb2ERtzf80HF4Bg@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.9 required=5.0 tests=BAYES_95,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:e2c listed in]
+        [list.dnswl.org]
+        *  3.0 BAYES_95 BODY: Bayes spam probability is 95 to 99%
+        *      [score: 0.9834]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ukpacharlesmikel[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-When installing 1 or more out-of-tree modules within
-/lib/modules/$UNAME, is it possible to run depmod in an incremental
-fashion - adding symbols from the new modules to modules.dep[.bin]
-without re-scanning all of the other modules from that kernel version?
+--=20
+hiermit m=C3=B6chten wir Ihnen mitteilen, dass Ihnen 500.000,00 $ von der
+Azim PremjI Philanthropies Foundation, Azim PremjI Philanthropies
+Foundation, zugesprochen wurden. Ihre E-Mail-Adresse wurde w=C3=A4hrend der
+Suche zuf=C3=A4llig online ausgew=C3=A4hlt. Bitte kontaktieren Sie uns so b=
+ald
+wie m=C3=B6glich, damit ich wei=C3=9F, dass Ihre E-Mail-Adresse korrekt ist=
+. F=C3=BCr
+weitere Informationen kontaktieren Sie uns:
 
-I've tried specifying the new module files, but that seems to create a
-completely new modules.dep containing *only* the symbols from the new
-modules (which obviously isn't very useful).
-
--- 
-========================================================================
-Google                                      Where SkyNet meets Idiocracy
-========================================================================
+E-Mail: azimprejimighty@gmail.com
+HCL Corporation und Azim PremjI Foundation
+Azim Premji
+Leiter Unternehmenskommunikation
+Gr=C3=BC=C3=9Fe...
