@@ -2,104 +2,168 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E471A59B6A9
-	for <lists+linux-modules@lfdr.de>; Mon, 22 Aug 2022 00:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35AF959ED33
+	for <lists+linux-modules@lfdr.de>; Tue, 23 Aug 2022 22:12:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231852AbiHUW7O (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 21 Aug 2022 18:59:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48038 "EHLO
+        id S229757AbiHWUMY (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 23 Aug 2022 16:12:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbiHUW7N (ORCPT
+        with ESMTP id S234120AbiHWUMC (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 21 Aug 2022 18:59:13 -0400
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB2511EC41
-        for <linux-modules@vger.kernel.org>; Sun, 21 Aug 2022 15:59:12 -0700 (PDT)
-Received: by mail-vs1-xe2c.google.com with SMTP id h67so8536436vsc.11
-        for <linux-modules@vger.kernel.org>; Sun, 21 Aug 2022 15:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc;
-        bh=OSBmu32vO8aIFQ/hG4uWOrgGUsLPqq8FeuPiazd3PBo=;
-        b=UrSpcQbHkQE52cZPG9O9TczfQS2tHy0GqpP0OS05tfKCJzpNZyqdvsyuO4iR9oW/cV
-         XQ+5sgVludPBrRnirutfoqqwSRc2n5pfBZVdBAv9EA2K/RmSc59lmj0cbgcNoEsFGhVZ
-         Xmp1hGOZ3oYT8zCyQNyJsrSi/21a/1aNjZcuxKLlKgtXMpIPJyoijOhEmt1vCVul0xr+
-         NtT93sE7SbyZGtGSQkINHd3uxFNATzRXHXbx8qxIzv1n/5eeqosUSLeN2w923G2NMr1u
-         pMCYsX2AZHOIBlASN+6iBg5X7Ttsi04aSUsdpHeej/YH7dhhriK4tjXwlxTR2gs18PoE
-         fQXQ==
+        Tue, 23 Aug 2022 16:12:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A217435C
+        for <linux-modules@vger.kernel.org>; Tue, 23 Aug 2022 12:32:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1661283151;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=H+uuhl1NN5QAxVTi9BhvP08GGdmaB2im78PYqW4VJEw=;
+        b=TEIZ63yiSTRQqzSQnr2HhogApCnUQegefG+g4g3WDz9g/OeYtomw/sSudU3/skeQbMw68w
+        6UJkziwNi4IrfgF3A+T6C/tbSNcvdxjaS6BiIPi8Q0zXac9UGO2PUCUkb7ym06ljYQz1vr
+        n1M5tkSmIrRZVH03TvVzynPo60UWQh4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-646-9shGXT8qMb6sqpqlRu2CZw-1; Tue, 23 Aug 2022 15:32:29 -0400
+X-MC-Unique: 9shGXT8qMb6sqpqlRu2CZw-1
+Received: by mail-wm1-f69.google.com with SMTP id f18-20020a05600c4e9200b003a5f81299caso8367853wmq.7
+        for <linux-modules@vger.kernel.org>; Tue, 23 Aug 2022 12:32:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=OSBmu32vO8aIFQ/hG4uWOrgGUsLPqq8FeuPiazd3PBo=;
-        b=hzPz1uWCcuNGYYuvzuZvcYlktinQ03ZERf17VK6RrzLM4l6XKu5ghsw9f0gL2RlfGF
-         HkygP0fJ+wPWAi4vpEe/aIE0KzDD9+QqWPvFITxJEmLvACNi+M1sosHhCwR34ZAJA0Gg
-         9aRMqsY6iF+k4oY7Na+PxuSkve4/iA/NaeL+zyJOkQ+OU9B8XgI6ZnbSzRvl66ZXX9+E
-         dHrc+oekzE8khNeOMSyKiahBT/cR/8uZHd7jH6ez8ZYja5FJCk8aLumBhNmqKxn+9tDM
-         GVnra41rU9lnVqgAI5Ls7PATaWyURWdanF9wmVZltjlYeDoGyGbO1BW2oQYaR+tUTKNE
-         t4/A==
-X-Gm-Message-State: ACgBeo2b8o+8BPn+LkwpOh+lzTPj1Djmez0ZUD/AZ134z/+0RNVFeis9
-        Ls8gHb9vsHpDo/xdCQPWCgsl4eIs/Eue3GsfMBI=
-X-Google-Smtp-Source: AA6agR4WLloXL0x1QNzMdXd9ox+47BUwm1K7n/hZ2EWW4B3Y5owHqr3vhO9DmtPrKuBC0NIhbCcXtPJjnFB+O0rgOLM=
-X-Received: by 2002:a67:d70b:0:b0:390:1e0d:b6ba with SMTP id
- p11-20020a67d70b000000b003901e0db6bamr5530136vsj.9.1661122751605; Sun, 21 Aug
- 2022 15:59:11 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=H+uuhl1NN5QAxVTi9BhvP08GGdmaB2im78PYqW4VJEw=;
+        b=uK2xPj3esS2FQCikpA1WM4iGgOcfnnY9kdH3U6nE+KwqNoKjJgdNt4EIwdh/dP5hTr
+         +fdb/3KKvCwAi7dcndIVws+nk4vkOIsQ/j4Zi6u1+cCOOgvohbYaX/s8EVcUsYY1fj/5
+         YBum6ICHt5oWa417kfdzvZNTUwN41ftMVDbJpje4IF5BQrhfLy+RzE6CvumuiWOlFPbY
+         UAGKkZRhvpCUZ0K8PN8S3/YHtqPTABtt/7Yl1ea/iK4RcFzXZTs0XkdaGbW5k/QR4uVC
+         zI+pCcfv3udoZhAlYEs5Ao44qL66JGYd3has6emzehxx5/ys5wdNEcRK49oteGy//B6E
+         RfGg==
+X-Gm-Message-State: ACgBeo1N61ajqSdUI/bj74A75AWaHnRwy85HpV2gmQOff84pQ7oJeaQ4
+        0ygZtxfAUqieh6yhVXckhNek041ce9ZgZKXb+fudxOzZeJMFtieN/Zs9oX5Y1FL+7oV2IVaEyq+
+        UWMPxZv+23NIk4UEg7aHekayX
+X-Received: by 2002:a05:600c:3514:b0:3a5:dc71:d9c4 with SMTP id h20-20020a05600c351400b003a5dc71d9c4mr3164887wmq.42.1661283147975;
+        Tue, 23 Aug 2022 12:32:27 -0700 (PDT)
+X-Google-Smtp-Source: AA6agR6vhXh7wc08Je7KJIA0KF0gMVDREzyVEI+mbql4xGLu+MnUDvZwRlIZchn/+sMZztXegMEpMg==
+X-Received: by 2002:a05:600c:3514:b0:3a5:dc71:d9c4 with SMTP id h20-20020a05600c351400b003a5dc71d9c4mr3164879wmq.42.1661283147767;
+        Tue, 23 Aug 2022 12:32:27 -0700 (PDT)
+Received: from localhost (cpc111743-lutn13-2-0-cust979.9-3.cable.virginm.net. [82.17.115.212])
+        by smtp.gmail.com with ESMTPSA id p16-20020a05600c1d9000b003a5fcae64d4sm19528005wms.29.2022.08.23.12.32.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Aug 2022 12:32:26 -0700 (PDT)
+From:   Aaron Tomlin <atomlin@redhat.com>
+To:     mcgrof@kernel.org
+Cc:     christophe.leroy@csgroup.eu, linux-kernel@vger.kernel.org,
+        linux-modules@vger.kernel.org, atomlin@atomlin.com
+Subject: [PATCH modules-next] module: Add debugfs interface to view unloaded tainted modules
+Date:   Tue, 23 Aug 2022 20:32:25 +0100
+Message-Id: <20220823193225.2072649-1-atomlin@redhat.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-Received: by 2002:a05:612c:59f:b0:2eb:ac02:6150 with HTTP; Sun, 21 Aug 2022
- 15:59:11 -0700 (PDT)
-Reply-To: azimprejimighty@gmail.com
-From:   Azim Premji <ukpacharlesmikel@gmail.com>
-Date:   Sun, 21 Aug 2022 15:59:11 -0700
-Message-ID: <CAHJoZEGUKv2fRmMPeQi_O-+ZNBAMd=e7+hNRb2ERtzf80HF4Bg@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.9 required=5.0 tests=BAYES_95,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:e2c listed in]
-        [list.dnswl.org]
-        *  3.0 BAYES_95 BODY: Bayes spam probability is 95 to 99%
-        *      [score: 0.9834]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [ukpacharlesmikel[at]gmail.com]
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: ******
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
---=20
-hiermit m=C3=B6chten wir Ihnen mitteilen, dass Ihnen 500.000,00 $ von der
-Azim PremjI Philanthropies Foundation, Azim PremjI Philanthropies
-Foundation, zugesprochen wurden. Ihre E-Mail-Adresse wurde w=C3=A4hrend der
-Suche zuf=C3=A4llig online ausgew=C3=A4hlt. Bitte kontaktieren Sie uns so b=
-ald
-wie m=C3=B6glich, damit ich wei=C3=9F, dass Ihre E-Mail-Adresse korrekt ist=
-. F=C3=BCr
-weitere Informationen kontaktieren Sie uns:
+This patch provides debug/modules/unloaded_tainted file to see
+a record of unloaded tainted modules.
 
-E-Mail: azimprejimighty@gmail.com
-HCL Corporation und Azim PremjI Foundation
-Azim Premji
-Leiter Unternehmenskommunikation
-Gr=C3=BC=C3=9Fe...
+Signed-off-by: Aaron Tomlin <atomlin@redhat.com>
+---
+ kernel/module/tracking.c | 66 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+
+diff --git a/kernel/module/tracking.c b/kernel/module/tracking.c
+index 7f8133044d09..015e641bc346 100644
+--- a/kernel/module/tracking.c
++++ b/kernel/module/tracking.c
+@@ -10,6 +10,7 @@
+ #include <linux/printk.h>
+ #include <linux/slab.h>
+ #include <linux/list.h>
++#include <linux/debugfs.h>
+ #include <linux/rculist.h>
+ #include "internal.h"
+ 
+@@ -59,3 +60,68 @@ void print_unloaded_tainted_modules(void)
+ 		}
+ 	}
+ }
++
++#ifdef CONFIG_DEBUG_FS
++static void *unloaded_tainted_modules_seq_start(struct seq_file *m, loff_t *pos)
++{
++	mutex_lock(&module_mutex);
++	return seq_list_start_rcu(&unloaded_tainted_modules, *pos);
++}
++
++static void *unloaded_tainted_modules_seq_next(struct seq_file *m, void *p, loff_t *pos)
++{
++	return seq_list_next_rcu(p, &unloaded_tainted_modules, pos);
++}
++
++static void unloaded_tainted_modules_seq_stop(struct seq_file *m, void *p)
++{
++	mutex_unlock(&module_mutex);
++}
++
++static int unloaded_tainted_modules_seq_show(struct seq_file *m, void *p)
++{
++	struct mod_unload_taint *mod_taint;
++	char buf[MODULE_FLAGS_BUF_SIZE];
++	size_t l;
++
++	mod_taint = list_entry(p, struct mod_unload_taint, list);
++	l = module_flags_taint(mod_taint->taints, buf);
++	buf[l++] = '\0';
++
++	seq_printf(m, "%s (%s) %llu", mod_taint->name, buf, mod_taint->count);
++	seq_puts(m, "\n");
++
++	return 0;
++}
++
++static const struct seq_operations unloaded_tainted_modules_seq_ops = {
++	.start = unloaded_tainted_modules_seq_start,
++	.next  = unloaded_tainted_modules_seq_next,
++	.stop  = unloaded_tainted_modules_seq_stop,
++	.show  = unloaded_tainted_modules_seq_show,
++};
++
++static int unloaded_tainted_modules_open(struct inode *inode, struct file *file)
++{
++	return seq_open(file, &unloaded_tainted_modules_seq_ops);
++}
++
++static const struct file_operations unloaded_tainted_modules_fops = {
++	.open = unloaded_tainted_modules_open,
++	.read = seq_read,
++	.llseek = seq_lseek,
++	.release = seq_release,
++};
++
++static int __init unloaded_tainted_modules_init(void)
++{
++	struct dentry *dir;
++
++	dir = debugfs_create_dir("modules", NULL);
++	debugfs_create_file("unloaded_tainted", 0444, dir, NULL,
++			    &unloaded_tainted_modules_fops);
++
++	return 0;
++}
++module_init(unloaded_tainted_modules_init);
++#endif /* CONFIG_DEBUG_FS */
+
+base-commit: 554694ba120b87e39cf732ed632e6a0c52fafb7c
+-- 
+2.37.1
+
