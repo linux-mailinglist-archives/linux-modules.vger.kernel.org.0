@@ -2,138 +2,98 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97A0B5B15F0
-	for <lists+linux-modules@lfdr.de>; Thu,  8 Sep 2022 09:48:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E33D5B1E1D
+	for <lists+linux-modules@lfdr.de>; Thu,  8 Sep 2022 15:10:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230384AbiIHHr7 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 8 Sep 2022 03:47:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44908 "EHLO
+        id S229546AbiIHNKq (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 8 Sep 2022 09:10:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbiIHHr6 (ORCPT
+        with ESMTP id S232057AbiIHNKc (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 8 Sep 2022 03:47:58 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760B3C6FEC;
-        Thu,  8 Sep 2022 00:47:57 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 11A6F1F921;
-        Thu,  8 Sep 2022 07:47:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-        t=1662623276; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=4+jY/L5+xe35wjNUaKjbU+iCet/hLbz6TyCvxP2dmm0=;
-        b=q2uaKkC1rcu77DvPauruHEVNp78d3UcgHYo6roqYS04TbzQga+wo3gUgYM7xc8RTAbag0b
-        Siee5YfUMtfmfxPxqkOhtZP8FU1vyGEbeWhPo02Tz2AY0PEdGFeJwOjRT85XiTIOJmldhN
-        n8cvx7UnpYatYAeIOdBLBa+REawwQmI=
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DFAA713A6D;
-        Thu,  8 Sep 2022 07:47:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id v6YhNiueGWPJGgAAMHmgww
-        (envelope-from <mhocko@suse.com>); Thu, 08 Sep 2022 07:47:55 +0000
-Date:   Thu, 8 Sep 2022 09:47:55 +0200
-From:   Michal Hocko <mhocko@suse.com>
-To:     Kent Overstreet <kent.overstreet@linux.dev>
-Cc:     Steven Rostedt <rostedt@goodmis.org>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Mel Gorman <mgorman@suse.de>,
-        Peter Zijlstra <peterz@infradead.org>,
+        Thu, 8 Sep 2022 09:10:32 -0400
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B82E55F20F;
+        Thu,  8 Sep 2022 06:10:11 -0700 (PDT)
+Received: from dggpemm500021.china.huawei.com (unknown [172.30.72.57])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4MNfX90jnXzjXLP;
+        Thu,  8 Sep 2022 21:06:33 +0800 (CST)
+Received: from dggpemm500006.china.huawei.com (7.185.36.236) by
+ dggpemm500021.china.huawei.com (7.185.36.109) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Thu, 8 Sep 2022 21:10:09 +0800
+Received: from thunder-town.china.huawei.com (10.174.178.55) by
+ dggpemm500006.china.huawei.com (7.185.36.236) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Thu, 8 Sep 2022 21:10:08 +0800
+From:   Zhen Lei <thunder.leizhen@huawei.com>
+To:     Josh Poimboeuf <jpoimboe@kernel.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Miroslav Benes <mbenes@suse.cz>,
+        Petr Mladek <pmladek@suse.com>,
+        Joe Lawrence <joe.lawrence@redhat.com>,
+        <live-patching@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Alexei Starovoitov <ast@kernel.org>,
+        Jiri Olsa <jolsa@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
         Andrew Morton <akpm@linux-foundation.org>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Roman Gushchin <roman.gushchin@linux.dev>,
-        Davidlohr Bueso <dave@stgolabs.net>,
-        Matthew Wilcox <willy@infradead.org>,
-        "Liam R. Howlett" <liam.howlett@oracle.com>,
-        David Vernet <void@manifault.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        Laurent Dufour <ldufour@linux.ibm.com>,
-        Peter Xu <peterx@redhat.com>,
-        David Hildenbrand <david@redhat.com>,
-        Jens Axboe <axboe@kernel.dk>, mcgrof@kernel.org,
-        masahiroy@kernel.org, nathan@kernel.org, changbin.du@intel.com,
-        ytcoode@gmail.com, Vincent Guittot <vincent.guittot@linaro.org>,
-        Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Benjamin Segall <bsegall@google.com>,
-        Daniel Bristot de Oliveira <bristot@redhat.com>,
-        Valentin Schneider <vschneid@redhat.com>,
-        Christopher Lameter <cl@linux.com>,
-        Pekka Enberg <penberg@kernel.org>,
-        Joonsoo Kim <iamjoonsoo.kim@lge.com>, 42.hyeyoo@gmail.com,
-        Alexander Potapenko <glider@google.com>,
-        Marco Elver <elver@google.com>,
-        Dmitry Vyukov <dvyukov@google.com>,
-        Shakeel Butt <shakeelb@google.com>,
-        Muchun Song <songmuchun@bytedance.com>, arnd@arndb.de,
-        jbaron@akamai.com, David Rientjes <rientjes@google.com>,
-        Minchan Kim <minchan@google.com>,
-        Kalesh Singh <kaleshsingh@google.com>,
-        kernel-team <kernel-team@android.com>,
-        linux-mm <linux-mm@kvack.org>, iommu@lists.linux.dev,
-        kasan-dev@googlegroups.com, io-uring@vger.kernel.org,
-        linux-arch@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-bcache@vger.kernel.org, linux-modules@vger.kernel.org,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC PATCH 00/30] Code tagging framework and applications
-Message-ID: <YxmeK2/HHS4AkXh0@dhcp22.suse.cz>
-References: <YxW4Ig338d2vQAz3@dhcp22.suse.cz>
- <20220905234649.525vorzx27ybypsn@kmo-framework>
- <Yxb1cxDSyte1Ut/F@dhcp22.suse.cz>
- <20220906182058.iijmpzu4rtxowy37@kmo-framework>
- <Yxh5ueDTAOcwEmCQ@dhcp22.suse.cz>
- <20220907130323.rwycrntnckc6h43n@kmo-framework>
- <20220907094306.3383dac2@gandalf.local.home>
- <20220908063548.u4lqkhquuvkwzvda@kmo-framework>
- <YxmV7a2pnj1Kldzi@dhcp22.suse.cz>
- <20220908072950.yapakb5scocxezhy@kmo-framework>
+        "Luis Chamberlain" <mcgrof@kernel.org>,
+        <linux-modules@vger.kernel.org>
+CC:     Zhen Lei <thunder.leizhen@huawei.com>
+Subject: [PATCH 0/7] kallsyms: Optimizes the performance of lookup symbols
+Date:   Thu, 8 Sep 2022 21:09:29 +0800
+Message-ID: <20220908130936.674-1-thunder.leizhen@huawei.com>
+X-Mailer: git-send-email 2.26.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220908072950.yapakb5scocxezhy@kmo-framework>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.174.178.55]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ dggpemm500006.china.huawei.com (7.185.36.236)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu 08-09-22 03:29:50, Kent Overstreet wrote:
-> On Thu, Sep 08, 2022 at 09:12:45AM +0200, Michal Hocko wrote:
-> > Then you have probably missed a huge part of my emails. Please
-> > re-read. If those arguments are not clear, feel free to ask for
-> > clarification. Reducing the whole my reasoning and objections to the
-> > sentence above and calling that vapid and lazy is not only unfair but
-> > also disrespectful.
-> 
-> What, where you complained about slab's page allocations showing up in the
-> profile instead of slab, and I pointed out to you that actually each and every
-> slab call is instrumented, and you're just seeing some double counting (that we
-> will no doubt fix?)
-> 
-> Or when you complained about allocation sites where it should actually be the
-> caller that should be instrumented, and I pointed out that it'd be quite easy to
-> simply change that code to use _kmalloc() and slab_tag_add() directly, if it
-> becomes an issue.
-> 
-> Of course, if we got that far, we'd have this code to thank for telling us where
-> to look!
-> 
-> Did I miss anything?
+Currently, to search for a symbol, we need to expand the symbols in
+'kallsyms_names' one by one, and then use the expanded string for
+comparison. This is very slow.
 
-Feel free to reponse to specific arguments as I wrote them. I won't
-repeat them again. Sure we can discuss how important/relevant those
-are. And that _can_ be a productive discussion.
+In fact, we can first compress the name being looked up and then use
+it for comparison when traversing 'kallsyms_names'.
+
+This patch series optimizes the performance of function kallsyms_lookup_name(),
+and function klp_find_object_symbol() in the livepatch module. Based on the
+test results, the performance overhead is reduced to 5%. That is, the
+performance of these functions is improved by 20 times.
+
+To avoid increasing the kernel size in non-debug mode, the optimization is only
+for the case CONFIG_KALLSYMS_ALL=y.
+
+
+Zhen Lei (7):
+  scripts/kallsyms: don't compress symbol type when
+    CONFIG_KALLSYMS_ALL=y
+  scripts/kallsyms: rename build_initial_tok_table()
+  kallsyms: Adjust the types of some local variables
+  kallsyms: Improve the performance of kallsyms_lookup_name()
+  kallsyms: Add helper kallsyms_on_each_match_symbol()
+  livepatch: Use kallsyms_on_each_match_symbol() to improve performance
+  livepatch: Improve the search performance of
+    module_kallsyms_on_each_symbol()
+
+ include/linux/kallsyms.h |   8 +++
+ kernel/kallsyms.c        | 135 +++++++++++++++++++++++++++++++++++++--
+ kernel/livepatch/core.c  |  25 ++++++--
+ kernel/module/kallsyms.c |  13 +++-
+ scripts/kallsyms.c       |  19 ++++--
+ 5 files changed, 184 insertions(+), 16 deletions(-)
 
 -- 
-Michal Hocko
-SUSE Labs
+2.25.1
+
