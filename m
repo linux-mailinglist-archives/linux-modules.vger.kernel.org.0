@@ -2,135 +2,105 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3409461F2B3
-	for <lists+linux-modules@lfdr.de>; Mon,  7 Nov 2022 13:14:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDB6D620E94
+	for <lists+linux-modules@lfdr.de>; Tue,  8 Nov 2022 12:20:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231600AbiKGMOX (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 7 Nov 2022 07:14:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43770 "EHLO
+        id S233584AbiKHLUo (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 8 Nov 2022 06:20:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231294AbiKGMOW (ORCPT
+        with ESMTP id S234090AbiKHLUi (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 7 Nov 2022 07:14:22 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16AD9C57;
-        Mon,  7 Nov 2022 04:14:22 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id 130so10419297pfu.8;
-        Mon, 07 Nov 2022 04:14:22 -0800 (PST)
+        Tue, 8 Nov 2022 06:20:38 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BCA649B70
+        for <linux-modules@vger.kernel.org>; Tue,  8 Nov 2022 03:20:37 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id o70so16969683yba.7
+        for <linux-modules@vger.kernel.org>; Tue, 08 Nov 2022 03:20:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QJ+gNJJepQlf8XJSvmdtr0TPbl2KfXJ0oNv3mgjP2Dg=;
-        b=JyfGs+MDUZcifcgPVXFnVeOmLHENtS/FduSr39qrJ8yzXHLIIpPAPnvzSUsrZX3PyN
-         zLoBqE/PkL2l2WsR7L56gKnji/tbaOKclVTJ0MQorKznw9Kt8UHAnAPH/+fLVrGljJi1
-         EH4O4KJjq6vAvrWsI8lV5kybo9KnmrUA8DF40u1RniyGSMmvsoYr2olNuYxas8ZyNPA+
-         8BZO9QygNtkNQFPvCquOpwTVB9CUA9LDeP//fiBrgKprVQcHqrR9nNI4Edh9cCDODFtd
-         t9JGzjcqr1UZP46Alm4D/OP0zB/iVgAav42yDfphdgzWZxSMG/nQDTeY7spHCnVvn8Sr
-         wSTA==
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jD/YBCtOhOa1ipEyheDVa6geA3XolzkSqDbroMLmTEw=;
+        b=J4BNN7jKfVfT0aL+JmOkjuoB8t6+kSq+FK+qtmRP1DScVaKYSfpiIdvKdYE9swFUQY
+         XtHjWaqnZFsSXqYA0o+q8CHye3arwTjr+hJBusI7mFqLyj6iQwnPEZnxpt7jEFXDv67C
+         i1RnWN77TDRD4R5bcXZk31BtpxWQI5F6il/aa7D6YEvXraa0x5EmFHE7S5DfyEv8K6Mr
+         sqvmxMR+LFYCNchTyksG6bgH4YMBdFO7Jyo5yt1Gfv8N5WpJHQg7liyYPj6Ln7TcsJ1M
+         7IF7H63JmVDaojfGa4RBrUx2qi70wmC2uC2C6sS9nlgayiVSuogPYEW3OyiZYJzoef10
+         VIFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QJ+gNJJepQlf8XJSvmdtr0TPbl2KfXJ0oNv3mgjP2Dg=;
-        b=2BIw3X8d5iAB5tVrKumFtun2nXDFFNYmbDOYbtx7OUyrBufDgtgSEG4RiqVcR3c508
-         isIHKQ4r77Nf61yNSKMzWAIjd+Ozvcng7VaaEaHNXeAaU8JSiss7DuAmnGvGABEP1rVm
-         A5nuPXKNz8vbhhrQs9hYv//2qwGSatHv7wUYhpdhXy1D/PADuSNq3W/Lu+h+3nOo17mc
-         2lTEZHY1ajy+v02rcb0YbMXQI/UvevCjbLAmmCTf+l5wHI2+6MAfifaNgIsndGhfyxRD
-         3NWvHq+K0+J9ksTJVTtwVkHQA15WYpqJV67rNQ5767xQxVIG7G1k1gNUTS+Wx77Yotga
-         TUaw==
-X-Gm-Message-State: ACrzQf2jm47760rqK6IFzIkKSJa2CQPHl2qU3VTFd0Rk7zPTzzhpnPTh
-        rPBMkufkSwQl8jTsgK6lJCmLDtzQybM=
-X-Google-Smtp-Source: AMsMyM4HXzx5BuHaRsAFLo+H6id+TDJGAPRqqnErE3GfBt1WV2tNRKTch9s/uiVXFwiAlaTJnRnWBA==
-X-Received: by 2002:a63:5341:0:b0:46f:d05d:55cf with SMTP id t1-20020a635341000000b0046fd05d55cfmr33552519pgl.356.1667823261575;
-        Mon, 07 Nov 2022 04:14:21 -0800 (PST)
-Received: from localhost (203-221-202-134.tpgi.com.au. [203.221.202.134])
-        by smtp.gmail.com with ESMTPSA id r11-20020a170902c60b00b001830ed575c3sm4828350plr.117.2022.11.07.04.14.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 04:14:21 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 07 Nov 2022 22:14:16 +1000
-Message-Id: <CO6202HG8VAN.1ROEE25G4KDK2@bobo>
-Subject: Re: [PATCH v5 2/2] powerpc/64: Add module check for ELF ABI version
-From:   "Nicholas Piggin" <npiggin@gmail.com>
-To:     "Christophe Leroy" <christophe.leroy@csgroup.eu>,
-        "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
-        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "Michael Ellerman" <mpe@ellerman.id.au>,
-        "Jessica Yu" <jeyu@kernel.org>,
-        "Luis Chamberlain" <mcgrof@kernel.org>
-X-Mailer: aerc 0.11.0
-References: <20221031120733.3956781-1-npiggin@gmail.com>
- <20221031120733.3956781-3-npiggin@gmail.com>
- <513e1973-a1d4-c698-1441-9c7d0f5205ed@csgroup.eu>
-In-Reply-To: <513e1973-a1d4-c698-1441-9c7d0f5205ed@csgroup.eu>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jD/YBCtOhOa1ipEyheDVa6geA3XolzkSqDbroMLmTEw=;
+        b=DwEvQ5kvhOvwLTkA8dJzLzyJCRJ2SKtMjrj47/dRBMzdCY3qhyJOWHGGWbtJnk3mDv
+         9zZtaiy7mO1AVGuq2fmMAiIxwF4mRg+pqyI7UWtKg50w5avYNj0WQK5h5lpj3F1Mz+z/
+         hLTYBIh2qVQTiExy3lEAeqWUc0WTSBhMhRFY9oOnEJJ22Ga6udJbHjqYZY2r9qhaaeaj
+         GMlqu4QmSXEwK6skhokQTj+UxOqlGezK2OMR83yxsTyD7Koh0U/7Vyqlzv/8HUMJoIHV
+         1nZtUdPnYftlf1KD85dprhNJFjycxHQgdrzo/Xhy379K4dfl/EzAH5Se7O/baCVWDg0V
+         c+mw==
+X-Gm-Message-State: ACrzQf1NkrUbZSO1w8nIWxObP5MX5ERrvBE98ez8CftkWYXrUP374U8g
+        yhSqdyjocfn0PauJOqvzv3E+fWVSEUq6IfU8DQA=
+X-Google-Smtp-Source: AMsMyM6xKqU5Rjh4+2+AxAqC0U0YC7Pv+rLQ5ILVu1L9p+G2RCExT06n9hL8M7TD2Z3SGUMSH2B3gfKMmkK13680VKQ=
+X-Received: by 2002:a25:a088:0:b0:6ca:33ff:5b30 with SMTP id
+ y8-20020a25a088000000b006ca33ff5b30mr54330551ybh.242.1667906436602; Tue, 08
+ Nov 2022 03:20:36 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:a05:7010:a38a:b0:313:c983:1d7e with HTTP; Tue, 8 Nov 2022
+ 03:20:36 -0800 (PST)
+Reply-To: mrinvest1010@gmail.com
+From:   "K. A. Mr. Kairi" <ctocik2@gmail.com>
+Date:   Tue, 8 Nov 2022 03:20:36 -0800
+Message-ID: <CAC9COZf4gVM4aT_ghoemxu3B8PtJ41D3GAMuMHbW-Zm3a0vanw@mail.gmail.com>
+Subject: Re: My Response..
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:b2f listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5001]
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [mrinvest1010[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [ctocik2[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [ctocik2[at]gmail.com]
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu Nov 3, 2022 at 6:35 PM AEST, Christophe Leroy wrote:
->
->
-> Le 31/10/2022 =C3=A0 13:07, Nicholas Piggin a =C3=A9crit=C2=A0:
-> > Override the generic module ELF check to provide a check for the ELF AB=
-I
-> > version. This becomes important if we allow big-endian ELF ABI V2 build=
-s
-> > but it doesn't hurt to check now.
-> >=20
-> > Cc: Jessica Yu <jeyu@kernel.org>
-> > Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> > [np: split patch, added changelog, adjust to Jessica's proposal]
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   arch/powerpc/kernel/module.c | 17 +++++++++++++++++
-> >   1 file changed, 17 insertions(+)
-> >=20
-> > diff --git a/arch/powerpc/kernel/module.c b/arch/powerpc/kernel/module.=
-c
-> > index f6d6ae0a1692..d46bf9bfda26 100644
-> > --- a/arch/powerpc/kernel/module.c
-> > +++ b/arch/powerpc/kernel/module.c
-> > @@ -19,6 +19,23 @@
-> >  =20
-> >   static LIST_HEAD(module_bug_list);
-> >  =20
-> > +#ifdef CONFIG_PPC64
->
-> Can it go in arch/powerpc/kernel/module_64.c instead ?
->
-> > +bool module_elf_check_arch(Elf_Ehdr *hdr)
-> > +{
-> > +	unsigned long abi_level =3D hdr->e_flags & 0x3;
-> > +
-> > +	if (IS_ENABLED(CONFIG_PPC64_ELF_ABI_V2)) {
-> > +		if (abi_level !=3D 2)
-> > +			return false;
-> > +	} else {
-> > +		if (abi_level >=3D 2)
-> > +			return false;
-> > +	}
-> > +
-> > +	return true;
->
-> Can be simpler:
->
-> 	if (IS_ENABLED(CONFIG_PPC64_ELF_ABI_V2))
-> 		return abi_level =3D=3D 2;
-> 	else
-> 		return abi_level < 2;
+-- 
+Hi
 
-Yes I think both of those can be done. Good suggestions.
+How are you with your family, I have a serious client, whom will be
+interested to invest in your country, I got your Details through the
+Investment Network and world Global Business directory.
 
-Thanks,
-Nick
+If you are interested for more details.....
+
+Sincerely,
+Kairi Andrew
