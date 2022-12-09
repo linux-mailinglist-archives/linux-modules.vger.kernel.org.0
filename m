@@ -2,92 +2,91 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 333536481B4
-	for <lists+linux-modules@lfdr.de>; Fri,  9 Dec 2022 12:30:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0B286483D6
+	for <lists+linux-modules@lfdr.de>; Fri,  9 Dec 2022 15:36:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbiLILaC (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 9 Dec 2022 06:30:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53602 "EHLO
+        id S229902AbiLIOgy (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 9 Dec 2022 09:36:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229760AbiLILaB (ORCPT
+        with ESMTP id S229897AbiLIOgx (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 9 Dec 2022 06:30:01 -0500
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58861D64E;
-        Fri,  9 Dec 2022 03:29:59 -0800 (PST)
-Received: from dggpemm500006.china.huawei.com (unknown [172.30.72.55])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NT81F3NsLzmW6v;
-        Fri,  9 Dec 2022 19:29:05 +0800 (CST)
-Received: from [10.174.178.55] (10.174.178.55) by
- dggpemm500006.china.huawei.com (7.185.36.236) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Fri, 9 Dec 2022 19:29:57 +0800
-Subject: Re: [PATCH] livepatch: Call klp_match_callback() in
- klp_find_callback() to avoid code duplication
-To:     Petr Mladek <pmladek@suse.com>
-CC:     Josh Poimboeuf <jpoimboe@kernel.org>,
+        Fri, 9 Dec 2022 09:36:53 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173B713F31;
+        Fri,  9 Dec 2022 06:36:52 -0800 (PST)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out2.suse.de (Postfix) with ESMTP id ABE111FF9C;
+        Fri,  9 Dec 2022 14:36:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+        t=1670596610; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=WX8KuOVecb6SzIYSsakpl/x1KTg6j7Cl5d2y2JO2ZUc=;
+        b=ihWuwSN8geBq0c/UV33vGbwcKVS2xKZyoin1XpFmemGbRtb5izXrXhK+t14oLZzkV4wyF2
+        6FyBikNpT1EEQs8foKYXh9dK9IUboTxOZA/m81RpEZ+9/iX9kCeX8wrF+/4bq+mNkJ3fYf
+        zDFNV9ir8T1Rj5vxNUpdhRr4imz2T3A=
+Received: from suse.cz (unknown [10.100.201.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by relay2.suse.de (Postfix) with ESMTPS id 84F3B2C141;
+        Fri,  9 Dec 2022 14:36:49 +0000 (UTC)
+Date:   Fri, 9 Dec 2022 15:36:49 +0100
+From:   Petr Mladek <pmladek@suse.com>
+To:     "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
+Cc:     Josh Poimboeuf <jpoimboe@kernel.org>,
         Jiri Kosina <jikos@kernel.org>,
         Miroslav Benes <mbenes@suse.cz>,
         Joe Lawrence <joe.lawrence@redhat.com>,
-        <live-patching@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        live-patching@vger.kernel.org, linux-kernel@vger.kernel.org,
         Masahiro Yamada <masahiroy@kernel.org>,
         Alexei Starovoitov <ast@kernel.org>,
         Jiri Olsa <jolsa@kernel.org>,
         Kees Cook <keescook@chromium.org>,
         Andrew Morton <akpm@linux-foundation.org>,
         Luis Chamberlain <mcgrof@kernel.org>,
-        <linux-modules@vger.kernel.org>
+        linux-modules@vger.kernel.org
+Subject: Re: [PATCH] livepatch: Call klp_match_callback() in
+ klp_find_callback() to avoid code duplication
+Message-ID: <Y5NIAS8dtY/RUIRW@alley>
 References: <20221207032304.2017-1-thunder.leizhen@huawei.com>
  <Y5L75x+W1NrWCOcm@alley>
-From:   "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
-Message-ID: <aed3ca41-0f27-b44e-b95c-f7ed0a8ef468@huawei.com>
-Date:   Fri, 9 Dec 2022 19:29:56 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ <aed3ca41-0f27-b44e-b95c-f7ed0a8ef468@huawei.com>
 MIME-Version: 1.0
-In-Reply-To: <Y5L75x+W1NrWCOcm@alley>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.178.55]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpemm500006.china.huawei.com (7.185.36.236)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aed3ca41-0f27-b44e-b95c-f7ed0a8ef468@huawei.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-
-
-On 2022/12/9 17:12, Petr Mladek wrote:
-> On Wed 2022-12-07 11:23:04, Zhen Lei wrote:
->> The implementation of function klp_match_callback() is identical to the
->> partial implementation of function klp_find_callback(). So call function
->> klp_match_callback() in function klp_find_callback() instead of the
->> duplicated code.
->>
->> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+On Fri 2022-12-09 19:29:56, Leizhen (ThunderTown) wrote:
 > 
-> Thanks for cleaning this.
 > 
-> Reviewed-by: Petr Mladek <pmladek@suse.com>
-
-Oh, sorry, I realized that I had forgotten to add:
-Suggested-by: Petr Mladek <pmladek@suse.com>
-
-Hi Luis:
-  Can you help me add it?
-
+> On 2022/12/9 17:12, Petr Mladek wrote:
+> > On Wed 2022-12-07 11:23:04, Zhen Lei wrote:
+> >> The implementation of function klp_match_callback() is identical to the
+> >> partial implementation of function klp_find_callback(). So call function
+> >> klp_match_callback() in function klp_find_callback() instead of the
+> >> duplicated code.
+> >>
+> >> Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+> > 
+> > Thanks for cleaning this.
+> > 
+> > Reviewed-by: Petr Mladek <pmladek@suse.com>
 > 
-> Best Regards,
-> Petr
-> .
+> Oh, sorry, I realized that I had forgotten to add:
+> Suggested-by: Petr Mladek <pmladek@suse.com>
 > 
+> Hi Luis:
+>   Can you help me add it?
 
--- 
-Regards,
-  Zhen Lei
+JFYI, I could live without it ;-)
+
+Best Regards,
+Petr
