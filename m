@@ -2,39 +2,36 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0B286483D6
-	for <lists+linux-modules@lfdr.de>; Fri,  9 Dec 2022 15:36:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66B72648C31
+	for <lists+linux-modules@lfdr.de>; Sat, 10 Dec 2022 02:09:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbiLIOgy (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Fri, 9 Dec 2022 09:36:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57516 "EHLO
+        id S229555AbiLJBJt (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Fri, 9 Dec 2022 20:09:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229897AbiLIOgx (ORCPT
+        with ESMTP id S229545AbiLJBJs (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Fri, 9 Dec 2022 09:36:53 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173B713F31;
-        Fri,  9 Dec 2022 06:36:52 -0800 (PST)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out2.suse.de (Postfix) with ESMTP id ABE111FF9C;
-        Fri,  9 Dec 2022 14:36:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-        t=1670596610; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=WX8KuOVecb6SzIYSsakpl/x1KTg6j7Cl5d2y2JO2ZUc=;
-        b=ihWuwSN8geBq0c/UV33vGbwcKVS2xKZyoin1XpFmemGbRtb5izXrXhK+t14oLZzkV4wyF2
-        6FyBikNpT1EEQs8foKYXh9dK9IUboTxOZA/m81RpEZ+9/iX9kCeX8wrF+/4bq+mNkJ3fYf
-        zDFNV9ir8T1Rj5vxNUpdhRr4imz2T3A=
-Received: from suse.cz (unknown [10.100.201.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id 84F3B2C141;
-        Fri,  9 Dec 2022 14:36:49 +0000 (UTC)
-Date:   Fri, 9 Dec 2022 15:36:49 +0100
-From:   Petr Mladek <pmladek@suse.com>
+        Fri, 9 Dec 2022 20:09:48 -0500
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58CB7F010;
+        Fri,  9 Dec 2022 17:09:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=MUb4yQoHyZ6YBjsxLLL/BLZnhDgIi+qZpS97jRSQv/s=; b=RyB09IfH8GMuhNGE4qhj3s11XX
+        Gh48husrdvAU3Nq/AusbekicUXfnBsLWplnp3iq8CH/Q6NYDXhPtP5EZUphDlpbmZ/sH6d2VplG/9
+        nK/LAAqwsagN7OXoCAcL7SiyiTJB1GVMAsH4BZm3YQdG+JQ2Aa1J4XC53KSa9Pm5U4XulnbLaQcD5
+        VnKQ1Lksb2zdm5MlPcidD3yjZgQ/J2xCTgzjEKNOQwu5P2KrRMHOW41FAfn/sIxp4v2LeK0ZpBXip
+        00gUhC537DhMlOCiO0BQIyzw3Yj+bPUkViRV9qrlfjxllKyrnm0Pso+eGHsf0O1ftJnN+skBMIfRr
+        v298eRdQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1p3oN0-00CzOy-0z; Sat, 10 Dec 2022 01:09:38 +0000
+Date:   Fri, 9 Dec 2022 17:09:37 -0800
+From:   Luis Chamberlain <mcgrof@kernel.org>
 To:     "Leizhen (ThunderTown)" <thunder.leizhen@huawei.com>
-Cc:     Josh Poimboeuf <jpoimboe@kernel.org>,
+Cc:     Petr Mladek <pmladek@suse.com>,
+        Josh Poimboeuf <jpoimboe@kernel.org>,
         Jiri Kosina <jikos@kernel.org>,
         Miroslav Benes <mbenes@suse.cz>,
         Joe Lawrence <joe.lawrence@redhat.com>,
@@ -44,11 +41,10 @@ Cc:     Josh Poimboeuf <jpoimboe@kernel.org>,
         Jiri Olsa <jolsa@kernel.org>,
         Kees Cook <keescook@chromium.org>,
         Andrew Morton <akpm@linux-foundation.org>,
-        Luis Chamberlain <mcgrof@kernel.org>,
         linux-modules@vger.kernel.org
 Subject: Re: [PATCH] livepatch: Call klp_match_callback() in
  klp_find_callback() to avoid code duplication
-Message-ID: <Y5NIAS8dtY/RUIRW@alley>
+Message-ID: <Y5PcUYXGY4ct/FXL@bombadil.infradead.org>
 References: <20221207032304.2017-1-thunder.leizhen@huawei.com>
  <Y5L75x+W1NrWCOcm@alley>
  <aed3ca41-0f27-b44e-b95c-f7ed0a8ef468@huawei.com>
@@ -56,15 +52,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <aed3ca41-0f27-b44e-b95c-f7ed0a8ef468@huawei.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Fri 2022-12-09 19:29:56, Leizhen (ThunderTown) wrote:
+On Fri, Dec 09, 2022 at 07:29:56PM +0800, Leizhen (ThunderTown) wrote:
 > 
 > 
 > On 2022/12/9 17:12, Petr Mladek wrote:
@@ -86,7 +84,6 @@ On Fri 2022-12-09 19:29:56, Leizhen (ThunderTown) wrote:
 > Hi Luis:
 >   Can you help me add it?
 
-JFYI, I could live without it ;-)
+Done!
 
-Best Regards,
-Petr
+  Luis
