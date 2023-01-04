@@ -2,98 +2,70 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCBBB65B755
-	for <lists+linux-modules@lfdr.de>; Mon,  2 Jan 2023 22:16:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6C9465D372
+	for <lists+linux-modules@lfdr.de>; Wed,  4 Jan 2023 13:56:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231472AbjABVQL (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 2 Jan 2023 16:16:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59176 "EHLO
+        id S239331AbjADMzm (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 4 Jan 2023 07:55:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbjABVQJ (ORCPT
+        with ESMTP id S230031AbjADMzZ (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 2 Jan 2023 16:16:09 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3607A459;
-        Mon,  2 Jan 2023 13:16:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:In-Reply-To:References;
-        bh=NHmSI4BAP2aEJ9CMtBuxh4gyI63+HnFkQnS+v2zXqr4=; b=Kje9jnEnCrSwN7EQt+D4Dekx5Q
-        AoxmtlHmh1kilCx/QP7qHnh4H1v7Cu+Gloa1BLUNHyHTrPfIy8dU6Hl0/NygcYHrx3EhOQZZC2Lra
-        fDscfwNgRdxJgpgNp8pEi+KF+tyHa3lTSDCrz2c+8he01kfFThMvlLFn92LDPuneyITRzO4seJB9y
-        oOz/t1TuaVcU8egRUyRVNmlYuPeot8pndJRkgEX5UN+ICvrMBpdYEsID9SRRnZnsG+cnl+jnGPyNI
-        YpEAYInd7enpXKKqZTJVgv9xGKtYNCSgt0PKsKo4NfXLN9MWalxyXa2xmtncu5Y0gK4fbnDnLiEY3
-        DzevHOog==;
-Received: from [2601:1c2:d80:3110::a2e7] (helo=bombadil.infradead.org)
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1pCSAA-00EIqL-FI; Mon, 02 Jan 2023 21:16:06 +0000
-From:   Randy Dunlap <rdunlap@infradead.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Randy Dunlap <rdunlap@infradead.org>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        linux-modules@vger.kernel.org
-Subject: [PATCH] test_kmod: stop kernel-doc warnings
-Date:   Mon,  2 Jan 2023 13:16:05 -0800
-Message-Id: <20230102211605.26058-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.39.0
+        Wed, 4 Jan 2023 07:55:25 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A93934773
+        for <linux-modules@vger.kernel.org>; Wed,  4 Jan 2023 04:54:54 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id o14so16211961qkk.5
+        for <linux-modules@vger.kernel.org>; Wed, 04 Jan 2023 04:54:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
+        b=BQfo1+41q2NZR57Q7BFlMODaOza2AgrRvUpAp3daCd4t1w84OEhFtXAM1g7CkVTr/y
+         mvXWkJvXCDM96Iy3cSf9E37Th3uZX5TzmwlIsHFzK3DAyLuSjJ8d3uR9drr/ahkzPGkt
+         iW+sw+gZOJCd7bumtfoM4UR2xOfXz6tdmGq2f+IJJhoSBazdofAm5Gs9PxuweXnk264c
+         knSGf1CtrqZScdeov1GoaGbl2sApMUXYjJGPCObPVA0UTlHx2t6+wdp4VOKHmsqLWM8X
+         lQt15zqigA6uJCG+q37n0r4mLK1MKtsniT1i9jhRA9qlN9E2Mf0sYN4W9Jd0n+39BoCK
+         yzWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
+        b=ExI1P1GqDGy5XAsg684xix1dw8G8ZWk+yZLlxSxozve8uVMDZAMgn1NNC/GluYFvcx
+         Hehp8pk23cDm7ugaDD801r1uHrvsDllIjwbW9NXS5hML9OfeYZewDqa0lOacwQFfA8XP
+         bZzzC8/HEAHIDxT/PmSCWt+TciJjyj6xq3HyjENpX9P+Q8RuB9hFuuvalpYE+NJaGe1Y
+         BBsB9ZyGuVA2gnsYLf9lpHAmJOHA/JivxDG1CAFqsa9FMR2J+XlM3/1lyJEKmWq9K2pJ
+         W5x+CdASvIP8fGsKENoE3FBpE5DSrg/iPtIePN65WuuTNKZrB4mtaNL5wcC+v7PsNfgI
+         tkZw==
+X-Gm-Message-State: AFqh2krpAI2rlIdDHB1u6Purru+IUNDN7BFJ/KWGmUTbHjSpfmK/8PjF
+        FJofNskeebroYUet7zJaXZX7Z0hBIhUsDHrETiTjgahxWyQ=
+X-Google-Smtp-Source: AMrXdXuKXTvNK0aSB9vnyjtdhrZfKmRzvU9Jw1W0zhcD7x19AMFVNgTh5oL+8ilZBOfTDf/bL64QVz1mYULxa/ftADs=
+X-Received: by 2002:ac8:568a:0:b0:3a9:688d:fad2 with SMTP id
+ h10-20020ac8568a000000b003a9688dfad2mr1976067qta.646.1672836882017; Wed, 04
+ Jan 2023 04:54:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6200:5d91:b0:4a5:78e9:2012 with HTTP; Wed, 4 Jan 2023
+ 04:54:41 -0800 (PST)
+Reply-To: Gregdenzell9@gmail.com
+From:   Greg Denzell <mzsophie@gmail.com>
+Date:   Wed, 4 Jan 2023 12:54:41 +0000
+Message-ID: <CAEoj5=ZpJ15GRz-U33Ocbu5-P3Va+3bNv3476+mmJJ52cwx7tA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Use kernel-doc notation to prevent warnings:
+Seasons Greetings!
 
-lib/test_kmod.c:58: warning: contents before sections
-lib/test_kmod.c:94: warning: cannot understand function prototype: 'struct kmod_test_device_info '
-lib/test_kmod.c:119: warning: cannot understand function prototype: 'struct kmod_test_device '
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: linux-modules@vger.kernel.org
----
- lib/test_kmod.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff -- a/lib/test_kmod.c b/lib/test_kmod.c
---- a/lib/test_kmod.c
-+++ b/lib/test_kmod.c
-@@ -51,12 +51,11 @@ static int num_test_devs;
- 
- /**
-  * enum kmod_test_case - linker table test case
-- *
-- * If you add a  test case, please be sure to review if you need to se
-- * @need_mod_put for your tests case.
-- *
-  * @TEST_KMOD_DRIVER: stress tests request_module()
-  * @TEST_KMOD_FS_TYPE: stress tests get_fs_type()
-+ *
-+ * If you add a  test case, please be sure to review if you need to set
-+ * @need_mod_put for your tests case.
-  */
- enum kmod_test_case {
- 	__TEST_KMOD_INVALID = 0,
-@@ -78,7 +77,7 @@ struct test_config {
- struct kmod_test_device;
- 
- /**
-- * kmod_test_device_info - thread info
-+ * struct kmod_test_device_info - thread info
-  *
-  * @ret_sync: return value if request_module() is used, sync request for
-  * 	@TEST_KMOD_DRIVER
-@@ -101,7 +100,7 @@ struct kmod_test_device_info {
- };
- 
- /**
-- * kmod_test_device - test device to help test kmod
-+ * struct kmod_test_device - test device to help test kmod
-  *
-  * @dev_idx: unique ID for test device
-  * @config: configuration for the test
+This will remind you again that I have not yet received your reply to
+my last message to you.
