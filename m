@@ -2,79 +2,184 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1584A66B032
-	for <lists+linux-modules@lfdr.de>; Sun, 15 Jan 2023 10:47:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2456666B443
+	for <lists+linux-modules@lfdr.de>; Sun, 15 Jan 2023 22:49:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbjAOJrp (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 15 Jan 2023 04:47:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45086 "EHLO
+        id S231610AbjAOVtO (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 15 Jan 2023 16:49:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230095AbjAOJro (ORCPT
+        with ESMTP id S231320AbjAOVtN (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 15 Jan 2023 04:47:44 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3116B46D
-        for <linux-modules@vger.kernel.org>; Sun, 15 Jan 2023 01:47:43 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id d13so4251982qkk.12
-        for <linux-modules@vger.kernel.org>; Sun, 15 Jan 2023 01:47:43 -0800 (PST)
+        Sun, 15 Jan 2023 16:49:13 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE6B18152;
+        Sun, 15 Jan 2023 13:49:11 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id p1-20020a05600c1d8100b003d8c9b191e0so20951308wms.4;
+        Sun, 15 Jan 2023 13:49:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7m5UdqDwB7t1NnrnthxDoXKdh27h3gu20ETW4b3CRI0=;
-        b=SUP62oYBofBeJN7NYC9zeFQuO7jTqrY3S/4lR20c5ZMEAsxCx+KFHGCYY7VC/lfza9
-         vc72b3GpATSyVUwDPFe4aNigJdLT9y0CkAThgrvejx02lzNrqhhZK+3o+JA68NA9fR+k
-         ngddImndbwPxP2NCznLjjnhlsPHwAXWogzg9o9VJ7U28rY1uxS8sXdlDac06yTm0H/wA
-         1x17p0Nqmp3Gaa4uvm91LS6M0kXWhkDBVAiPpQDYgmWe/afAbKIrgLKSas6eml6DaJo3
-         wNy/OIMTbrErmx4yE+HX5+q+oVGd14ftPG6hMjrpkP+vKIjJGxJV0Ovq07V0d2/AO8ri
-         qXTQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gd7Ow2nPrEWd6lZ2zmUT7J4z0TLG/anTssBGwzt00Nc=;
+        b=UIl9Gprhiq5HCUZZup59Kkv+RXKDVsYOAXEAxEes7WEAImXJ2xVcxAdKA0R98q3nKh
+         inuXNmPXwE0hs+3pjZ24JVPIht4gbMfjpH8U0TRyJvlyDWWMgsAOYzR+KYS3OXd0soiC
+         ArPUNwYD2T082+UFZaB2/AE6EwAe3EmIDVZTWESaBcKExPjcznHRKuRFYp9a4tIMcF5V
+         P0bSPQEhc2VOnYgws+qrhbc1nkx53RPpBe+9fO02kDUjEc9db9KGc4UYSiASB5oXeRMp
+         HiIO3rzuKxqbP1dZojGal/Fp9+DK5oeb0g1sS6IPzDsZepgIguxjSn7NS1iq7B1i2hrW
+         n5eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7m5UdqDwB7t1NnrnthxDoXKdh27h3gu20ETW4b3CRI0=;
-        b=ms5uQ18OkAJY7/ANn/glsApmQHhr2B37DUlBqxr7+zmFl4nTspIk6AY1FvHgN1ldMm
-         EkxSlx73191uVoH/rPaCWGFjIrvFUvugpe2dy6+Co4lHO0gKxKa01zIFlvajNCgDGA/F
-         iVKj16G0dZ3y7DMhRw5vp58qMLM6uv3Ggoot1JJNdNa9bPLcmYCQIaahDX5ns4r0nwGU
-         UGpyOGefsPR3QLghsQAxhi849WJCIgMpB7VSjXdoB6sJyFw9jHq/VlPpo7iu1J6Z+gYb
-         /LJPDf9xF/8BWRp745FNyl2pdIHf4LuecWmhFrBvdJKg5yNZ2eyTQRsUwNIN10kq01q4
-         YW+w==
-X-Gm-Message-State: AFqh2kqK89426ePqoKqykYDdjRWYQhBxpn6NE3IEQHNfwDhMYHdv7C+w
-        x6CJG12qSzNPxQkVbLvLw//wp/leLqNuyJVO+lA=
-X-Google-Smtp-Source: AMrXdXsa/rFC2xU0tajAFrNxnkYCoMX9kTirBNB2BA171R47NuXScmvsmOE+GsVrObGC9qkcJ5PcFZS003UDsEwxGLk=
-X-Received: by 2002:a05:620a:c96:b0:706:3283:f106 with SMTP id
- q22-20020a05620a0c9600b007063283f106mr112040qki.510.1673776062862; Sun, 15
- Jan 2023 01:47:42 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gd7Ow2nPrEWd6lZ2zmUT7J4z0TLG/anTssBGwzt00Nc=;
+        b=ALVfZU9i8hpurt/tN2BM8ucvd27cOU1kJYVS9YyIshTB4PTKAKVpjUNqxsGtF3s7p2
+         RKIrsCxAOY8sCy9pVSmTEBKcfSKACWcHgsNjd6x7u5tIwlh0GKrtzNrLo1BqF9XtkIMo
+         t2UGG/LuWoyEviKXMUlPOst3EmIewQFFZ6A2YmHA0Z2gcIRMgx04sk28D/cgd7TWlFTr
+         +PItWqOPD2PBtdVCiKeyUGgxr/yhoS9OXWzZ+sGmpsZkq/3TQurNMEcGuII4Wg+gQQJM
+         /bwsE3RJ0ONCAWGqb4gBy+vCt43hvJAj048WezQ4mBIqF47a9oUQBEhpnYxRFfG/sX8N
+         mW2g==
+X-Gm-Message-State: AFqh2kq0JKbbUaQLF+bcQxsEoC8SQtupqeBpU9/Ivrw/HVhPb/KGW41m
+        EGnc8dmtFJ8P+27KngTiytA=
+X-Google-Smtp-Source: AMrXdXuwLlvobMgpyjk0yf7rfKUiaQcWvz2pRA5JHlX/iVn9xPH66Ik3FuDSLw1s9XtZiGUFB7Yh0w==
+X-Received: by 2002:a05:600c:4d11:b0:3da:f97b:2a95 with SMTP id u17-20020a05600c4d1100b003daf97b2a95mr2143498wmp.36.1673819349645;
+        Sun, 15 Jan 2023 13:49:09 -0800 (PST)
+Received: from krava ([83.240.63.124])
+        by smtp.gmail.com with ESMTPSA id z22-20020a7bc7d6000000b003cfa81e2eb4sm4441311wmk.38.2023.01.15.13.49.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Jan 2023 13:49:08 -0800 (PST)
+From:   Jiri Olsa <olsajiri@gmail.com>
+X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
+Date:   Sun, 15 Jan 2023 22:49:06 +0100
+To:     Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc:     Alexei Starovoitov <ast@kernel.org>,
+        Daniel Borkmann <daniel@iogearbox.net>,
+        Andrii Nakryiko <andrii@kernel.org>,
+        Josh Poimboeuf <jpoimboe@kernel.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Miroslav Benes <mbenes@suse.cz>,
+        Petr Mladek <pmladek@suse.com>,
+        Zhen Lei <thunder.leizhen@huawei.com>, bpf@vger.kernel.org,
+        live-patching@vger.kernel.org, linux-modules@vger.kernel.org,
+        Martin KaFai Lau <kafai@fb.com>,
+        Song Liu <songliubraving@fb.com>, Yonghong Song <yhs@fb.com>,
+        John Fastabend <john.fastabend@gmail.com>,
+        KP Singh <kpsingh@chromium.org>,
+        Stanislav Fomichev <sdf@google.com>,
+        Hao Luo <haoluo@google.com>,
+        Joe Lawrence <joe.lawrence@redhat.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Luis Chamberlain <mcgrof@kernel.org>
+Subject: Re: [PATCHv2 bpf-next 2/3] selftests/bpf: Add
+ serial_test_kprobe_multi_bench_attach_kernel/module tests
+Message-ID: <Y8R00sRwznbKlJV3@krava>
+References: <20230113143303.867580-1-jolsa@kernel.org>
+ <20230113143303.867580-3-jolsa@kernel.org>
+ <CAEf4BzZSzM0NznnEH0oD9y6Zdd6YDZWEp4HyL1+2hLBrWk=j1w@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:ad4:5150:0:b0:534:252f:6822 with HTTP; Sun, 15 Jan 2023
- 01:47:42 -0800 (PST)
-Reply-To: joejess2022@gmail.com
-From:   JOE AND JESS <gloriousmike64@gmail.com>
-Date:   Sun, 15 Jan 2023 01:47:42 -0800
-Message-ID: <CANW8Q-Etf6rZc1sEYiMA9i0wDNdjUMNc5fd5+AAK5_8tA=aG1Q@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAEf4BzZSzM0NznnEH0oD9y6Zdd6YDZWEp4HyL1+2hLBrWk=j1w@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
---=20
-Einen sch=C3=B6nen Tag dir,
-Ich bin Mr. Joe, wir haben gerade 184 Millionen Pfund im Lotto-Jackpot gewo=
-nnen
-Lottoziehung. Wir vergeben eine Stiftung in H=C3=B6he von 1,5 Millionen Pfu=
-nd
-jeweils an (15) gl=C3=BCckliche Empf=C3=A4nger, um Gott unsere Wertsch=C3=
-=A4tzung zu zeigen,
-Antworten Sie mit Ihrer Referenznummer f=C3=BCr Anspruch SG6745:
-joejess2022@gmail.com
+On Fri, Jan 13, 2023 at 02:43:47PM -0800, Andrii Nakryiko wrote:
+> On Fri, Jan 13, 2023 at 6:33 AM Jiri Olsa <jolsa@kernel.org> wrote:
+> >
+> > Add bench test for module portion of the symbols as well.
+> >
+> >   # ./test_progs -v -t kprobe_multi_bench_attach_module
+> >   bpf_testmod.ko is already unloaded.
+> >   Loading bpf_testmod.ko...
+> >   Successfully loaded bpf_testmod.ko.
+> >   test_kprobe_multi_bench_attach:PASS:get_syms 0 nsec
+> >   test_kprobe_multi_bench_attach:PASS:kprobe_multi_empty__open_and_load 0 nsec
+> >   test_kprobe_multi_bench_attach:PASS:bpf_program__attach_kprobe_multi_opts 0 nsec
+> >   test_kprobe_multi_bench_attach: found 26620 functions
+> >   test_kprobe_multi_bench_attach: attached in   0.182s
+> >   test_kprobe_multi_bench_attach: detached in   0.082s
+> >   #96      kprobe_multi_bench_attach_module:OK
+> >   Summary: 1/0 PASSED, 0 SKIPPED, 0 FAILED
+> >   Successfully unloaded bpf_testmod.ko.
+> >
+> > It's useful for testing kprobe multi link modules resolving.
+> >
+> > Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+> > ---
+> >  .../bpf/prog_tests/kprobe_multi_test.c        | 21 ++++++++++++++-----
+> >  1 file changed, 16 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+> > index c6f37e825f11..017a6996f3fa 100644
+> > --- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+> > +++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+> > @@ -322,7 +322,7 @@ static bool symbol_equal(long key1, long key2, void *ctx __maybe_unused)
+> >         return strcmp((const char *) key1, (const char *) key2) == 0;
+> >  }
+> >
+> > -static int get_syms(char ***symsp, size_t *cntp)
+> > +static int get_syms(char ***symsp, size_t *cntp, bool kernel)
+> >  {
+> >         size_t cap = 0, cnt = 0, i;
+> >         char *name = NULL, **syms = NULL;
+> > @@ -349,8 +349,9 @@ static int get_syms(char ***symsp, size_t *cntp)
+> >         }
+> >
+> >         while (fgets(buf, sizeof(buf), f)) {
+> > -               /* skip modules */
+> > -               if (strchr(buf, '['))
+> > +               if (kernel && strchr(buf, '['))
+> > +                       continue;
+> > +               if (!kernel && !strchr(buf, '['))
+> >                         continue;
+> >
+> >                 free(name);
+> > @@ -404,7 +405,7 @@ static int get_syms(char ***symsp, size_t *cntp)
+> >         return err;
+> >  }
+> >
+> > -void serial_test_kprobe_multi_bench_attach(void)
+> > +static void test_kprobe_multi_bench_attach(bool kernel)
+> >  {
+> >         LIBBPF_OPTS(bpf_kprobe_multi_opts, opts);
+> >         struct kprobe_multi_empty *skel = NULL;
+> > @@ -415,7 +416,7 @@ void serial_test_kprobe_multi_bench_attach(void)
+> >         char **syms = NULL;
+> >         size_t cnt = 0, i;
+> >
+> > -       if (!ASSERT_OK(get_syms(&syms, &cnt), "get_syms"))
+> > +       if (!ASSERT_OK(get_syms(&syms, &cnt, kernel), "get_syms"))
+> >                 return;
+> >
+> >         skel = kprobe_multi_empty__open_and_load();
+> > @@ -453,6 +454,16 @@ void serial_test_kprobe_multi_bench_attach(void)
+> >         }
+> >  }
+> >
+> > +void serial_test_kprobe_multi_bench_attach_kernel(void)
+> > +{
+> > +       test_kprobe_multi_bench_attach(true);
+> > +}
+> > +
+> > +void serial_test_kprobe_multi_bench_attach_module(void)
+> > +{
+> > +       test_kprobe_multi_bench_attach(false);
+> > +}
+> > +
+> 
+> minor nit: probably would be better to make kernel and module variants
+> into subtests?
+
+ok, will change that
+
+thanks,
+jirka
