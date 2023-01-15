@@ -2,77 +2,79 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3413966AC92
-	for <lists+linux-modules@lfdr.de>; Sat, 14 Jan 2023 17:21:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1584A66B032
+	for <lists+linux-modules@lfdr.de>; Sun, 15 Jan 2023 10:47:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbjANQVH (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sat, 14 Jan 2023 11:21:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55346 "EHLO
+        id S230137AbjAOJrp (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 15 Jan 2023 04:47:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbjANQVG (ORCPT
+        with ESMTP id S230095AbjAOJro (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sat, 14 Jan 2023 11:21:06 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81054699;
-        Sat, 14 Jan 2023 08:21:05 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6E63760B8B;
-        Sat, 14 Jan 2023 16:21:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B3D1EC433EF;
-        Sat, 14 Jan 2023 16:21:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673713264;
-        bh=w0VDn70wqRnCrd4MDALS1fxv+kQFjGJT3MpwbTane9c=;
-        h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-        b=BwEDmAOtURXbI48eqa/hZmHhBEApiudO8rwUO8hS/uzlZa6SPKCohZ8HuNdJzqQ/N
-         vGY5nTSFnBQnmuUtACz2ME9vQLgKr3wU22hqImv5L1JGVdAyclSBR7lKR763/Et7wL
-         YoomSm7t1aB9WUIFOzZ3oAXd4WlkcU51Qip/Ya+VBVmBM3Go34ry+R40YotygkmpeV
-         ww9s/GNajHPFkMUlECLyDThNf+bpOBWliqX0wEXpo1W6Bpiv2ql6+Vu4LHkMC2QWcb
-         IB5uz9JwYAX/f1ZKrrCe1ge1PUH1x5/XFJ+tCkhNOZmwePpVQZ5aPOzBPlGBfMD/hV
-         hgAkQf2P+m+4g==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8BA3CC395C8;
-        Sat, 14 Jan 2023 16:21:04 +0000 (UTC)
-Subject: Re: [GIT PULL] modules changes for v6.2-rc4
-From:   pr-tracker-bot@kernel.org
-In-Reply-To: <Y8HnmbSvgli7fbQI@bombadil.infradead.org>
-References: <Y8HnmbSvgli7fbQI@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <Y8HnmbSvgli7fbQI@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.2-rc4
-X-PR-Tracked-Commit-Id: da35048f2600633a7f9ba5fa7d6e3b1d0195938b
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 8b7be52f3f0d0c24ee147ba7cab6c7fa4f9bcfbb
-Message-Id: <167371326438.7515.4993088341393310829.pr-tracker-bot@kernel.org>
-Date:   Sat, 14 Jan 2023 16:21:04 +0000
-To:     Luis Chamberlain <mcgrof@kernel.org>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        thunder.leizhen@huawei.com, swboyd@chromium.org,
-        yang.lee@linux.alibaba.com, linux@rasmusvillemoes.dk,
-        petr.pavlu@suse.com, mwilck@suse.com, pmladek@suse.com,
-        linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mcgrof@kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Sun, 15 Jan 2023 04:47:44 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3116B46D
+        for <linux-modules@vger.kernel.org>; Sun, 15 Jan 2023 01:47:43 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id d13so4251982qkk.12
+        for <linux-modules@vger.kernel.org>; Sun, 15 Jan 2023 01:47:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7m5UdqDwB7t1NnrnthxDoXKdh27h3gu20ETW4b3CRI0=;
+        b=SUP62oYBofBeJN7NYC9zeFQuO7jTqrY3S/4lR20c5ZMEAsxCx+KFHGCYY7VC/lfza9
+         vc72b3GpATSyVUwDPFe4aNigJdLT9y0CkAThgrvejx02lzNrqhhZK+3o+JA68NA9fR+k
+         ngddImndbwPxP2NCznLjjnhlsPHwAXWogzg9o9VJ7U28rY1uxS8sXdlDac06yTm0H/wA
+         1x17p0Nqmp3Gaa4uvm91LS6M0kXWhkDBVAiPpQDYgmWe/afAbKIrgLKSas6eml6DaJo3
+         wNy/OIMTbrErmx4yE+HX5+q+oVGd14ftPG6hMjrpkP+vKIjJGxJV0Ovq07V0d2/AO8ri
+         qXTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7m5UdqDwB7t1NnrnthxDoXKdh27h3gu20ETW4b3CRI0=;
+        b=ms5uQ18OkAJY7/ANn/glsApmQHhr2B37DUlBqxr7+zmFl4nTspIk6AY1FvHgN1ldMm
+         EkxSlx73191uVoH/rPaCWGFjIrvFUvugpe2dy6+Co4lHO0gKxKa01zIFlvajNCgDGA/F
+         iVKj16G0dZ3y7DMhRw5vp58qMLM6uv3Ggoot1JJNdNa9bPLcmYCQIaahDX5ns4r0nwGU
+         UGpyOGefsPR3QLghsQAxhi849WJCIgMpB7VSjXdoB6sJyFw9jHq/VlPpo7iu1J6Z+gYb
+         /LJPDf9xF/8BWRp745FNyl2pdIHf4LuecWmhFrBvdJKg5yNZ2eyTQRsUwNIN10kq01q4
+         YW+w==
+X-Gm-Message-State: AFqh2kqK89426ePqoKqykYDdjRWYQhBxpn6NE3IEQHNfwDhMYHdv7C+w
+        x6CJG12qSzNPxQkVbLvLw//wp/leLqNuyJVO+lA=
+X-Google-Smtp-Source: AMrXdXsa/rFC2xU0tajAFrNxnkYCoMX9kTirBNB2BA171R47NuXScmvsmOE+GsVrObGC9qkcJ5PcFZS003UDsEwxGLk=
+X-Received: by 2002:a05:620a:c96:b0:706:3283:f106 with SMTP id
+ q22-20020a05620a0c9600b007063283f106mr112040qki.510.1673776062862; Sun, 15
+ Jan 2023 01:47:42 -0800 (PST)
+MIME-Version: 1.0
+Received: by 2002:ad4:5150:0:b0:534:252f:6822 with HTTP; Sun, 15 Jan 2023
+ 01:47:42 -0800 (PST)
+Reply-To: joejess2022@gmail.com
+From:   JOE AND JESS <gloriousmike64@gmail.com>
+Date:   Sun, 15 Jan 2023 01:47:42 -0800
+Message-ID: <CANW8Q-Etf6rZc1sEYiMA9i0wDNdjUMNc5fd5+AAK5_8tA=aG1Q@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-The pull request you sent on Fri, 13 Jan 2023 15:22:01 -0800:
-
-> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.2-rc4
-
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/8b7be52f3f0d0c24ee147ba7cab6c7fa4f9bcfbb
-
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+--=20
+Einen sch=C3=B6nen Tag dir,
+Ich bin Mr. Joe, wir haben gerade 184 Millionen Pfund im Lotto-Jackpot gewo=
+nnen
+Lottoziehung. Wir vergeben eine Stiftung in H=C3=B6he von 1,5 Millionen Pfu=
+nd
+jeweils an (15) gl=C3=BCckliche Empf=C3=A4nger, um Gott unsere Wertsch=C3=
+=A4tzung zu zeigen,
+Antworten Sie mit Ihrer Referenznummer f=C3=BCr Anspruch SG6745:
+joejess2022@gmail.com
