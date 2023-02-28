@@ -2,129 +2,75 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E1D06A5FFE
-	for <lists+linux-modules@lfdr.de>; Tue, 28 Feb 2023 20:53:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B4EE6A603A
+	for <lists+linux-modules@lfdr.de>; Tue, 28 Feb 2023 21:18:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbjB1TxS (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 28 Feb 2023 14:53:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52024 "EHLO
+        id S229632AbjB1US3 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 28 Feb 2023 15:18:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjB1TxS (ORCPT
+        with ESMTP id S229510AbjB1US2 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 28 Feb 2023 14:53:18 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0018FF3B;
-        Tue, 28 Feb 2023 11:53:16 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 83479B80DE7;
-        Tue, 28 Feb 2023 19:53:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49711C433D2;
-        Tue, 28 Feb 2023 19:53:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677613994;
-        bh=Y2iCQOI+QIptI1cAQ9K+Q84gdG4gXITGnMKH6Zu3i2w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JadZaEPK9VGtVAUCHTICx1dxwwELfHxbmZjBNCAeSO6DplqIkZ4ZgHp1gUrjKYt5k
-         X7GtnlE6c5EFA0kOyYMVREFolk/RkPyZl2Za0Fsk2Gen8Kxqb/xUQ7YtaHh2csJJWO
-         mga4bkPDH2pcnwYhm1vhiJlmIpYc9aegsYAuSesP1jRHbVQ0c63DCxKtujtiBAperG
-         LGRG5kH/QG3gH3pbxitetkFdCqPtf8zxmoZ3GJ6n8V3e1B2CZZ2UWMwE+9nmWB6V6s
-         Wovk/gGzKeboJVoZWbuij8aFnA+Tbj3ixeCl//s7RJBqymzNfOGh0jz6hyR70UkC68
-         SZdT8sAV08lSw==
-Date:   Tue, 28 Feb 2023 19:53:10 +0000
-From:   Conor Dooley <conor@kernel.org>
-To:     Nick Alcock <nick.alcock@oracle.com>
-Cc:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 13/20] reset: remove MODULE_LICENSE in non-modules
-Message-ID: <Y/5bpr/93hJ3yYUU@spud>
-References: <20230228130215.289081-1-nick.alcock@oracle.com>
- <20230228130215.289081-14-nick.alcock@oracle.com>
- <Y/5TU/gxAxfVOedg@spud>
- <87edq9h9q8.fsf@esperi.org.uk>
+        Tue, 28 Feb 2023 15:18:28 -0500
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0699C14E97;
+        Tue, 28 Feb 2023 12:18:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=Md9JrtUu3xnfZLvaIIJNt8/gwSPrEeVyF+t3AXsCqrM=; b=hPOpvUmwE+GwgMNIE3/72oaneU
+        p43UVVetRqWVxdG5BNG/nc9ExKYmcf/IqZVYIROwQVC/Hl5pnCcquA3qFbzyeJbKC89Esdwpo2q4E
+        c7gE+L4mmYidlsG90i97Ux3sLGRGcp5ft3bYrgTvIc69W2Iugj2zTW8uZ8VPrq0EfHbwa5WJy37JN
+        Czj3riJGPq8P48oxwo1OpxHBJU+biqO/Pd0JsdzGPSY7jf7iNlzmafWcc+9Jw10lPbz9cM6eEglgl
+        fs+syII0Uubs+WtkTLny7PnA2Fhnoelboo4ZllTBrxNrtKwRNSzbv20WxUA+gPsxUlthoFNx0uUgj
+        IQ+IhUNA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1pX6Qa-00EBCk-UE; Tue, 28 Feb 2023 20:18:24 +0000
+Date:   Tue, 28 Feb 2023 12:18:24 -0800
+From:   Luis Chamberlain <mcgrof@kernel.org>
+To:     Jason Baron <jbaron@akamai.com>
+Cc:     jim.cromie@gmail.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] dyndbg: let's use the module notifier callback
+Message-ID: <Y/5hkFJsRnAuoRBN@bombadil.infradead.org>
+References: <cover.1677612539.git.jbaron@akamai.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Kp+/tWtv3tDQlrmv"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87edq9h9q8.fsf@esperi.org.uk>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <cover.1677612539.git.jbaron@akamai.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
+On Tue, Feb 28, 2023 at 02:34:20PM -0500, Jason Baron wrote:
+> Hi,
+> 
+> Jim Cromie hit a BUG() while toggling jump label branches in a module
+> before they were properly initialized. This isn't currently an issue,
+> but will be as part of his pending classmap series. Seems like we
+> should covert to using module callback notifier for dynamic debug
+> anyways. First patch is just a cleanup.
+> 
+> Link: https://lore.kernel.org/lkml/20230113193016.749791-21-jim.cromie@xxxxxxxxx/
+> 
+> Thanks,
+> 
+> -Jason
+> 
+> v2:
+> -Fix: error: field 'dyndbg_info' has incomplete type
+>  Reported-by: kernel test robot <lkp@intel.com>
+>  Link: https://lore.kernel.org/oe-kbuild-all/202302190427.9iIK2NfJ-lkp@intel.com/
+> -make ddebug_remove_module() static
 
---Kp+/tWtv3tDQlrmv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Do you have tests to ensure no regressions have occurred? If so what
+are they? If there are no tests, can you come up with some basic ones?
 
-On Tue, Feb 28, 2023 at 07:26:55PM +0000, Nick Alcock wrote:
-> [dropped non-lists to defend innocent ears from my flaming pedantry]
->=20
-> On 28 Feb 2023, Conor Dooley stated:
->=20
-> > On Tue, Feb 28, 2023 at 01:02:08PM +0000, Nick Alcock wrote:
-> >> Since commit 8b41fc4454e ("kbuild: create modules.builtin without
-> >> Makefile.modbuiltin or tristate.conf"), MODULE_LICENSE declarations
-> >> are used to identify modules. As a consequence, uses of the macro
-> >> in non-modules will cause modprobe to misidentify their containing
-> >> object file as a module when it is not (false positives), and modprobe
-> >> might succeed rather than failing with a suitable error message.
-> >>=20
-> >> So remove it in the files in this commit, none of which can be built as
-> >> modules.
-> >>=20
-> >> Signed-off-by: Nick Alcock <nick.alcock@oracle.com>
-> >> Suggested-by: Luis Chamberlain <mcgrof@kernel.org>
-> >> Cc: Luis Chamberlain <mcgrof@kernel.org>
-> >> Cc: linux-modules@vger.kernel.org
-> >> Cc: linux-kernel@vger.kernel.org
-> >> Cc: Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>
-> >> Cc: Conor Dooley <conor.dooley@microchip.com>
-> >> Cc: Daire McNamara <daire.mcnamara@microchip.com>
-> >> Cc: Philipp Zabel <p.zabel@pengutronix.de>
-> >> Cc: linux-riscv@lists.infradead.org
-> >> ---
-> >>  drivers/reset/reset-mpfs.c | 1 -
-> >
-> > I assume your script just got confused here w/ $subject, since there's
-> > only a change for this specific file.
->=20
-> This file has had no commits since you wrote it last year, and the
-> subject for that commit was
->=20
->     reset: add polarfire soc reset support
->=20
-> so, er, yes, the script used 'reset:' as a prefix, mimicking the
-> existing commit. I'm not sure what else it could have done.
-
-Oh ye, silly me - I didn't think of that. I guess that's a common
-pattern for commits adding a driver, as the "mpfs:" doesn't really make
-sense until the driver is in-tree.
-I'm not too sure what you could have done either, but I'm not
-complaining, or requesting that something be changed here.
-
-> (Regarding the rest of the subject line, I suppose I could have arranged
-> to detect single-file commits and turned the subject into 'in this
-> non-module'? But there comes a time when even I think that maybe I might
-> be overdesigning something, and automated grammatical adjustments to the
-> subject line was that point!)
-
-Yeah, I think it's not worth doing anything about really...
-
---Kp+/tWtv3tDQlrmv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY/5bpgAKCRB4tDGHoIJi
-0ityAP4ieRuQTEdqsGZxmgH0Ie+b5HZsxWdK57F1JJsroTqwYwEAj6GT1/w4OmV6
-y3uemsRLYSiSaSApbXcOdwNMXgMnEwY=
-=YIMs
------END PGP SIGNATURE-----
-
---Kp+/tWtv3tDQlrmv--
+  Luis
