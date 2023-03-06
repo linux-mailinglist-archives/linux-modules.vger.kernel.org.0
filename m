@@ -2,90 +2,75 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1FAE6ABA91
-	for <lists+linux-modules@lfdr.de>; Mon,  6 Mar 2023 10:59:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1B166ABC54
+	for <lists+linux-modules@lfdr.de>; Mon,  6 Mar 2023 11:26:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbjCFJ7n (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 6 Mar 2023 04:59:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48034 "EHLO
+        id S231166AbjCFK0s (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 6 Mar 2023 05:26:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjCFJ7l (ORCPT
+        with ESMTP id S230316AbjCFK02 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 6 Mar 2023 04:59:41 -0500
-Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F276311169
-        for <linux-modules@vger.kernel.org>; Mon,  6 Mar 2023 01:59:33 -0800 (PST)
-Received: by mail-ua1-x934.google.com with SMTP id n4so5986595ual.13
-        for <linux-modules@vger.kernel.org>; Mon, 06 Mar 2023 01:59:33 -0800 (PST)
+        Mon, 6 Mar 2023 05:26:28 -0500
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9750E25967
+        for <linux-modules@vger.kernel.org>; Mon,  6 Mar 2023 02:25:59 -0800 (PST)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-176261d7f45so10778656fac.11
+        for <linux-modules@vger.kernel.org>; Mon, 06 Mar 2023 02:25:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1678096773;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mYIx7+Ak5uvLBEiqCaz2EjTEv5YVga1eqk3WlIV6f4M=;
-        b=zK2NCcCpt9UU5XWW7P556fwgVJnEZEkgL1VUMcs6Mj43IYOEvoEhfp8gfGUsPfLC9y
-         rr++bTyCnBcdN2dngclReRJLaxoST8UztHhb1fDmgWvgza6vB+TGcRfhIZnGtRSmxWAH
-         1CVAD5hZIQVINYG5pgNlKMDawgjanCiHOlNjBOd0Fuk+W/0c+b4uiCC8Xb8KXBnI095x
-         8QLYEPPLxrfg3p8bJIMPf18V36pTcBfCfQstjYus6E0Iq0L5ShKu8Tzt04xYxOeI4YvW
-         nDIag/4yGtMlZV2g1dzKtMLxiEvkUPlPuFxOlgkxt4MZrtxvdOozHO6rLF0cmXE46pon
-         ntHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678096773;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20210112; t=1678098351;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mYIx7+Ak5uvLBEiqCaz2EjTEv5YVga1eqk3WlIV6f4M=;
-        b=V7I8oDtfLNM2tatR5zcEqhiHMjB+6zA33xYOv29Tt04xQOzMw7ZsHhheUXjBm5vMjO
-         E8h8iFVCLyDoVj5mDQ/RRRtNTkpdVsbsuEvC8AbcHVp1pPry3sA4ffNAtxQiuqon6h8A
-         4Q02NHibfrGgC0mqbd2GmwkMdZ9IWAvjWGbOaH+3x01t1xtg0e0UUd14Tw3LPyf+pJPI
-         jQNVjyC3QbChmjr4qFXqL8kE2Vm7CmdCWUpKGo4e5km/eSFunV/sgEJ4hAJHzeQKN9xE
-         iaXH6V2VwYw2M0AdgSC/o/rJvPgRXJIl+LOwhT6P61D6CoEJT1VGVAqgvAe94ZouQuDk
-         BWJg==
-X-Gm-Message-State: AO0yUKUs6mycCqkJAf9eO0lLsuQU5T8LehNTsIZsVA35xLTKERpW4qva
-        anTXG5Px2xoiPT2sBA26GtUkb8Ii4gNI0aPdxWLkLQ==
-X-Google-Smtp-Source: AK7set86O3qpveh/FrKfkd3g2XuLPEZoo2Pf5KYA5+piHq15fqYnN6m4NMoJVYTy0MLAeYsy8UJPiyEY5BxmJfkfHGE=
-X-Received: by 2002:a1f:2dcb:0:b0:401:42e5:6d2e with SMTP id
- t194-20020a1f2dcb000000b0040142e56d2emr6188621vkt.1.1678096773108; Mon, 06
- Mar 2023 01:59:33 -0800 (PST)
+        bh=Vh7FN/ulAdnmY8O0LKz7bqpIFk4oOSQ9iCZ8VQ/AkNo=;
+        b=EDbhPO1WKzSJy97Cp1KR4Ue1wIcLFSscoH9L1E67CyPoJvstONJwP7RxKCqsDiuar/
+         4XZc6UhnyOFrEHlIQ3KmGU6oX8xWOyZpiVA4bD6F27cjopM5KQeiwoXnQq1r2hu/0hkW
+         LgiQ9FGonNq8AsMsEKBqZEvtwgOfW2lv3iUKapY2ocqE+LRWfsVifUNA3eNbIcULbvPT
+         nBBU0ns0xWwmvS7ETCAh5Z5lhdCiLVSRis+m63aq8CObwyUrMLAjGQpDeSf4OVAOQav5
+         5TuEH4NOUnTGCqcHGRIE0/tBavRRplzW4HaWY1DRs+pas+nyfL/37adPjYmqfexbl/Di
+         PS3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678098351;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vh7FN/ulAdnmY8O0LKz7bqpIFk4oOSQ9iCZ8VQ/AkNo=;
+        b=ogmXLXmG/v4gVkwD5BGcn8gIABzYjSlkpHItkrT/u8Prpv38Jd3I2p9rjhcqO+y8ZU
+         VGQR2z63nh9q9Z3sXCrj8yzkiw2T7qSWQxZ87mOH7dbVvGiLbk6Co9r0odu5rnq2koOJ
+         fGKBwyVxK5/w4m/bMJ4H1zvSYytCJGyAJwDycK/XLKyntKnms/FlhZjAis0QIlGC77dj
+         J5FighiAzxd5WD7q6G8HGRBHLjndkIhcOeK/B9EHAvXEUotRlcos+3jAiORw0M4KVYjP
+         K9SfMQAUc5WoUN7CfLMisewcCi9yT3gFfXuIjmnt/Per9Y6y9whOSfQ0XDII2+weeOPz
+         i+jA==
+X-Gm-Message-State: AO0yUKUzutHmOXYpxMXMzOcXXVG+0MhatSx22W0gU1vrxT61yl/YVnD9
+        da7diYorABAaMdo2Hw42dXtArZa/1tevsxrgJAXVXcTZ+qQ=
+X-Google-Smtp-Source: AK7set9YqazPiOkBuGm+YrFZOLe51O90+qKBrIr6WBjXtnVrmZ9RIOYyWRLBWcHI+/rsVoNhMQhwnCpcR6G8n2Z6mzE=
+X-Received: by 2002:a05:6102:e44:b0:402:999f:44d3 with SMTP id
+ p4-20020a0561020e4400b00402999f44d3mr6975472vst.1.1678098330725; Mon, 06 Mar
+ 2023 02:25:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20230222121453.91915-1-nick.alcock@oracle.com> <20230222121453.91915-28-nick.alcock@oracle.com>
-In-Reply-To: <20230222121453.91915-28-nick.alcock@oracle.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Mon, 6 Mar 2023 10:59:22 +0100
-Message-ID: <CAMRc=Mc76TT+y_OZokRBptgDzA=Tnf6_0BuiBNqB2FRjCEGuHg@mail.gmail.com>
-Subject: Re: [PATCH 27/27] kbuild, gpio: gpio-aspeed-sgpio: remove
- MODULE_LICENSE in non-modules
-To:     Nick Alcock <nick.alcock@oracle.com>
-Cc:     mcgrof@kernel.org, linux-modules@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Joel Stanley <joel@jms.id.au>, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org
+Received: by 2002:a59:ce6f:0:b0:3ae:930b:3e70 with HTTP; Mon, 6 Mar 2023
+ 02:25:30 -0800 (PST)
+Reply-To: madis.scarl@terlera.it
+From:   "Ms Eve from U.N" <denisagotou@gmail.com>
+Date:   Mon, 6 Mar 2023 11:25:30 +0100
+Message-ID: <CAD6bNBi6bPCYboaF4-xBgmeUTFn6JMXqU6TNepQig=NRMqhdUg@mail.gmail.com>
+Subject: Re: Claim of Fund:
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_SCAM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Wed, Feb 22, 2023 at 1:17=E2=80=AFPM Nick Alcock <nick.alcock@oracle.com=
-> wrote:
->
-> Since commit 8b41fc4454e ("kbuild: create modules.builtin without
-> Makefile.modbuiltin or tristate.conf"), MODULE_LICENSE declarations
-> are used to identify modules. As a consequence, uses of the macro
-> in non-modules will cause modprobe to misidentify their containing
-> object file as a module when it is not (false positives), and modprobe
-> might succeed rather than failing with a suitable error message.
->
-> So remove it in the files in this commit, none of which can be built as
-> modules.
->
+Hello Good Morning,
+This is to bring to your notice that all our efforts to contact you
+through this your email ID failed Please Kindly contact Barrister.
+Steven Mike { mbarrsteven@gmail.com } on his private email for the
+claim of your compensation entitlement
 
-Applied, thanks!
-
-Bart
+Note: You have to pay for the delivery fee.
+Yours Sincerely
+Mrs EVE LEWIS
