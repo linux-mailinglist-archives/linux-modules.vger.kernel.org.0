@@ -2,75 +2,95 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1B166ABC54
-	for <lists+linux-modules@lfdr.de>; Mon,  6 Mar 2023 11:26:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFD4A6AC33E
+	for <lists+linux-modules@lfdr.de>; Mon,  6 Mar 2023 15:30:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231166AbjCFK0s (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 6 Mar 2023 05:26:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57602 "EHLO
+        id S229755AbjCFOag (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 6 Mar 2023 09:30:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbjCFK02 (ORCPT
+        with ESMTP id S230194AbjCFO37 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 6 Mar 2023 05:26:28 -0500
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9750E25967
-        for <linux-modules@vger.kernel.org>; Mon,  6 Mar 2023 02:25:59 -0800 (PST)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-176261d7f45so10778656fac.11
-        for <linux-modules@vger.kernel.org>; Mon, 06 Mar 2023 02:25:59 -0800 (PST)
+        Mon, 6 Mar 2023 09:29:59 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E549F6
+        for <linux-modules@vger.kernel.org>; Mon,  6 Mar 2023 06:29:19 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id i34so39301616eda.7
+        for <linux-modules@vger.kernel.org>; Mon, 06 Mar 2023 06:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678098351;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vh7FN/ulAdnmY8O0LKz7bqpIFk4oOSQ9iCZ8VQ/AkNo=;
-        b=EDbhPO1WKzSJy97Cp1KR4Ue1wIcLFSscoH9L1E67CyPoJvstONJwP7RxKCqsDiuar/
-         4XZc6UhnyOFrEHlIQ3KmGU6oX8xWOyZpiVA4bD6F27cjopM5KQeiwoXnQq1r2hu/0hkW
-         LgiQ9FGonNq8AsMsEKBqZEvtwgOfW2lv3iUKapY2ocqE+LRWfsVifUNA3eNbIcULbvPT
-         nBBU0ns0xWwmvS7ETCAh5Z5lhdCiLVSRis+m63aq8CObwyUrMLAjGQpDeSf4OVAOQav5
-         5TuEH4NOUnTGCqcHGRIE0/tBavRRplzW4HaWY1DRs+pas+nyfL/37adPjYmqfexbl/Di
-         PS3w==
+        d=linaro.org; s=google; t=1678112892;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xK40+IrvuLAaGEzw1vO71ZMnvX089nmXSE+KdSBZGxI=;
+        b=PMj0wDfVD3fuRV5c5SQfgpEQ61hMhePsdaketVQ7cgAAg5JZpRObdy/JgOFOWzAzwv
+         j6BxaLeNAHLhFObDDSK6tR/Gwdsw03CCSRAVD5tTsRKbVXSZyZxP3gSv1iHhtQQTJDEp
+         8MRU5IOdPn0yeOi+Ba8AcL0SXsRjh47+2TjSRpHaUKVM/rkLNCKbIxbAYr+YIj1QYv11
+         48pSy/iUSTWmyB30nqYxltQSPMfnnBQ8vcjYZmZxZzP5kCruWdFO8IfUHIoNF6vwazHz
+         RTDlsY/KoD6TS5+nrWL2VyQw3u7FOSMiwDM+CdOzuNCrFPoHxy6lN3dZbMgqCsOuwcYo
+         XtEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678098351;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vh7FN/ulAdnmY8O0LKz7bqpIFk4oOSQ9iCZ8VQ/AkNo=;
-        b=ogmXLXmG/v4gVkwD5BGcn8gIABzYjSlkpHItkrT/u8Prpv38Jd3I2p9rjhcqO+y8ZU
-         VGQR2z63nh9q9Z3sXCrj8yzkiw2T7qSWQxZ87mOH7dbVvGiLbk6Co9r0odu5rnq2koOJ
-         fGKBwyVxK5/w4m/bMJ4H1zvSYytCJGyAJwDycK/XLKyntKnms/FlhZjAis0QIlGC77dj
-         J5FighiAzxd5WD7q6G8HGRBHLjndkIhcOeK/B9EHAvXEUotRlcos+3jAiORw0M4KVYjP
-         K9SfMQAUc5WoUN7CfLMisewcCi9yT3gFfXuIjmnt/Per9Y6y9whOSfQ0XDII2+weeOPz
-         i+jA==
-X-Gm-Message-State: AO0yUKUzutHmOXYpxMXMzOcXXVG+0MhatSx22W0gU1vrxT61yl/YVnD9
-        da7diYorABAaMdo2Hw42dXtArZa/1tevsxrgJAXVXcTZ+qQ=
-X-Google-Smtp-Source: AK7set9YqazPiOkBuGm+YrFZOLe51O90+qKBrIr6WBjXtnVrmZ9RIOYyWRLBWcHI+/rsVoNhMQhwnCpcR6G8n2Z6mzE=
-X-Received: by 2002:a05:6102:e44:b0:402:999f:44d3 with SMTP id
- p4-20020a0561020e4400b00402999f44d3mr6975472vst.1.1678098330725; Mon, 06 Mar
- 2023 02:25:30 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678112892;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xK40+IrvuLAaGEzw1vO71ZMnvX089nmXSE+KdSBZGxI=;
+        b=rhO7T6Dk2Pmo86ndka6I1J0ECQ7v9rtqiGRrKt3ohbZw9Bvuv/LO9uZLKVeYnGcWV3
+         1QkZS501rQMfl7YG6LlXb63UsqpNaqVRspAUDJlhw+dg0vIt09td/I6C5cVkXl3DzW7Z
+         kPzlEOTn2ELjC+WgbZEQU1fCtKMZaV9Dl5dUqgT25K7ZnlvA6U286Z6t/DusL+qTeotk
+         /zbKn0pm4tir+41VE6b1UJ6y75OgiNhaH9C3GPDzQ+WAIOJlPJJiPuUX7SA/uidHX3rt
+         ji8qqa9/2HST8irJZ1WLpAOFpIncM8avQvDjpNRKQKeypWyn5gzZAOUB2+yVHv0OUvzR
+         rnSQ==
+X-Gm-Message-State: AO0yUKXx8HgEdz32QKb7bSiJQKpr0WNfl1Q3XciK+4gPpHnY1CNpoLjJ
+        a4vMGZMt8RPzJK8axpaUSTvHeg==
+X-Google-Smtp-Source: AK7set9tagM4MvfxFASDbgv+ClynFHyi2+EfGVgbjvu5S9HDWrjjA77I6x2FIorpAtxNw/VW+IojBA==
+X-Received: by 2002:a17:906:5e0c:b0:872:82d3:4162 with SMTP id n12-20020a1709065e0c00b0087282d34162mr10260275eju.44.1678112891814;
+        Mon, 06 Mar 2023 06:28:11 -0800 (PST)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:c1e7:5006:98ac:f57])
+        by smtp.gmail.com with ESMTPSA id k14-20020a170906a38e00b008b8ae79a72bsm4636763ejz.135.2023.03.06.06.28.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 06:28:11 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     mcgrof@kernel.org, Nick Alcock <nick.alcock@oracle.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-tegra@vger.kernel.org,
+        Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>,
+        linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Subject: Re: (subset) [PATCH 16/27] memory: tegra: remove MODULE_LICENSE in non-modules
+Date:   Mon,  6 Mar 2023 15:28:08 +0100
+Message-Id: <167811288496.11610.7328079575847216501.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230224150811.80316-17-nick.alcock@oracle.com>
+References: <20230224150811.80316-1-nick.alcock@oracle.com> <20230224150811.80316-17-nick.alcock@oracle.com>
 MIME-Version: 1.0
-Received: by 2002:a59:ce6f:0:b0:3ae:930b:3e70 with HTTP; Mon, 6 Mar 2023
- 02:25:30 -0800 (PST)
-Reply-To: madis.scarl@terlera.it
-From:   "Ms Eve from U.N" <denisagotou@gmail.com>
-Date:   Mon, 6 Mar 2023 11:25:30 +0100
-Message-ID: <CAD6bNBi6bPCYboaF4-xBgmeUTFn6JMXqU6TNepQig=NRMqhdUg@mail.gmail.com>
-Subject: Re: Claim of Fund:
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_SCAM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Hello Good Morning,
-This is to bring to your notice that all our efforts to contact you
-through this your email ID failed Please Kindly contact Barrister.
-Steven Mike { mbarrsteven@gmail.com } on his private email for the
-claim of your compensation entitlement
+On Fri, 24 Feb 2023 15:08:00 +0000, Nick Alcock wrote:
+> Since commit 8b41fc4454e ("kbuild: create modules.builtin without
+> Makefile.modbuiltin or tristate.conf"), MODULE_LICENSE declarations
+> are used to identify modules. As a consequence, uses of the macro
+> in non-modules will cause modprobe to misidentify their containing
+> object file as a module when it is not (false positives), and modprobe
+> might succeed rather than failing with a suitable error message.
+> 
+> [...]
 
-Note: You have to pay for the delivery fee.
-Yours Sincerely
-Mrs EVE LEWIS
+Applied, thanks!
+
+[16/27] memory: tegra: remove MODULE_LICENSE in non-modules
+        https://git.kernel.org/krzk/linux-mem-ctrl/c/ee5ca07b2041dba178e11f33c79d4bfc20227f09
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
