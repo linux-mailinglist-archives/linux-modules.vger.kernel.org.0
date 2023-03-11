@@ -2,164 +2,92 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E15E6B5887
-	for <lists+linux-modules@lfdr.de>; Sat, 11 Mar 2023 06:17:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 783716B6107
+	for <lists+linux-modules@lfdr.de>; Sat, 11 Mar 2023 22:36:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbjCKFRm (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sat, 11 Mar 2023 00:17:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46760 "EHLO
+        id S229742AbjCKVga (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sat, 11 Mar 2023 16:36:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229933AbjCKFRd (ORCPT
+        with ESMTP id S229457AbjCKVga (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sat, 11 Mar 2023 00:17:33 -0500
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7836114050B;
-        Fri, 10 Mar 2023 21:17:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        Reply-To:Content-Type:Content-ID:Content-Description;
-        bh=pxTUOVx9i1JFOyCPATR0il1cHRcDZ89gN6jPm1YO3X8=; b=1KBw30U8YggjwHFTZnlXveoHDd
-        GHJ64T+dUK7GtsvB5Dhia8zLF/jfDFwlRiLp+6PdSDaNqL3UFUTQR7u6gcYa4F+8LfXZjmD7Ulzr8
-        g6+S+A0gCudBGun8jhkiKPTyR5Tk4dr3G0WXRF7ecWP459aKYrZt48opPxV52Y5p7744catjlqhom
-        d8O4k7pfZau8Q2dolG+oPgU38RF+RfkFOcedICrOivuPfNbAQ8LQ/nZeELimz6nxUbQMHgobvTO/V
-        tPjs9Eum+aCYa+t7ti/qhZYwJaFuxOaB+k4rOkRXNDz1dE0MP0n2ijgLpk/L3iisEIl1miJmvHIl0
-        AXbqfwAQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1parbj-00HBNG-JB; Sat, 11 Mar 2023 05:17:27 +0000
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
-        pmladek@suse.com, david@redhat.com, petr.pavlu@suse.com,
-        prarit@redhat.com
-Cc:     christophe.leroy@csgroup.eu, song@kernel.org, mcgrof@kernel.org,
-        torvalds@linux-foundation.org
-Subject: [RFC 12/12] module: use aliases to find module on find_module_all()
-Date:   Fri, 10 Mar 2023 21:17:12 -0800
-Message-Id: <20230311051712.4095040-13-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230311051712.4095040-1-mcgrof@kernel.org>
-References: <20230311051712.4095040-1-mcgrof@kernel.org>
+        Sat, 11 Mar 2023 16:36:30 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05141457D9;
+        Sat, 11 Mar 2023 13:36:28 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 44D1260DE3;
+        Sat, 11 Mar 2023 21:36:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A670DC433AA;
+        Sat, 11 Mar 2023 21:36:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1678570587;
+        bh=IKeTI/9Te9LPskNfO9SJTqjD+2/qDHwVKrUMbdwzKlU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=eTZdAFWSwbfuZLSgnkX6as8Jv0mI8l+j8A0IykfqziDPhYnBa8WiM3UQOGakue48D
+         8OisI+Qz4zzh4Pphk/Xbaa1CrgvrgmN9tU6zQz1Kt2pp0iUL0e9jVvQhmu6vVtallO
+         ZLk3mzMql65OtRd2/uo+WqLzm1+z2pVQ9obTI65b/fRD2OEJVyWpuipn0QFA4mtC2G
+         FNPPE+DhMma86ZsZSyNcRGaNWHeLSJck4tHqZA9lkG6PBfcHfuyXsafFCoaCCAfN7b
+         B3n7V0rA6sCB3HEGsY1k8+eMfw3Sm2WopIpF1LIB6ns6enzYcFndQ873/0LDELgjZ/
+         K07XLHTViAVew==
+Received: by mail-ua1-f51.google.com with SMTP id bx14so5904486uab.0;
+        Sat, 11 Mar 2023 13:36:27 -0800 (PST)
+X-Gm-Message-State: AO0yUKVtR6p/diHIoStJ29xyAd4H7vB3dUciz9BA8VLWy5YyN9DT5FUa
+        CxBUnMArEKskKGbCLP6W3P2jVoxI1QXVVO166DU=
+X-Google-Smtp-Source: AK7set/I6c0a33weIoohUiNtMjsqNKX8cuVAnKpOCcAqXYAt6v44TQjzBVkxVpHe32CEk5uxeIAmp7Tm0SjzN2blJ4A=
+X-Received: by 2002:a1f:e584:0:b0:413:1498:e843 with SMTP id
+ c126-20020a1fe584000000b004131498e843mr18579061vkh.0.1678570586519; Sat, 11
+ Mar 2023 13:36:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20221205103557.18363-1-petr.pavlu@suse.com> <Y5gI/3crANzRv22J@bombadil.infradead.org>
+ <Y5hRRnBGYaPby/RS@alley> <Y8c3hgVwKiVrKJM1@bombadil.infradead.org>
+ <79aad139-5305-1081-8a84-42ef3763d4f4@suse.com> <Y8ll+eP+fb0TzFUh@alley>
+ <Y8nljyOJ5/y9Pp72@bombadil.infradead.org> <Y8nnTXi1Jqy1YARi@bombadil.infradead.org>
+ <Y8xp1HReo+ayHU8G@bombadil.infradead.org>
+In-Reply-To: <Y8xp1HReo+ayHU8G@bombadil.infradead.org>
+From:   Luis Chamberlain <mcgrof@kernel.org>
+Date:   Sat, 11 Mar 2023 13:36:15 -0800
+X-Gmail-Original-Message-ID: <CAB=NE6U5qokL-1xTnsUm+i7EoziEcmj-6p_b13OPi7_-sOtH2g@mail.gmail.com>
+Message-ID: <CAB=NE6U5qokL-1xTnsUm+i7EoziEcmj-6p_b13OPi7_-sOtH2g@mail.gmail.com>
+Subject: Re: [PATCH v2] module: Don't wait for GOING modules
+To:     Petr Mladek <pmladek@suse.com>,
+        Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+Cc:     Petr Pavlu <petr.pavlu@suse.com>,
+        Prarit Bhargava <prarit@redhat.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Borislav Petkov <bp@alien8.de>, NeilBrown <neilb@suse.de>,
+        Goldwyn Rodrigues <rgoldwyn@suse.com>, david@redhat.com,
+        mwilck@suse.com, linux-modules@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Lucas De Marchi <lucas.de.marchi@gmail.com>,
+        Ben Hutchings <benh@debian.org>,
+        Adam Manzanares <a.manzanares@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Modules can have a series of aliases, but we don't currently use
-them to check if a module is already loaded. Part of this is because
-load_module() will stick to checking for already loaded modules using
-the actual module name, not an alias. Its however desriable to also
-check for aliases on find_module_all() for existing callers and future
-callers. The curent gain to using aliases on find_module_all() will
-simply be to be able to support unloading modules using the alias using
-the delete_module() syscall.
+On Sat, Jan 21, 2023 at 2:40=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org=
+> wrote:
+>
+> There is one bug with  compression on debian:
+>
+>  - gzip compressed modules don't end up in the initramfs
+>
+> There is a generic upstream kmod bug:
+>
+>   - modprobe --show-depends won't grok compressed modules so initramfs
+>     tools that use this as Debian likely are not getting module dependenc=
+ies
+>     installed in their initramfs
 
-You can debug this with dynamic debug:
+Vincenzo *might* be up to tackle the above, let's see!
 
-GRUB_CMDLINE_LINUX_DEFAULT="dyndbg=\"func module_process_aliases +p; func module_name_match +p; \" "
-
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kernel/module/aliases.c  | 17 +++++++++++++++++
- kernel/module/internal.h |  5 +++++
- kernel/module/main.c     | 24 +++++++++++++++++++++++-
- 3 files changed, 45 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/module/aliases.c b/kernel/module/aliases.c
-index 2f30c9d4c765..69518bc5169a 100644
---- a/kernel/module/aliases.c
-+++ b/kernel/module/aliases.c
-@@ -90,3 +90,20 @@ int module_process_aliases(struct module *mod, struct load_info *info)
- 
- 	return -ENOMEM;
- }
-+
-+bool module_name_match_aliases(struct module *mod, const char *name, size_t len)
-+{
-+	unsigned int i;
-+	const char *alias;
-+
-+	for (i=0; i < mod->num_aliases; i++) {
-+		alias = mod->aliases[i];
-+		if (strlen(alias) == len && !memcmp(alias, name, len)) {
-+			pr_debug("module %s alias matched: alias[%u] = %s\n",
-+				 mod->name, i, alias);
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-diff --git a/kernel/module/internal.h b/kernel/module/internal.h
-index 40bb80ed21e2..78aaad74f4ca 100644
---- a/kernel/module/internal.h
-+++ b/kernel/module/internal.h
-@@ -306,6 +306,7 @@ static inline int same_magic(const char *amagic, const char *bmagic, bool has_cr
- #ifdef CONFIG_MODULE_KERNEL_ALIAS
- void free_mod_aliases(struct module *mod);
- int module_process_aliases(struct module *mod, struct load_info *info);
-+bool module_name_match_aliases(struct module *mod, const char *name, size_t len);
- #else
- static void free_mod_aliases(struct module *mod)
- {
-@@ -314,4 +315,8 @@ static int module_process_aliases(struct module *mod, struct load_info *info)
- {
- 	return 0;
- }
-+static bool module_name_match_aliases(struct module *mod, const char *name, size_t len)
-+{
-+	return false;
-+}
- #endif /* CONFIG_MODULE_KERNEL_ALIAS */
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index bc9202b60d55..cf044329da3c 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -338,6 +338,28 @@ bool find_symbol(struct find_symbol_arg *fsa)
- 	return false;
- }
- 
-+static bool module_name_match(struct module *mod, const char *name, size_t len)
-+{
-+	unsigned int i;
-+	const char *alias;
-+
-+	if (strlen(mod->name) == len && !memcmp(mod->name, name, len))
-+		return true;
-+
-+	return module_name_match_aliases(mod, name, len);
-+
-+	for (i=0; i < mod->num_aliases; i++) {
-+		alias = mod->aliases[i];
-+		if (strlen(alias) == len && !memcmp(alias, name, len)) {
-+			pr_debug("module %s alias matched: alias[%u] = %s\n",
-+				 mod->name, i, alias);
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- /*
-  * Search for module by name: must hold module_mutex (or preempt disabled
-  * for read-only access).
-@@ -353,7 +375,7 @@ struct module *find_module_all(const char *name, size_t len,
- 				lockdep_is_held(&module_mutex)) {
- 		if (!even_unformed && mod->state == MODULE_STATE_UNFORMED)
- 			continue;
--		if (strlen(mod->name) == len && !memcmp(mod->name, name, len))
-+		if (module_name_match(mod, name, len))
- 			return mod;
- 	}
- 	return NULL;
--- 
-2.39.1
-
+  Luis
