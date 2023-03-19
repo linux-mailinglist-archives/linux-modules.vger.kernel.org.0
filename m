@@ -2,43 +2,41 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16F846C057D
-	for <lists+linux-modules@lfdr.de>; Sun, 19 Mar 2023 22:28:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 59BD56C05A3
+	for <lists+linux-modules@lfdr.de>; Sun, 19 Mar 2023 22:35:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230168AbjCSV17 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 19 Mar 2023 17:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44758 "EHLO
+        id S230148AbjCSVfs (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 19 Mar 2023 17:35:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230274AbjCSV1y (ORCPT
+        with ESMTP id S229835AbjCSVfq (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 19 Mar 2023 17:27:54 -0400
+        Sun, 19 Mar 2023 17:35:46 -0400
 Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C72E1B2F4;
-        Sun, 19 Mar 2023 14:27:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3FD11653;
+        Sun, 19 Mar 2023 14:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        Reply-To:Content-Type:Content-ID:Content-Description;
-        bh=wQkyT18VZpOuqRMfI0/GbWVG9J9s2yrV/+TTo6WVbWQ=; b=dkn9BWo+buogcOb4zH8SOvdKC5
-        WNMMT8Jl+AR5MxaBeO9NBZlZeLxqEZOJxSP/6ShMRF76q5E8DoZ5Y+zR6c59absP/Nbr1Oo7wLZy5
-        PeGPpvVcEhKKa4ZXSwRyVqKLI0ARZi+L9K0HnVuNmQX7iJ589cEzOGzfWQMXUa/3aBgNNv+U3BEIw
-        3ujVrbll7407IemEyJYcjsz9fbM0TWErvVWtnuQdgSpOBQzqXGRwHOiQR6Y/a7IxtWyXsUUweEUNi
-        1owqCZYziD0tEV5AQN9bcySH8/0tDgGi6TicwAg0vlP2hN2g/X4Oalkut5vPTNfCHlJ6Nrxc0igN3
-        lkz+bsfw==;
+        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+        Content-ID:Content-Description:In-Reply-To:References;
+        bh=4+NzyS15tvE5FVGnxGqo+lPc7QVVkfAfgOyCb7VB/XM=; b=2fCknlgWTdi0+x9lnrIeEbLIVF
+        55fk6OZVI/R/W4zkljEDBoMJYWXrtaJ3bomUUBCust/KBP/LbuyJcwRnpNwLj0fQwv3ctcAgiL7ir
+        7mqnmJkl2YYlTf7C/WvinuYJjuwQGhiGkj7+xfoIwfwhouTy4Vo8s07Ov7Ld+b82o4+peoc7s6kSF
+        eVlDDuVqWNfzedPSw1AdAom95xddzlX/HSzVVsDfjrgjASpA8GPd59FXRWzIGaMkVqkxYi9FR+GwN
+        JhuiVJdpgVggFx07x3Hwl1lkviNdIpBJRQs/r2zbxlaEy/53Iw5ybzma1Vl20ybB8e58/rbIEJtX1
+        KA0KCVnw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-        id 1pe0ZA-007TrN-0D;
-        Sun, 19 Mar 2023 21:27:48 +0000
+        id 1pe0gp-007Vmp-1H;
+        Sun, 19 Mar 2023 21:35:43 +0000
 From:   Luis Chamberlain <mcgrof@kernel.org>
 To:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
         pmladek@suse.com, david@redhat.com, petr.pavlu@suse.com,
         prarit@redhat.com
 Cc:     christophe.leroy@csgroup.eu, song@kernel.org, mcgrof@kernel.org
-Subject: [PATCH 12/12] module: rename check_module_license_and_versions() to check_export_symbol_versions()
-Date:   Sun, 19 Mar 2023 14:27:46 -0700
-Message-Id: <20230319212746.1783033-13-mcgrof@kernel.org>
+Subject: [PATCH 0/5] module: ELF validation enhancement and cleanups
+Date:   Sun, 19 Mar 2023 14:35:37 -0700
+Message-Id: <20230319213542.1790479-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230319212746.1783033-1-mcgrof@kernel.org>
-References: <20230319212746.1783033-1-mcgrof@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
@@ -51,35 +49,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-This makes the routine easier to understand what the check its checking for.
+While doing a cleanup of load_module() to do less work before we allocate [0],
+one of the undocumented tricks we pull off is memcpy'ing the struct module
+from the module.mod.c into the kernel, with the modifications we've made
+to it on load_module(). This puts a bit of love to make the clearer, and
+extends our ELF validity checker to ensure we verify this before allowing
+us to even process a module.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kernel/module/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This effort has discovered a new possible build issue we have to fix:
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index f165d93a4ef9..cf097ffe6a4a 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -2220,7 +2220,7 @@ static int move_module(struct module *mod, struct load_info *info)
- 	return -ENOMEM;
- }
- 
--static int check_module_license_and_versions(struct module *mod)
-+static int check_export_symbol_versions(struct module *mod)
- {
- #ifdef CONFIG_MODVERSIONS
- 	if ((mod->num_syms && !mod->crcs) ||
-@@ -2796,7 +2796,7 @@ static int load_module(struct load_info *info, const char __user *uargs,
- 	if (err)
- 		goto free_unload;
- 
--	err = check_module_license_and_versions(mod);
-+	err = check_export_symbol_versions(mod);
- 	if (err)
- 		goto free_unload;
- 
+It is in theory possible today to modify the module struct module size,
+let a kernel developer lazily just build the module (say make fs/xfs/)
+and then try to insert that module without ensuring the module size
+expected should have grown. You can verify the size with:
+
+nm --print-size --size-sort fs/xfs/xfs.ko | grep __this_module
+0000000000000000 0000000000000500 D __this_module
+
+The struct module size will be different per each kernel configuration,
+and so this is system build dependent. The new ELF check put in place
+prevents this situation and also make the use case of memcpying the
+struct module very clear, along with ensuring we keep all modifications
+we've made to it.
+
+[0] https://lkml.kernel.org/r/20230311051712.4095040-1-mcgrof@kernel.org
+
+Luis Chamberlain (5):
+  module: add sanity check for ELF module section
+  module: add stop-grap sanity check on module memcpy()
+  module: move more elf validity checks to elf_validity_check()
+  module: merge remnants of setup_load_info() to elf validation
+  module: fold usermode helper kmod into modules directory
+
+ MAINTAINERS                |  13 +--
+ kernel/Makefile            |   1 -
+ kernel/module/Makefile     |   4 +-
+ kernel/{ => module}/kmod.c |   0
+ kernel/module/main.c       | 219 ++++++++++++++++++++++++-------------
+ 5 files changed, 148 insertions(+), 89 deletions(-)
+ rename kernel/{ => module}/kmod.c (100%)
+
 -- 
 2.39.1
 
