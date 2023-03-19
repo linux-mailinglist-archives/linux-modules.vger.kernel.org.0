@@ -2,43 +2,41 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF31C6C05A0
-	for <lists+linux-modules@lfdr.de>; Sun, 19 Mar 2023 22:35:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7229B6C05C0
+	for <lists+linux-modules@lfdr.de>; Sun, 19 Mar 2023 22:49:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbjCSVfr (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sun, 19 Mar 2023 17:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
+        id S230000AbjCSVtt (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 19 Mar 2023 17:49:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229824AbjCSVfp (ORCPT
+        with ESMTP id S229779AbjCSVtb (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sun, 19 Mar 2023 17:35:45 -0400
+        Sun, 19 Mar 2023 17:49:31 -0400
 Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A2F11164B;
-        Sun, 19 Mar 2023 14:35:44 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF8F12BDB;
+        Sun, 19 Mar 2023 14:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-        MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        Reply-To:Content-Type:Content-ID:Content-Description;
-        bh=o7Go1puxe90FGMktwOjmsLknRJd3vVFjG7iQj4FUx+M=; b=XqMEHnA1Jxvrrb245/gV9tQJgM
-        CKTzB8jqsj/Mrc4jQJulJjjvW6eSvvhDRJQbLLthWWGxdgzs8e4f8/HMftBfDxSu3htw9yjyqzbdn
-        MR52AsAZ+FOCvqmkf3us3iGzPp8CH+PEQK+DCAV8CtKbtMXpwUtFC3Q5RqOOhcf6fmJpRuP60BIwR
-        ibr7FJGZ1bxgKq3OkApLjLhfFPS9w9R58snlxbcBxwgpL2XLyrlavSNCIGS39tMMMP4bvuhMAGk2D
-        fCdcpy95A7nX+nt+i6POnJs0gt71a61x82dcm/xEwhub3LSs3OSQbCghkvUjXi9XJIEmxXQC8b/jA
-        MjmDTuVg==;
+        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+        Content-ID:Content-Description:In-Reply-To:References;
+        bh=q1oyRes5negp+kybh6kzvflbB5TOrerfJ/RB+Q/Ch1s=; b=pZBIhHv7cXZDXF1lirrj303enp
+        wklOMwjYCBzWyqsoMEOrnGgwfOuHf4hwPHl0aSu6eI9NQNmtARVfAk4RaWm+J+dC9jQ7Uw0IED6KV
+        /OKpgOT6vD7SQf/520tL2tJlrjo+nzJH4lbhsHR7p0Yb2v0W+CrHX+PSwieOBnHFGULbzvXr4xhSl
+        JQvSSXyo5YmPWQVfgFs6P8snnrYBWtrsgHnDoRmwOn/v6bv1DT2qAL9SuVC4ozdj4Pk63ZJ2UP9jY
+        wkfMDIYHaXnSWOPBa91dq7dmwyYE9uKpo/G1bM7W733habsgyR62pce40IucVY2sPig2Bpz53R4sk
+        rtf4EYxA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-        id 1pe0gp-007Vmz-1r;
-        Sun, 19 Mar 2023 21:35:43 +0000
+        id 1pe0u7-007WjN-37;
+        Sun, 19 Mar 2023 21:49:27 +0000
 From:   Luis Chamberlain <mcgrof@kernel.org>
 To:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
         pmladek@suse.com, david@redhat.com, petr.pavlu@suse.com,
         prarit@redhat.com
 Cc:     christophe.leroy@csgroup.eu, song@kernel.org, mcgrof@kernel.org
-Subject: [PATCH 5/5] module: fold usermode helper kmod into modules directory
-Date:   Sun, 19 Mar 2023 14:35:42 -0700
-Message-Id: <20230319213542.1790479-6-mcgrof@kernel.org>
+Subject: [RFT 0/5] module: avoid userspace pressure on unwanted allocations
+Date:   Sun, 19 Mar 2023 14:49:21 -0700
+Message-Id: <20230319214926.1794108-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230319213542.1790479-1-mcgrof@kernel.org>
-References: <20230319213542.1790479-1-mcgrof@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
@@ -51,83 +49,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-The kernel/kmod.c is already only built if we enabled modules, so
-just stuff it under kernel/module/kmod.c and unify the MAINTAINERS
-file for it.
+Finally this third patch set spins the first RFC I put out to help
+reduce memory pressure [0]. It updates the commit log with some stats
+obtained on a guest, but I need to do more tests on more systems and
+then also with stress-ng. I posted a patch to run stress-ng for modules,
+so it stresses running finit_module() [1]. Using that instead of
+kmod test 0008 should be useful as that really puts some heavy load
+without going through the kernel module auto-loader, that has a
+restriction of just allowing 50 threads concurrently. The issue with
+that stress test so far is that unloading doesn't seem to unload yet.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- MAINTAINERS                | 13 +++----------
- kernel/Makefile            |  1 -
- kernel/module/Makefile     |  4 +++-
- kernel/{ => module}/kmod.c |  0
- 4 files changed, 6 insertions(+), 12 deletions(-)
- rename kernel/{ => module}/kmod.c (100%)
+The last patch is purely for testing purposes and its value can only be
+shown if it really does help the use case of a large system with many
+CPUs. That situation is known currently to cuase issues with subsystems
+which end up loading tons of the same drivers and so this tries to be
+a bit defensive for subsystems that might need some love in this area.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8d5bc223f305..1ca0e26aa9f8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -11522,16 +11522,6 @@ F:	include/linux/kmemleak.h
- F:	mm/kmemleak.c
- F:	samples/kmemleak/kmemleak-test.c
- 
--KMOD KERNEL MODULE LOADER - USERMODE HELPER
--M:	Luis Chamberlain <mcgrof@kernel.org>
--L:	linux-kernel@vger.kernel.org
--L:	linux-modules@vger.kernel.org
--S:	Maintained
--F:	include/linux/kmod.h
--F:	kernel/kmod.c
--F:	lib/test_kmod.c
--F:	tools/testing/selftests/kmod/
--
- KMSAN
- M:	Alexander Potapenko <glider@google.com>
- R:	Marco Elver <elver@google.com>
-@@ -14083,8 +14073,11 @@ L:	linux-kernel@vger.kernel.org
- S:	Maintained
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git modules-next
- F:	include/linux/module.h
-+F:	include/linux/kmod.h
- F:	kernel/module/
- F:	scripts/module*
-+F:	lib/test_kmod.c
-+F:	tools/testing/selftests/kmod/
- 
- MONOLITHIC POWER SYSTEM PMIC DRIVER
- M:	Saravanan Sekar <sravanhome@gmail.com>
-diff --git a/kernel/Makefile b/kernel/Makefile
-index 10ef068f598d..3dd4ea433ee9 100644
---- a/kernel/Makefile
-+++ b/kernel/Makefile
-@@ -13,7 +13,6 @@ obj-y     = fork.o exec_domain.o panic.o \
- 	    async.o range.o smpboot.o ucount.o regset.o
- 
- obj-$(CONFIG_USERMODE_DRIVER) += usermode_driver.o
--obj-$(CONFIG_MODULES) += kmod.o
- obj-$(CONFIG_MULTIUSER) += groups.o
- 
- ifdef CONFIG_FUNCTION_TRACER
-diff --git a/kernel/module/Makefile b/kernel/module/Makefile
-index 948efea81e85..5b1d26b53b8d 100644
---- a/kernel/module/Makefile
-+++ b/kernel/module/Makefile
-@@ -7,7 +7,9 @@
- # and produce insane amounts of uninteresting coverage.
- KCOV_INSTRUMENT_module.o := n
- 
--obj-y += main.o strict_rwx.o
-+obj-y += main.o
-+obj-y += strict_rwx.o
-+obj-y += kmod.o
- obj-$(CONFIG_MODULE_DECOMPRESS) += decompress.o
- obj-$(CONFIG_MODULE_SIG) += signing.o
- obj-$(CONFIG_LIVEPATCH) += livepatch.o
-diff --git a/kernel/kmod.c b/kernel/module/kmod.c
-similarity index 100%
-rename from kernel/kmod.c
-rename to kernel/module/kmod.c
+I have two trees for this patchset, the first one had the ELF checker
+and validity tests at the end [2], and the latest one re-adjusts the
+ordering to put this patch set as the last series [3], in line with
+the order in which I've submitted the patches. I had only run time
+tested the patch order on [2] but it makes sense to put more of the
+heavier functional changes at the very end, and request for further
+testing.
+
+[0] https://lkml.kernel.org/r/20230311051712.4095040-1-mcgrof@kernel.org
+[1] https://lore.kernel.org/all/ZBUA6E3kYh0Xuu/c@bombadil.infradead.org/?q=stress-ng+mcgrof
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/log/?h=20230319-module-alloc-opts
+
+Luis Chamberlain (5):
+  module: move finished_loading()
+  module: extract patient module check into helper
+  module: avoid allocation if module is already present and ready
+  module: use list_add_tail_rcu() when adding module
+  module: add a sanity check prior to allowing kernel module
+    auto-loading
+
+ kernel/module/internal.h |   1 +
+ kernel/module/kmod.c     |   7 ++
+ kernel/module/main.c     | 139 ++++++++++++++++++++++++---------------
+ 3 files changed, 93 insertions(+), 54 deletions(-)
+
 -- 
 2.39.1
 
