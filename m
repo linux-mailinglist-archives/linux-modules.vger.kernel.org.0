@@ -2,78 +2,79 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 530996C5A71
-	for <lists+linux-modules@lfdr.de>; Thu, 23 Mar 2023 00:33:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 851C66C5AA6
+	for <lists+linux-modules@lfdr.de>; Thu, 23 Mar 2023 00:40:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbjCVXdP (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 22 Mar 2023 19:33:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
+        id S230202AbjCVXk1 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Wed, 22 Mar 2023 19:40:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229990AbjCVXdO (ORCPT
+        with ESMTP id S230194AbjCVXkN (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 22 Mar 2023 19:33:14 -0400
+        Wed, 22 Mar 2023 19:40:13 -0400
 Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308381EFFB
-        for <linux-modules@vger.kernel.org>; Wed, 22 Mar 2023 16:33:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA5A02B9E1;
+        Wed, 22 Mar 2023 16:39:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description;
-        bh=0Ay6mu3D3SXmMbb4vHiX/YPNK8iEGezCM/EVJg6pHPk=; b=dJUF8lQYcm7mF8b9K0AbPJc2NQ
-        QCj+bUP9TtU+v03krBeePWaZTvkj5t6Kj95QkI0W5ZKfk0I4wIkOEsdJnypMptBTx2sXHm2SxL7LC
-        xI0IFlq7d+8yvPO5zFUbX4p7/cNX2rLdj/TcJhgndZeiqIa2i9cPx/Ke68im9PAvx6MgSQJKJLhy2
-        GJk+x6f8l+5HeV41Puf/fWv6HjTHqfg6FVc9BHra2lsiIUiunLMO/uIEaEqMrotx7Q0pyBShrVV1u
-        UHvd1yuS1yzj4VitNSI2+850n6spqfJ9SFU0+Nyzlt3JKev54IDK6ZcDRyuYKL6LRP/qAauXc4Ikd
-        b2ls88nA==;
+        d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+        Content-Type:MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:
+        To:From:Reply-To:Content-ID:Content-Description;
+        bh=mQhebhj0ErIIe2B+tMJaRXg9lTK+szPIe3mCV0swbA0=; b=E5BBwMiJhWzwIOYFr//zUzlBj1
+        scZXkgeH62TUicvPPjHG1IZSV6SGMuGDycbYv/uvfBHm4jLoysNQfSH+QjWT1/bgWOTEo4fmlGvLq
+        qqhxtxb/jjyKogzpv7vP8Rsxs04puiSSYJz5K5bamvpvljIRvoAH7QwS+vPuNenDdhCreHBxr9bOs
+        usv+wn+oWwn6J0GRx4o+1ATJbFuTvTgdQZiqdxV60V9/FZhTf7O650WeOVuHkWXv1xc2wOUkknH5T
+        xuyYfrdAMLi0GG1rpu4IV+ThIvnai6MyTstUJR+onMPVLRmIyzTYQByRTSaA1k4QQisHRE0CqOrey
+        T+d1OrYw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-        id 1pf7xB-0009Wi-2W;
-        Wed, 22 Mar 2023 23:33:13 +0000
-Date:   Wed, 22 Mar 2023 16:33:13 -0700
-From:   Luis Chamberlain <mcgrof@kernel.org>
-To:     Nick Alcock <nick.alcock@oracle.com>
-Cc:     linux-modules <linux-modules@vger.kernel.org>
-Subject: Re: module_license tree refreshed against linux-next
-Message-ID: <ZBuQOXi+my7bnXzR@bombadil.infradead.org>
-References: <87mt46s8i3.fsf@esperi.org.uk>
- <ZBncDHaZfKEHAjGu@bombadil.infradead.org>
- <87r0tiqc6z.fsf@esperi.org.uk>
+        id 1pf83I-000B0W-1o;
+        Wed, 22 Mar 2023 23:39:32 +0000
+From:   Luis Chamberlain <mcgrof@bombadil.infradead.org>
+To:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+        jim.cromie@gmail.com
+Cc:     Luis Chamberlain <mcgrof@kernel.org>
+Subject: Re: [PATCH 0/4] cosmetic fixes to module pr_debugs
+Date:   Wed, 22 Mar 2023 16:38:59 -0700
+Message-Id: <167952830755.2267106.14602423112302281916.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230322013623.251401-1-jim.cromie@gmail.com>
+References: <20230322013623.251401-1-jim.cromie@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87r0tiqc6z.fsf@esperi.org.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_EF,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Tue, Mar 21, 2023 at 04:52:20PM +0000, Nick Alcock wrote:
-> On 21 Mar 2023, Luis Chamberlain verbalised:
-> 
-> > On Tue, Mar 21, 2023 at 10:29:08AM +0000, Nick Alcock wrote:
-> >> I have not dropped commits with Greg K-H as maintainer simply because I
-> >> kept on oscillating on doing that, so I thought I'd leave the commits in
-> >> so you have the option to do either.
-> >
-> > No, I don't want to do that work, please drop Greg's drivers.
-> 
-> OK! Repushed to the same branch, sans what I *think* is the relevant set:
-> 
-> binder: remove MODULE_LICENSE in non-modules
-> serial: remove MODULE_LICENSE in non-modules
-> vgacon: remove MODULE_LICENSE in non-modules
-> tty: serial: imx: remove MODULE_LICENSE in non-modules
-> tty: remove MODULE_LICENSE in non-modules
-> 
-> I hope that's right -- it's all the patches he was directly Cc:ed on.
-> 
-> (other branches containing kallmodsyms as a whole, etc, have not yet
-> been refreshed at all and are old: I'll get to it).
+From: Luis Chamberlain <mcgrof@kernel.org>
 
-OK I merged this set onto modules-next. Thanks.
+On Tue, 21 Mar 2023 19:36:19 -0600, Jim Cromie wrote:
+> These 4 patches alter pr_debug() messages for more info, and less
+> log-spam.
+> 
+> * add "for $modname:" to banners
+>   helpful for finding one of many
+> 
+> [   40.885922] main:layout_sections: Core section allocation order for test_dynamic_debug:
+>     	       ~20 lines of output
+> [   40.885967] main:move_module: Final section addresses for test_dynamic_debug:
+>     	       ~2 lines - .init.text/data
+> 
+> [...]
+
+Applied, thanks!
+
+[1/4] module: in layout_sections, move_module: add the modname
+      commit: 4ab9c7dca82f215fa596fb61192384e4c922bf9c
+[2/4] module: add symbol-name to pr_debug Absolute symbol
+      commit: 9f5d69a7852db158bc9f5c5afa105ce12058afc3
+[3/4] module: add section-size to move_module pr_debug
+      commit: 8cf2cfac04e4b24dfc4371306e202b09ab574a80
+[4/4] module: already_uses() - reduce pr_debug output volume
+      commit: 6e82310365bade624ff38dd11a8467739adab6cc
 
   Luis
