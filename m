@@ -2,66 +2,61 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF3466EF657
-	for <lists+linux-modules@lfdr.de>; Wed, 26 Apr 2023 16:26:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 948AB6F09E2
+	for <lists+linux-modules@lfdr.de>; Thu, 27 Apr 2023 18:31:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229744AbjDZOZ7 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Wed, 26 Apr 2023 10:25:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35208 "EHLO
+        id S244171AbjD0QbN (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 27 Apr 2023 12:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240010AbjDZOZ6 (ORCPT
+        with ESMTP id S244166AbjD0QbL (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Wed, 26 Apr 2023 10:25:58 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5DFA10C2
-        for <linux-modules@vger.kernel.org>; Wed, 26 Apr 2023 07:25:57 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id 5614622812f47-38e9dfa543bso1999427b6e.2
-        for <linux-modules@vger.kernel.org>; Wed, 26 Apr 2023 07:25:57 -0700 (PDT)
+        Thu, 27 Apr 2023 12:31:11 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5D710EC
+        for <linux-modules@vger.kernel.org>; Thu, 27 Apr 2023 09:31:10 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 46e09a7af769-6a5f7341850so6816188a34.2
+        for <linux-modules@vger.kernel.org>; Thu, 27 Apr 2023 09:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682519157; x=1685111157;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U2Z7XiAW0682+1reJ9kRWOozvDk4jsLjeyU2Feerd6M=;
-        b=Ckr3gjJC4ohUY80Uiv/StFVReuN7Rc/Zgf5sXykNetMtWkEAsjS3/sGlerQKA31CJf
-         j+zAiol2T+QX+s7sV0nXfxXs+iBkfdruBQEccgKEWeZpx6OAB48Nh1KPFixCMX1abO5T
-         POyK7SESM7xLzI8QZLj4QWWsOMNaQgSaymyMAODC0wDWN58sM7qy6BeeVYGZvLFlMp2M
-         +Woxv+IHenH6vLcFCHGYJBpXKK6sH8T2GSdsAuH7KftZVA8d5jZbdaG5KpXY4xoUbfsQ
-         +YtAu8VT/B8rvhULHQWVcyggakOQsobMmR8Y+lJdLKLVqVSun0ji37y/T0tDnEaApn+x
-         zxmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682519157; x=1685111157;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20221208; t=1682613069; x=1685205069;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U2Z7XiAW0682+1reJ9kRWOozvDk4jsLjeyU2Feerd6M=;
-        b=A+I2/nLLsv//E5n7SlBiHYxrBk/3gdFf/mSacRsRJzjYL8p1a/FD3cKfTaj24//BpQ
-         TsFESH15ePwvbJGbglUdjOVtJNEI+ZzlsEnLeqA2zmOylY8V2jvjpBMewRAo2KObiGTF
-         SBJFOg+rgToqNGHcoC2Akih3mAAJ/N25JSHGp+CSUcyEvRNtHzMKskk2+o1H9Nyp4xwS
-         iRptqB0FIDuE6/+gc+IdtgyE1TLn3zZBPj6uttKrKM/DWOUCXbAwOMH3+ffnKXdlekq9
-         ozKhCjT8SygR0xplDQBvWAS+VfJHj0JhSEjATwCbdA1f4fhvz7bOF5E29CheTKYbhSr4
-         JsHw==
-X-Gm-Message-State: AAQBX9enHywBcpXUGHX4RuelMkBxCnn+AIMT0snvxss5PkAJdTYfcGH4
-        gO06T12dPGbpr6TjGcpvXYnC8p9UAsPVabxDFrIJOdeG
-X-Google-Smtp-Source: AKy350YauJ4xPgnyMWMGeDhlSARLlh1kuR1DQZt0r0BQqKK7MzQN32EdHgsuQ8zASK/P/VuhRf2boiyHMKgZqJG/cS4=
-X-Received: by 2002:a54:4589:0:b0:38e:4b50:161b with SMTP id
- z9-20020a544589000000b0038e4b50161bmr10689152oib.4.1682519157069; Wed, 26 Apr
- 2023 07:25:57 -0700 (PDT)
+        bh=YgsQjPYSA4x9EUAST26pLIMgzwk5/fmUNEDBBVE+P4A=;
+        b=H/F2jXQhEspNf2OSg1QdhIunBBlXl0Bx9YZ26gqXk+Gs3zr1BMEJlTeL5k9J8P05bu
+         GUKysimt65dWa99YmJSJVeBANdqJjBXt3KAmR09VKLgLmOByA2d4V1DF8VdJyCqx0WVy
+         wTTi+XjWh1gjMd/UXjdaOWsjrs8U9CTZzav9EEzBxRv7ygMPsrF21nAtzIqBy0hd6bx/
+         rVCC5lep6mjx7P7X7168S1kDfCavrY2GvkPNq436Edjl3h7XLL4NyZMlDGY38BE+C6i9
+         hP37oyOZN9vjSf9M67zNMdGLB4TBOx9IpsMXcGi+Kf/odO+qLqN4KuSt+YvvfhtsbHfe
+         wshw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682613069; x=1685205069;
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YgsQjPYSA4x9EUAST26pLIMgzwk5/fmUNEDBBVE+P4A=;
+        b=KHilJbltB/jC/qwlc5T0G7uv2YW3og+SRKShIGszxewPtcQzezhbcjQRcSu1i/pV/6
+         HXEPby3qRytXj8grdctTZ2uvNcnGf7M5kqYGcPCOioDKqu58tLmpt63T65AvHJNmwbXY
+         hdWZhG8g3ImwdpzqVS1jmFkRkJVRh93sBm3bIL9XSSJe400Hb8OfRE2bbdmh3wguSkeZ
+         ludI9JCkVgB4O89vX0AOKgM1Llbcu2TkFgrmoKs3Bmi4AgX5dlvC7+3pZL5QU8IF565L
+         Kp49B+W6VOnOyJSB44NngPdPcXOhHj27asp08Mco/i9vLdr051FJtCeuz3aJOJfIG7UT
+         P6PQ==
+X-Gm-Message-State: AC+VfDwZEcUH0px7C8GXaLMapx8d2FFV5Q1Ig2hV0F7cToIu6An61gyf
+        8yUGP+Ms2uV7HC/vym+R9orI6pndxTZEwwueNXM=
+X-Google-Smtp-Source: ACHHUZ4ZWPxxNS1Y5SSo3pDTzI3Cin5siRdLfLJT7PY3lt+Mg1tieNMQ61YcFP1SGBY5C2W7bo73rMjSg69Nd/lxy4o=
+X-Received: by 2002:a05:6871:6b81:b0:188:10b8:5358 with SMTP id
+ zh1-20020a0568716b8100b0018810b85358mr1352670oab.16.1682613069193; Thu, 27
+ Apr 2023 09:31:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230426042906.724352-1-airlied@gmail.com> <20230426042906.724352-2-airlied@gmail.com>
-In-Reply-To: <20230426042906.724352-2-airlied@gmail.com>
-From:   Alex Deucher <alexdeucher@gmail.com>
-Date:   Wed, 26 Apr 2023 10:25:45 -0400
-Message-ID: <CADnq5_Ot6_RU5qCtJkM_mbv-=btkv_rN9ezrKBCaeLEKWDU0ZA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] modules/firmware: add a new option to denote a
- firmware group to choose one.
-To:     Dave Airlie <airlied@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, Dave Airlie <airlied@redhat.com>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        linux-modules@vger.kernel.org
+Sender: mrsthereseninna@gmail.com
+Received: by 2002:a05:6358:2489:b0:f1:be9a:c0c5 with HTTP; Thu, 27 Apr 2023
+ 09:31:08 -0700 (PDT)
+From:   Dr Lisa Williams <lw4666555@gmail.com>
+Date:   Thu, 27 Apr 2023 09:31:08 -0700
+X-Google-Sender-Auth: 2oW4L4Na4Ml9J-VMpu6qL-XIbgg
+Message-ID: <CAKVHDg8feap+6aWmD4o2bHD1DZqj_4PvghR9nh0Cm1DaYdQB=A@mail.gmail.com>
+Subject: Hi,
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
@@ -70,76 +65,13 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Wed, Apr 26, 2023 at 12:31=E2=80=AFAM Dave Airlie <airlied@gmail.com> wr=
-ote:
->
-> From: Dave Airlie <airlied@redhat.com>
->
-> This adds a tag that will go into the module info, only one firmware from
-> the group given needs to be available for this driver to work. This allow=
-s
-> dracut to avoid adding in firmware that aren't needed.
->
-> This just brackets a module list in the modinfo, the modules in the list
-> will get entries in reversed order so the last module in the list is the
-> preferred one.
->
-> The corresponding dracut code it at:
-> https://github.com/dracutdevs/dracut/pull/2309
->
-> Cc: Luis Chamberlain <mcgrof@kernel.org>
-> Cc: linux-modules@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Signed-off-by: Dave Airlie <airlied@redhat.com>
+Hi,
 
-I think this is a very useful feature,
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+My name is Dr. Lisa Williams, from the United States, currently living
+in the United Kingdom.
 
-> ---
->  include/linux/module.h | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->
-> diff --git a/include/linux/module.h b/include/linux/module.h
-> index f9d072a7e198..d3e7085cedd0 100644
-> --- a/include/linux/module.h
-> +++ b/include/linux/module.h
-> @@ -306,6 +306,28 @@ extern typeof(name) __mod_##type##__##name##_device_=
-table          \
->   */
->  #define MODULE_FIRMWARE(_firmware) MODULE_INFO(firmware, _firmware)
->
-> +/**
-> + * MODULE_FIRMWARE_GROUP_ONLY_ONE - Create a need only one firmware grou=
-p
-> + * @_grpname: group name
-> + *
-> + * This creates a group of which the driver only needs one firmware inst=
-alled.
-> + * This is to allow dracut to limit the number of firmwares in the initr=
-amfs.
-> + * This just creates a new entry in the modinfo section, there should be=
- one
-> + * of these entries bracketing the group of MODULE_INFO lines.
-> + * Due to how modinfo is constructed the ordering of the modinfo means t=
-he
-> + * last module info in the group will end up being the first one dracut =
-will
-> + * search for, so place the newest firmware last.
-> + *
-> + * ``MODULE_FIRMWARE_GROUP_ONLY_ONE("mygroup")``
-> + *
-> + * ``MODULE_FIRMWARE("firmwarev1")``
-> + *
-> + * ``MODULE_FIRMWARE("firmwarev2")``
-> + *
-> + * ``MODULE_FIRMWARE_GROUP_ONLY_ONE("mygroup")``
-> + */
-> +#define MODULE_FIRMWARE_GROUP_ONLY_ONE(_grpname) MODULE_INFO(firmware_gr=
-oup_only_one, _grpname)
-> +
->  /**
->   * MODULE_IMPORT_NS - Set the symbol namespace for the module.
->   * @ns: symbol namespace to import the module into.
-> --
-> 2.39.2
->
+I hope you consider my friend request. I will share some of my photos
+and more details about me when I get your reply.
+
+With love
+Lisa
