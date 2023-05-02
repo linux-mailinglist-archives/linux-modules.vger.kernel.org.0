@@ -2,42 +2,67 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7E8C6F443D
-	for <lists+linux-modules@lfdr.de>; Tue,  2 May 2023 14:50:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 255DE6F46E9
+	for <lists+linux-modules@lfdr.de>; Tue,  2 May 2023 17:20:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234176AbjEBMuh (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 2 May 2023 08:50:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
+        id S234409AbjEBPUN (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 2 May 2023 11:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234164AbjEBMuf (ORCPT
+        with ESMTP id S234127AbjEBPUL (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 2 May 2023 08:50:35 -0400
-X-Greylist: delayed 161 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 02 May 2023 05:50:21 PDT
-Received: from bee.tesarici.cz (bee.tesarici.cz [IPv6:2a03:3b40:fe:2d4::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4AC59E7;
-        Tue,  2 May 2023 05:50:20 -0700 (PDT)
-Received: from meshulam.tesarici.cz (dynamic-2a00-1028-83b8-1e7a-4427-cc85-6706-c595.ipv6.o2.cz [IPv6:2a00:1028:83b8:1e7a:4427:cc85:6706:c595])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by bee.tesarici.cz (Postfix) with ESMTPSA id 11C1F14D391;
-        Tue,  2 May 2023 14:50:16 +0200 (CEST)
-Authentication-Results: mail.tesarici.cz; dmarc=fail (p=none dis=none) header.from=tesarici.cz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tesarici.cz; s=mail;
-        t=1683031817; bh=7Jx1V6HXo4qXXJ5gzNb9WgNbQl2iBAjQx92+mbN9mcI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=LdYat1pxvtqHcsyEsr0xSmJ80I9UQQAdwuWNsIlmRhcDv+RP+JqFNQRT+nYc9G7uP
-         dXPpgO79Zyo5DI2T6iRH+RieaWMoILvCo+t0ga1IpmjPazX2dudxt9IHa/Q1eVW8Rh
-         npJAxuinpIG3jaAdl3urTCU5KvJB8xckJUgufKO4oRJxNsCTGApQSCpiehfAf9XW2g
-         55qZn04dxosxPP6JwtR/XcAxhlpiWK6SFfOBMCcvmnxf+hMduxm0neIM19D6X3o7mp
-         /hFiYxv9D35v34aGYGGZPSYkcyumwUEB7pS25ZX4SffsQ4FOhXKIFk8+GhJJd8+bil
-         9cEFx4TVmGUMg==
-Date:   Tue, 2 May 2023 14:50:14 +0200
-From:   Petr =?UTF-8?B?VGVzYcWZw61r?= <petr@tesarici.cz>
-To:     Suren Baghdasaryan <surenb@google.com>
-Cc:     akpm@linux-foundation.org, kent.overstreet@linux.dev,
-        mhocko@suse.com, vbabka@suse.cz, hannes@cmpxchg.org,
-        roman.gushchin@linux.dev, mgorman@suse.de, dave@stgolabs.net,
+        Tue, 2 May 2023 11:20:11 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D912114;
+        Tue,  2 May 2023 08:20:04 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-74e3899037cso187389385a.2;
+        Tue, 02 May 2023 08:20:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683040803; x=1685632803;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2UFtU6oUaOr0vAs1hqgYmpK0GvH9Lqd4XIp3l76+ytw=;
+        b=fQDTcAPBcFMm48S9mQhBubJHQt6Rf9v6Z4dCuVwj56NHh0dP3ICDHdXuGTZQ7fhY6f
+         NVwsf2cgqzJ2oTH5E3+K89qprKrCbOGTByhEvyoyI4jzL38CLohj4Pemx6+zekp7fjIC
+         C0wfN5ZD3wmwhLkep7s0ZqbRXr8rVSrCyB0q6Z4CQD4ucuL/biAEe5lz0MuYDAeeY6uB
+         gtH3nfcpQt9FqSzoPBxOU/XU4QDMDDdYIjdcF09D6jE8LNvs6UBNJcq1K4MKCbG+pFI5
+         zN03kdFjS2HNT9cI3ETBPM+TTHt6uAO2dPGj9O13t7gNwcK/SiD5lyjyY8em9DO5HFop
+         7wkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683040803; x=1685632803;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2UFtU6oUaOr0vAs1hqgYmpK0GvH9Lqd4XIp3l76+ytw=;
+        b=cn6TO0mZsjLEH7tRgcj+3OQGGY9LeOLGzK3NNWay1fymCvq3XCf9ZD8yBjjz+Qu+eA
+         tQq/+uAfVQExLBOp1JPOeHKhm9lgH/EUh14TaaSlw+4RKTXYlR5IUIaD48PAcx90c+bd
+         h5jT+B8v1xyGAghqhDfWUlfAR7XvTlUmHWH7k9DFbOTGBq9SZfJOt98WlIp44y5NXs7q
+         uJAgGL2ZnO3cU7x6szMXKssyZKEfP+u9UlsowkSZf/U/+c1QUZCGVBueJdmEM2SJ0DqQ
+         5cTkFi2kgKG2JXPE8hSD8Ts40tG4AjETgGUL8YHjP1ZMz6PSm6T2f3Ae7/CVZj27LfSs
+         BePg==
+X-Gm-Message-State: AC+VfDyGm0Wp0wHaHbShejfq35RiPFhZlXK8GepEDJVwJJvxt2ajAz0S
+        b72qOisAJKJT3ymWB1YV3y1xzOWGYmVawsuT22M=
+X-Google-Smtp-Source: ACHHUZ67Igwm6oW+sm04elsLKOyKN7r+O3KyU1vf/G+3Yx3wp2o4Cnb08XQGYvjqZI+LStbSVoSMitBc6Z9kx2rMSo8=
+X-Received: by 2002:a05:6214:124a:b0:5f1:6892:7449 with SMTP id
+ r10-20020a056214124a00b005f168927449mr5506301qvv.28.1683040803341; Tue, 02
+ May 2023 08:20:03 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230501165450.15352-1-surenb@google.com> <20230501165450.15352-2-surenb@google.com>
+ <ouuidemyregstrijempvhv357ggp4tgnv6cijhasnungsovokm@jkgvyuyw2fti>
+ <ZFAUj+Q+hP7cWs4w@moria.home.lan> <b6b472b65b76e95bb4c7fc7eac1ee296fdbb64fd.camel@HansenPartnership.com>
+ <ZFCA2FF+9MI8LI5i@moria.home.lan> <CAHp75VdK2bgU8P+-np7ScVWTEpLrz+muG-R15SXm=ETXnjaiZg@mail.gmail.com>
+ <ZFCsAZFMhPWIQIpk@moria.home.lan>
+In-Reply-To: <ZFCsAZFMhPWIQIpk@moria.home.lan>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Tue, 2 May 2023 18:19:27 +0300
+Message-ID: <CAHp75VdvRshCthpFOjtmajVgCS_8YoJBGbLVukPwU+t79Jgmww@mail.gmail.com>
+Subject: Re: [PATCH 01/40] lib/string_helpers: Drop space in string_get_size's output
+To:     Kent Overstreet <kent.overstreet@linux.dev>
+Cc:     James Bottomley <James.Bottomley@hansenpartnership.com>,
+        Suren Baghdasaryan <surenb@google.com>,
+        akpm@linux-foundation.org, mhocko@suse.com, vbabka@suse.cz,
+        hannes@cmpxchg.org, roman.gushchin@linux.dev, mgorman@suse.de,
         willy@infradead.org, liam.howlett@oracle.com, corbet@lwn.net,
         void@manifault.com, peterz@infradead.org, juri.lelli@redhat.com,
         ldufour@linux.ibm.com, catalin.marinas@arm.com, will@kernel.org,
@@ -61,87 +86,40 @@ Cc:     akpm@linux-foundation.org, kent.overstreet@linux.dev,
         linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
         linux-arch@vger.kernel.org, linux-fsdevel@vger.kernel.org,
         linux-mm@kvack.org, linux-modules@vger.kernel.org,
-        kasan-dev@googlegroups.com, cgroups@vger.kernel.org
-Subject: Re: [PATCH 09/40] mm: introduce __GFP_NO_OBJ_EXT flag to
- selectively prevent slabobj_ext creation
-Message-ID: <20230502145014.24b28e64@meshulam.tesarici.cz>
-In-Reply-To: <20230501165450.15352-10-surenb@google.com>
-References: <20230501165450.15352-1-surenb@google.com>
-        <20230501165450.15352-10-surenb@google.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-suse-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        kasan-dev@googlegroups.com, cgroups@vger.kernel.org,
+        Andy Shevchenko <andy@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Paul Mackerras <paulus@samba.org>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Jason Wang <jasowang@redhat.com>,
+        =?UTF-8?B?Tm9yYWxmIFRyw6/Cv8K9bm5lcw==?= <noralf@tronnes.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Mon,  1 May 2023 09:54:19 -0700
-Suren Baghdasaryan <surenb@google.com> wrote:
+On Tue, May 2, 2023 at 9:22=E2=80=AFAM Kent Overstreet
+<kent.overstreet@linux.dev> wrote:
+> On Tue, May 02, 2023 at 08:33:57AM +0300, Andy Shevchenko wrote:
+> > Actually instead of producing zillions of variants, do a %p extension
+> > to the printf() and that's it. We have, for example, %pt with T and
+> > with space to follow users that want one or the other variant. Same
+> > can be done with string_get_size().
+>
+> God no.
 
-> Introduce __GFP_NO_OBJ_EXT flag in order to prevent recursive allocations
-> when allocating slabobj_ext on a slab.
-> 
-> Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-> ---
->  include/linux/gfp_types.h | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/linux/gfp_types.h b/include/linux/gfp_types.h
-> index 6583a58670c5..aab1959130f9 100644
-> --- a/include/linux/gfp_types.h
-> +++ b/include/linux/gfp_types.h
-> @@ -53,8 +53,13 @@ typedef unsigned int __bitwise gfp_t;
->  #define ___GFP_SKIP_ZERO	0
->  #define ___GFP_SKIP_KASAN	0
->  #endif
-> +#ifdef CONFIG_SLAB_OBJ_EXT
-> +#define ___GFP_NO_OBJ_EXT       0x4000000u
-> +#else
-> +#define ___GFP_NO_OBJ_EXT       0
-> +#endif
->  #ifdef CONFIG_LOCKDEP
-> -#define ___GFP_NOLOCKDEP	0x4000000u
-> +#define ___GFP_NOLOCKDEP	0x8000000u
+Any elaboration what's wrong with that?
 
-So now we have two flags that depend on config options, but the first
-one is always allocated in fact. I wonder if you could use an enum to
-let the compiler allocate bits. Something similar to what Muchun Song
-did with section flags.
+God no for zillion APIs for almost the same. Today you want space,
+tomorrow some other (special) delimiter.
 
-See commit ed7802dd48f7a507213cbb95bb4c6f1fe134eb5d for reference.
-
->  #else
->  #define ___GFP_NOLOCKDEP	0
->  #endif
-> @@ -99,12 +104,15 @@ typedef unsigned int __bitwise gfp_t;
->   * node with no fallbacks or placement policy enforcements.
->   *
->   * %__GFP_ACCOUNT causes the allocation to be accounted to kmemcg.
-> + *
-> + * %__GFP_NO_OBJ_EXT causes slab allocation to have no object
-> extension. */
->  #define __GFP_RECLAIMABLE ((__force gfp_t)___GFP_RECLAIMABLE)
->  #define __GFP_WRITE	((__force gfp_t)___GFP_WRITE)
->  #define __GFP_HARDWALL   ((__force gfp_t)___GFP_HARDWALL)
->  #define __GFP_THISNODE	((__force gfp_t)___GFP_THISNODE)
->  #define __GFP_ACCOUNT	((__force gfp_t)___GFP_ACCOUNT)
-> +#define __GFP_NO_OBJ_EXT   ((__force gfp_t)___GFP_NO_OBJ_EXT)
->  
->  /**
->   * DOC: Watermark modifiers
-> @@ -249,7 +257,7 @@ typedef unsigned int __bitwise gfp_t;
->  #define __GFP_NOLOCKDEP ((__force gfp_t)___GFP_NOLOCKDEP)
->  
->  /* Room for N __GFP_FOO bits */
-> -#define __GFP_BITS_SHIFT (26 + IS_ENABLED(CONFIG_LOCKDEP))
-> +#define __GFP_BITS_SHIFT (27 + IS_ENABLED(CONFIG_LOCKDEP))
-
-If the above suggestion is implemented, this could be changed to
-something like __GFP_LAST_BIT (the enum's last identifier).
-
-Petr T
+--=20
+With Best Regards,
+Andy Shevchenko
