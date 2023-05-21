@@ -2,77 +2,151 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8AB470A7AB
-	for <lists+linux-modules@lfdr.de>; Sat, 20 May 2023 14:15:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D333270AD59
+	for <lists+linux-modules@lfdr.de>; Sun, 21 May 2023 11:42:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231390AbjETMP4 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Sat, 20 May 2023 08:15:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50114 "EHLO
+        id S230292AbjEUJm0 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Sun, 21 May 2023 05:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbjETMPz (ORCPT
+        with ESMTP id S229895AbjEUJmU (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Sat, 20 May 2023 08:15:55 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44167E3
-        for <linux-modules@vger.kernel.org>; Sat, 20 May 2023 05:15:54 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2af189d323fso21640731fa.1
-        for <linux-modules@vger.kernel.org>; Sat, 20 May 2023 05:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684584952; x=1687176952;
-        h=to:subject:message-id:date:from:sender:reply-to:mime-version:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qKiEc/q5NVJa1ONcEFLpvWSx5WNl1YdXTMpRPT6Oklo=;
-        b=L14uQnvTKP9MGnp3Vv/dcemOI7E0doubohHMG3FtZb8wURgesyeUoeScLXs20m8H+Q
-         Gvf7EZZutJbZhrMSgypzLix9B4hxwMn/GXIuLmw1JaBoavjLBclkJ1eIo59PazIRNRyl
-         AcYUkY7gmHwyQj9+EEY0gUsmbUnlD58BJQKyboR3YIbLMZzsbJmpLL0gjN7ftjd0bjGi
-         fcJyAbBWcHqfzzrtvcTTwjKkT/W5NmDdpzDVwhthASDxVU6vil897dEzrLuUXOoYKbgn
-         6k1Fe7BCm/Abb058sPkOiF5BpUqpi6Pi5IpO8StREuQ4JfwxGFgM0j89USHvmaNczrLO
-         2hyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684584952; x=1687176952;
-        h=to:subject:message-id:date:from:sender:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qKiEc/q5NVJa1ONcEFLpvWSx5WNl1YdXTMpRPT6Oklo=;
-        b=WBXDLC7OwJRSrA337zxtEe5ESn5J+hVL4zsS8gdBvttBwGZgU2t+e05YV0A1hEVzC8
-         lpKGn1vW7w2+hdDyaC/dcureFNqerVpt38tHxQcrzZqGftc+P2CpOlpk+L+YzY40x8tB
-         e2T79rDtDSshWNABBaHYfHvvrx10fJDsohZSnK1u16H6n3nHWDkOfMjS/l4OY72G4NPr
-         QN5HXSi2H+oD0HVMI1ud3Qvl0ui4AdJliuObRNXdSW5hpe1JFd/5X4KhZkvRawNGN78L
-         km/0ctQIGiA7qYaM59niWywebrdVALLctiwVs/an9zhD885QD/I6t03RpXPnCCH18fwg
-         leAw==
-X-Gm-Message-State: AC+VfDxFEhjQs2bOnvurrnkVeZX5wKSYjB2RbIWNv4vuMDNOxwE0neqt
-        G+Zk5Iwiz8C/xO2jxQ4WZQuihMDKt4+Yv2ABJi4=
-X-Google-Smtp-Source: ACHHUZ74PRWd3W6tA7/HC6ffJ6hUlzKNVHe9tEKAitrJAPUnK5rORfUJbbMWQJ108I6ExXGwTw5z+wSbP/q2dJlyD08=
-X-Received: by 2002:a19:f816:0:b0:4f1:4074:b4fd with SMTP id
- a22-20020a19f816000000b004f14074b4fdmr2155614lff.29.1684584952032; Sat, 20
- May 2023 05:15:52 -0700 (PDT)
+        Sun, 21 May 2023 05:42:20 -0400
+Received: from forward102b.mail.yandex.net (forward102b.mail.yandex.net [178.154.239.149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A8A0ED
+        for <linux-modules@vger.kernel.org>; Sun, 21 May 2023 02:42:18 -0700 (PDT)
+Received: from mail-nwsmtp-smtp-production-main-45.myt.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-45.myt.yp-c.yandex.net [IPv6:2a02:6b8:c12:2ea0:0:640:a1b2:0])
+        by forward102b.mail.yandex.net (Yandex) with ESMTP id D98B260047
+        for <linux-modules@vger.kernel.org>; Sun, 21 May 2023 12:42:14 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-45.myt.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id 2gcQMu6Wo8c0-O58qaOEp;
+        Sun, 21 May 2023 12:42:14 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1684662134;
+        bh=+W1ebVQ8wxAxVdRhQKJhM/aCMtTw/BgUPYu/MF11KIc=;
+        h=Message-Id:Date:Cc:Subject:To:From;
+        b=LtdloUYZT4eKv+k4OORUuNuWFiy+ndZZSc8vVCEFTlFJnMH0oM4bAGgshbZzQ0znt
+         KqXcMnZTRqPX0lcNmGEGEcZOOkov82RLZ+8daLH9aV9LRXk2KGULHoWhBRvdeT8M9q
+         rF/x6i+R+6ooi8FYB4TtTY9s9NGSiXGjY2FYdafc=
+Authentication-Results: mail-nwsmtp-smtp-production-main-45.myt.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+From:   Dmitry Antipov <dmantipov@yandex.ru>
+To:     linux-modules@vger.kernel.org
+Cc:     Dmitry Antipov <dmantipov@yandex.ru>
+Subject: [PATCH] depmod: simplify and cleanup depmod_modules_sort()
+Date:   Sun, 21 May 2023 12:41:58 +0300
+Message-Id: <20230521094158.81384-1-dmantipov@yandex.ru>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Reply-To: mrr.patriciajuliawilliam@gmail.com
-Sender: stedoni745@gmail.com
-Received: by 2002:a05:6022:6114:b0:3b:959c:3e0d with HTTP; Sat, 20 May 2023
- 05:15:51 -0700 (PDT)
-From:   "mrs. patricia julia william" <mrr.patriciajuliawilliam@gmail.com>
-Date:   Sat, 20 May 2023 05:15:51 -0700
-X-Google-Sender-Auth: uwljhLZb7D7C7ft08Wd-WR2cUKs
-Message-ID: <CAAWQ0g6yRkCp7XdF0XZEbKu_LBYeyo7g3BTBkM8cgjvxnq14rA@mail.gmail.com>
-Subject: Yours sincerely,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_HK_NAME_FM_MR_MRS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-Good day Dearest,
+In depmod_modules_sort(), there is no particular reason to read
+modules.order twice. For sorting purposes, it's enough to assign
+keys (sort indexes) to line number - UINT_MAX (assuming that
+modules.order can't contain more than UINT_MAX lines in total).
 
-Am from one of the cancer hospitals here in America suffering from a
-long time breast cancer of breast and i want to donate my money to
-help the orphans, widows and handicap people through you because there
-is no more time left for me on this earth.
+Check for more possible errors, return convenient error codes
+and handle the latter in do_depmod() as well.
 
-Yours sincerely,
-Mrs.Patricia Julia William.
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+---
+ tools/depmod.c | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
+
+diff --git a/tools/depmod.c b/tools/depmod.c
+index a15126e..de6669e 100644
+--- a/tools/depmod.c
++++ b/tools/depmod.c
+@@ -1479,18 +1479,18 @@ static FILE *dfdopen(const char *dname, const char *filename, int flags,
+ 	return ret;
+ }
+ 
+-
+-
+-static void depmod_modules_sort(struct depmod *depmod)
++static int depmod_modules_sort(struct depmod *depmod)
+ {
+ 	char line[PATH_MAX];
+ 	const char *order_file = "modules.order";
+ 	FILE *fp;
+-	unsigned idx = 0, total = 0;
++	int ret = 0;
++	struct mod *mod;
++	unsigned idx = 0;
+ 
+ 	fp = dfdopen(depmod->cfg->dirname, order_file, O_RDONLY, "r");
+ 	if (fp == NULL)
+-		return;
++		return -errno;
+ 
+ 	while (fgets(line, sizeof(line), fp) != NULL) {
+ 		size_t len = strlen(line);
+@@ -1500,35 +1500,33 @@ static void depmod_modules_sort(struct depmod *depmod)
+ 		if (line[len - 1] != '\n') {
+ 			ERR("%s/%s:%u corrupted line misses '\\n'\n",
+ 				depmod->cfg->dirname, order_file, idx);
++			ret = -EINVAL;
+ 			goto corrupted;
+ 		}
+-	}
+-	total = idx + 1;
+-	idx = 0;
+-	fseek(fp, 0, SEEK_SET);
+-	while (fgets(line, sizeof(line), fp) != NULL) {
+-		size_t len = strlen(line);
+-		struct mod *mod;
+-
+-		idx++;
+-		if (len == 0)
+-			continue;
+ 		line[len - 1] = '\0';
+-
+ 		mod = hash_find(depmod->modules_by_uncrelpath, line);
+ 		if (mod == NULL)
+ 			continue;
+-		mod->sort_idx = idx - total;
++		mod->sort_idx = idx - UINT_MAX;
++	}
++
++	if (ferror(fp)) {
++		ERR("error reading %s/%s (%s)\n", depmod->cfg->dirname,
++		    order_file, strerror(errno));
++		ret = -errno;
++		goto corrupted;
+ 	}
+ 
+ 	array_sort(&depmod->modules, mod_cmp);
++
+ 	for (idx = 0; idx < depmod->modules.count; idx++) {
+-		struct mod *m = depmod->modules.array[idx];
+-		m->idx = idx;
++		mod = depmod->modules.array[idx];
++		mod->idx = idx;
+ 	}
+ 
+ corrupted:
+ 	fclose(fp);
++	return ret;
+ }
+ 
+ static int depmod_symbol_add(struct depmod *depmod, const char *name,
+@@ -3125,7 +3123,9 @@ static int do_depmod(int argc, char *argv[])
+ 		goto cmdline_modules_failed;
+ 	}
+ 
+-	depmod_modules_sort(&depmod);
++	err = depmod_modules_sort(&depmod);
++	if (err < 0 && err != -ENOENT)
++		goto cmdline_modules_failed;
+ 	err = depmod_load(&depmod);
+ 	if (err < 0)
+ 		goto cmdline_modules_failed;
+-- 
+2.40.1
+
