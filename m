@@ -2,299 +2,158 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFF2271169E
-	for <lists+linux-modules@lfdr.de>; Thu, 25 May 2023 21:07:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7A527117D9
+	for <lists+linux-modules@lfdr.de>; Thu, 25 May 2023 22:08:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243415AbjEYS5J (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 25 May 2023 14:57:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45626 "EHLO
+        id S240832AbjEYUIr (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 25 May 2023 16:08:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243771AbjEYS4A (ORCPT
+        with ESMTP id S240603AbjEYUIq (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 25 May 2023 14:56:00 -0400
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C482B4EEC;
-        Thu, 25 May 2023 11:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1685040486; x=1716576486;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=PjhBjwS3th3SyaAVxprzvC1sQhp70S41vyCVuCT/iPU=;
-  b=msrKda2u7/yntLqcqosCbsO9vOjA/czEAVDIiIJcEtoBugqH5RhfPQMR
-   JU5+oshpxDd2UxYTwBJXgbhwLTwlhoRIhxXp9bLen7QjmnxhF6tug6B9g
-   GOhcRDBy91ZPP1qe7vq6UomqWPx87WziexyRuyCqeZbQUo+9xa3gayHY6
-   WD0t5OFUayLsB1+sq0430uAIK5FpkHCkVDuaPWrOsm8wRnF9Uc7A9aneK
-   9Qe9j83p0ar0slwsNfnzfp3ZBLXe7znDSkYW/5fUOKgJ36lgI8lS8jKuL
-   ThPy2z8ZHpGcJz9oQValr3FFoFP/p3Z5spKJhb2/P488EYO61SKBGYRpb
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10721"; a="338588675"
-X-IronPort-AV: E=Sophos;i="6.00,191,1681196400"; 
-   d="scan'208";a="338588675"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2023 11:45:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10721"; a="951571714"
-X-IronPort-AV: E=Sophos;i="6.00,191,1681196400"; 
-   d="scan'208";a="951571714"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga006.fm.intel.com with ESMTP; 25 May 2023 11:45:41 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Thu, 25 May 2023 11:45:41 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23 via Frontend Transport; Thu, 25 May 2023 11:45:41 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.175)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.23; Thu, 25 May 2023 11:45:40 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cKyOV0zMAaPDPQ4Jaxi7Kg8sKWSxsYT1JEcNJvC+OR4XpJIyb16sW0mNhJcAfxGsMFpa1mGVZ/TfSCBeCgmAdsDhztPk40Lq5qDwtkRn7EHbQzyQP74YdwuOOv8SqSyfgFfaeA+K7eWo/1gGIDlxLppM04mFbKMU2i2gcxxZ64gqDj6LnsWLJL8EjXMnojdJM5fEvGdwyDjOQO3gw4O+PP74pRFCTOz+tgp7pyjXUdclpXLrmSj/+bK96NJtAX0nmvY3UM5W9WjomXmNJLEOouHFr94Gw95DwI/pxRTQ2jCsdygDD43gE1mNYwTJNACLTqbZ66l6KXuwMIXqGfhWvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iBemwG8fuK9VClomC7yIZ9vd3Pn7m7Q6DB70JP0rLrk=;
- b=h7WVhgcHXS6MipaveGmbuTlpcpfmIOwcYCh7pAQwXTZRzNP/TDKtYjuPrOSDESCsIMBvxVrmhhjusj5Bnr02BiotgP8QpPJ44VHSqXVqTkUt7Z5FE2q2IDIKjJZndL5PKoHYcTssWStX/NXOZzkTAQPKxim0NBsKhBmD+nNzfTe8i1NvCPMH7bFb0nK/NM1Z4jK5S8VBzVka49FtABSQIcSXs5dyl8cKga04f/fVgqGt6pilKuriAvl2SRZMAbyYrWJfPcnbgGBwQVGCOom0Fm0XYgp/SYhoNHecHe+5l6D85SDBWV1cUjZL9j/zEA3/lnQkAWP9So4xGDLXwzrGFQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
- by DM4PR11MB5520.namprd11.prod.outlook.com (2603:10b6:5:39f::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.17; Thu, 25 May
- 2023 18:45:38 +0000
-Received: from CY5PR11MB6139.namprd11.prod.outlook.com
- ([fe80::44e7:c479:62f4:3eb4]) by CY5PR11MB6139.namprd11.prod.outlook.com
- ([fe80::44e7:c479:62f4:3eb4%3]) with mapi id 15.20.6433.017; Thu, 25 May 2023
- 18:45:38 +0000
-Date:   Thu, 25 May 2023 11:45:33 -0700
-From:   Lucas De Marchi <lucas.demarchi@intel.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-CC:     Petr Pavlu <petr.pavlu@suse.com>,
-        Luis Chamberlain <mcgrof@kernel.org>,
-        <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
-        <song@kernel.org>, <lucas.de.marchi@gmail.com>,
-        <christophe.leroy@csgroup.eu>, <peterz@infradead.org>,
-        <rppt@kernel.org>, <dave@stgolabs.net>, <willy@infradead.org>,
-        <vbabka@suse.cz>, <mhocko@suse.com>, <dave.hansen@linux.intel.com>,
-        <colin.i.king@gmail.com>, <jim.cromie@gmail.com>,
-        <catalin.marinas@arm.com>, <jbaron@akamai.com>,
-        <rick.p.edgecombe@intel.com>, <yujie.liu@intel.com>,
-        <david@redhat.com>, <tglx@linutronix.de>, <hch@lst.de>,
-        <patches@lists.linux.dev>, <linux-modules@vger.kernel.org>,
-        <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
-        <pmladek@suse.com>, <prarit@redhat.com>, <lennart@poettering.net>
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-Message-ID: <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
-References: <20230524213620.3509138-1-mcgrof@kernel.org>
- <20230524213620.3509138-3-mcgrof@kernel.org>
- <8fc5b26b-d2f6-0c8f-34a1-af085dbef155@suse.com>
- <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
-X-ClientProxiedBy: SJ0PR03CA0348.namprd03.prod.outlook.com
- (2603:10b6:a03:39c::23) To CY5PR11MB6139.namprd11.prod.outlook.com
- (2603:10b6:930:29::17)
+        Thu, 25 May 2023 16:08:46 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2004EA9
+        for <linux-modules@vger.kernel.org>; Thu, 25 May 2023 13:08:44 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3095557dd99so2497141f8f.1
+        for <linux-modules@vger.kernel.org>; Thu, 25 May 2023 13:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1685045322; x=1687637322;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aIsIFxmLlj97Nfx6D9vKSgsX1a6jDH3TwyPUkCdOSPQ=;
+        b=NfHUuPqrYbkYfaJLYZsBrLcXLQRoBIy987P60Cb1gnvLRhrIhe4KBMlVsgiG7UUgVw
+         WVV33SCrrt339T4kMyxHGzTyd7rwigoc+GKyVMTHL6aWghrX+1TCpAItGtsR5OVRu03X
+         Gr9zjwH15243EBBGSdUuvVy/cqnkehFB4vrPo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685045322; x=1687637322;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aIsIFxmLlj97Nfx6D9vKSgsX1a6jDH3TwyPUkCdOSPQ=;
+        b=Pz+sJSMo2O3DS8RimZ/cng2zX0fqVTlTuaLb+FWZz7isSNZpX7VAM3JiakAMuuv2kV
+         w/eo4HX/+yhdKOGvfKjUgCKLiStahgtfoWeMrVG2/9UL4ES6IXSsgJeyMwVDetcDk0FY
+         jr5tSmsaqXKWmw4uuqBkkJqiFqRrTBoy9zGQd+n6vPX0KFt3ti59k6H2ua+P8N7dQeOZ
+         JIejaBgvyFzgJtQaekGWLH6Z9932zriM/wG6uhGJXaAc2eJKrmOyDzgraGfJtZv3EkS+
+         jf+pl6kVfJ/ZAeiRcB90t3iorTBpg9/xQyIpxptL2obVrXUuRrCJl8wqhgtH/t1v6DWm
+         e41Q==
+X-Gm-Message-State: AC+VfDzHK5TIgmCyTNZOY6K1x+g5HxbDZF1an7pjmFV6ATP75++uaUNU
+        GC+7e85dgKYi+TG/9ulU9YAKE4WvsForNr9piL8Z3CBo
+X-Google-Smtp-Source: ACHHUZ7zLP5zR+E4+CH585Ugglw3aRDFeUqd/mT5NGKbile0CwZhylBcDiig1CG3aXCmoiVVUWta4A==
+X-Received: by 2002:a17:906:9f25:b0:96f:675d:491f with SMTP id fy37-20020a1709069f2500b0096f675d491fmr2927700ejc.57.1685040640329;
+        Thu, 25 May 2023 11:50:40 -0700 (PDT)
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com. [209.85.208.48])
+        by smtp.gmail.com with ESMTPSA id j13-20020a170906254d00b0096a6be0b66dsm1160086ejb.208.2023.05.25.11.50.39
+        for <linux-modules@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 May 2023 11:50:39 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-510dabb39aeso4405713a12.2
+        for <linux-modules@vger.kernel.org>; Thu, 25 May 2023 11:50:39 -0700 (PDT)
+X-Received: by 2002:a17:907:6d9e:b0:96f:4ee4:10d4 with SMTP id
+ sb30-20020a1709076d9e00b0096f4ee410d4mr2465428ejc.43.1685040638863; Thu, 25
+ May 2023 11:50:38 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR11MB6139:EE_|DM4PR11MB5520:EE_
-X-MS-Office365-Filtering-Correlation-Id: 03113594-9149-4197-f0c3-08db5d503b4a
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 5CoE9cWU+Md2N6Mz5F5Bb7TgzLuXDuroRPxyFKlWqdpdDd+8HHFMRlC1k+/8Kcyyc3bOLMJjoWOcGUCMRsu4LFJSngpUkscN+ywOHdwUlw7y+C7azLqciM5Fq9rWv6pnHEMGZWyG8tVGSdGsU4KAtvR+jJyu2N0YpoBIxb619xEIbkdtvkNs3x/obF01KqI/H0zT93vCB8G1JBQKp7mRjdUDqbrUDLAQnzk+iSuD9Fx2KEqGA6VpjKe9ELvxVSerOpVWv9lou8aNQtSrN1LSBz2Mkj5YwFTVdHLjxj5WQLqPyLcrMP+tttriLtHwUI3Ht4IA0U129QxlT69xUzCepJzn3pHyqe7pkvRnLD+g5U3I26oezPXVQDiPzETpFcmchQ0REIxANmC7sSLvIart9pfR7ESDjsMxYtsOrajnIcOrwSEf211U0l9pDlK07gKegZ2arMvwSv5stYX/nVXjUDLEPMSR20lECVg9uzJNzXb9Ebt+DV+yySWQdlGViMoQ5WBsJajzdHueaJ/S7M70EFHYM0CkM1SvrwcUEBoHXK/xvG6e650DzE/zvjZZIfKhyCrEPp7S/n/iOjQQHLc/juo7IN/0xzyd332KJc8Pg2Rt2+nt67WZ/D2omLtel2uHqyznveTXnC0kgxNyZIwA7Q==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR11MB6139.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(7916004)(346002)(39860400002)(366004)(376002)(136003)(396003)(451199021)(66899021)(966005)(6916009)(66946007)(66556008)(66476007)(478600001)(4326008)(316002)(54906003)(86362001)(83380400001)(6512007)(6506007)(9686003)(26005)(186003)(5660300002)(41300700001)(8936002)(8676002)(7416002)(2906002)(6486002)(6666004)(33716001)(38100700002)(82960400001)(27246005);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T29OLzh5bUc2TTBod3orKzh0NkZPVGYyTVhGTy91QWpnU0l5TVVHV2doWUFr?=
- =?utf-8?B?aVZxSUp0c1pJc0lnTDBnYlpNTXU0dUxDNzJEeDU1K083ZGZlalIyeThKZmIr?=
- =?utf-8?B?aU5zdEV4dlNVMVBlSUFwQ0U4amNkeDh1QmpRVHJUVHkreFlCQlVpME5hSmdq?=
- =?utf-8?B?NFNFK0lReW0rOWh3WFVLZWxVaHhnQlNHRUpXbHJiV1hxWVJzYlFrSTVlem01?=
- =?utf-8?B?bFB6cGI0Y1lWb0VhZTBydzE0cmlBVFdXQy9MVUlaL0dmeXZhaExLT2dkeFVW?=
- =?utf-8?B?bmdOSC9rS09NVTRXc1dFMWt6L1IweXUwQ3pyWk81OGE3L3BlTjB4QUFOMDFG?=
- =?utf-8?B?eWdvb2hZZ01hZVdXSWcxcWhqMmlVT0RsWXpXeUxKMGZudm5aRU1pbThDNi9o?=
- =?utf-8?B?NDhWSTM3NlJnZ2MzVnNWR3JLdW9YVUhneGcwUnIxdUtJVFZFeFRhdUxzYUZ1?=
- =?utf-8?B?UENqOGlZRk1aZlZ4VXVCVnBrSnBuUkNVRnFXZUN1cnFlaG53Ull0Q0w5UXBr?=
- =?utf-8?B?QU5sUXhCYmVKTjdRbkZmUWU3MlJ6czRQQWNnTHFTbFlrMHE0WklPcXEveVpB?=
- =?utf-8?B?UDNRTVNEdGJDRXl3UHA3RFBINForM1BZSEUvdWl3U0ZKNGxkL2pJNHBMMC9P?=
- =?utf-8?B?ejIyVTIzOFBlQmZ2STRxUEh5L3E0cHhmbURUODY0eVZPV1dHSVQxWVZiWTgz?=
- =?utf-8?B?UmNDYkQwTWhiYWVZakM1N1ZGNlQwcWRKbmRBL1VzRFkvV3pUUEd4UklFNEpu?=
- =?utf-8?B?MDlsRS9jOEw0QVB6bUVWdEliRzRYazNHM2FRbEw3VTF5aWtyYTRnb25zQ3k4?=
- =?utf-8?B?WlVnSkY2c082emhHOVlsdGNYcnd2aVNIL3ZDeW5zR1hiWUZtRERKUlVxQi9u?=
- =?utf-8?B?N3k5R25RTmE1R3djTWNoZFNtUytJUVpLYWl5d0cvTVFxK3ZWZE9UeFBleFVz?=
- =?utf-8?B?TUpZb0s5WjREWHNhRUxjNDdCVFBEa1VjQVRpeUNjZWg2Q3YvNHcwUWxFU2RS?=
- =?utf-8?B?dTVSZ0gzL3FZSUlSaDVsenpoUExOOG5TTTRkZW8veTFlc2lmMXpoQ3pmZGlF?=
- =?utf-8?B?QVBMZG1NK3RLT1VKTVFVZ1NDQ3lrL3V4Q0x0WFhCZXIrTmpiWWdXTGNpaFJh?=
- =?utf-8?B?N09obFE4S0wrZGdqdm5keDlGUThLdXg5MGREY0JQVXpJeUVEQ01aTzZKb1Rv?=
- =?utf-8?B?RUhZVTF0bFZTOWhOTjczQ2djY2p5aHZrUHFFN2R1Z3lSNU9DT2Vvbk11UTBY?=
- =?utf-8?B?aGJlYURyUTh0UjY3bkVBclFTR2tsbjFpdDVmY3pjY0hkNitONlAvNUNNZUds?=
- =?utf-8?B?Y3R4YzdMKysrSHo3aG0rOUtoNmd0NUI4KzdlWC9jSWljaUtHUUQwU0s2dmFF?=
- =?utf-8?B?RE1qNFExU29mTytGckUvV2kvT2ExYldrWlRKUFdhRGVPdHNkUUdDQW5Pd0ky?=
- =?utf-8?B?YSt6djFqaXFDZlAvUTk3YWR4UitJdjA1T3lTRnI2ellranUrMStha2RhV29Z?=
- =?utf-8?B?TldGbk5zV2tIZGpQK3dkN2d5SWpsSWZKOXJlQWNrTUFuUk9GNXNiN3Q5L1Fp?=
- =?utf-8?B?ZEVKSkI5UFhvU3J2VFdiVFZ6ME1UMEJ3dG1pY1p3OTY4ekFsQW1SK2c3ZEtz?=
- =?utf-8?B?ZmJjMFF1NjVSbytIMnZTNS81RG1TSXBBbUhaTjJnYkZlbDRjbGd1UGtWSEZo?=
- =?utf-8?B?alNnUTdYT0RhdTd2NkN2ZlN1MENEYTl1akNMUSt2YVlXVWNOOXZ3bElESVRC?=
- =?utf-8?B?OFFlb2xwYlFBVjg3U2JaRE0wOXZkWi8wZTd0S1ovTzY0RHlaZTRWY2FPZHdG?=
- =?utf-8?B?OVNLclVVTmhBejFMMGl1TjBtdW1YamUwTGhDbXpIVmZtVi9PQzgwTHIzc1Iz?=
- =?utf-8?B?ek1XTDh5cm5uWWJjRXhQSUx3ZkhxK3R5U1QwaTJwSkpQNFdjQmpkS2xWU093?=
- =?utf-8?B?a24vdU14VEh5YThzck5zL0tWRUdEdHBKMHBZM3F6UjRVZjl5SVVWNURUVVZx?=
- =?utf-8?B?UDhuOVZiNFgzVldvWVBlMkdGeVFCcUZDMDhrcy84Qm1pVjdUVW9OMHdLeGdO?=
- =?utf-8?B?S25INVFlNDR1K0k3MGd1OHM4TjlScm5iT1N0QkpYZFlNMVZJTWxDdDFicW9E?=
- =?utf-8?B?RC9IZ2JCMXErVzUrTlBJT3hlQVNhT2xvVFNheFROcCtxMkFvMDNLeDVRbHQ4?=
- =?utf-8?B?ZUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 03113594-9149-4197-f0c3-08db5d503b4a
-X-MS-Exchange-CrossTenant-AuthSource: CY5PR11MB6139.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2023 18:45:37.9050
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ebtrVVQDT6PiTH7r0RDiKo6bZdfdvDgXbrFXIbg/oVI1uY9UJ5D0DalNEYz2GpBQmO9zjWmqeCX7p2jVuWcWiGvAZDzNx3D+p7mpXiTCCA4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB5520
-X-OriginatorOrg: intel.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230524213620.3509138-1-mcgrof@kernel.org> <20230524213620.3509138-2-mcgrof@kernel.org>
+ <CAHk-=wjahcAqLYm0ijcAVcPcQAz-UUuJ3Ubx4GzP_SJAupf=qQ@mail.gmail.com>
+ <CAHk-=wgKu=tJf1bm_dtme4Hde4zTB=_7EdgR8avsDRK4_jD+uA@mail.gmail.com> <ZG+kDevFH6uE1I/j@bombadil.infradead.org>
+In-Reply-To: <ZG+kDevFH6uE1I/j@bombadil.infradead.org>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 25 May 2023 11:50:21 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgWCDw58fZDLGYVqVC2ee-Zec25unewdHFp8syCZFumvg@mail.gmail.com>
+Message-ID: <CAHk-=wgWCDw58fZDLGYVqVC2ee-Zec25unewdHFp8syCZFumvg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] fs/kernel_read_file: add support for duplicate detection
+To:     Luis Chamberlain <mcgrof@kernel.org>
+Cc:     Linux FS Devel <linux-fsdevel@vger.kernel.org>, hch@lst.de,
+        brauner@kernel.org, david@redhat.com, tglx@linutronix.de,
+        patches@lists.linux.dev, linux-modules@vger.kernel.org,
+        linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
+        petr.pavlu@suse.com, prarit@redhat.com, lennart@poettering.net,
+        gregkh@linuxfoundation.org, rafael@kernel.org, song@kernel.org,
+        lucas.de.marchi@gmail.com, lucas.demarchi@intel.com,
+        christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
+        dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+        mhocko@suse.com, dave.hansen@linux.intel.com,
+        colin.i.king@gmail.com, jim.cromie@gmail.com,
+        catalin.marinas@arm.com, jbaron@akamai.com,
+        rick.p.edgecombe@intel.com, yujie.liu@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Thu, May 25, 2023 at 09:07:23AM -0700, Linus Torvalds wrote:
->On Thu, May 25, 2023 at 4:40 AM Petr Pavlu <petr.pavlu@suse.com> wrote:
->>
->> kmod normally uses finit_module() only if a module is not compressed,
->> otherwise it decompresses it first and then invokes init_module().
+On Thu, May 25, 2023 at 11:08=E2=80=AFAM Luis Chamberlain <mcgrof@kernel.or=
+g> wrote:
 >
->Note that it would probably be good to teach Fedora and SuSE to use
->the kernel-side decompression, if only because we have it and would
->like to try to avoid using the old "load contents from user memory".
+> Certainly on the track where I wish we could go. Now this goes tested.
+> On 255 cores:
 >
->Mainly because it allows security modules to actively check for
->tampering (ie things like verity etc). Long-term, it would be good to
->just deprecate the old init_module() entirely.
+> Before:
+>
+> vagrant@kmod ~ $ sudo systemd-analyze
+> Startup finished in 41.653s (kernel) + 44.305s (userspace) =3D 1min 25.95=
+8s
+> graphical.target reached after 44.178s in userspace.
+>
+> root@kmod ~ # grep "Virtual mem wasted bytes" /sys/kernel/debug/modules/s=
+tats
+>  Virtual mem wasted bytes       1949006968
+>
+>
+> ; 1949006968/1024/1024/1024
+>         ~1.81515418738126754761
+>
+> So ~1.8 GiB... of vmalloc space wasted during boot.
+>
+> After:
+>
+> systemd-analyze
+> Startup finished in 24.438s (kernel) + 41.278s (userspace) =3D 1min 5.717=
+s
+> graphical.target reached after 41.154s in userspace.
+>
+> root@kmod ~ # grep "Virtual mem wasted bytes" /sys/kernel/debug/modules/s=
+tats
+>  Virtual mem wasted bytes       354413398
+>
+> So still 337.99 MiB of vmalloc space wasted during boot due to
+> duplicates.
 
-Right... I was trying to remember why that wasn't done yet since I
-thought it was. The in-kernel decompression is much more recent than
-the finit_module. Commit b1ae6dc41eaa ("module: add in-kernel support for decompressing")
-was actually the one allowing to decompress on the kernel side
-and  commit 169a58ad824d ("module/decompress: Support zstd in-kernel decompression")
-brought the algo support on the kernel and userspace side to parity.
+Ok. I think this will count as 'good enough for mitigation purposes'
 
-I will teach kmod to take the proper path considering the in-kernel
-decompression availability.
+> The reason is the exclusive_deny_write_access() must be
+> kept during the life of the module otherwise as soon as it is done
+> others can still race to load
 
->
->But yes:
->
->> It means that these and similarly organized distributions end up using
->> init_module(), and adding complexity to optimize finit_module() wouldn't
->> actually help in their case.
->
->Yeah, I think the real bug is absolutely in udev, and trying to load
->the same module hundreds of times is very very wrong. So I think the
->"mitigate it in the kernel" is at most a quick hack to fix user-space
->brokenness.
->
->And I don't think 1/2 is acceptable as that "quick hack". Not at all.
->It also seems fundamentally buggy, as it uses purely the inode number
->as the file identity, which means that it does bad things across
->filesystem limits.
->
->That said, I posted an alternate patch that I think _is_ valid as that
->quick hack. I don't love it, but it sure is simpler (and avoids the
->i_ino bug):
->
->    https://lore.kernel.org/lkml/CAHk-=wgKu=tJf1bm_dtme4Hde4zTB=_7EdgR8avsDRK4_jD+uA@mail.gmail.com/
->
->that patch hasn't seen any testing, and for all I know it won't even
->boot because of some thinko, but I think it would be acceptable as a
->workaround if it does work.
->
->But no, it's not some kind of "fix" for the bug, and yes, using
->init_module() rather than finit_module() will circumvent the quick
->hack. The true fix would be for udev to do proper handling of its data
->structures instead of randomly spraying duplicate module loading
->events.
->
->I don't know why udev does what it does. From what Luis told me,
->apparently it's just forking stuff and keeping all its data structures
->in memory, and has no actual consistency or locking or memory of what
->it has done. Luis pointed me at
+Yes. The exclusion only applies while the file is actively being read.
 
-It's a long time I don't touch that udev code, but my understanding
-is that it first creates the kmod context and then starts to fork workers
-(up to a limit) as the events arrive and there are no idle workers available.
-At this point each of them have a separate kmod context derived from the
-initial context. I was told the workers are needed because
-a) they must be resilient to crashing without catastrophic consequences and
-b) the kernel floods udev with thousands of netlink events during boot.
-c) unrelated netlink events can't wait a module to be loaded, for example.
+> So with two other hunks added (2nd and 4th), this now matches parity with
+> my patch, not suggesting this is right,
 
-If the above is true (need confirmation from udev devs), then what could
-be done on the userspace side would be:
+Yeah, we can't do that, because user space may quite validly want to
+write the file afterwards.
 
-1) do the modalias lookup first, before delegating the module load part
-    to the workers. That will translate the modalias to the module name,
-2) hand over to the worker the module loading part by name, not by alias,
-    iff there isn't one being done for that already by other workers -
-    workers need to share some state with the main process.
+Or, in fact, unload the module and re-load it.
 
-With this the dedup can happen based on the *module name*. I was told
-a dedup based on the aliases is not effective as there are slight
-changes on the modaliases being sent on boot leading to the same module.
+So the "exclusion" really needs to be purely temporary.
 
+That said, I considered moving the exclusion to module/main.c itself,
+rather than the reading part. That wouild get rid of the hacky "id =3D=3D
+READING_MODULE", and put the exclusion in the place that actually
+wants it.
 
->    https://lore.kernel.org/all/23bd0ce6-ef78-1cd8-1f21-0e706a00424a@suse.com/T/#u
->
->for some udev background.
+And that would allow us to at least extend that temporary exlusion a
+bit - we could keep it until the module has actually been loaded and
+inited.
 
-the synchronization point in the kernel side rather than on userspace
-used to be cheap and the race window smaller.  About the race: libkmod
-already checks if there's a module being loaded before actually loading
-it, however there is a race between the initstate file being created by
-the kernel side and new requests arriving to load the same module.
+So it would probably improve on those numbers a bit more, but you'd
+still have the fundamental race where *serial* duplicates end up
+always wasting CPU effort and temporary vmalloc space.
 
->
->It's been about a decade since I looked at udev sources, and none of
->this encourages me to take a second look, so all of the above may be
->me misunderstanding just exactly what the udev problem is. But for
->that 'finit' case, we *could* try that simple hack of mine.
->
->I say "hack", but the patch really is pretty simple, and the concept
->of "exclusive special access" certainly is not some hack in itself.
->It's just not anything we've ever done before. So the hackishness from
->that exclusive_deny_write_access() thing in my patch is mainly that it
->shouldn't be needed at all (and that the exclusivity should probably
->be set some other way).
->
->Comments welcome.
-
-Thinking only on the finit_module case and given libkmod will be
-changed to prefer that path, it's not clear if it's preferred
-to dedup on module name (userspace) or inode (kernel). Also worth
-mentioning that both of them only protect against the window of calling
-finit_module() and having a initstate file created by the kernel: if the
-file exists in the coming or live states, libkmod will already do the
-shortcut.
-
-Are you willig to merge (a possibly improved version of) your patch
-or the userspace change is still something that
-would be desired?  Doing that on the kernel has the small advantage
-that it also synchronizes requests from sources other than udev,
-but I don't think we would have many to justify.
-
-Lucas De Marchi
-
->
->                  Linus
+                   Linus
