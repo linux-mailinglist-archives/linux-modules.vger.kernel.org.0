@@ -2,203 +2,114 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43986773D6C
-	for <lists+linux-modules@lfdr.de>; Tue,  8 Aug 2023 18:18:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C67477413A
+	for <lists+linux-modules@lfdr.de>; Tue,  8 Aug 2023 19:17:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231950AbjHHQRm (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 8 Aug 2023 12:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
+        id S229623AbjHHRRK (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Tue, 8 Aug 2023 13:17:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232249AbjHHQQC (ORCPT
+        with ESMTP id S230318AbjHHRQg (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 8 Aug 2023 12:16:02 -0400
-Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D48E62;
-        Tue,  8 Aug 2023 08:48:07 -0700 (PDT)
-X-UUID: e0ad852e35c511ee9cb5633481061a41-20230808
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-        h=Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=3bTI4ezWT0dRlseV1XH1auN5umDiuiT9sp0ElLkplnk=;
-        b=qyrZII5nSYfDgdidaw0URf4ZofwG1EVXxfgB82I25iLr1fGG5VBErD7TvzBhg96A9B5+kb/ogGfTQ4OCbf6AoR+58kbRMDd7K0JiOR/BAjneLgRzr2OohbVyf9EijJM8VpITHX4ggUNOukzOB5mkO2uy5lmhSBaUbapqtcfdldM=;
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.31,REQID:7ff864a1-1a3f-46a3-8abc-b4524e19721c,IP:0,U
-        RL:0,TC:0,Content:0,EDM:0,RT:0,SF:95,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-        :release,TS:95
-X-CID-INFO: VERSION:1.1.31,REQID:7ff864a1-1a3f-46a3-8abc-b4524e19721c,IP:0,URL
-        :0,TC:0,Content:0,EDM:0,RT:0,SF:95,FILE:0,BULK:0,RULE:Spam_GS981B3D,ACTION
-        :quarantine,TS:95
-X-CID-META: VersionHash:0ad78a4,CLOUDID:59b6f042-d291-4e62-b539-43d7d78362ba,B
-        ulkID:230808163051S0PE58AX,BulkQuantity:0,Recheck:0,SF:38|29|28|17|19|48,T
-        C:nil,Content:0,EDM:-3,IP:nil,URL:11|1,File:nil,Bulk:nil,QS:nil,BEC:nil,CO
-        L:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 0
-X-CID-BAS: 0,_,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_SDM,TF_CID_SPAM_ASC,TF_CID_SPAM_FAS,
-        TF_CID_SPAM_FSD,TF_CID_SPAM_ULN
-X-UUID: e0ad852e35c511ee9cb5633481061a41-20230808
-Received: from mtkmbs14n1.mediatek.inc [(172.21.101.75)] by mailgw01.mediatek.com
-        (envelope-from <kuan-ying.lee@mediatek.com>)
-        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-        with ESMTP id 996264844; Tue, 08 Aug 2023 16:30:48 +0800
-Received: from mtkmbs13n2.mediatek.inc (172.21.101.108) by
- mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Tue, 8 Aug 2023 16:30:47 +0800
-Received: from mtksdccf07.mediatek.inc (172.21.84.99) by
- mtkmbs13n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
- 15.2.1118.26 via Frontend Transport; Tue, 8 Aug 2023 16:30:47 +0800
-From:   Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
-To:     Jan Kiszka <jan.kiszka@siemens.com>,
-        Kieran Bingham <kbingham@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-CC:     <chinwen.chang@mediatek.com>, <qun-wei.lin@mediatek.com>,
-        <linux-mm@kvack.org>, <linux-modules@vger.kernel.org>,
-        <casper.li@mediatek.com>, <akpm@linux-foundation.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>, <bpf@vger.kernel.org>
-Subject: [PATCH v2 8/8] scripts/gdb/vmalloc: add vmallocinfo support
-Date:   Tue, 8 Aug 2023 16:30:18 +0800
-Message-ID: <20230808083020.22254-9-Kuan-Ying.Lee@mediatek.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20230808083020.22254-1-Kuan-Ying.Lee@mediatek.com>
-References: <20230808083020.22254-1-Kuan-Ying.Lee@mediatek.com>
+        Tue, 8 Aug 2023 13:16:36 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D15871D446
+        for <linux-modules@vger.kernel.org>; Tue,  8 Aug 2023 09:06:43 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fe2d620d17so88135e9.0
+        for <linux-modules@vger.kernel.org>; Tue, 08 Aug 2023 09:06:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1691510792; x=1692115592;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=en4BANwXReNJdtVv23CMrzP6JO/+20SEX8H3hOTpv5o=;
+        b=myWSq4lPvBKhbe4+zSbtARG2ka8adzgpdxrGR/PkL7IS+S1OubWLaJ3PjZLNvhJy5F
+         Xxx8J5Do9SX4jKy9jMtYoXQrT2tMTOGGb6tx6htlzAflRvPrEIFTF/Rmk7QkwR5YHGVz
+         JdV8msNkCSWWUevTqzOhoHQTZQ8lZPprWLFxllO+tDH/UFYWNkyGoBNXkX3fHO4R3QoI
+         UPXOREvlo7HlTAfGM9pYpPVCmPupS5fK7rQia78bAJZZd9jL9iiHNDB6uwYHKN2q2Ybo
+         9cJPjGl9yg5d/Rgfc2HxZcto8aGFRA7PmIARN2MFk+wkNjx0zxZ4fN/yRC31aiKkjhas
+         6gLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691510792; x=1692115592;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=en4BANwXReNJdtVv23CMrzP6JO/+20SEX8H3hOTpv5o=;
+        b=IyPF+rMeoswsi87hu+BmUxSHQvt9n1zjMra/zqMEZ6YGuw4p6qVrRju8Bbl3gCgHv3
+         GiEykWJkFMPpe8pEQ9/ItVHSVQCNVLUb6Qof+zZI6kyglXVQM9iedcdVCn6VtRGgugFh
+         yWCWWs+HEMzaFI6RQD0Ge54x9UmfG1fQa2BFHWc7vUgmdmuUMtPRxPq+Vy2XiskF2rps
+         zlYlyjOEJ2eT7v2yZX1FfikD70pQHb7pFL0Jyqs+YsS59cS9pmci+yEiRuPPu1UaDYPZ
+         bJ655AMMjcGU46hnNOKvTzC6XIdVMF/WeCSpLJ6c+cKpq8z2no6zbM/JeKdtTV/7tDMk
+         Nxsg==
+X-Gm-Message-State: AOJu0Yyz2UV0h00wSVi44gafYtj2p/6S6m5DWzLhIlrBLewwqGjDZYIZ
+        kpuPm94t7cjONybsin8vyS/+hULhNpEP2XbqEFvEGw==
+X-Google-Smtp-Source: AGHT+IEyE8ErD7uTJxSl5pOL1gNwgH/rpoc3NrRUJbIX+CCqivojjSoogbdUBi8R44J+rqzNlPOm0e/5+oOFVS4Mew4=
+X-Received: by 2002:a05:600c:6023:b0:3f1:70d1:21a6 with SMTP id
+ az35-20020a05600c602300b003f170d121a6mr311208wmb.0.1691510792379; Tue, 08 Aug
+ 2023 09:06:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK:  N
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        UNPARSEABLE_RELAY,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <0000000000000e4cc105ff68937b@google.com> <000000000000166f9e06025c8139@google.com>
+In-Reply-To: <000000000000166f9e06025c8139@google.com>
+From:   Aleksandr Nogikh <nogikh@google.com>
+Date:   Tue, 8 Aug 2023 18:06:20 +0200
+Message-ID: <CANp29Y7q49HBoV+_xD1wpztUGDu4ykEFb-2H-d71rZAkY=M67A@mail.gmail.com>
+Subject: Re: [syzbot] [modules?] KASAN: invalid-access Read in init_module_from_file
+To:     syzbot <syzbot+e3705186451a87fd93b8@syzkaller.appspotmail.com>
+Cc:     bpf@vger.kernel.org, chris@chrisdown.name, linan122@huawei.com,
+        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
+        llvm@lists.linux.dev, mcgrof@kernel.org, nathan@kernel.org,
+        ndesaulniers@google.com, song@kernel.org,
+        syzkaller-bugs@googlegroups.com, trix@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-This GDB script shows the vmallocinfo for user to
-analyze the vmalloc memory usage.
+On Tue, Aug 8, 2023 at 12:09=E2=80=AFAM syzbot
+<syzbot+e3705186451a87fd93b8@syzkaller.appspotmail.com> wrote:
+>
+> syzbot suspects this issue was fixed by commit:
+>
+> commit 125bfc7cd750e68c99f1d446e2c22abea08c237f
+> Author: Li Nan <linan122@huawei.com>
+> Date:   Fri Jun 9 09:43:20 2023 +0000
+>
+>     md/raid10: fix the condition to call bio_end_io_acct()
+>
+> bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=3D15c26ba9a8=
+0000
+> start commit:   a901a3568fd2 Merge tag 'iomap-6.5-merge-1' of git://git.k=
+e..
+> git tree:       upstream
+> kernel config:  https://syzkaller.appspot.com/x/.config?x=3Df5e1158c5b2f8=
+3bb
+> dashboard link: https://syzkaller.appspot.com/bug?extid=3De3705186451a87f=
+d93b8
+> syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=3D12518548a80=
+000
+> C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=3D124ccf70a8000=
+0
+>
+> If the result looks correct, please mark the issue as fixed by replying w=
+ith:
+>
+> #syz fix: md/raid10: fix the condition to call bio_end_io_acct()
 
-Example output:
-0xffff800008000000-0xffff800008009000      36864 <start_kernel+372> pages=8 vmalloc
-0xffff800008009000-0xffff80000800b000       8192 <gicv2m_init_one+400> phys=0x8020000 ioremap
-0xffff80000800b000-0xffff80000800d000       8192 <bpf_prog_alloc_no_stats+72> pages=1 vmalloc
-0xffff80000800d000-0xffff80000800f000       8192 <bpf_jit_alloc_exec+16> pages=1 vmalloc
-0xffff800008010000-0xffff80000ad30000   47316992 <paging_init+452> phys=0x40210000 vmap
-0xffff80000ad30000-0xffff80000c1c0000   21561344 <paging_init+556> phys=0x42f30000 vmap
-0xffff80000c1c0000-0xffff80000c370000    1769472 <paging_init+592> phys=0x443c0000 vmap
-0xffff80000c370000-0xffff80000de90000   28442624 <paging_init+692> phys=0x44570000 vmap
-0xffff80000de90000-0xffff80000f4c1000   23269376 <paging_init+788> phys=0x46090000 vmap
-0xffff80000f4c1000-0xffff80000f4c3000       8192 <gen_pool_add_owner+112> pages=1 vmalloc
-0xffff80000f4c3000-0xffff80000f4c5000       8192 <gen_pool_add_owner+112> pages=1 vmalloc
-0xffff80000f4c5000-0xffff80000f4c7000       8192 <gen_pool_add_owner+112> pages=1 vmalloc
+No, that's unrelated.
 
-Signed-off-by: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
----
- scripts/gdb/linux/constants.py.in |  8 +++++
- scripts/gdb/linux/vmalloc.py      | 56 +++++++++++++++++++++++++++++++
- scripts/gdb/vmlinux-gdb.py        |  1 +
- 3 files changed, 65 insertions(+)
- create mode 100644 scripts/gdb/linux/vmalloc.py
+Most likely it's due to https://github.com/google/syzkaller/issues/4117
+TL;DR: for bugs that only existed for a very short time syzbot is
+having problems differentiating between revisions where the bug is not
+yet introduced and where it's already fixed.
 
-diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
-index 03fa6d2cfe01..e3517d4ab8ec 100644
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -22,6 +22,7 @@
- #include <linux/radix-tree.h>
- #include <linux/slab.h>
- #include <linux/threads.h>
-+#include <linux/vmalloc.h>
- 
- /* We need to stringify expanded macros so that they can be parsed */
- 
-@@ -91,6 +92,13 @@ LX_GDBPARSED(RADIX_TREE_MAP_SIZE)
- LX_GDBPARSED(RADIX_TREE_MAP_SHIFT)
- LX_GDBPARSED(RADIX_TREE_MAP_MASK)
- 
-+/* linux/vmalloc.h */
-+LX_VALUE(VM_IOREMAP)
-+LX_VALUE(VM_ALLOC)
-+LX_VALUE(VM_MAP)
-+LX_VALUE(VM_USERMAP)
-+LX_VALUE(VM_DMA_COHERENT)
-+
- /* linux/page_ext.h */
- if IS_BUILTIN(CONFIG_PAGE_OWNER):
-     LX_GDBPARSED(PAGE_EXT_OWNER)
-diff --git a/scripts/gdb/linux/vmalloc.py b/scripts/gdb/linux/vmalloc.py
-new file mode 100644
-index 000000000000..48e4a4fae7bb
---- /dev/null
-+++ b/scripts/gdb/linux/vmalloc.py
-@@ -0,0 +1,56 @@
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (c) 2023 MediaTek Inc.
-+#
-+# Authors:
-+#  Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
-+#
-+
-+import gdb
-+import re
-+from linux import lists, utils, stackdepot, constants, mm
-+
-+vmap_area_type = utils.CachedType('struct vmap_area')
-+vmap_area_ptr_type = vmap_area_type.get_type().pointer()
-+
-+def is_vmalloc_addr(x):
-+    pg_ops = mm.page_ops().ops
-+    addr = pg_ops.kasan_reset_tag(x)
-+    return addr >= pg_ops.VMALLOC_START and addr < pg_ops.VMALLOC_END
-+
-+class LxVmallocInfo(gdb.Command):
-+    """Show vmallocinfo"""
-+
-+    def __init__(self):
-+        super(LxVmallocInfo, self).__init__("lx-vmallocinfo", gdb.COMMAND_DATA)
-+
-+    def invoke(self, arg, from_tty):
-+        vmap_area_list = gdb.parse_and_eval('vmap_area_list')
-+        for vmap_area in lists.list_for_each_entry(vmap_area_list, vmap_area_ptr_type, "list"):
-+            if not vmap_area['vm']:
-+                gdb.write("0x%x-0x%x %10d vm_map_ram\n" % (vmap_area['va_start'], vmap_area['va_end'],
-+                    vmap_area['va_end'] - vmap_area['va_start']))
-+                continue
-+            v = vmap_area['vm']
-+            gdb.write("0x%x-0x%x %10d" % (v['addr'], v['addr'] + v['size'], v['size']))
-+            if v['caller']:
-+                gdb.write(" %s" % str(v['caller']).split(' ')[-1])
-+            if v['nr_pages']:
-+                gdb.write(" pages=%d" % v['nr_pages'])
-+            if v['phys_addr']:
-+                gdb.write(" phys=0x%x" % v['phys_addr'])
-+            if v['flags'] & constants.LX_VM_IOREMAP:
-+                gdb.write(" ioremap")
-+            if v['flags'] & constants.LX_VM_ALLOC:
-+                gdb.write(" vmalloc")
-+            if v['flags'] & constants.LX_VM_MAP:
-+                gdb.write(" vmap")
-+            if v['flags'] & constants.LX_VM_USERMAP:
-+                gdb.write(" user")
-+            if v['flags'] & constants.LX_VM_DMA_COHERENT:
-+                gdb.write(" dma-coherent")
-+            if is_vmalloc_addr(v['pages']):
-+                gdb.write(" vpages")
-+            gdb.write("\n")
-+
-+LxVmallocInfo()
-diff --git a/scripts/gdb/vmlinux-gdb.py b/scripts/gdb/vmlinux-gdb.py
-index 2526364f31fd..fc53cdf286f1 100644
---- a/scripts/gdb/vmlinux-gdb.py
-+++ b/scripts/gdb/vmlinux-gdb.py
-@@ -48,3 +48,4 @@ else:
-     import linux.stackdepot
-     import linux.page_owner
-     import linux.slab
-+    import linux.vmalloc
--- 
-2.18.0
-
+>
+> For information about bisection process see: https://goo.gl/tpsmEJ#bisect=
+ion
+>
