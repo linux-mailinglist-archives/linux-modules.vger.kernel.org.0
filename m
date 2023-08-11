@@ -2,225 +2,98 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3C77748ED
-	for <lists+linux-modules@lfdr.de>; Tue,  8 Aug 2023 21:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAAD8778636
+	for <lists+linux-modules@lfdr.de>; Fri, 11 Aug 2023 05:49:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235185AbjHHTpG (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Tue, 8 Aug 2023 15:45:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52654 "EHLO
+        id S229665AbjHKDtq convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 10 Aug 2023 23:49:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235269AbjHHToq (ORCPT
+        with ESMTP id S229576AbjHKDtq (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Tue, 8 Aug 2023 15:44:46 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EED46FC9
-        for <linux-modules@vger.kernel.org>; Tue,  8 Aug 2023 09:48:06 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-1bbb9fcac6bso24403fac.1
-        for <linux-modules@vger.kernel.org>; Tue, 08 Aug 2023 09:48:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1691513285; x=1692118085;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kb4epZ0hVQjvrS5RqNy38MOhVst2cqtQlkC7YBmZyjc=;
-        b=fNv2VsWLWXzrAnrcJBu7Juv9Tez1x0iS2nX174u1/svb4J8tsWl/YypNVXfwENVc9g
-         R1bylUtMDI8J8zgzT9Id7usfHP2VMdW9Ykc0SvWfn7DGJpazOUXSt9XJWYyctjpAp93d
-         eHkDVVTzFPcvbYpxVJbMPkSdpzZJrDheXvcECM8m5no1G25oNk2HioPUr9cNre8tW/Wf
-         BYucLsvEB8tFXH0Vdv1OQncxYoaS9hf9GDsxIaO3vCt+xPMDKYReByjtPypnYQRhjZrI
-         swzGi36xvGi3CXgcQOqNrmROIGDiDRPt7Aac62NG2f0cajTPcHyLYIgfuJlNaaiwLEF3
-         oMcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691513285; x=1692118085;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kb4epZ0hVQjvrS5RqNy38MOhVst2cqtQlkC7YBmZyjc=;
-        b=eu9GnAYzVF2Y3jPZMVcCgjRF3akLvjWJIs6OSAWYI9/lDHaG+5TRYn1tPBch2bb8kG
-         FjkilcYkNr2itGgm9wFJCgo+oKNGVsqf3SxGxkA7vGfkGkQuyU8BWYC3z0mCkxC6BgTA
-         POpS/Nunu3tzWYVLvavIvPMQu3GRB1/Pqb9hnarr7okwYgFCfbe7ADxumnNW67oXrPdM
-         vGzcmayQc20Ryt7u3dzyEA233YF6DQleBYXIUmo4DkPJEcDdSw1HKUR8VReBJMGeMqRX
-         AM4gnKqh9DZkRf7sl9yCCNbAoA5v9H70vNL8EsAMk4eeikS18K6gDl7HJIjUDc3nH5Yv
-         HVgA==
-X-Gm-Message-State: AOJu0YxB9gGQ0p5IrcOROpuj83ZaWczn4XAER/LzTrQrCSUgcr9FQSSZ
-        OKEepGfzfy+P7vAArh4KTMx30e0R0UbNpurDTmPLQnVb90KzmSBo
-X-Google-Smtp-Source: AGHT+IF66ZIg71BsvfIXpCtaWYgCcZU8SNpF3fi8QtXBlp/Ozl2bOkN0RcX0VeXVj4YAJiEXbN2H1G1ZyCw5KxmnN8o=
-X-Received: by 2002:a25:aa21:0:b0:d15:3761:3513 with SMTP id
- s30-20020a25aa21000000b00d1537613513mr9704045ybi.19.1691486159218; Tue, 08
- Aug 2023 02:15:59 -0700 (PDT)
+        Thu, 10 Aug 2023 23:49:46 -0400
+X-Greylist: delayed 625 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 10 Aug 2023 20:49:45 PDT
+Received: from smtp-gw.pt.net (smtp-gw.pt.net [206.210.192.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C470A2710
+        for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 20:49:45 -0700 (PDT)
+X-ASG-Debug-ID: 1691725159-09411a10a558ef10001-vc2Alt
+Received: from mail.pt.net (mail.pt.net [206.210.194.11]) by smtp-gw.pt.net with ESMTP id B7UHtnhbE0HQRmWo (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO) for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 22:39:19 -0500 (CDT)
+X-Barracuda-Envelope-From: lesrhorer@siliconventures.net
+X-Barracuda-Effective-Source-IP: mail.pt.net[206.210.194.11]
+X-Barracuda-Apparent-Source-IP: 206.210.194.11
+Received: from localhost (localhost [IPv6:::1])
+        by mail.pt.net (Postfix) with ESMTP id EEF1C17F22AA
+        for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 22:39:18 -0500 (CDT)
+Received: from mail.pt.net ([IPv6:::1])
+        by localhost (mail.pt.net [IPv6:::1]) (amavisd-new, port 10032)
+        with ESMTP id uznONP5mQGpV for <linux-modules@vger.kernel.org>;
+        Thu, 10 Aug 2023 22:39:18 -0500 (CDT)
+Received: from localhost (localhost [IPv6:::1])
+        by mail.pt.net (Postfix) with ESMTP id A90E717F2401
+        for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 22:39:18 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at pt.net
+Received: from mail.pt.net ([IPv6:::1])
+        by localhost (mail.pt.net [IPv6:::1]) (amavisd-new, port 10026)
+        with ESMTP id bLJogyefCtku for <linux-modules@vger.kernel.org>;
+        Thu, 10 Aug 2023 22:39:18 -0500 (CDT)
+Received: from [192.168.1.121] (75-15-243-201.lightspeed.snantx.sbcglobal.net [75.15.243.201])
+        (Authenticated sender: lesrhorer@siliconventures.net)
+        by mail.pt.net (Postfix) with ESMTPSA id 937DF17F21FE
+        for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 22:39:18 -0500 (CDT)
+Message-ID: <c6d34094-7363-a462-5043-768f688aef66@siliconventures.net>
+Date:   Thu, 10 Aug 2023 22:39:12 -0500
 MIME-Version: 1.0
-References: <20230801173544.1929519-1-hch@lst.de> <20230801173544.1929519-3-hch@lst.de>
-In-Reply-To: <20230801173544.1929519-3-hch@lst.de>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 8 Aug 2023 11:15:23 +0200
-Message-ID: <CAPDyKForXd2GFVmXXM8hsnAYSQcKhp84t1aOunppUY+MFe0qag@mail.gmail.com>
-Subject: Re: [PATCH 2/5] mmc: au1xmmc: force non-modular build and remove
- symbol_get usage
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Luis Chamberlain <mcgrof@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Daniel Mack <daniel@zonque.org>,
-        Haojian Zhuang <haojian.zhuang@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Manuel Lauss <manuel.lauss@gmail.com>,
-        Yangbo Lu <yangbo.lu@nxp.com>,
-        Joshua Kinard <kumba@gentoo.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-kernel@lists.infradead.org,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-mmc@vger.kernel.org, netdev@vger.kernel.org,
-        linux-rtc@vger.kernel.org, linux-modules@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+To:     "linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>
+Content-Language: en-US
+From:   Leslie Rhorer <lesrhorer@siliconventures.net>
+Subject: module issues
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ASG-Orig-Subj: module issues
+Content-Transfer-Encoding: 8BIT
+X-Barracuda-Connect: mail.pt.net[206.210.194.11]
+X-Barracuda-Start-Time: 1691725159
+X-Barracuda-Encrypted: TLS_AES_256_GCM_SHA384
+X-Barracuda-URL: https://smtp-gw.pt.net:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at pt.net
+X-Barracuda-Scan-Msg-Size: 1353
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.112581
+        Rule breakdown below
+         pts rule name              description
+        ---- ---------------------- --------------------------------------------------
+X-Spam-Status: No, score=0.0 required=5.0 tests=BAYES_20,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-On Tue, 1 Aug 2023 at 19:36, Christoph Hellwig <hch@lst.de> wrote:
->
-> au1xmmc is split somewhat awkwardly into the main mmc subsystem driver,
-> and callbacks in platform_data that sit under arch/mips/ and are
-> always built in.  The latter than call mmc_detect_change through
-> symbol_get.  Remove the use of symbol_get by requiring the driver
-> to be built in.  In the future the interrupt handlers for card
-> insert/eject detection should probably be moved into the main driver,
-> and which point it can be built modular again.
->
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
+Hello all,
 
-If not too late, feel free to add:
+     About a yer or so ago, I upgraded one of my Debian servers to 
+Bullseye, and it killed the 10G NIC on the server due to issues with the 
+device driver in the Debian repository.  I jumped through all sorts of 
+loops and hoops to try to get it working, but I finally had to give up 
+and resort to using the 1G interface. Recently, I tried upgrading 
+another server to the new Debian Bookworm, and it worked for that 
+server, so apparently the issue has been fixed in Bookworm.
 
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+     With that in mind, I went ahead and upgraded the original server to 
+Bookworm, but the NIC remains dead.  Unfortunately, I cannot find ny 
+notes on what I did originally to try to get the 10G interface working 
+and to shut it down in favor of a built-in port.  I do recall I tried 
+compiling what was supposed to be the correct firmware driver and also 
+changing the udev rules, but I do not recall the exact details.  I have 
+tried several things, including re-installing the firmware, but nothing 
+seems to work. The Ethernet interface does not appear on the system in 
+order to be able to specify it in /etc/network/interfaces.  What can I 
+do in order to try to get the 10G card working?
 
-Kind regards
-Uffe
+     The card is an Asus MCB-10G_PEB-10G NIC and uses the bnx2x.ko 
+driver. The system uses an Asus AMD-64 motherboard.
 
-> ---
->  arch/mips/alchemy/devboards/db1000.c |  8 +-------
->  arch/mips/alchemy/devboards/db1200.c | 19 ++-----------------
->  arch/mips/alchemy/devboards/db1300.c | 10 +---------
->  drivers/mmc/host/Kconfig             |  4 ++--
->  4 files changed, 6 insertions(+), 35 deletions(-)
->
-> diff --git a/arch/mips/alchemy/devboards/db1000.c b/arch/mips/alchemy/devboards/db1000.c
-> index 79d66faa84828d..012da042d0a4f7 100644
-> --- a/arch/mips/alchemy/devboards/db1000.c
-> +++ b/arch/mips/alchemy/devboards/db1000.c
-> @@ -14,7 +14,6 @@
->  #include <linux/interrupt.h>
->  #include <linux/leds.h>
->  #include <linux/mmc/host.h>
-> -#include <linux/module.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm.h>
->  #include <linux/spi/spi.h>
-> @@ -167,12 +166,7 @@ static struct platform_device db1x00_audio_dev = {
->
->  static irqreturn_t db1100_mmc_cd(int irq, void *ptr)
->  {
-> -       void (*mmc_cd)(struct mmc_host *, unsigned long);
-> -       /* link against CONFIG_MMC=m */
-> -       mmc_cd = symbol_get(mmc_detect_change);
-> -       mmc_cd(ptr, msecs_to_jiffies(500));
-> -       symbol_put(mmc_detect_change);
-> -
-> +       mmc_detect_change(ptr, msecs_to_jiffies(500));
->         return IRQ_HANDLED;
->  }
->
-> diff --git a/arch/mips/alchemy/devboards/db1200.c b/arch/mips/alchemy/devboards/db1200.c
-> index 1864eb935ca57f..76080c71a2a7b6 100644
-> --- a/arch/mips/alchemy/devboards/db1200.c
-> +++ b/arch/mips/alchemy/devboards/db1200.c
-> @@ -10,7 +10,6 @@
->  #include <linux/gpio.h>
->  #include <linux/i2c.h>
->  #include <linux/init.h>
-> -#include <linux/module.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/leds.h>
-> @@ -340,14 +339,7 @@ static irqreturn_t db1200_mmc_cd(int irq, void *ptr)
->
->  static irqreturn_t db1200_mmc_cdfn(int irq, void *ptr)
->  {
-> -       void (*mmc_cd)(struct mmc_host *, unsigned long);
-> -
-> -       /* link against CONFIG_MMC=m */
-> -       mmc_cd = symbol_get(mmc_detect_change);
-> -       if (mmc_cd) {
-> -               mmc_cd(ptr, msecs_to_jiffies(200));
-> -               symbol_put(mmc_detect_change);
-> -       }
-> +       mmc_detect_change(ptr, msecs_to_jiffies(200));
->
->         msleep(100);    /* debounce */
->         if (irq == DB1200_SD0_INSERT_INT)
-> @@ -431,14 +423,7 @@ static irqreturn_t pb1200_mmc1_cd(int irq, void *ptr)
->
->  static irqreturn_t pb1200_mmc1_cdfn(int irq, void *ptr)
->  {
-> -       void (*mmc_cd)(struct mmc_host *, unsigned long);
-> -
-> -       /* link against CONFIG_MMC=m */
-> -       mmc_cd = symbol_get(mmc_detect_change);
-> -       if (mmc_cd) {
-> -               mmc_cd(ptr, msecs_to_jiffies(200));
-> -               symbol_put(mmc_detect_change);
-> -       }
-> +       mmc_detect_change(ptr, msecs_to_jiffies(200));
->
->         msleep(100);    /* debounce */
->         if (irq == PB1200_SD1_INSERT_INT)
-> diff --git a/arch/mips/alchemy/devboards/db1300.c b/arch/mips/alchemy/devboards/db1300.c
-> index e70e529ddd914d..ff61901329c626 100644
-> --- a/arch/mips/alchemy/devboards/db1300.c
-> +++ b/arch/mips/alchemy/devboards/db1300.c
-> @@ -17,7 +17,6 @@
->  #include <linux/interrupt.h>
->  #include <linux/ata_platform.h>
->  #include <linux/mmc/host.h>
-> -#include <linux/module.h>
->  #include <linux/mtd/mtd.h>
->  #include <linux/mtd/platnand.h>
->  #include <linux/platform_device.h>
-> @@ -459,14 +458,7 @@ static irqreturn_t db1300_mmc_cd(int irq, void *ptr)
->
->  static irqreturn_t db1300_mmc_cdfn(int irq, void *ptr)
->  {
-> -       void (*mmc_cd)(struct mmc_host *, unsigned long);
-> -
-> -       /* link against CONFIG_MMC=m.  We can only be called once MMC core has
-> -        * initialized the controller, so symbol_get() should always succeed.
-> -        */
-> -       mmc_cd = symbol_get(mmc_detect_change);
-> -       mmc_cd(ptr, msecs_to_jiffies(200));
-> -       symbol_put(mmc_detect_change);
-> +       mmc_detect_change(ptr, msecs_to_jiffies(200));
->
->         msleep(100);    /* debounce */
->         if (irq == DB1300_SD1_INSERT_INT)
-> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> index 159a3e9490aed8..f7afd179dd10bf 100644
-> --- a/drivers/mmc/host/Kconfig
-> +++ b/drivers/mmc/host/Kconfig
-> @@ -526,11 +526,11 @@ config MMC_ALCOR
->           of Alcor Micro PCI-E card reader
->
->  config MMC_AU1X
-> -       tristate "Alchemy AU1XX0 MMC Card Interface support"
-> +       bool "Alchemy AU1XX0 MMC Card Interface support"
->         depends on MIPS_ALCHEMY
->         help
->           This selects the AMD Alchemy(R) Multimedia card interface.
-> -         If you have a Alchemy platform with a MMC slot, say Y or M here.
-> +         If you have a Alchemy platform with a MMC slot, say Y here.
->
->           If unsure, say N.
->
-> --
-> 2.39.2
->
