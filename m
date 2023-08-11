@@ -2,76 +2,77 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA785778634
-	for <lists+linux-modules@lfdr.de>; Fri, 11 Aug 2023 05:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C19FB778645
+	for <lists+linux-modules@lfdr.de>; Fri, 11 Aug 2023 05:53:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbjHKDse (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Thu, 10 Aug 2023 23:48:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39980 "EHLO
+        id S232124AbjHKDxa (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Thu, 10 Aug 2023 23:53:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjHKDse (ORCPT
+        with ESMTP id S233391AbjHKDx2 (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Thu, 10 Aug 2023 23:48:34 -0400
-Received: from sonic309-25.consmr.mail.gq1.yahoo.com (sonic309-25.consmr.mail.gq1.yahoo.com [98.137.65.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3202710
-        for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 20:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=att.net; s=s1024; t=1691725710; bh=NLdXBpcpi60kipC/kOSajFw8jygoNTvhv+qTHtaLJDk=; h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To; b=tO0pOBNtfVArn0Bd8IRvPWfgB2Bcel/wOmNwKEWg8NFMGtE4XtsiJlGGKavhzSR1ddj9+/rv1Hf/Aa1q4znFqmFHZUZhkL/8GFfUo8QWgtC2Nsz0I8rX+B0/5TWEN3G7u/dmrg4StG344oJNPNMG8amKUmk17IF/6iXUPD01eR4=
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1691725710; bh=M/nKhs1vLR8ghEpP3LQHthk2YJOS7jDUD2SqasVP06C=; h=X-Sonic-MF:Date:Subject:To:From:From:Subject; b=cBsJ7t/pVMnP2fOIu1dnaRAJVoaZpn/q9PvkLLBTY7gw42Z1dXpamrbGIC3nHnvaxyL87BIg9UqBG30BOqcjUOCT2K3iiJC0HXLVKvimFK91UOqFVcoUlHK4Ef4SQzKmJjMURBbk+cgAq5Exf3AXTxPWejn680aJZ8tMGqEBHp0SAYCUAUi/+uFXH54aUDZf1XVPyhmCcev2rYw8IXo0O2wVyDpOQsvxspoLQ5q0OgWjv0+goBE1EwYtwXqJyoTeT019ZpT0CoA1LDiTIWwqo7gy3cZ4ZGLMwbDFUu5WXFUgZu0428gjCSddjlShWzHdTM4/72Qh7W6hVOSB6tHorQ==
-X-YMail-OSG: y8PjfssVM1lKZURoKw6TWr6haDDecNBzriTBi0G2HSJA3bF1CGnssnA1ODsovAr
- EklFPahHDrCeL4zoExMpWbZXdJLffdpqPA87.gCfZ3UHpDiO6YjOHH83bn.32PmRSm42wC5OngmW
- bPb14aT4EhuObH0.d0W2STRp8o3QTvapPh5Py1HNx7A8q4ZUrSK_WvV33bf6SN3gQr9w2zkgId91
- ycJpFUt9MX0Faho8.RVP_tVCXXqIkYkwC4UEH6bAJ_0c5cgL370vPWhOEoDkrJwpEcOnsdHwM_Nr
- rDjoDniaq6aChPMGrPAK3aQm_1UUjCqT4ZglIGwllD1Omz7xKjjOasYRjxILmCl7M2cdSlbLLuTc
- jZecW2Uf2Ye6Rw75YC.qzGWvqz4Kv9bfjxz4O2CJDgxJVh_txgEOt5r0vQlTNzZNgRFtGa8Aqt6k
- QcgSYoyXEbbZzVPFedVpo5nPvGJSzXoi1ef5FC6heJgVDEQNkvdSQEBhdlRar_YyC8ceyHPKyVWm
- GRSGoI4FummLYZNpBelj0_Ui6qwpParjGcb4s3xM3p_8iGiSC9NfnxWcve6eZWGkLdZFTl_MjUM.
- VwiMP.g99U.TD5n5P2e.fmJq5GYP.Xf6EsPHr2f6DherQR5xuNoBbcLYyljkdEX0tbEBgtjhkMTe
- 5iSr2NrL7dxbgjCwC2Cl8tgLpgMiFS3YYbNa_B.DeQd5Id1TTLhT2PH_RrzgVI78mbSEJn3Iy1zu
- gwNC30VKrg2nsO2jn3NIfS3FQCCvoYzWzC_xY4WazjKYQeRMZHMJvxagEDn80ccyAcaI1Jl3IaKE
- ARDNNtndBwddcLQ4n65Fir3iDVwm5.QlW..cFXXC.SyWfmhlm6sOwXqD5_au_3s3EGFJKrY_gQV.
- m1Gf1BSBS.R7i7Kg6gfJuAZC3lDZvJG5WUDTbf5O2GsKVINk3arwGQtYQdUxr7SjfwPQ4iKF6uXb
- IUJJjhWv7E4eSUa.MTaAGsd2PtlELp2eX10X90jR77DyPaLm7dIqIa_oFDc71FuEu7F6mehAl1so
- p9eQ515JTbE_wZf7sB.vtvc4vfPjlrI9O4DVl33KDFDcCzfn6pOYJU4Ck6pbX0jY7UkyR5v5ssvZ
- NLjnYxyWwL29PVAtEeyPRhdzoJvc206uLIxQVep4QMKeZNhN0unWZcqPImnxNhtE7x1XQlFegleN
- ZfnWOe2HbplUkOOO6b0LWhiTVrcVGhDpRG9nvunJy91bjN1CutaB7JUfekBEtlZ6r7B6LdAhgUhG
- uc29kiCfA8FoPhH.jgqzWSTdwSrP32rsXUo6pT.wy7s_sPD_ivOBU136LhlubtwoqeHCGPIXpz3M
- QXfku2WIKFl8tglgs0B5deFmHKQndT8Soao4IBtpS3lySY7VMZDRpLb6WCnCEjkqKp80S_rB8zoY
- Q455JMk7J0Tt566cjKblulH5mOiLlE2UpV_GPBiBGW0vQaRQD5nHUGUrBUkvbjnrBPysO3oR3c5M
- FAb9sAOJahSufJbGuBZlgjHbtW..niuO9XIpXqs7UOcMlV5H4.1oMaAcCJYsys4_n_MZYNlyZ5vi
- aCJhre7I4afT38zHS0nZsxwkAWFNN2ujPnl5ScT8W3gjfzABfM4c_uXQQPIxCGRvI5VEVShig1HE
- Zao3q_yUCBL5.Bcz8Yto1KQiKY6DwuOyWo.CkTM5h3O2lY.xVX24JcI4iA3dr5ySNUY1o34z2LHv
- 1BloFD_SLSKYCsNs689ktxyRJs4AwEg7mGxbBczUxvzCQ9fLsfAffsQu2SiV0.Z1RVYXT0Vp9Y33
- SSMczsVtKh7FojgJlBx0HtzZQfaoI0uPmlcralFd9IQ2anl9OGqwiWkvv.Z9riFps8CmqRa1gHhK
- YdKoEuegBqeF_i1E9UArlLr5sLx_EKOfelN9SFHrXzrHDX7IsahLd0CAvm6m0uQLPfVHEz4zZG42
- ulRG2T9IxtjHNn6OG.aG5I7FNJ2kfizKvxA9ZDBZMpeLZuE3.83FamlFhJhe7JMdUpP3ZIBcc0IF
- 8ls12YWPB_bS5QegKfrUjatwJ8YyXMYZq3e6.AjZ9V1Oq2spWNmIUnEy3XDxlM3jke6tKdh4A4nK
- oj9PFqMfCwHJQueC8_1vfMtU.nX8kcG2HflUnSJlRdavNalW2_1cxbEcnoRFdJDvwIabr2pqxq0G
- Inm4tz8hn0Koodq5FyTTtNIkK5OglLChI.vTdQg6esGLiypfY.9FoxcPteKmCL3Ib2ZSHB5U_V17
- 9kRv7xZ7UMhoDnUBHKlY6RBbllUgGcFuzvhXmq0ZKwmub7w--
+        Thu, 10 Aug 2023 23:53:28 -0400
+Received: from sonic308-11.consmr.mail.gq1.yahoo.com (sonic308-11.consmr.mail.gq1.yahoo.com [98.137.68.35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD8A230D8
+        for <linux-modules@vger.kernel.org>; Thu, 10 Aug 2023 20:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=att.net; s=s1024; t=1691726000; bh=9amaImanC7wmD7zWEs2r0P2ogPLDW5tnz9w758kttq8=; h=Date:Subject:From:To:Cc:References:In-Reply-To:From:Subject:Reply-To; b=BEZOlgo0CoexePSg6OqBgaYrvhU4uxI3v77/4183fV6NMLCIHa2vo5BnGivKxiYMrPMW7hcWUrns77opNcMHo4jY/ufuv5sBW/aphP1ZP7ACiXCkeLN4cOMnDqujeljycOo+UegE6hPPrw/5hRtbZVmhEqdwLJ94h4N1pPJbGuU=
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1691726000; bh=F6/sVHgVtOatwKT61oc4J8nYufmCbZYWWABMZK5WJl+=; h=X-Sonic-MF:Date:Subject:From:To:From:Subject; b=P0LxYbcKB8499YdGZBQOgSFbVfYhhGmk2ZjjtHkIGrXjnSin6jR+K1LGJGA/Iw8s4r58+RGKYhHd4zNv+fa6CnAI1lT00GIIYNJfYW0zS3+Bs/hnG/u1HP4XlBcZhL61DXFAG222YVQVf4T1YPDgZaWrAV1UPu1o8HoUaETK1odC5YNOFLfVmveU0j/xRoDbB8cI8bjQPWGUcjlWQiLNY4O7FJAJwJQnvHwDe0eMUVwq0r+5HMfHvtCEMNyoE12oSKMq/5iqsWdkOB+oiGimXkmy7Ra1EHKCWZA7C/3rSKWo2kzhKueulbegCAaBOxZIEU/3W5E5vCn4leJX0W0fnw==
+X-YMail-OSG: astknmAVM1nqTjkbYvrpdWsuhIJZBUPF088SCvCjlicxL93QhLEOEiP7kP_kgos
+ m5uFSqoRSP9u1UpOj7ppEh3PFWVyABW1zhTsWyvrEXcLviWqOnhjdosvlfjXdQwZ0pTnyCqz62um
+ hEhBOfoARV01Ls2n2QBaDOpTMUhj0igfUP06yycNalt_JBjl4WyjkAO4O9Ok5eT_d.91xDnow7Xd
+ rYGsoFmLFTs0kILOmKaYomTtEVrFf.AE9uOhr2kkEVzoxR2w_SinArMk1tjcFQalyDN6OYXss5WT
+ ORwaJmWMo.mjth349DnBUZa4ljl7vKFIXeq7OzvHlNlNs6cSuBguROYU6gB.MxcjMNfouiKsgb2f
+ 3Hg9IZpzazXhUnBEPueykiKXRRH4AYOQlupVfb0r.Rr0zwr6qK8tzkGXrDWEa9OgHJ69QlnYPR6X
+ vGaq2mxi2Jr6jojR7uEwLs7hdntNJ_UHoWkTXiHScKSlKcrq32yHdwas5NFXOk1E6l2An.ERtJ0n
+ vNCqJr6uFbmWko0M5_3SHRs22wVSqJ9ZIaLmkxhprbabgiyJyY1Kh6KtJ3RY9RF.3X6mlNZi8MFH
+ Uo92plSOtWbTAoVEA55scFLscdWkh6iUmVjAsnarvUIJAk6GhMoQoaxdlV5zujlp8_PVoADJo_uz
+ ophfPBdnzbpkCI.hEA18IcZcxUbqeywUxY1tinp6_LsaFegkduv8Y8v93EkJKAjBkiHg99Gm5_0Z
+ UIzdZ7vKVgh.5A_ewoLeO_7tlGvR71qY34qGceXrUbNUARH5jTpPZqqQZKASqtZAyQz5nRt3mErJ
+ eBV7K1xVAOquLwoOLNrk5aRfy2rO54QLtyBEv8OVHXvtefoIxQjfLWwbUczeD8Bt_94.HQSJy5wI
+ vrq4cbTeSGpBoOkMc9vrUrPJOCu0Q6p.R4FV6c2vrjuAUMlccwR8wFgARqZeBd1wJm0_am44YQx_
+ tRE5v7tFIFttf9UU7iy69WEv9vyJzgmPqgwo8fu2mLyS99YNtF0.gc57Y3VR8H3LuXtuqydsJjLa
+ WotfNRbJy9p1pOpo.lRw1cc6vZfBic2elSuVvoI7p9vg9Ahx73wz3dth2LTGRqop2vzBU2CEVVKO
+ GEHlsGS5_Bjyx8xrxTe7zEo02mIyGwbyZ1hqzoVvAy8cmuyJ_P73DBGxzWc2eZWI6xZiavNbBYTd
+ 3tvOAPEDEqJUm3X.x_vCdCrjLduwNVu4P2Gjz6t.mM.Joadjn4Xia2zs8BS7MXfAqV5zd2lQJuSj
+ 1CmDdI_f6yztTyoNCPrsrHkaskh.w62VuZKNHSa.10fX8xY8i0w5QVOXHxYxuCHeFoqnw467gp1e
+ d6uQAAREj_krT4eJeiv6HgJsgiiJrW2Z3OzG.6UZV8fTV_EsjuVmPTEXWuO7neDRlQnVwZswWKS9
+ Bpg3MU4U6Khd.QhLj5je7AD0dJ.AThYAaBp7jAwWtnUFoqWTOxMMsLE4xx1N2QXVkU_fSNpV16BL
+ Sue8qwjcBu6daVCodG3uCgs0N.amFHFwYWeWroggW4e_XUKzZzq7t2XUgSmw0faDeBFNfyU3AeqQ
+ UteeBsi65oGTEUuvoRl_qBqUoyzHnyG5WOnuEg4mrgswSit2DymLhwHYZF2PEamxArzIeZV4jL50
+ x1mUnbK7BXasevUjjpG1.kQ52cgnNW0dlOnUSSCBm9jbfL1LoVSPvs4H14UsP9zhht02BFAHxmXK
+ NaTvdGmvkgz6RFyvQfPWese5VzJhyA5ZrQ7asNxX9DUoCzcSuUzKvoSmFOBtw7SkiEAOE4_3PkdC
+ AqGDW3fa9.zX77c1mUlzeEtlGoXi8eUiYOypYPT3ryGpG.EK.mvzWgDY0vkaXRUFhtMRmSAi6NK.
+ ssoDaf5DMr0Ym2xTtX.ZbzInBPS4KvfhtZick2si6o_7YcJebtRMjwoOxAau9r4TsvT8NfCr4rjY
+ bUgD7u39u01kwi2Tnn9mHj9h49egoBFDEJWKnQU6HIlpkMG06eG2tfuH6kZhGY_3MD9Pjei5BtEu
+ 2OHZDngpWaq_Ed3IkE2a2yBk53tsVRMdoIXqOxQ4CQJxnizoN5nm2Um0T.oLaeoIPSThKkZQN6hJ
+ odddMtmHMZTYwxn6McS4wH_DFLoQUZZ6O33Yb8MAfYjZHVDuTSsvOb6EYy1dXJ7YPrQl_MHXV3t.
+ o6kTqjyYxah6yG7hmUitV4ZUkifn9veAegWVsmqBFYilzvFVBUucErtxLt3Sm2wqkVfB6JwfqC1_
+ ULVtxwunHgkJl3jAKDCjC5esoIan138VAnR5__eXp3el2bzT5qRY4
 X-Sonic-MF: <lesrhorer@att.net>
-X-Sonic-ID: ff0799a5-16a9-4def-8471-2a276ca8da86
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.gq1.yahoo.com with HTTP; Fri, 11 Aug 2023 03:48:30 +0000
-Received: by hermes--production-bf1-865889d799-7vf9r (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID af749de47665fc8a294a907e1ae52cbd;
-          Fri, 11 Aug 2023 03:48:25 +0000 (UTC)
-Message-ID: <06bc7efa-c486-f995-a73c-3f1dd6a5ce64@att.net>
-Date:   Thu, 10 Aug 2023 22:48:17 -0500
+X-Sonic-ID: 8b3df8b4-4638-4e2f-842a-9e870de4cdd2
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.gq1.yahoo.com with HTTP; Fri, 11 Aug 2023 03:53:20 +0000
+Received: by hermes--production-bf1-865889d799-cgv22 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID e412af30481515cc8d9f8bb7690bba07;
+          Fri, 11 Aug 2023 03:53:14 +0000 (UTC)
+Message-ID: <38f29379-4a8b-3cb0-c5dc-7cb4c8246fa4@att.net>
+Date:   Thu, 10 Aug 2023 22:53:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.14.0
-Subject: Majordomo not working
+Subject: Re: Majordomo not working
 Content-Language: en-US
+From:   Leslie Rhorer <lesrhorer@att.net>
 To:     Luis Chamberlain <mcgrof@kernel.org>,
         Linus Torvalds <torvalds@linux-foundation.org>,
         pmladek@suse.com
 Cc:     linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <Y9BIU5SGOS6YEdSh@bombadil.infradead.org>
-From:   Leslie Rhorer <lesrhorer@att.net>
-In-Reply-To: <Y9BIU5SGOS6YEdSh@bombadil.infradead.org>
+ <06bc7efa-c486-f995-a73c-3f1dd6a5ce64@att.net>
+In-Reply-To: <06bc7efa-c486-f995-a73c-3f1dd6a5ce64@att.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Mailer: WebService/1.1.21695 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,17 +80,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-	I know this is not exactly the right place to post this, but I am at a 
-complete loss what else to do.  Please forgive me, but I cannot get the 
-Majordomo at vger.kernel.org to respond to me.  I have tried everything 
-of which I can think, but the Majordomo will not recognize when I send 
-it the authorization command in order to try and include my 
-siliconventures.net address in the linux-modules mailing list.  My 
-att.net address is supposed to already be a member of the list, but 
-whenever I send to the linux-modules list from mt AT&T address, the 
-message bounces.
+	Update: I finally managed to get a message through from my AT&T address 
+to the linux-modules list.  I am not certain what the issue was before 
+this.  I am still not sure what the issue is with the Majordomo, however.
 
-	Thus , I seem to be having two issues.  The more immediate is I cannot 
-get any messages through to where they need to go, both to the Majordomo 
-and to the linux-modules list.  The more important long term issue is I 
-am having a problem with the NIC card on one of my Debian Linux servers.
+On 8/10/2023 10:48 PM, Leslie Rhorer wrote:
+>      I know this is not exactly the right place to post this, but I am 
+> at a complete loss what else to do.  Please forgive me, but I cannot get 
+> the Majordomo at vger.kernel.org to respond to me.  I have tried 
+> everything of which I can think, but the Majordomo will not recognize 
+> when I send it the authorization command in order to try and include my 
+> siliconventures.net address in the linux-modules mailing list.  My 
+> att.net address is supposed to already be a member of the list, but 
+> whenever I send to the linux-modules list from mt AT&T address, the 
+> message bounces.
+> 
+>      Thus , I seem to be having two issues.  The more immediate is I 
+> cannot get any messages through to where they need to go, both to the 
+> Majordomo and to the linux-modules list.  The more important long term 
+> issue is I am having a problem with the NIC card on one of my Debian 
+> Linux servers.
