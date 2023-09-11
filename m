@@ -2,28 +2,28 @@ Return-Path: <linux-modules-owner@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D290B79BAB0
-	for <lists+linux-modules@lfdr.de>; Tue, 12 Sep 2023 02:11:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDA1379B781
+	for <lists+linux-modules@lfdr.de>; Tue, 12 Sep 2023 02:07:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235357AbjIKWiW (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
-        Mon, 11 Sep 2023 18:38:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44072 "EHLO
+        id S236090AbjIKWi3 (ORCPT <rfc822;lists+linux-modules@lfdr.de>);
+        Mon, 11 Sep 2023 18:38:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241001AbjIKO7a (ORCPT
+        with ESMTP id S242336AbjIKP2N (ORCPT
         <rfc822;linux-modules@vger.kernel.org>);
-        Mon, 11 Sep 2023 10:59:30 -0400
+        Mon, 11 Sep 2023 11:28:13 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F225F1B9;
-        Mon, 11 Sep 2023 07:59:23 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A37C433C9;
-        Mon, 11 Sep 2023 14:59:22 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1EFFE4;
+        Mon, 11 Sep 2023 08:28:04 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE343C433C8;
+        Mon, 11 Sep 2023 15:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1694444363;
-        bh=/0IUmUpzpkh1me2q1+X4YOSaqeFWOKy0KQwizwMISqE=;
+        s=korg; t=1694446084;
+        bh=leAuhnXHEA8i+U1PVWaPGzHDjO49pSioEmMH0vYlkP4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=xdMBp58YnksBeYEhYzcZ1jrd8cQuRaEi7sGMqxWk3dRi6MLWf2iTw0izP0c6hTv5p
-         qzy13+R3lQNuk0JJzsc2zo+z6fY2Dd11bUS6MFY+PbcMfF38bVDsCCM6vwoo/VBHi6
-         xWiOozo5cJkZuT6LR3ILm2aLU8Kk07FPAEGQfocI=
+        b=CRLi+iV/rmqBXwrmCRKQdu68R3ATio9tqeoE5XfHvYRUyOBe+EANiDQFhDUNRSVga
+         BOWAuzxmx01Ce2Z+7EGSAnveIuOpiN68zn02oA0BpOmAQuyTDdHZ7AFhE3FpZb7USK
+         ELR/pGQY3mT1EgkPrsuEo0E2Nk8wFdKWyIvcyPQc=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,12 +34,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-modules@vger.kernel.org,
         Luis Chamberlain <mcgrof@kernel.org>,
         Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.4 674/737] media: dvb: symbol fixup for dvb_attach()
-Date:   Mon, 11 Sep 2023 15:48:53 +0200
-Message-ID: <20230911134709.367010296@linuxfoundation.org>
+Subject: [PATCH 6.1 547/600] media: dvb: symbol fixup for dvb_attach()
+Date:   Mon, 11 Sep 2023 15:49:40 +0200
+Message-ID: <20230911134649.766566667@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230911134650.286315610@linuxfoundation.org>
-References: <20230911134650.286315610@linuxfoundation.org>
+In-Reply-To: <20230911134633.619970489@linuxfoundation.org>
+References: <20230911134633.619970489@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,7 +54,7 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <linux-modules.vger.kernel.org>
 
-6.4-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -188,8 +188,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  drivers/media/tuners/xc2028.c                     |    2 +-
  drivers/media/tuners/xc4000.c                     |    2 +-
  drivers/media/tuners/xc5000.c                     |    2 +-
- drivers/staging/media/av7110/sp8870.c             |    2 +-
- 106 files changed, 113 insertions(+), 113 deletions(-)
+ 105 files changed, 112 insertions(+), 112 deletions(-)
 
 --- a/drivers/media/dvb-frontends/ascot2e.c
 +++ b/drivers/media/dvb-frontends/ascot2e.c
@@ -443,7 +442,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	.delsys = { SYS_DVBT },
 --- a/drivers/media/dvb-frontends/drx39xyj/drxj.c
 +++ b/drivers/media/dvb-frontends/drx39xyj/drxj.c
-@@ -12372,7 +12372,7 @@ error:
+@@ -12368,7 +12368,7 @@ error:
  
  	return NULL;
  }
@@ -525,8 +524,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -EXPORT_SYMBOL(helene_attach);
 +EXPORT_SYMBOL_GPL(helene_attach);
  
- static int helene_probe(struct i2c_client *client)
- {
+ static int helene_probe(struct i2c_client *client,
+ 			const struct i2c_device_id *id)
 --- a/drivers/media/dvb-frontends/horus3a.c
 +++ b/drivers/media/dvb-frontends/horus3a.c
 @@ -395,7 +395,7 @@ struct dvb_frontend *horus3a_attach(stru
@@ -636,7 +635,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
 --- a/drivers/media/dvb-frontends/lgdt330x.c
 +++ b/drivers/media/dvb-frontends/lgdt330x.c
-@@ -927,7 +927,7 @@ struct dvb_frontend *lgdt330x_attach(con
+@@ -928,7 +928,7 @@ struct dvb_frontend *lgdt330x_attach(con
  
  	return lgdt330x_get_dvb_frontend(client);
  }
@@ -722,7 +721,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  MODULE_AUTHOR("Malcolm Priestley tvboxspy@gmail.com");
 --- a/drivers/media/dvb-frontends/mb86a16.c
 +++ b/drivers/media/dvb-frontends/mb86a16.c
-@@ -1851,6 +1851,6 @@ error:
+@@ -1848,6 +1848,6 @@ error:
  	kfree(state);
  	return NULL;
  }
@@ -970,7 +969,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
 --- a/drivers/media/dvb-frontends/stv090x.c
 +++ b/drivers/media/dvb-frontends/stv090x.c
-@@ -5071,7 +5071,7 @@ error:
+@@ -5072,7 +5072,7 @@ error:
  	kfree(state);
  	return NULL;
  }
@@ -992,7 +991,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  MODULE_PARM_DESC(debug, "Turn on/off frontend debugging (default:off).");
 --- a/drivers/media/dvb-frontends/stv6110x.c
 +++ b/drivers/media/dvb-frontends/stv6110x.c
-@@ -467,7 +467,7 @@ const struct stv6110x_devctl *stv6110x_a
+@@ -468,7 +468,7 @@ const struct stv6110x_devctl *stv6110x_a
  	dev_info(&stv6110x->i2c->dev, "Attaching STV6110x\n");
  	return stv6110x->devctl;
  }
@@ -1252,8 +1251,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -EXPORT_SYMBOL(mt2060_attach);
 +EXPORT_SYMBOL_GPL(mt2060_attach);
  
- static int mt2060_probe(struct i2c_client *client)
- {
+ static int mt2060_probe(struct i2c_client *client,
+ 			const struct i2c_device_id *id)
 --- a/drivers/media/tuners/mt2131.c
 +++ b/drivers/media/tuners/mt2131.c
 @@ -274,7 +274,7 @@ struct dvb_frontend * mt2131_attach(stru
@@ -1278,7 +1277,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  MODULE_DESCRIPTION("Microtune MT2266 silicon tuner driver");
 --- a/drivers/media/tuners/mxl5005s.c
 +++ b/drivers/media/tuners/mxl5005s.c
-@@ -4120,7 +4120,7 @@ struct dvb_frontend *mxl5005s_attach(str
+@@ -4116,7 +4116,7 @@ struct dvb_frontend *mxl5005s_attach(str
  	fe->tuner_priv = state;
  	return fe;
  }
@@ -1342,13 +1341,5 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  MODULE_AUTHOR("Steven Toth");
  MODULE_DESCRIPTION("Xceive xc5000 silicon tuner driver");
---- a/drivers/staging/media/av7110/sp8870.c
-+++ b/drivers/staging/media/av7110/sp8870.c
-@@ -606,4 +606,4 @@ MODULE_DESCRIPTION("Spase SP8870 DVB-T D
- MODULE_AUTHOR("Juergen Peitz");
- MODULE_LICENSE("GPL");
- 
--EXPORT_SYMBOL(sp8870_attach);
-+EXPORT_SYMBOL_GPL(sp8870_attach);
 
 
