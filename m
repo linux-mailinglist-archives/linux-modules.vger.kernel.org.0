@@ -1,128 +1,136 @@
-Return-Path: <linux-modules+bounces-39-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-43-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E78C7B5369
-	for <lists+linux-modules@lfdr.de>; Mon,  2 Oct 2023 14:49:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4EC37B588C
+	for <lists+linux-modules@lfdr.de>; Mon,  2 Oct 2023 18:57:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by ny.mirrors.kernel.org (Postfix) with ESMTP id 3BE831C208CC
-	for <lists+linux-modules@lfdr.de>; Mon,  2 Oct 2023 12:49:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTP id 6736F2825CD
+	for <lists+linux-modules@lfdr.de>; Mon,  2 Oct 2023 16:57:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E696215EA2;
-	Mon,  2 Oct 2023 12:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DB3C1DDC9;
+	Mon,  2 Oct 2023 16:57:45 +0000 (UTC)
 X-Original-To: linux-modules@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF584693
-	for <linux-modules@vger.kernel.org>; Mon,  2 Oct 2023 12:49:09 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C1CBB0;
-	Mon,  2 Oct 2023 05:49:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1696250948; x=1727786948;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=St8o8nXaM/Hc1Wx+43CvNqKafBY5/VZjLMJIwNON2J0=;
-  b=X23s+LxdUGB/A1TLVJdAbhA6aWfl4H6+NAyqVUCWTOadRqjeMdFyaPSE
-   ES87FOqM5/sJeOgeApD7TbjaRZhT3yuDMVYF1Xrzs09jc0e6DI2K5KFtj
-   w0C8vI4igVM2YdtFsGRDsnkhbyKvsuu0r/PHlwYoXlkiGGo6rxdCp+5X2
-   aihwVRyp6wWY/haMPlLjThXb8Zl/H1zZ7TVCyjsCv/EHwrcU2LtQOLG8z
-   r7SIH3kREfREWo2IvQBu5XR6iEyjgSH0xS2YHhHpdgs+OWb8ZllaqKv1O
-   X8FfWZPVF4uVQj6bRq3BIUa+WmWelbcBeob/f1PqXr/jnLj2xEQg3hn9h
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10851"; a="362901240"
-X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
-   d="scan'208";a="362901240"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2023 05:49:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10851"; a="840970521"
-X-IronPort-AV: E=Sophos;i="6.03,194,1694761200"; 
-   d="scan'208";a="840970521"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by FMSMGA003.fm.intel.com with ESMTP; 02 Oct 2023 05:49:06 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 2CCE415BA; Mon,  2 Oct 2023 15:49:02 +0300 (EEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBF21CF83
+	for <linux-modules@vger.kernel.org>; Mon,  2 Oct 2023 16:57:43 +0000 (UTC)
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E9EB8
+	for <linux-modules@vger.kernel.org>; Mon,  2 Oct 2023 09:57:41 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1c60a514f3aso53625ad.3
+        for <linux-modules@vger.kernel.org>; Mon, 02 Oct 2023 09:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1696265861; x=1696870661; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=i59JrJXWn0I4GHAvwruiaJLmC8yZXpZX5lGiOcVDgzc=;
+        b=PeLHX79hqfPPghINRHy0NyX1l38B9zVeBq+7a8z4kHmh4FFCx+7eB6/gKx3ef/oszV
+         fiWE6PMcj9ge30QBGjV+52aCFjzmMO5wu0nFmyJg3zX1SN5xfYr9SM63OEtfb4tKS2Dl
+         MfXWWLL1Ej+9ZQra2TN8dWtqRfklqut//hn8Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696265861; x=1696870661;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i59JrJXWn0I4GHAvwruiaJLmC8yZXpZX5lGiOcVDgzc=;
+        b=Dg6iVtHhnyJ7ic7AkFWZkPaBqVj5WdqYi7bSg8HOYZPf7xKH28aE26K81H0RXXvuDn
+         RLKn1yhxFUQcsppzFarY3w+SVQWwCICQjVRRYfGJ+42UR0atARmIH7tLcHOJ21xayfph
+         DK8RWi8T+kJHTuNxBrRvS9O2D4C5t1hthrWVyEJ6rWHNrM7BvRepd1rhViA4aOiChNgm
+         tMsY1RZnBzpK2xu5FIOjm+uc/v6NLj4MqU1TkGGsiKZGfjOgyy5/XYSThRyLvQqa7gVf
+         17YjgtL1jEY8Qz4oTjRxbkAytwZN/OCQeb+vITvcaIiGsnlxd37FRHbmbC4eJmi8YlEV
+         Y6/Q==
+X-Gm-Message-State: AOJu0YwGFthzF6ssxW3ux23/l57JtrY3Y053eTxZhGV+q0WLmR2hGNdO
+	nDGcan9mgQaf0Tw/EmoYxdeNhw==
+X-Google-Smtp-Source: AGHT+IGnn5OV17hnLKq0t7/owjFSVTDzAdiCLLhTlLFY2ZcuMqxzI7nr2Ppl/kYZdYMGR2rJMkFcew==
+X-Received: by 2002:a17:902:c409:b0:1c5:f4c7:b4d5 with SMTP id k9-20020a170902c40900b001c5f4c7b4d5mr14735849plk.34.1696265860790;
+        Mon, 02 Oct 2023 09:57:40 -0700 (PDT)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id h21-20020a170902f7d500b001c728609574sm10420569plw.6.2023.10.02.09.57.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Oct 2023 09:57:40 -0700 (PDT)
+Date: Mon, 2 Oct 2023 09:57:37 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH v2 5/5] params: Fix multi-line comment style
-Date: Mon,  2 Oct 2023 15:48:56 +0300
-Message-Id: <20231002124856.2455696-6-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.40.0.1.gaa8946217a0b
-In-Reply-To: <20231002124856.2455696-1-andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v2 2/5] params: Do not go over the limit when getting the
+ string length
+Message-ID: <202310020956.AF556DC@keescook>
 References: <20231002124856.2455696-1-andriy.shevchenko@linux.intel.com>
+ <20231002124856.2455696-3-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231002124856.2455696-3-andriy.shevchenko@linux.intel.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-The multi-line comment style in the file is rather arbitrary.
-Make it follow the standard one.
+On Mon, Oct 02, 2023 at 03:48:53PM +0300, Andy Shevchenko wrote:
+> We can use strnlen() even on early stages and it prevents from
+> going over the string boundaries in case it's already too long.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- kernel/params.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+It makes sense to avoid calling strlen() multiple times. I don't have
+much opinion one way or another about using strnlen() here, since we
+know the string will be terminated.
 
-diff --git a/kernel/params.c b/kernel/params.c
-index eb55b32399b4..2e447f8ae183 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -1,8 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/* Helpers for initial module or kernel cmdline parsing
--   Copyright (C) 2001 Rusty Russell.
--
--*/
-+/*
-+ * Helpers for initial module or kernel cmdline parsing
-+ * Copyright (C) 2001 Rusty Russell.
-+ */
- #include <linux/ctype.h>
- #include <linux/device.h>
- #include <linux/err.h>
-@@ -271,8 +271,10 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
- 
- 	maybe_kfree_parameter(*(char **)kp->arg);
- 
--	/* This is a hack.  We can't kmalloc in early boot, and we
--	 * don't need to; this mangled commandline is preserved. */
-+	/*
-+	 * This is a hack. We can't kmalloc() in early boot, and we
-+	 * don't need to; this mangled commandline is preserved.
-+	 */
- 	if (slab_is_available()) {
- 		*(char **)kp->arg = kmalloc_parameter(len + 1);
- 		if (!*(char **)kp->arg)
-@@ -743,8 +745,10 @@ void module_param_sysfs_remove(struct module *mod)
- {
- 	if (mod->mkobj.mp) {
- 		sysfs_remove_group(&mod->mkobj.kobj, &mod->mkobj.mp->grp);
--		/* We are positive that no one is using any param
--		 * attrs at this point.  Deallocate immediately. */
-+		/*
-+		 * We are positive that no one is using any param
-+		 * attrs at this point. Deallocate immediately.
-+		 */
- 		free_module_param_attrs(&mod->mkobj);
- 	}
- }
+-Kees
+
+> 
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+>  kernel/params.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/kernel/params.c b/kernel/params.c
+> index 626fa8265932..f8e3c4139854 100644
+> --- a/kernel/params.c
+> +++ b/kernel/params.c
+> @@ -260,7 +260,10 @@ EXPORT_SYMBOL_GPL(param_set_uint_minmax);
+>  
+>  int param_set_charp(const char *val, const struct kernel_param *kp)
+>  {
+> -	if (strlen(val) > 1024) {
+> +	size_t len, maxlen = 1024;
+> +
+> +	len = strnlen(val, maxlen + 1);
+> +	if (len == maxlen + 1) {
+>  		pr_err("%s: string parameter too long\n", kp->name);
+>  		return -ENOSPC;
+>  	}
+> @@ -270,7 +273,7 @@ int param_set_charp(const char *val, const struct kernel_param *kp)
+>  	/* This is a hack.  We can't kmalloc in early boot, and we
+>  	 * don't need to; this mangled commandline is preserved. */
+>  	if (slab_is_available()) {
+> -		*(char **)kp->arg = kmalloc_parameter(strlen(val)+1);
+> +		*(char **)kp->arg = kmalloc_parameter(len + 1);
+>  		if (!*(char **)kp->arg)
+>  			return -ENOMEM;
+>  		strcpy(*(char **)kp->arg, val);
+> @@ -508,7 +511,7 @@ int param_set_copystring(const char *val, const struct kernel_param *kp)
+>  {
+>  	const struct kparam_string *kps = kp->str;
+>  
+> -	if (strlen(val)+1 > kps->maxlen) {
+> +	if (strnlen(val, kps->maxlen) == kps->maxlen) {
+>  		pr_err("%s: string doesn't fit in %u chars.\n",
+>  		       kp->name, kps->maxlen-1);
+>  		return -ENOSPC;
+> -- 
+> 2.40.0.1.gaa8946217a0b
+> 
+
 -- 
-2.40.0.1.gaa8946217a0b
-
+Kees Cook
 
