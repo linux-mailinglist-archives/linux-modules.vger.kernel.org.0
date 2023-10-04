@@ -1,32 +1,34 @@
-Return-Path: <linux-modules+bounces-52-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-53-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 149527B8043
-	for <lists+linux-modules@lfdr.de>; Wed,  4 Oct 2023 15:12:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81BE17B809B
+	for <lists+linux-modules@lfdr.de>; Wed,  4 Oct 2023 15:17:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sv.mirrors.kernel.org (Postfix) with ESMTP id 7BFBF281401
-	for <lists+linux-modules@lfdr.de>; Wed,  4 Oct 2023 13:12:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTP id 7AA1AB2081B
+	for <lists+linux-modules@lfdr.de>; Wed,  4 Oct 2023 13:17:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2346614267;
-	Wed,  4 Oct 2023 13:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 740B714280;
+	Wed,  4 Oct 2023 13:17:40 +0000 (UTC)
 X-Original-To: linux-modules@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DBC101FA
-	for <linux-modules@vger.kernel.org>; Wed,  4 Oct 2023 13:12:32 +0000 (UTC)
-X-Greylist: delayed 479 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 04 Oct 2023 06:12:29 PDT
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29544B0
-	for <linux-modules@vger.kernel.org>; Wed,  4 Oct 2023 06:12:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221131400D
+	for <linux-modules@vger.kernel.org>; Wed,  4 Oct 2023 13:17:36 +0000 (UTC)
+X-Greylist: delayed 585 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 04 Oct 2023 06:17:30 PDT
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9698F98
+	for <linux-modules@vger.kernel.org>; Wed,  4 Oct 2023 06:17:29 -0700 (PDT)
 Received: from desktop (unknown [114.214.233.200])
-	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id 45BBB80008D
-	for <linux-modules@vger.kernel.org>; Wed,  4 Oct 2023 21:04:27 +0800 (CST)
-Date: Wed, 4 Oct 2023 21:04:26 +0800
+	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id 186A7800058;
+	Wed,  4 Oct 2023 21:07:42 +0800 (CST)
+Date: Wed, 4 Oct 2023 21:07:41 +0800
 From: Wu Zhenyu <wuzhenyu@ustc.edu>
 To: linux-modules@vger.kernel.org
-Message-ID: <7kcjhcgniwih2uuybjol4eckevgvbihfkavjeigdvbyvh5p62t@fjzo7uwqtdvs>
+Cc: Lucas De Marchi <lucas.de.marchi@gmail.com>
+Subject: Re: [PATCH] libkmod: use realpath
+Message-ID: <2gfubiqrbq5lhu3znkas3eglk35s6wbl4ss6bh4wpfirzrsqfa@vf3gd4kmc3ty>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -36,20 +38,21 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCSR8aVkgYSh0YSU1JSk0eSlUTARMWGhIXJBQOD1
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZTE0fVkxJGhoYHR1OS0JOGVUTARMWGhIXJBQOD1
 	lXWRgSC1lBWUpKT1VJSk9VSUhIVUlLS1lXWRYaDxIVHRRZQVlPS0hVSk1PSUxOVUpLS1VKQktLWQ
 	Y+
-X-HM-Tid: 0a8afaca28aeb03akuuu45bbb80008d
+X-HM-Tid: 0a8afacd21c6b03akuuu186a7800058
 X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Nhg6GSo6Fzw5PiMhLRUjN04D
-	Q1YKCxBVSlVKTUJNT0lPTU1MQ0hCVTMWGhIXVQwOARMeFQIOOw4IDxhVHh8ORVlXWRILWUFZSkpP
-	VUlKT1VJSEhVSUtLWVdZCAFZQUpDTE83Bg++
-X-Spam-Status: No, score=1.8 required=5.0 tests=BAYES_20,MISSING_SUBJECT,
-	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OU06Syo4DDw8LiMvVhVNN0I4
+	DTEaCQhVSlVKTUJNT0lPQ01JTUNLVTMWGhIXVQwOARMeFQIOOw4IDxhVHh8ORVlXWRILWUFZSkpP
+	VUlKT1VJSEhVSUtLWVdZCAFZQUlKSEg3Bg++
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.6
-X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
+
+Forgot to mention. This commit can be modified freely to statisfy the maintainers :)
 
 From: Wu Zhenyu <wuzhenyu@ustc.edu>
 To: linux-modules@vger.kernel.org
@@ -95,5 +98,6 @@ index 585da41..bdc1427 100644
  
 -- 
 2.42.0
+
 
 
