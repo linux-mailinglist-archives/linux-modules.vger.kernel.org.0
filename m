@@ -1,121 +1,125 @@
-Return-Path: <linux-modules+bounces-195-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-198-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 942007E7C13
-	for <lists+linux-modules@lfdr.de>; Fri, 10 Nov 2023 13:14:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 874B07E7E73
+	for <lists+linux-modules@lfdr.de>; Fri, 10 Nov 2023 18:45:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3875F281208
-	for <lists+linux-modules@lfdr.de>; Fri, 10 Nov 2023 12:14:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A032F1C20931
+	for <lists+linux-modules@lfdr.de>; Fri, 10 Nov 2023 17:45:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44207182D2;
-	Fri, 10 Nov 2023 12:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D24020B37;
+	Fri, 10 Nov 2023 17:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cYTmn7Cu";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ArSIIaCc"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Qth9rBQG";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="CVg6EvQ+"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E434C1862B
-	for <linux-modules@vger.kernel.org>; Fri, 10 Nov 2023 12:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3261620B14
+	for <linux-modules@vger.kernel.org>; Fri, 10 Nov 2023 17:45:02 +0000 (UTC)
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A33373304B;
-	Fri, 10 Nov 2023 04:14:15 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D3DB3D578;
+	Fri, 10 Nov 2023 09:44:37 -0800 (PST)
 Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-	by smtp-out1.suse.de (Postfix) with ESMTP id 060FC219C4;
-	Fri, 10 Nov 2023 12:14:14 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTP id 7F53821992;
+	Fri, 10 Nov 2023 17:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1699618454; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
+	t=1699638265; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Dq19wJSmTOrZRzEGt4AZFA5wmg4WvLvB9MbM94XFO7k=;
-	b=cYTmn7Cu5Hwf6dEwJm2Dfuphy49HT1ncwzz63aOGu9p+CD8c2blI9bAm9+DM8sSHqLuv3c
-	E8eSAFeVkQ0xT/E/X8bVsEGbLGYY6n+oFUTn4Yz/sWxyMB2W9ecJ7mvbmgIqdUnftk07zW
-	6cqDA+0jSFKR6T9iL8HBAJzGZwHvJK0=
+	bh=EYAgDQt7eB0w4cAnKtCjsEc9BO9IoUXrjcQ62KDllKo=;
+	b=Qth9rBQGAnzwAnCKDJ8zor20XIDEQsOPXEhs/aHJ3Y1Y5dxO9McpVLMSwfiVTEebS55Zv2
+	1XjD96DVYPsqab7MewJRnvh8xrgoaQSGjQzRoBXGOpNqxW4/GEGJdWslVA1LG2xUkZ+d1O
+	R7Gr4wFAocV3Tt2f4DaS518OXPCY7tg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1699618454;
+	s=susede2_ed25519; t=1699638265;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
+	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Dq19wJSmTOrZRzEGt4AZFA5wmg4WvLvB9MbM94XFO7k=;
-	b=ArSIIaCcyPZ/qGHDyDqGuJmiIQaBWEq0JmsIWnWTnc+p9QQn2hoMnCmarEV2Wor6UZFv6Z
-	PosazrD2S6yHsTDQ==
+	bh=EYAgDQt7eB0w4cAnKtCjsEc9BO9IoUXrjcQ62KDllKo=;
+	b=CVg6EvQ+T5l73hl8bEHLdBOBref+XFvEfFrvR3JIRFdB3dEZvGDzqM182DKJFYnVYjoAmc
+	Q4A0kLoBMrPiEtDw==
 Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-	by relay2.suse.de (Postfix) with ESMTP id A17E72C162;
-	Fri, 10 Nov 2023 12:14:13 +0000 (UTC)
-From: Michal Suchanek <msuchanek@suse.de>
-To: linux-modules@vger.kernel.org,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Michal Suchanek <msuchanek@suse.de>,
-	Takashi Iwai <tiwai@suse.com>,
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by relay2.suse.de (Postfix) with ESMTPS id 1C5F62D40D;
+	Fri, 10 Nov 2023 17:44:23 +0000 (UTC)
+Date: Fri, 10 Nov 2023 18:44:22 +0100
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Jan Engelhardt <jengelh@inai.de>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Nicolas Schier <nicolas@fjasle.eu>,
+	linux-modules@vger.kernel.org, Takashi Iwai <tiwai@suse.com>,
 	Lucas De Marchi <lucas.de.marchi@gmail.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Jiri Slaby <jslaby@suse.com>,
-	Jan Engelhardt <jengelh@inai.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] configure: Check that provided paths are absolute
-Date: Fri, 10 Nov 2023 13:13:55 +0100
-Message-ID: <8aff0c9c491d8afeec7f6b2cd96cbd0439e26fbb.1699618135.git.msuchanek@suse.de>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <cover.1699618135.git.msuchanek@suse.de>
-References: <e3yow7ih6af2hxzkmjay2oan3jypmo4hda64vxvpfco66ajcew@i3zewn4nbklf> <cover.1699618135.git.msuchanek@suse.de>
+	Michal =?iso-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>,
+	Jiri Slaby <jslaby@suse.com>, Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>
+Subject: Re: [PATCH rebased] kbuild: rpm-pkg: Fix build with non-default
+ MODLIB
+Message-ID: <20231110174422.GY6241@kitsune.suse.cz>
+References: <20231009140733.GV6241@kitsune.suse.cz>
+ <CAK7LNAQQMFUt4R1m_U8kBY5=BvxD_dMuE4MD4kpd48WK1E+AGA@mail.gmail.com>
+ <20231010101552.GW6241@kitsune.suse.cz>
+ <CAK7LNASX2_-xt3Qvxie_G=Q4fuVYR6eE47QjQ5NZf7QxY-4_tQ@mail.gmail.com>
+ <20231017104453.GG6241@kitsune.suse.cz>
+ <CAK7LNASKPg0JK0QsLGb1Rfx2ysvHJTm3NFOvtwOpZRz4-20T8w@mail.gmail.com>
+ <20231017122747.GH6241@kitsune.suse.cz>
+ <CAK7LNAT3N82cJD3GsF+yUBEfPNOBkhzYPk37q3k0HdU7ukz9vQ@mail.gmail.com>
+ <20231017151050.GJ6241@kitsune.suse.cz>
+ <p86sq573-s32q-6792-4978-43s1pn91r027@vanv.qr>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <p86sq573-s32q-6792-4978-43s1pn91r027@vanv.qr>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-configure checks that its built-in directory options get an absolute
-path. Copy the check for custom options.
+On Wed, Oct 18, 2023 at 03:12:41AM +0200, Jan Engelhardt wrote:
+> On Tuesday 2023-10-17 17:10, Michal Suchánek wrote:
+> >
+> >> In my system (Ubuntu), I see the directory paths
+> >> 
+> >> /usr/aarch64-linux-gnu/lib/
+> >> /usr/i686-linux-gnu/lib/
+> >> /usr/x86_64-linux-gnu/lib/
+> >> 
+> >> If there were such a crazy distro that supports multiple kernel arches
+> >> within a single image, modules might be installed:
+> >> /usr/x86_64-linux-gnu/lib/module/<version>/
+> >
+> >For me it's /usr/lib/i386-linux-gnu/.
+> >
+> >Did they change the scheme at some point?
+> 
+> It's a complicated mumble-jumble. Prior art exists as in:
+> 
+>  /opt/vendorThing/bin/...
+>  /usr/X11R6/lib/libXi.so.6 [host binary]
+>  /usr/x86_64-w64-mingw32/bin/as [host binary]
+>  /usr/x86_64-w64-mingw32/sys-root/mingw/bin/as.exe [foreign binary]
+>  /usr/platform/SUNW,Ultra-2/lib/libprtdiag_psr.so.1 [looks foreign]
+> 
+> The use of suffix-based naming must have been established sometime
+> near the end of the 90s or the start of 2000s as the first biarch
+> Linux distros emerged. Probably in gcc or glibc sources one will find
+> the root of where the use of suffix identifiers like /usr/lib64
+> started. Leaves the question open "why".
 
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
----
-v6: new patch
----
- configure.ac | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+That's pretty clear: to be able to install libraries for multiple
+architectures at the same time.
 
-diff --git a/configure.ac b/configure.ac
-index d6da5ee9ae9a..de01e08cf2e8 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -97,6 +97,23 @@ AC_ARG_WITH([module_directory],
-         [], [with_module_directory=/lib/modules])
- AC_SUBST([module_directory], [$with_module_directory])
- 
-+# Check all directory arguments for consistency.
-+for ac_var in	distconfdir rootlibdir module_directory
-+do
-+  eval ac_val=\$$ac_var
-+  # Remove trailing slashes.
-+  case $ac_val in
-+    */ )
-+      ac_val=`expr "X$ac_val" : 'X\(.*@<:@^/@:>@\)' \| "X$ac_val" : 'X\(.*\)'`
-+      eval $ac_var=\$ac_val;;
-+  esac
-+  # Be sure to have absolute directory names.
-+  case $ac_val in
-+    @<:@\\/$@:>@* | ?:@<:@\\/@:>@* )  continue;;
-+  esac
-+  as_fn_error $? "expected an absolute directory name for --$ac_var: $ac_val"
-+done
-+
- AC_ARG_WITH([zstd],
- 	AS_HELP_STRING([--with-zstd], [handle Zstandard-compressed modules @<:@default=disabled@:>@]),
- 	[], [with_zstd=no])
--- 
-2.42.0
+Thanks
 
+Michal
 
