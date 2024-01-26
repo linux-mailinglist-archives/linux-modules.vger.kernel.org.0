@@ -1,52 +1,52 @@
-Return-Path: <linux-modules+bounces-364-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-363-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAD0F83DCA0
-	for <lists+linux-modules@lfdr.de>; Fri, 26 Jan 2024 15:43:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AEC583DCA1
+	for <lists+linux-modules@lfdr.de>; Fri, 26 Jan 2024 15:43:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87DE2285C7C
-	for <lists+linux-modules@lfdr.de>; Fri, 26 Jan 2024 14:43:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0780D285D43
+	for <lists+linux-modules@lfdr.de>; Fri, 26 Jan 2024 14:43:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C6E71C2B3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C7121C68F;
 	Fri, 26 Jan 2024 14:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y9r7WpcW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fmXVe83j"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E771C2AE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E181BF53
 	for <linux-modules@vger.kernel.org>; Fri, 26 Jan 2024 14:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706280230; cv=none; b=eOeUDr9c8Va9LiMPmmCHgCZHIKPkYBx2UTa5Bd5S98xkBxnpQ6d3E+pHIlV7wklSZCgHff+NgfAE8lykhHDRglszj6/j4zD/Q5+1wMQeO7qZTKrFvGH5njiXc3EgTJg4AXsI0n2dsnCCMWboki/8t2PwhFKZbhJqGOgxfuRtg/U=
+	t=1706280230; cv=none; b=NTeh0p0vsiHDHr/Ja5zxJVPr/+nsExG1bZFFL8zQtswxVKjPPG8NT9a1tCSO3OmT+/W+FpMk6YqB+J8KGzjg0KYlRDT6k8LVYeHBFvMzTdSOI18iW0uEW3lFVwTbEhgfqN3uKdyr/Ac2yi2mkYnBfvi2EQU8Ed2KsyLDa4Q56OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706280230; c=relaxed/simple;
-	bh=Mwkjxdv6ZeI3RiGnQHQaNJvZizkxUrEbM4PzHrmVAGg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KfasZusfbUprLtZUd9x94jjLKYe4y0LzoRBvsuOiFkEeZhOZKgd+haptVFrPu1NDt3tZY3iUxYzXp0MhRxUV4323w/qLuBw79jmLHFBjbrJ+iG2IkbKMgfdhvfY0R4eHZylBrY7rpakQyXr4J2ex8rZOaxVZhjzoW2eJ3oioTn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y9r7WpcW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9E7FAC433B1;
+	bh=5CQ82m4EJToERg+iBBjvGV5URcWOmtQDjUeQjnjX2Vo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=tuKgIdzfFrqlGqADrSyX6P6rMHcSfiRGk+aVYjCeYFpbvpmXWh+WVj3blgUo7ZyVkH898wypAqNGDgDDOsvan2LZAoHgNe1AuXPP4WtIsGao8rjxsgfDQdwLP29Qgat6CO1hsCIb30g3C1GmNY+l043xPV72TzeLy67xLw+e/eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fmXVe83j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A9C87C4166A;
 	Fri, 26 Jan 2024 14:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706280229;
-	bh=Mwkjxdv6ZeI3RiGnQHQaNJvZizkxUrEbM4PzHrmVAGg=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=Y9r7WpcWmn7DIroDKzL7ufLk/AIsrN4rG7oBOT7ymGQFqsAopdQ1OZvwiKn3v8gyv
-	 QnXJnW4n2xKNTk+/ryuMCtaFbmfYMAPk9W7IykP0t4gWp+XzpdBbk59UIZ70pR0+xK
-	 5k5glQzKVwrcMDLGzzoKccnOWwTJBMBli5WLNeqDVo3vlZ6TfdAsCgIUjQyDm2iRNO
-	 cjmtWzuoOmZ4XJzycppwkozWcEp8CaAddqVBLHA/Y7v+DMlINUjiwIxIOwBC1ade1n
-	 lqlx2POZEMRDlJi6ec0AVk9FRuxa59EYXmZpNoxMh6acQbL7f+FV/c+FhY9179MNPp
-	 0uCZWPesxd9SQ==
+	bh=5CQ82m4EJToERg+iBBjvGV5URcWOmtQDjUeQjnjX2Vo=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=fmXVe83jjtoHIJSYvlekR9cKHIMZVWpeE3rV9u90I8uTsxw2ZYTtR9HjNIRsFodUZ
+	 imMpos+PLKJFrHC1GkPRSYjQI/HzPPx/MVpvfeGq7j7V36Ab6JmvsRrA6c1gDQNYiJ
+	 ZXCCqIkc8+ShcSfqij7XZitHwBd0zN4k8xRhdVsY7G+g4WGclDuNUXxZA5RJETBJ9q
+	 T1ZnCwQl55RHpjq/ASr3kBzvzI5MwGKEjOylFUTj1jWNd15ul9hWKl68fWQ/0ssU4j
+	 UApvZOtm7/xXfniHIew63ieHRJFA3BGYas2u/USxI+kXuHeK7czVO1A5L4D075TroR
+	 0io77Um4vuLSQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88282C47DDF;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9195FC47422;
 	Fri, 26 Jan 2024 14:43:49 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Subject: [PATCH 0/2] Polish module_directory help string, install symlinks
-Date: Fri, 26 Jan 2024 14:43:49 +0000
-Message-Id: <20240126-master-v1-0-6257d039a30a@gmail.com>
+Date: Fri, 26 Jan 2024 14:43:50 +0000
+Subject: [PATCH 1/2] configure: tweak the module_directory help string
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,17 +55,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACXFs2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDQyMz3dzE4pLUIl3TpEQjC7MkI7PU1BQloOKCotS0zAqwQdGxtbUAqZF
- WblgAAAA=
+Message-Id: <20240126-master-v1-1-6257d039a30a@gmail.com>
+References: <20240126-master-v1-0-6257d039a30a@gmail.com>
+In-Reply-To: <20240126-master-v1-0-6257d039a30a@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.velikov@collabora.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706280230; l=807;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706280230; l=981;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=Mwkjxdv6ZeI3RiGnQHQaNJvZizkxUrEbM4PzHrmVAGg=;
- b=owKXjQXevkD2k1BGeCmO+DPuJb+42URVekX0+uJqqAGxlaTkGo661qCftIJaRPj57Fbr07FD7
- hhY0BmaCUZ/DBUpVWRfoRGUUUZyedan1RNwvsKNrFMRC5vMPR2AqINq
+ bh=odADJmMZHmCPpeUZVqD+kpI2Vt0oc+W3kHqA6aS9tIY=;
+ b=AUcT2Of6cwHxxOx17QvN93TZCuSf+he/xRj0n3Qx5IYkq00JgFeKhRlmtOLzPoUJPxcu5rohS
+ dBY/mzpSSSzBka4yGK8799Q4nadMspw9Hz+DIByk1zSvHYeY4xLcM3x
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -73,35 +73,31 @@ X-Endpoint-Received:
 X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
 Reply-To: <emil.l.velikov@gmail.com>
 
-Hello all,
+From: Emil Velikov <emil.velikov@collabora.com>
 
-I've noticed the recent module_directory work and I'm super hyped to see
-it released. Are there any plans for v32?
+Drop the somewhat misleading ${prefix}/lib/modules and explicitly
+mention what's the default.
 
-This tiny series has two patches:
- - tweaks the help string for the module_directory toggle
- - installs the insmod, rmmod, lsmod ... symlinks
-
-The above should be fairly straightforward, but if there's any questions
-or concerns do let me know.
-
-Thanks
-Emil
-
+Signed-off-by: Emil Velikov <emil.velikov@collabora.com>
 ---
-Emil Velikov (2):
-      configure: tweak the module_directory help string
-      make: install/uninstall tools symlinks to kmod
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- Makefile.am  | 10 ++++++++++
- configure.ac |  2 +-
- 2 files changed, 11 insertions(+), 1 deletion(-)
----
-base-commit: 48b0c75f79f86140314b9656d3d855a515e18a73
-change-id: 20240126-master-5ba286b26eed
+diff --git a/configure.ac b/configure.ac
+index de01e08..ab0b303 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -93,7 +93,7 @@ AC_SUBST([rootlibdir], [$with_rootlibdir])
+ 
+ # Ideally this would be $prefix/lib/modules but default to /lib/modules for compatibility with earlier versions
+ AC_ARG_WITH([module_directory],
+-        AS_HELP_STRING([--with-module-directory=DIR], [directory in which to look for kernel modules - typically '/lib/modules' or '${prefix}/lib/modules']),
++        AS_HELP_STRING([--with-module-directory=DIR], [directory in which to look for kernel modules @<:@default=/lib/modules@:>@]),
+         [], [with_module_directory=/lib/modules])
+ AC_SUBST([module_directory], [$with_module_directory])
+ 
 
-Best regards,
 -- 
-Emil Velikov <emil.l.velikov@gmail.com>
+2.43.0
 
 
