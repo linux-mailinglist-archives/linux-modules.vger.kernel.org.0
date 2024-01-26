@@ -1,146 +1,107 @@
-Return-Path: <linux-modules+bounces-362-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-364-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F95883C614
-	for <lists+linux-modules@lfdr.de>; Thu, 25 Jan 2024 16:07:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CAD0F83DCA0
+	for <lists+linux-modules@lfdr.de>; Fri, 26 Jan 2024 15:43:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3621291C0C
-	for <lists+linux-modules@lfdr.de>; Thu, 25 Jan 2024 15:07:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87DE2285C7C
+	for <lists+linux-modules@lfdr.de>; Fri, 26 Jan 2024 14:43:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 603286E2C9;
-	Thu, 25 Jan 2024 15:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C6E71C2B3;
+	Fri, 26 Jan 2024 14:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TyHhrFcx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y9r7WpcW"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A116E2D1
-	for <linux-modules@vger.kernel.org>; Thu, 25 Jan 2024 15:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.134.136.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E771C2AE
+	for <linux-modules@vger.kernel.org>; Fri, 26 Jan 2024 14:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706195263; cv=none; b=rLcgX/6Y/6dHDb0lRYiXHE4HeEqbtjQMlBWslh0MH/0iJXytuQEnAAPl5SUyLV3KWdsX/65QsjXTBAIXWg4sAISAdb7hI/VYF/a5nD7aAGXCzvQ/wXdzt2/JYeUnTrGgOePR00yPKZdbB/NycxVRXorkCmOt0BglL+d2K3R3ESk=
+	t=1706280230; cv=none; b=eOeUDr9c8Va9LiMPmmCHgCZHIKPkYBx2UTa5Bd5S98xkBxnpQ6d3E+pHIlV7wklSZCgHff+NgfAE8lykhHDRglszj6/j4zD/Q5+1wMQeO7qZTKrFvGH5njiXc3EgTJg4AXsI0n2dsnCCMWboki/8t2PwhFKZbhJqGOgxfuRtg/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706195263; c=relaxed/simple;
-	bh=tM16dqRHj19OPE4d/lX825A7pUgLv2ZgnhkroZhR4Vc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MQb5pBKX0ZU+HOaVVd90F+HOY6Yzk2xJmazDt8oezijS8Ap8K89r41Fq6jDg5MsTU6zY6I2v67BOGRrX0SsRz0qFG7ZU+7V4/Vi6Z9K381zkXX4KlpzlSOIiAWffEKdfandBq3knr5zthV5XQPCtoKNgvV3Q3hiF45X47gimUDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TyHhrFcx; arc=none smtp.client-ip=134.134.136.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706195261; x=1737731261;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=tM16dqRHj19OPE4d/lX825A7pUgLv2ZgnhkroZhR4Vc=;
-  b=TyHhrFcxdqRKXcHkjKYsjBl3RGvOHbLzw+eh5BOVwphv6uMLFTobjkOf
-   mHDd/5OKZe1/pzmiVtVMetlzeBGdyU87+ox0i97mCcP/o1Plz8xMX47Zj
-   CIfxyaqqlrGH0iLSgyfrviL/g5jLBR2kZC85DODjohaj+1mXfPc566hE/
-   Vr+BsUYns4jn5AtZQX0ATHn/boYsLck9SmRyB3gwBbdr94+1d1rG5CAWY
-   wpnau7vHF7H6acofPSJr1hUv3beIglJRzZOLsXCNzVVY/N7cPKnJXCaI2
-   kkojywpTkXjuOf7HvTruN6sZ0bxvIvdYpTEb9XUq5nyWAVW1fHl9PjxkJ
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10962"; a="405934540"
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="405934540"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 07:07:40 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,216,1701158400"; 
-   d="scan'208";a="2443617"
-Received: from sarossow-mobl1.amr.corp.intel.com (HELO [10.209.99.106]) ([10.209.99.106])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2024 07:07:38 -0800
-Message-ID: <6c5c72ab-01b1-45b4-9a33-529688e449eb@intel.com>
-Date: Thu, 25 Jan 2024 07:07:37 -0800
+	s=arc-20240116; t=1706280230; c=relaxed/simple;
+	bh=Mwkjxdv6ZeI3RiGnQHQaNJvZizkxUrEbM4PzHrmVAGg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KfasZusfbUprLtZUd9x94jjLKYe4y0LzoRBvsuOiFkEeZhOZKgd+haptVFrPu1NDt3tZY3iUxYzXp0MhRxUV4323w/qLuBw79jmLHFBjbrJ+iG2IkbKMgfdhvfY0R4eHZylBrY7rpakQyXr4J2ex8rZOaxVZhjzoW2eJ3oioTn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y9r7WpcW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9E7FAC433B1;
+	Fri, 26 Jan 2024 14:43:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706280229;
+	bh=Mwkjxdv6ZeI3RiGnQHQaNJvZizkxUrEbM4PzHrmVAGg=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Y9r7WpcWmn7DIroDKzL7ufLk/AIsrN4rG7oBOT7ymGQFqsAopdQ1OZvwiKn3v8gyv
+	 QnXJnW4n2xKNTk+/ryuMCtaFbmfYMAPk9W7IykP0t4gWp+XzpdBbk59UIZ70pR0+xK
+	 5k5glQzKVwrcMDLGzzoKccnOWwTJBMBli5WLNeqDVo3vlZ6TfdAsCgIUjQyDm2iRNO
+	 cjmtWzuoOmZ4XJzycppwkozWcEp8CaAddqVBLHA/Y7v+DMlINUjiwIxIOwBC1ade1n
+	 lqlx2POZEMRDlJi6ec0AVk9FRuxa59EYXmZpNoxMh6acQbL7f+FV/c+FhY9179MNPp
+	 0uCZWPesxd9SQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88282C47DDF;
+	Fri, 26 Jan 2024 14:43:49 +0000 (UTC)
+From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
+Subject: [PATCH 0/2] Polish module_directory help string, install symlinks
+Date: Fri, 26 Jan 2024 14:43:49 +0000
+Message-Id: <20240126-master-v1-0-6257d039a30a@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 02/12] mm: add config option and per-NUMA node VMS
- support
-Content-Language: en-US
-To: Artem Kuzin <artem.kuzin@huawei.com>,
- "Christoph Lameter (Ampere)" <cl@gentwo.org>
-Cc: x86@kernel.org, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, hpa@zytor.com, luto@kernel.org,
- peterz@infradead.org, akpm@linux-foundation.org, urezki@gmail.com,
- hch@infradead.org, lstoakes@gmail.com, mcgrof@kernel.org,
- rmk+kernel@armlinux.org.uk, nikita.panov@huawei-partners.com,
- alexander.grubnikov@huawei.com, stepanov.anatoly@huawei.com,
- guohanjun@huawei.com, weiyongjun1@huawei.com, wangkefeng.wang@huawei.com,
- judy.chenhui@huawei.com, yusongping@huawei.com, kang.sun@huawei.com,
- linux-mm@kvack.org, linux-modules@vger.kernel.org
-References: <20231228131056.602411-1-artem.kuzin@huawei.com>
- <20231228131056.602411-3-artem.kuzin@huawei.com>
- <059dc132-af10-fd08-7368-302c765a4269@gentwo.org>
- <c5c8d372-ee12-4ccc-8080-a2c33301b812@huawei.com>
-From: Dave Hansen <dave.hansen@intel.com>
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- xsFNBE6HMP0BEADIMA3XYkQfF3dwHlj58Yjsc4E5y5G67cfbt8dvaUq2fx1lR0K9h1bOI6fC
- oAiUXvGAOxPDsB/P6UEOISPpLl5IuYsSwAeZGkdQ5g6m1xq7AlDJQZddhr/1DC/nMVa/2BoY
- 2UnKuZuSBu7lgOE193+7Uks3416N2hTkyKUSNkduyoZ9F5twiBhxPJwPtn/wnch6n5RsoXsb
- ygOEDxLEsSk/7eyFycjE+btUtAWZtx+HseyaGfqkZK0Z9bT1lsaHecmB203xShwCPT49Blxz
- VOab8668QpaEOdLGhtvrVYVK7x4skyT3nGWcgDCl5/Vp3TWA4K+IofwvXzX2ON/Mj7aQwf5W
- iC+3nWC7q0uxKwwsddJ0Nu+dpA/UORQWa1NiAftEoSpk5+nUUi0WE+5DRm0H+TXKBWMGNCFn
- c6+EKg5zQaa8KqymHcOrSXNPmzJuXvDQ8uj2J8XuzCZfK4uy1+YdIr0yyEMI7mdh4KX50LO1
- pmowEqDh7dLShTOif/7UtQYrzYq9cPnjU2ZW4qd5Qz2joSGTG9eCXLz5PRe5SqHxv6ljk8mb
- ApNuY7bOXO/A7T2j5RwXIlcmssqIjBcxsRRoIbpCwWWGjkYjzYCjgsNFL6rt4OL11OUF37wL
- QcTl7fbCGv53KfKPdYD5hcbguLKi/aCccJK18ZwNjFhqr4MliQARAQABzUVEYXZpZCBDaHJp
- c3RvcGhlciBIYW5zZW4gKEludGVsIFdvcmsgQWRkcmVzcykgPGRhdmUuaGFuc2VuQGludGVs
- LmNvbT7CwXgEEwECACIFAlQ+9J0CGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGg1
- lTBwyZKwLZUP/0dnbhDc229u2u6WtK1s1cSd9WsflGXGagkR6liJ4um3XCfYWDHvIdkHYC1t
- MNcVHFBwmQkawxsYvgO8kXT3SaFZe4ISfB4K4CL2qp4JO+nJdlFUbZI7cz/Td9z8nHjMcWYF
- IQuTsWOLs/LBMTs+ANumibtw6UkiGVD3dfHJAOPNApjVr+M0P/lVmTeP8w0uVcd2syiaU5jB
- aht9CYATn+ytFGWZnBEEQFnqcibIaOrmoBLu2b3fKJEd8Jp7NHDSIdrvrMjYynmc6sZKUqH2
- I1qOevaa8jUg7wlLJAWGfIqnu85kkqrVOkbNbk4TPub7VOqA6qG5GCNEIv6ZY7HLYd/vAkVY
- E8Plzq/NwLAuOWxvGrOl7OPuwVeR4hBDfcrNb990MFPpjGgACzAZyjdmYoMu8j3/MAEW4P0z
- F5+EYJAOZ+z212y1pchNNauehORXgjrNKsZwxwKpPY9qb84E3O9KYpwfATsqOoQ6tTgr+1BR
- CCwP712H+E9U5HJ0iibN/CDZFVPL1bRerHziuwuQuvE0qWg0+0SChFe9oq0KAwEkVs6ZDMB2
- P16MieEEQ6StQRlvy2YBv80L1TMl3T90Bo1UUn6ARXEpcbFE0/aORH/jEXcRteb+vuik5UGY
- 5TsyLYdPur3TXm7XDBdmmyQVJjnJKYK9AQxj95KlXLVO38lczsFNBFRjzmoBEACyAxbvUEhd
- GDGNg0JhDdezyTdN8C9BFsdxyTLnSH31NRiyp1QtuxvcqGZjb2trDVuCbIzRrgMZLVgo3upr
- MIOx1CXEgmn23Zhh0EpdVHM8IKx9Z7V0r+rrpRWFE8/wQZngKYVi49PGoZj50ZEifEJ5qn/H
- Nsp2+Y+bTUjDdgWMATg9DiFMyv8fvoqgNsNyrrZTnSgoLzdxr89FGHZCoSoAK8gfgFHuO54B
- lI8QOfPDG9WDPJ66HCodjTlBEr/Cwq6GruxS5i2Y33YVqxvFvDa1tUtl+iJ2SWKS9kCai2DR
- 3BwVONJEYSDQaven/EHMlY1q8Vln3lGPsS11vSUK3QcNJjmrgYxH5KsVsf6PNRj9mp8Z1kIG
- qjRx08+nnyStWC0gZH6NrYyS9rpqH3j+hA2WcI7De51L4Rv9pFwzp161mvtc6eC/GxaiUGuH
- BNAVP0PY0fqvIC68p3rLIAW3f97uv4ce2RSQ7LbsPsimOeCo/5vgS6YQsj83E+AipPr09Caj
- 0hloj+hFoqiticNpmsxdWKoOsV0PftcQvBCCYuhKbZV9s5hjt9qn8CE86A5g5KqDf83Fxqm/
- vXKgHNFHE5zgXGZnrmaf6resQzbvJHO0Fb0CcIohzrpPaL3YepcLDoCCgElGMGQjdCcSQ+Ci
- FCRl0Bvyj1YZUql+ZkptgGjikQARAQABwsFfBBgBAgAJBQJUY85qAhsMAAoJEGg1lTBwyZKw
- l4IQAIKHs/9po4spZDFyfDjunimEhVHqlUt7ggR1Hsl/tkvTSze8pI1P6dGp2XW6AnH1iayn
- yRcoyT0ZJ+Zmm4xAH1zqKjWplzqdb/dO28qk0bPso8+1oPO8oDhLm1+tY+cOvufXkBTm+whm
- +AyNTjaCRt6aSMnA/QHVGSJ8grrTJCoACVNhnXg/R0g90g8iV8Q+IBZyDkG0tBThaDdw1B2l
- asInUTeb9EiVfL/Zjdg5VWiF9LL7iS+9hTeVdR09vThQ/DhVbCNxVk+DtyBHsjOKifrVsYep
- WpRGBIAu3bK8eXtyvrw1igWTNs2wazJ71+0z2jMzbclKAyRHKU9JdN6Hkkgr2nPb561yjcB8
- sIq1pFXKyO+nKy6SZYxOvHxCcjk2fkw6UmPU6/j/nQlj2lfOAgNVKuDLothIxzi8pndB8Jju
- KktE5HJqUUMXePkAYIxEQ0mMc8Po7tuXdejgPMwgP7x65xtfEqI0RuzbUioFltsp1jUaRwQZ
- MTsCeQDdjpgHsj+P2ZDeEKCbma4m6Ez/YWs4+zDm1X8uZDkZcfQlD9NldbKDJEXLIjYWo1PH
- hYepSffIWPyvBMBTW2W5FRjJ4vLRrJSUoEfJuPQ3vW9Y73foyo/qFoURHO48AinGPZ7PC7TF
- vUaNOTjKedrqHkaOcqB185ahG2had0xnFsDPlx5y
-In-Reply-To: <c5c8d372-ee12-4ccc-8080-a2c33301b812@huawei.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACXFs2UC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQyMz3dzE4pLUIl3TpEQjC7MkI7PU1BQloOKCotS0zAqwQdGxtbUAqZF
+ WblgAAAA=
+To: linux-modules@vger.kernel.org
+Cc: Emil Velikov <emil.velikov@collabora.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706280230; l=807;
+ i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
+ bh=Mwkjxdv6ZeI3RiGnQHQaNJvZizkxUrEbM4PzHrmVAGg=;
+ b=owKXjQXevkD2k1BGeCmO+DPuJb+42URVekX0+uJqqAGxlaTkGo661qCftIJaRPj57Fbr07FD7
+ hhY0BmaCUZ/DBUpVWRfoRGUUUZyedan1RNwvsKNrFMRC5vMPR2AqINq
+X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
+ pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
+X-Endpoint-Received:
+ by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
+X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
+Reply-To: <emil.l.velikov@gmail.com>
 
-On 1/9/24 08:57, Artem Kuzin wrote:
-> We already have per-NUMA node init_mm, but this is not enough.
-> We need this array of pointers in the task struct due to the proper pgd 
-> (per-NUMA node) should be used for threads of process that occupy more 
-> than one NUMA node.
+Hello all,
 
-Let me repeat what Christoph said in a bit more forceful way.
+I've noticed the recent module_directory work and I'm super hyped to see
+it released. Are there any plans for v32?
 
-MAX_NUMNODES can be 1024.  You're adding 1023*8 bytes of overhead for
-each process ... everywhere, including on my single node laptop.  That's
-completely unacceptable.  You need to find another way to do this.
+This tiny series has two patches:
+ - tweaks the help string for the module_directory toggle
+ - installs the insmod, rmmod, lsmod ... symlinks
 
-I'd suggest just ignoring the problem for now.  Do multi-node processes
-with a later optimization.
+The above should be fairly straightforward, but if there's any questions
+or concerns do let me know.
+
+Thanks
+Emil
+
+---
+Emil Velikov (2):
+      configure: tweak the module_directory help string
+      make: install/uninstall tools symlinks to kmod
+
+ Makefile.am  | 10 ++++++++++
+ configure.ac |  2 +-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+---
+base-commit: 48b0c75f79f86140314b9656d3d855a515e18a73
+change-id: 20240126-master-5ba286b26eed
+
+Best regards,
+-- 
+Emil Velikov <emil.l.velikov@gmail.com>
+
 
