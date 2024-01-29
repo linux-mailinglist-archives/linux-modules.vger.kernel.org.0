@@ -1,97 +1,79 @@
-Return-Path: <linux-modules+bounces-376-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-378-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FE4E84136A
-	for <lists+linux-modules@lfdr.de>; Mon, 29 Jan 2024 20:27:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A3668413FB
+	for <lists+linux-modules@lfdr.de>; Mon, 29 Jan 2024 21:01:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 721D71C23E1B
-	for <lists+linux-modules@lfdr.de>; Mon, 29 Jan 2024 19:27:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35C2A282163
+	for <lists+linux-modules@lfdr.de>; Mon, 29 Jan 2024 20:01:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C447F13D4FC;
-	Mon, 29 Jan 2024 19:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 276667603A;
+	Mon, 29 Jan 2024 20:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="dsewV60v"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="X37HBjAl"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEE676023;
-	Mon, 29 Jan 2024 19:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8BB48790;
+	Mon, 29 Jan 2024 20:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706556412; cv=none; b=RidLqjO4iURrDsX0bs1GvXM5qk0N2nKLBjE85trFuzfLr19G2o2XQ+DKv1lknOw8n5ukb75ZPmadNDLvPPmX6GrV/pf9OaU9el25XUBAbPJCLlfGaqxAzSXSi2KKMyYzeULTznm0hwRaAeDmTMaRlGXvYFaZpp9U5i57CUOS03I=
+	t=1706558496; cv=none; b=jKzh7XLDkKPY61CBeDqziNsULSYkbInci2nleDVv6k7IF83W5beqwZUXtb5VPg2FbjBk6tfCNQSEu0DqzVfnQsBKygCj7XW2+UJTI3RX4KfQlKjqncs4HdZqdnxMN1PpLsWCwlu/8JXIW7HZqdg5Gh+KczuSuxQ9OgJ/XSWdIAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706556412; c=relaxed/simple;
-	bh=0DCssUbSMzZG0WW8U5N3x7j24bKA4wfldkB5+LDWwFQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEhqsYlBYpRoU+54rulEJppnwUzC+IP6nku896V/eSf19CVVOESOZf/E2/itmM/8BF5a52ZJnsfNKuLi3gzzKIVgZxOIu1heQ0mg6YiFWumW1tUn+t7TfJyHrgBdJxlUX3b0VmzP66DKInBfwew+N7zKXCH2rOvIdT//9s7U0b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=dsewV60v; arc=none smtp.client-ip=198.137.202.133
+	s=arc-20240116; t=1706558496; c=relaxed/simple;
+	bh=ISg0qWcsic3NhSTT26Ik0LHaKUMiqMelriiZGFHLbPU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VP6+gmzkJwKUSIKQpj2n0uVZQCxDEJ65yJKEUWwzAWr1B28erC+5SFWU9O7RKmD4CTX3Q54cRDJBbwCR79YySZ5mDdSr8bOaeBV93z/5I0SZqMSbpraJxz+0qnmDsslhuEdNz0Fop+ueHNm+cs2ZkjenRMO9nx2wTEscR1PBbos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=X37HBjAl; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=M1jujuKLf3xpruhDR2flI4/MXT9+iY7sBsE2JSjaJ8k=; b=dsewV60v9w6yB9nt1NnbKQcKrt
-	vs1tUjLgte/Y8/eVUZw0tp4OdcDd/1aOSTr0te2/7Ri1VsyL4zE7Y05iM5U8Sx5e8yQU2yAmNWgO8
-	Rp+Mx84CubR+TVZ4CElMitOr7g17G6b1xhmr8kPm6FkeTdi+tpTvKIEpGfk9hmvEDpN8NERbZAot4
-	Nmp6AFlEDwR08x4/fFbTK3D+kCF0yMECJMixu+0sIr8TdnvS4lt6ldfAe6g21vOJpz/duKBw12tkK
-	P/Yv8yLABZiaFa6gfwV2++5kivIJqLG6WOlZDczDtwzaiI0YqUZuysI4jXEeqpN38mzqcnCDd9Gt5
-	8560ml8w==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=IkjdIBKoiOcpY02ZoVDX9S0wFvKlvTpVElGZtMaUhdk=; b=X37HBjAlM/ZTVyv4M+Ru3y1KCO
+	C6lhWPaBK270WH1qmBnFhd/oyk8xgfveopnpjnJZGxcz8Vf9NtUsiEtSx1FLfBXMiEjRkDivFbkN4
+	4ZdaWE6ueAlWYVSDxGkd5rF7BFDKmH0DPFm/FS5ocfYe1P/NbrZbPklkeBpNWm6CTgLsQJDkN9xM1
+	vG2spEQNGsBVFP/KtCe8Xs+m2MOPvZchqnEpAJls51agfmn5ODO7VCouatGuR1oF/a6OF/NHQaObO
+	ah5h7NOO4RmDHijLwtKXnR+TTKQprLT1hvRHV1Yx8HtceS5aIKZTzmwkXKvHY8MG0gwkG6sZh/r5/
+	pcIK1Asg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rUXHN-0000000E683-3D7U;
-	Mon, 29 Jan 2024 19:26:49 +0000
+	id 1rUXoz-0000000EBhU-2uy5;
+	Mon, 29 Jan 2024 20:01:33 +0000
+Date: Mon, 29 Jan 2024 12:01:33 -0800
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: masahiroy@kernel.org,
-	deller@gmx.de
-Cc: mcgrof@kernel.org,
-	arnd@arndb.de,
-	linux-arch@vger.kernel.org,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 4/4] modules: Add missing entry for __ex_table
-Date: Mon, 29 Jan 2024 11:26:43 -0800
-Message-ID: <20240129192644.3359978-5-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129192644.3359978-1-mcgrof@kernel.org>
-References: <20240129192644.3359978-1-mcgrof@kernel.org>
+To: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] module: Use set_memory_rox()
+Message-ID: <ZbgEHYe6f4WiIKoU@bombadil.infradead.org>
+References: <98d4db94f19737fe05fd811a4188ff277b83a334.1703143382.git.christophe.leroy@csgroup.eu>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <98d4db94f19737fe05fd811a4188ff277b83a334.1703143382.git.christophe.leroy@csgroup.eu>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-From: Helge Deller <deller@gmx.de>
+On Thu, Dec 21, 2023 at 08:24:23AM +0100, Christophe Leroy wrote:
+> A couple of architectures seem concerned about calling set_memory_ro()
+> and set_memory_x() too frequently and have implemented a version of
+> set_memory_rox(), see commit 60463628c9e0 ("x86/mm: Implement native
+> set_memory_rox()") and commit 22e99fa56443 ("s390/mm: implement
+> set_memory_rox()")
+> 
+> Use set_memory_rox() in modules when STRICT_MODULES_RWX is set.
+> 
+> Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-The entry for __ex_table was missing, which may make __ex_table
-become 1- or 2-byte aligned in modules.
-Add the entry to ensure it gets 32-bit aligned.
+Nice simplification. I applied all 3 patches and pushed!
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- scripts/module.lds.S | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/scripts/module.lds.S b/scripts/module.lds.S
-index b00415a9ff27..488f61b156b2 100644
---- a/scripts/module.lds.S
-+++ b/scripts/module.lds.S
-@@ -26,6 +26,7 @@ SECTIONS {
- 	.altinstructions	0 : ALIGN(8) { KEEP(*(.altinstructions)) }
- 	__bug_table		0 : ALIGN(8) { KEEP(*(__bug_table)) }
- 	__jump_table		0 : ALIGN(8) { KEEP(*(__jump_table)) }
-+	__ex_table		0 : ALIGN(4) { KEEP(*(__ex_table)) }
- 
- 	__patchable_function_entries : { *(__patchable_function_entries) }
- 
--- 
-2.42.0
-
+  Luis
 
