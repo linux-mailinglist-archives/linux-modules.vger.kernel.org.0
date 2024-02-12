@@ -1,52 +1,52 @@
-Return-Path: <linux-modules+bounces-434-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-436-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7881F851B3C
-	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 18:23:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED9DF851B3F
+	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 18:23:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA9AE1C21386
-	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 17:23:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29F491C2141C
+	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 17:23:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B1063EA74;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A60F53EA95;
 	Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DI27nuEj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bv2B8aJ7"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663773E477
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820793E49C
 	for <linux-modules@vger.kernel.org>; Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707758586; cv=none; b=dM0XkG6Tc1rx4GtGXnAfA8hrgLPXTe0Wh5MZShfx2KuR4PeTQRgqBTCraUS3uVwwQOBAZupuzco0ATIqCfj4UFE+VZhjvbjinbGZm0qoIFvVHZ/RyRXtlRwrZZMWeeFMAhNCov0HVCwBGiUPhcR65z1BQxq0lFzntpT8dUmtDnA=
+	t=1707758586; cv=none; b=Eoon+Le+Z0V4y6YILI8t5YQbphEoccc7hGfNRzRNXeumsJtbmCa4g/6caAbiv7dTNK7iGCKLdphtRd8PW0VuQpTCD5AalxDqqEaUPgA9sp617vfEsjKF13u+tDhvkDOolZsLalUp2GwsZqjaiNZwaAqEJC+cE7ISY+EQO156mUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707758586; c=relaxed/simple;
-	bh=TZBNiHOLDF13i5bmBVUDnvfTXoZyU6dW90MffHP8vIA=;
+	bh=3BGP/vZWVd6Fz4QD1oM4T5+MZqwiZCwqPX677URBqrs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dsDhVd4zKfO5DJ7jm4OFkWE3aG3Z/c+Fr+L4WJZuds+9Q2zADYtboPx/o6HDdCg95TU25TdirRhnqn8dU5PUTwwC7namkODgxjyoYJ5Q3kRLvc/MA8fruTohDGbe60E+cttKrzU3mZqgJ51P8o+WC2Jl+gqmi5KqUML1+0vqwNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DI27nuEj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 45DF1C4166B;
+	 In-Reply-To:To:Cc; b=o7GNq9rwqnibo67Y64F5rOXUvRvJo8d8izW/PrxPjwaxzvE3EJ1FtznQz2OmaUn0FszlktAk6nUCUbBHBj0HvmVC6PZaFQH14Rf/gV0rIACmRiu4h76PK2N8CnPl7Alp0Y3/uEuaPPDaQlDjuKOBae2+hU2ALWXeEyjDOmtQHG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bv2B8aJ7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 63C85C41674;
 	Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1707758586;
-	bh=TZBNiHOLDF13i5bmBVUDnvfTXoZyU6dW90MffHP8vIA=;
+	bh=3BGP/vZWVd6Fz4QD1oM4T5+MZqwiZCwqPX677URBqrs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=DI27nuEjZNCMGuPKduVxzt+WVt87sziLUT3rGMx40mFiNYtaZZuBQouBcED2w5hcY
-	 uI11Di1xmV6O0d4jWlmVjlguzRMlgsmGgYoxeT/9jHZLTbJp5p9wgq9Y1iWIuAqSJb
-	 ZJbXd3wsC+bQV5OCo4F2LjdMS+tZ9//ugQa5KoN6D6waW2IrZwjmM/F/SKv9iBtC5m
-	 3ND9zFdgY5+b6Cb76w8AQiRBG8QqJ7vavuRBQBEj1Nap5VT5yCbVnzn9JN+gm5z5CA
-	 eqzXHez8Jy89/aEkiJH1UNhVQDrHJaF4r7zT/kL3Jsmk1mZ5NKJvvkLzrtQ4AdsSij
-	 ACs6wFvtJvSSw==
+	b=bv2B8aJ7sBqvjCCuZ5QTeaVTn5xNOILPMh0Cl65GtclYSynZ5nyUsZLDMFRB3NFif
+	 lzUJfBb5AbKrWLuSuBq5DQ2qg+uUTi0Rr/V5Fq+71qnGXJDdhL8ubgZGL1jghKEbJt
+	 psbEzCDMcaTCJGwossDiCqbaFeq5C3CeDxRLh7327B8n3Ju1AejiLzaYXFDQ7brSxi
+	 0xsVksoFAPBM7EvBSDOYK5+eOErhKPtcmh9qsfTTUQSts9k3zhNmCuKlZwZ9mB7jAs
+	 W+/YvvK2k2AxXxsYFA31JPSvDR//feOsio60MSRiCMpU+LBZN/8PObAOe5kSqG08wh
+	 xe1SQ7rMBMTjA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33BB9C4829E;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D502C48BC1;
 	Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 12 Feb 2024 17:23:11 +0000
-Subject: [PATCH kmod 10/13] libkmod: tidy-up kmod_file_open()
+Date: Mon, 12 Feb 2024 17:23:12 +0000
+Subject: [PATCH kmod 11/13] libkmod: move load_reg() further up
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,17 +55,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240212-decompression-fixes-v1-10-06f92ad07985@gmail.com>
+Message-Id: <20240212-decompression-fixes-v1-11-06f92ad07985@gmail.com>
 References: <20240212-decompression-fixes-v1-0-06f92ad07985@gmail.com>
 In-Reply-To: <20240212-decompression-fixes-v1-0-06f92ad07985@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707758583; l=2378;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707758583; l=1695;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=UfzSecSP8vIYsHmd21SFJIic/SxgSObW4SMoY5ZZ5mI=;
- b=Gh/abScOoWeSs/fl6sH1LlQ+em0F5Pa5ZcmJMSceZ/nUmxJtEHe2B0HizqB1/Uh2wukLUt2Lh
- x7AwKrpVhUKBFQ/7P/bBNO25hPnZDM58kXESBA3oGaNMEHo3UCyWLkq
+ bh=s7DGIk3v5vJZUPUJq4qUIG5k2dwH6qeNbl7Ccp04tdM=;
+ b=r+xUgnwpNFv2pLM9zfu/g+v/Ncb451QKQmLwLfooiRmjkaiKwgrO8YpIpoo1nNwAZGpC8KHlN
+ 3Ax90X3qGebDHBMoyGar0BjA3ntxKXFtVlwhzoSzZWsQQJKuY4R32ze
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -75,101 +75,55 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-This commit cleans up the indentation and the error path of the
-function. It bears no functional changes.
+We're about to reference it in comp_types with next commit.
 
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
- libkmod/libkmod-file.c | 60 +++++++++++++++++++++-----------------------------
- 1 file changed, 25 insertions(+), 35 deletions(-)
+ libkmod/libkmod-file.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/libkmod/libkmod-file.c b/libkmod/libkmod-file.c
-index 5b88d6c..c4893fd 100644
+index c4893fd..db775a6 100644
 --- a/libkmod/libkmod-file.c
 +++ b/libkmod/libkmod-file.c
-@@ -410,41 +410,40 @@ struct kmod_file *kmod_file_open(const struct kmod_ctx *ctx,
+@@ -358,18 +358,6 @@ static int load_zlib(struct kmod_file *file)
+ 
+ static const char magic_zlib[] = {0x1f, 0x8b};
+ 
+-static const struct comp_type {
+-	size_t magic_size;
+-	enum kmod_file_compression_type compression;
+-	const char *magic_bytes;
+-	int (*load)(struct kmod_file *file);
+-} comp_types[] = {
+-	{sizeof(magic_zstd),	KMOD_FILE_COMPRESSION_ZSTD, magic_zstd, load_zstd},
+-	{sizeof(magic_xz),	KMOD_FILE_COMPRESSION_XZ, magic_xz, load_xz},
+-	{sizeof(magic_zlib),	KMOD_FILE_COMPRESSION_ZLIB, magic_zlib, load_zlib},
+-	{0,			KMOD_FILE_COMPRESSION_NONE, NULL, NULL}
+-};
+-
+ static int load_reg(struct kmod_file *file)
  {
- 	struct kmod_file *file = calloc(1, sizeof(struct kmod_file));
- 	const struct comp_type *itr;
--	int err = 0;
-+	char buf[7];
-+	ssize_t sz;
- 
- 	if (file == NULL)
- 		return NULL;
- 
- 	file->fd = open(filename, O_RDONLY|O_CLOEXEC);
- 	if (file->fd < 0) {
--		err = -errno;
--		goto error;
-+		free(file);
-+		return NULL;
- 	}
- 
--	{
--		char buf[7];
--		ssize_t sz;
--
--		assert_cc(sizeof(magic_zstd) < sizeof(buf));
--		assert_cc(sizeof(magic_xz) < sizeof(buf));
--		assert_cc(sizeof(magic_zlib) < sizeof(buf));
--
--		sz = read_str_safe(file->fd, buf, sizeof(buf));
--		lseek(file->fd, 0, SEEK_SET);
--		if (sz != (sizeof(buf) - 1)) {
--			if (sz < 0)
--				err = sz;
--			else
--				err = -EINVAL;
--			goto error;
--		}
-+	assert_cc(sizeof(magic_zstd) < sizeof(buf));
-+	assert_cc(sizeof(magic_xz) < sizeof(buf));
-+	assert_cc(sizeof(magic_zlib) < sizeof(buf));
- 
--		for (itr = comp_types; itr->load != NULL; itr++) {
--			if (memcmp(buf, itr->magic_bytes, itr->magic_size) == 0) {
--				file->load = itr->load;
--				file->compression = itr->compression;
--				break;
--			}
-+	sz = read_str_safe(file->fd, buf, sizeof(buf));
-+	lseek(file->fd, 0, SEEK_SET);
-+	if (sz != (sizeof(buf) - 1)) {
-+		if (sz < 0)
-+			errno = -sz;
-+		else
-+			errno = EINVAL;
-+
-+		close(file->fd);
-+		free(file);
-+		return NULL;
-+	}
-+
-+	for (itr = comp_types; itr->load != NULL; itr++) {
-+		if (memcmp(buf, itr->magic_bytes, itr->magic_size) == 0) {
-+			file->load = itr->load;
-+			file->compression = itr->compression;
-+			break;
- 		}
- 	}
- 
-@@ -455,15 +454,6 @@ struct kmod_file *kmod_file_open(const struct kmod_ctx *ctx,
- 
- 	file->ctx = ctx;
- 
--error:
--	if (err < 0) {
--		if (file->fd >= 0)
--			close(file->fd);
--		free(file);
--		errno = -err;
--		return NULL;
--	}
--
- 	return file;
+ 	struct stat st;
+@@ -388,6 +376,18 @@ static int load_reg(struct kmod_file *file)
+ 	return 0;
  }
  
++static const struct comp_type {
++	size_t magic_size;
++	enum kmod_file_compression_type compression;
++	const char *magic_bytes;
++	int (*load)(struct kmod_file *file);
++} comp_types[] = {
++	{sizeof(magic_zstd),	KMOD_FILE_COMPRESSION_ZSTD, magic_zstd, load_zstd},
++	{sizeof(magic_xz),	KMOD_FILE_COMPRESSION_XZ, magic_xz, load_xz},
++	{sizeof(magic_zlib),	KMOD_FILE_COMPRESSION_ZLIB, magic_zlib, load_zlib},
++	{0,			KMOD_FILE_COMPRESSION_NONE, NULL, NULL}
++};
++
+ struct kmod_elf *kmod_file_get_elf(struct kmod_file *file)
+ {
+ 	int err;
 
 -- 
 2.43.0
