@@ -1,53 +1,52 @@
-Return-Path: <linux-modules+bounces-431-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-435-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45A35851B3A
-	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 18:23:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D472851B3E
+	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 18:23:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0030828C4CA
-	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 17:23:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F5B31C214D6
+	for <lists+linux-modules@lfdr.de>; Mon, 12 Feb 2024 17:23:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D0F33E498;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A09433EA93;
 	Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g1aiJ519"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ir6JuLn9"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AE73E464
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D83C3E499
 	for <linux-modules@vger.kernel.org>; Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707758586; cv=none; b=FvXonnS8JGcOrZe+XGGW85ZSANRZiVKNUgo/6STAvqz1uqBqHAit0/3UuCOx95z2QnqQUx3VsiejQXNDfkzSRa5mffhdm9TOekIV3IjGxk3S3oSkvzn0akhgsJ3ZmeKRaOZFV6Z3ZJD3Ao/bT/4bcti16i7AI6vMPtXTRTgVDA0=
+	t=1707758586; cv=none; b=dvZI/cD9dxgZSWTOEAhOWaINNXPiT3EghcOZrSdpS2QezvKyCVekHo1QvRq2Ibom/339re8qsPIGNR5DmqQ79GJnWxeSNXObv0/MFsC1tlqatxid+CGRomWRjJabpLQkLVugyeQgBakOBk2tt9PM5bGSYUj6slb08OC42yty/zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707758586; c=relaxed/simple;
-	bh=i0w/N1kme4K9ELI3ZZ4I7KCak551RKEE1CoF9dzzTt8=;
+	bh=ldEDUCkPI5C/bJm7mVquDR47uX8LHbZYUjpQ8z+9/jo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YZYfhIRmGrLZZ3P7PuCcRPYCesS++OCRC4UhkRy0EcXaT5p1VnFqg6AghKiOhnbQHNNOECYbPOkKb+3sIBXd/yTdKeyuAKNTS3rXdP59oyWKLIbn9bfdTxMS6X6A1gdNqjDzTa2vXlyXVd1xnbgQSqFW35PhLRvstAQh4uhLePk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g1aiJ519; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 01F45C43142;
+	 In-Reply-To:To:Cc; b=BioKR73YloIRjXmQEUfaUEz5HcZ5MsM4kRX01rHRj+aLYmE9cUAbbS13IAlZKMS7GDPDC1rz21rIkRNjMyD/b+B2q7Sd+1pwGBpdf3HVcaEjblswFcyK2fTeWFtaN7zcByhJ1uayW12JQSJrbdR4jeLLzJ0m1KMLHIfkr48pyoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ir6JuLn9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 14C25C43143;
 	Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1707758586;
-	bh=i0w/N1kme4K9ELI3ZZ4I7KCak551RKEE1CoF9dzzTt8=;
+	bh=ldEDUCkPI5C/bJm7mVquDR47uX8LHbZYUjpQ8z+9/jo=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=g1aiJ519NoF/mmoVzXYN9jmb27OcbMuMxznmPZtax0pHbyUlKZzX1FJ4SXqNATlJT
-	 CY8qSonxFCBboxsVBHSSR+GsilMJOu1WnhJNlvBhksDHGHzS3MsAmg5EJ0ZS0TxTkw
-	 CbGhQ3NBvLxTfMi34TzewcVQg4l6tlr5hrMDyaktW6dcC5mrUXcQx/CorkxBFsoYIZ
-	 5DDAl5mZh0khuFn7H4+DdhxKtQO4vvOaPpEdmjSV+c5d+/5jicNQWhLS+lb74R9uCr
-	 egUSZC3+ZYw1ea2Gn8mo1RiYm7Ec0fFRe64UAOP+0LBvbcSpuqD5Z5SQcvm7X9r0cb
-	 FCGluY4Dc1jYA==
+	b=Ir6JuLn9aBDAZ981Y4c6ZSacTI4hc84UCU2fTdvR7+i1maM3zGMQ8OX3nL4b3lNIC
+	 Pg4XQJaFFWO3s0Kr4LFTQaSf4qZowQuua84RVjtNbemsmZquxMuilNWepJqabRwt5P
+	 9va+x+PJlTnydJl2yfHGHI6/ZQzYaGxwAkVzRPiMS7w9GXFZ1Pk5jWuqT3D8t6NoZE
+	 E7NnMYN/uj2PykL63xOH0xXLC42W3QlsyzMxxfdltMrsD928XxFH8Zpw8svvMQYNrI
+	 lXRSKCAkhcA7PGE0XStBUyAbm1KzePgqOTxjH+QKjGUMQRxmnVVSnhnroX2TETmBPI
+	 z0ToCpMKIix6A==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0676C48297;
-	Mon, 12 Feb 2024 17:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 048CEC48BC3;
+	Mon, 12 Feb 2024 17:23:06 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 12 Feb 2024 17:23:08 +0000
-Subject: [PATCH kmod 07/13] libkmod: move kmod_file_load_contents as
- applicable
+Date: Mon, 12 Feb 2024 17:23:09 +0000
+Subject: [PATCH kmod 08/13] libkmod: always detect the module compression
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -56,17 +55,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240212-decompression-fixes-v1-7-06f92ad07985@gmail.com>
+Message-Id: <20240212-decompression-fixes-v1-8-06f92ad07985@gmail.com>
 References: <20240212-decompression-fixes-v1-0-06f92ad07985@gmail.com>
 In-Reply-To: <20240212-decompression-fixes-v1-0-06f92ad07985@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707758583; l=1207;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707758583; l=2385;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=P4udCeYuUMpIW9quBl7lfm1aEgAkNyDIYoV/mJWVVoQ=;
- b=XUvBbmBX6Y/ENcaTa6JI/AV0aVBXrs82P2iIirqcUF16Q16DVaep0Re0Pim1fUzwgHxOfQ13h
- dAf8Fk4IExsD8UDr6zHqJeZkOx4q5GMWc92FaveloIW6hZwzv6pKROH
+ bh=vnwce2nmhp+gEWObCw0gKQhrZ2WjtAclB1+9aE/85S8=;
+ b=N2d9JcCxy/n8uPTm3GLc3XE68bos/hi+cNfNg3vQfzE38+bxAugKCSQKaJI5QyXq15WsecDsU
+ +uv2gnZoD+ED061sNEYeRuEr2BJRmPdokQvyo8WMkv37KdX0KHC+e2N
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -76,43 +75,94 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-When dealing with an elf, we don't know or care about loading the file.
-The kmod_elf subsystem/API will deal with the required parts itself.
+Currently, when built w/o given compression we'll incorrectly report a
+"compression_none".
 
-Which in this case, already calls kmod_file_load_contents() as
-applicable.
+As we reach do_finit_module(), we'll naively assume that the kernel can
+handle the compressed module, yet omit the MODULE_INIT_COMPRESSED_FILE
+flag.
+
+As result the kernel will barf at us, do_finit_module will fail with non
+-ENOSYS and we won't end in the do_init_module codepath (which will also
+fail).
+
+In other words: with this change, you can build kmod without zstd, xz
+and zlib support and the kernel will load the modules, assuming it
+supports the format \o/
 
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
- libkmod/libkmod-module.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ libkmod/libkmod-file.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/libkmod/libkmod-module.c b/libkmod/libkmod-module.c
-index 1e43482..d309948 100644
---- a/libkmod/libkmod-module.c
-+++ b/libkmod/libkmod-module.c
-@@ -903,10 +903,6 @@ static int do_init_module(struct kmod_module *mod, unsigned int flags,
- 	off_t size;
- 	int err;
+diff --git a/libkmod/libkmod-file.c b/libkmod/libkmod-file.c
+index 3a79464..b69f1ef 100644
+--- a/libkmod/libkmod-file.c
++++ b/libkmod/libkmod-file.c
+@@ -174,9 +174,14 @@ out:
+ 	free((void *)zst_outb.dst);
+ 	return ret;
+ }
++#else
++static int load_zstd(struct kmod_file *file)
++{
++	return -ENOSYS;
++}
++#endif
  
--	err = kmod_file_load_contents(mod->file);
--	if (err)
--		return err;
--
- 	if (flags & (KMOD_INSERT_FORCE_VERMAGIC | KMOD_INSERT_FORCE_MODVERSION)) {
- 		elf = kmod_file_get_elf(mod->file);
- 		if (elf == NULL) {
-@@ -928,6 +924,10 @@ static int do_init_module(struct kmod_module *mod, unsigned int flags,
+ static const char magic_zstd[] = {0x28, 0xB5, 0x2F, 0xFD};
+-#endif
  
- 		mem = kmod_elf_get_memory(elf);
- 	} else {
-+		err = kmod_file_load_contents(mod->file);
-+		if (err)
-+			return err;
-+
- 		mem = kmod_file_get_contents(mod->file);
- 	}
- 	size = kmod_file_get_size(mod->file);
+ #ifdef ENABLE_XZ
+ static void xz_uncompress_belch(struct kmod_file *file, lzma_ret ret)
+@@ -275,9 +280,14 @@ static int load_xz(struct kmod_file *file)
+ 	lzma_end(&strm);
+ 	return ret;
+ }
++#else
++static int load_xz(struct kmod_file *file)
++{
++	return -ENOSYS;
++}
++#endif
+ 
+ static const char magic_xz[] = {0xfd, '7', 'z', 'X', 'Z', 0};
+-#endif
+ 
+ #ifdef ENABLE_ZLIB
+ #define READ_STEP (4 * 1024 * 1024)
+@@ -339,9 +349,14 @@ error:
+ 	gzclose(gzf); /* closes the gzfd */
+ 	return err;
+ }
++#else
++static int load_zlib(struct kmod_file *file)
++{
++	return -ENOSYS;
++}
++#endif
+ 
+ static const char magic_zlib[] = {0x1f, 0x8b};
+-#endif
+ 
+ static const struct comp_type {
+ 	size_t magic_size;
+@@ -349,15 +364,9 @@ static const struct comp_type {
+ 	const char *magic_bytes;
+ 	int (*load)(struct kmod_file *file);
+ } comp_types[] = {
+-#ifdef ENABLE_ZSTD
+ 	{sizeof(magic_zstd),	KMOD_FILE_COMPRESSION_ZSTD, magic_zstd, load_zstd},
+-#endif
+-#ifdef ENABLE_XZ
+ 	{sizeof(magic_xz),	KMOD_FILE_COMPRESSION_XZ, magic_xz, load_xz},
+-#endif
+-#ifdef ENABLE_ZLIB
+ 	{sizeof(magic_zlib),	KMOD_FILE_COMPRESSION_ZLIB, magic_zlib, load_zlib},
+-#endif
+ 	{0,			KMOD_FILE_COMPRESSION_NONE, NULL, NULL}
+ };
+ 
 
 -- 
 2.43.0
