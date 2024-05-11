@@ -1,160 +1,132 @@
-Return-Path: <linux-modules+bounces-1327-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1330-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15B928C232A
-	for <lists+linux-modules@lfdr.de>; Fri, 10 May 2024 13:23:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 253568C2E51
+	for <lists+linux-modules@lfdr.de>; Sat, 11 May 2024 03:03:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6AD6AB210D6
-	for <lists+linux-modules@lfdr.de>; Fri, 10 May 2024 11:23:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D0902826B9
+	for <lists+linux-modules@lfdr.de>; Sat, 11 May 2024 01:03:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01279170855;
-	Fri, 10 May 2024 11:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07CB5847A;
+	Sat, 11 May 2024 01:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cisco.com header.i=@cisco.com header.b="k4jHdu/n"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k1ffVGM/"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from rcdn-iport-6.cisco.com (rcdn-iport-6.cisco.com [173.37.86.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921FF170849
-	for <linux-modules@vger.kernel.org>; Fri, 10 May 2024 11:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.37.86.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F5123AD;
+	Sat, 11 May 2024 01:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715340174; cv=none; b=AqMvL66xl0EY8qQkQmtVeTQb9HqSD07GXN7zD5VzbEQBbPIcpRNWH/AF+Dn5UVRJDExMUxtqtdtdptz9hiCdjK1hpxIfxV8wzNFycWFRnhfxplGLIKSEvO8LfinJYmNY6EyU4bJf+9fggmx8nfJR3WZZDVg9Sa30lJJ7vUfcsEw=
+	t=1715389432; cv=none; b=kM9G1W2958ITmHU5nCUxH2BL3ItFpS9pDM4YfBSVv3310X1SBx+zgW/sjOi+1CzCcdGzz/Iap9IJ/qRHcaMylcsKBmPvNKzLQwPvoqMzy2sJjLxh42hWFbvsWxQJ8Xm1QbvKH/QlI5Vl7X7nwOyOiT58Hg7A62WJA9QXYJuZhsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715340174; c=relaxed/simple;
-	bh=gLtn8iNbCFDPbGTHeSOJuJbYJweI5RzQTSWGmPZPFOQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=qnPyu+iJcbvF+hpWJQIWiln2/T89SzSeyzOVgGzq9sCZaXxh3lxIQkpzxv4f1yACZofFDep2T4fj0oxfV8o08hC4MnGqLx1hnHACyuQgCK9i/RSswiuPihLtLAMWa/ziSFz+u2r7EPLHW9dyOBQwuLbb5V8k3stTY9EH/22nykY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com; spf=pass smtp.mailfrom=cisco.com; dkim=pass (1024-bit key) header.d=cisco.com header.i=@cisco.com header.b=k4jHdu/n; arc=none smtp.client-ip=173.37.86.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cisco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cisco.com
+	s=arc-20240116; t=1715389432; c=relaxed/simple;
+	bh=BAKWID6FQw+TKSNOVcRT31Kx46DteShlfiHfrR1Uxlk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=bHtzKEEB9IyE26MqWcGfxmVd1MNBSkL+DTGJa94t3W1l0jTUMHIab9VWZHwYJDmwISYsT1cJkNVL3GUAtgUdsfRaMYn6Pv0T8+7Djr3YCWC17rBud9FKcNqqgO/fa/6/Uiv4W8z0FQHBhwdD8Ll+rHyD5XWV+OB3qRa1PTsB6Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k1ffVGM/; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-62036051972so28841117b3.1;
+        Fri, 10 May 2024 18:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=cisco.com; i=@cisco.com; l=2752; q=dns/txt; s=iport;
-  t=1715340160; x=1716549760;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=NiDAXLDSiKY2ApqZkYFsFmyoDXMK2HLjY40hrfDh9nA=;
-  b=k4jHdu/noTgbexGfD7hUtEAgV3knRZFcLw9fWdNWB5m4lV0qTnMcoVix
-   ecS3XYfeENTfpv8BbzG3CAcaLWcbrAUbXaE193KWHE7cBuHcIImmygUjz
-   I5QqW7rXw60Af9+phivWFXGAgoJka6ZMSSoumsM8QqgLHhYEAIlFjHpvV
-   A=;
-X-CSE-ConnectionGUID: 2KZPmB6ZQOCrxN7ZNKCT6g==
-X-CSE-MsgGUID: GabFqdiPQA23PFuYxqKEOg==
-X-IPAS-Result: =?us-ascii?q?A0AuAQChAj5mmJNdJa1agliEGEJIlj6LdJIZgSUDVg8BA?=
- =?us-ascii?q?QEPRAQBAYUGiDoCJjQJDgECBAEBAQEDAgMBAQEBAQEBAQYBAQUBAQECAQcFF?=
- =?us-ascii?q?AEBAQEBAQEBHhkFDhAnhgGGXDYBRoFQgwCCZQIBsTSCLIEB3jGBaxiBMI0Hh?=
- =?us-ascii?q?WQnG4FJRIJQgTeGBoV3BIpxiFiBWIUsiXGFVEqBIwNZIQIRAVUTDQoLPgkWA?=
- =?us-ascii?q?hYDGxQEMA8JCyYDKgY2AhIMBgYGWSAWCQQjAwgEA0QDIHERAwQaBAsHdYMxB?=
- =?us-ascii?q?BNEA4E4iX2DPSmBd4EOgxBLhHaBdw5hiSAPBwVJQAMLGA1IESw1FBsGIh9uB?=
- =?us-ascii?q?6VHBz0bNoIGKhuTQIMPjlifL4E8hB2hLBozqjSYYqQkhGOBZTpIgRNNIxU7g?=
- =?us-ascii?q?mdSGQ+OOtATIzU7AgcLAQEDCYpoAQE?=
-IronPort-Data: A9a23:gVi3661zhGib2aoZ6PbD5ftxkn2cJEfYwER7XKvMYLTBsI5bpzZTm
- zBKXWnSOa6MZTemKN4ibIni8E0Au5DXyINkGgNo3Hw8FHgiRegpqji6wuYcGwvIc6UvmWo+t
- 512huHodZ1yFjmE4E71btANlFEkvYmQXL3wFeXYDS54QA5gWU8JhAlq8wIDqtYAbeORXUXV6
- bsen+WFYAX5g2MtajpNg06+gEoHUMra6WtwUmMWPZinjHeG/1EJAZQWI72GLneQauG4ycbjG
- o4vZJnglo/o109F5uGNy94XQWVWKlLmBjViv1INM0SUbreukQRpukozHKJ0hU66EFxllfgpo
- DlGncTYpQvEosQglcxFOyS0HR2SMoUc243/JFLhg/W05FfWVSTe5dZFMB85aNhwFuZfWQmi9
- NQCIzwLKxuEne/zmev9Qeh3jcNlJ87uVG8dkig/lneCUrB3GtaaH/qiCdxwhF/cguhQFvbTf
- cwedBJkbQ/LZFtEPVJ/5JcWxr7y2CWkLWMCwL6TjYU+6UbKwA1J6ZG3a+L7Z+2aXOZ4uUnN8
- woq+EyiX0lFb4bAodafyVqom+TGhmX3VcQXHaez9v9Cj1iax2hVAxoTPXO95+Kyik+zQfpWN
- UlS9idGhawz8lG7C9z6UwC8rWWsoBERQZxTHvc85QXLzbDbizt1HUAeRTJHLdchrsJzHGVs3
- V6SlNSvDjtq2FGIdZ6D3u23nwu3E3YnFEgpfz8iEjkjwPLf/o5m23ojUe1fOKKyi9T0HxT5z
- DaLsDUyit0vYSgjif/TEbfv3WvEm3TZcjPZ8Dk7SY5M0++UTJSua4rt4l/B4LMZdcCST0KKu
- z4PnM32AAEy4XOlynLlrAYlRe3BCxO53Nv02gAH834JrGjFxpJbVdoMiAyS3W8wWir+RRfnY
- VXIpSRa74JJMX2hYMdfOt3oVp51nPS+Soi9Cpg4i+aihLAsJWdrGwkzNSatM5zFzyDAbIlmY
- MjLL5zwZZrkIf06kWLeqxghPU8DnX1mmjiJGvgXPjys0KGVYzaOWKwZPV6VJuE/5+Xsnekm2
- 4g3Cid+8D0GCLeWSnCOqeY7dAlWRVBlXsqeg5IMKYa+zv9ORTtJ5wn5m+1xIuSIXs19y4/1w
- 51KchMHkgSl2iOYeG1nqBlLMdvSYHq2llpjVQREALpi8yFLjVqHhEvHS6YKQA==
-IronPort-HdrOrdr: A9a23:2uOLmKs//eQR/pectqxBeRMa7skDedV00zEX/kB9WHVpmwKj+/
- xG+85rtyMc5wx+ZJhNo7q90cq7MBDhHOBOgLX5VI3KNGLbUQCTQ72Kg7GO/9TIIVyaygck78
- ddm2wUMqyWMbC85vyKhDWFLw==
-X-Talos-CUID: 9a23:TCjkP2NgiTD3pu5DAgpVzEs+RPIcVVbH3FGPEWmbIlo3R+jA
-X-Talos-MUID: =?us-ascii?q?9a23=3AMiP6UgyZVY2IGj0rXyGGiFqU4DaaqIunAm4UnZQ?=
- =?us-ascii?q?+guDebhReJgaNlReaZYByfw=3D=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.08,150,1712620800"; 
-   d="scan'208";a="212643662"
-Received: from rcdn-core-11.cisco.com ([173.37.93.147])
-  by rcdn-iport-6.cisco.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2024 11:21:30 +0000
-Received: from sjc-ads-1541.cisco.com (sjc-ads-1541.cisco.com [171.70.59.233])
-	by rcdn-core-11.cisco.com (8.15.2/8.15.2) with ESMTP id 44ABLTuD031338;
-	Fri, 10 May 2024 11:21:30 GMT
-From: Valerii Chernous <vchernou@cisco.com>
-To: linux-modules@vger.kernel.org
-Cc: xe-linux-external@cisco.com, Nicolas Schier <n.schier@avm.de>,
-        Lucas De Marchi <lucas.de.marchi@gmail.com>
-Subject: [MODALTS v0.1 4/4] add modules deps alternatives description
-Date: Fri, 10 May 2024 04:21:28 -0700
-Message-Id: <20240510112128.2417494-4-vchernou@cisco.com>
-X-Mailer: git-send-email 2.35.6
+        d=gmail.com; s=20230601; t=1715389430; x=1715994230; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gj98wxf0dD5kCrnZWVbsQZX8fcdXwS4YPSyIBoOfL6w=;
+        b=k1ffVGM/ezNdsHxyavYJAiSYwb56ZeHxyvaoee1KaYfnmD/8QczQ/UNbnHquPouRx5
+         i+hiEQCUipZ8mik4ilIVBAUDR4zEnhdmfTOdINUFgf36TX7VQ+4h3jjHWeYh57+2+mx/
+         qSdv2eJIiAMSosjIG/aCF1bxWa61kBU6gSWidzH4uKIChX2efbwub3SwE4wK7vI1wx8x
+         Ye4w/mO4qWhb6IGWVX/xeRdJCKmg5rCZo13gmLiGaTtCUCqp6LCLMa/3It3ZnaDuCr08
+         e5ogt5gwUUUUdzsVkO50aIUA3ynbQMivN3CwjKFkV1FNDnUobaOqk9OCBQ3ohvMhxKBJ
+         KPKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715389430; x=1715994230;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gj98wxf0dD5kCrnZWVbsQZX8fcdXwS4YPSyIBoOfL6w=;
+        b=GCZbjqZGTAYUQPenmhvjOFsL5x8q4Fsk4FU194IwqT2+wiXWLWOUBqkWz/1G2Dy4j/
+         TRJXH2K+z+1MRlQ87KRj2sq09ICOPKcLH4JBaZivMqOGNoJn6E6lg4HYahiL805oWLBQ
+         bUHdl7OnG0E0ZesHF3MEoAke/ZWFYaJx20r/hgNVirFVfTCIlx7tnI8w2PYT1K5LeE49
+         xwOYbHhjDU9seC0dXfFnRLnXP02pRx8ejlXgcqROR27kQszp+BMcH5XTF7roi3Uowqbp
+         nUXprztlQS3wNjsuUaCNSa3kjoaPLDSzaadBiN/rAkjePc+UnEgryD4sIk7H/8LGkwkC
+         5+aw==
+X-Forwarded-Encrypted: i=1; AJvYcCXsEhus9UWPtLJnao9BPyCb+rPEGLQqeSYYBIWjJ7ttwsW0r4qS5NUrNZK/bRFPWRnlPCfBNlQBGmCSA0HFRriqqT8Q7zmaAFQwrU+l/oGMQvVYT7MnDRJUETLvUTqtm22sKLljBTa+zs9UCA==
+X-Gm-Message-State: AOJu0YzRZlxYA2XjVtvy9u4wBk3lwxsyLtlU78/ryt/jNKrmdTfTuCfe
+	yfi93ybgktjWuL1zKGJoeJEzOBZ3CLVm7d1mPjd6z+m81JwzinTHllx5YpvTADTHINaPyg4jttz
+	srtE5OIPPhmWYXfvxaGsi8VCBlBAgrTCI
+X-Google-Smtp-Source: AGHT+IFrRlIJgsNQPjpz5iPCOo9FFgUCkCpCnoPvmUdAW9+Dp/oJoRjAqVVAJ1SUxAV75ie71dR+M8fBTVxv1DRp9Po=
+X-Received: by 2002:a0d:d44d:0:b0:61a:cb67:9d0d with SMTP id
+ 00721157ae682-622affdc8a1mr45068817b3.22.1715389430469; Fri, 10 May 2024
+ 18:03:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Auto-Response-Suppress: DR, OOF, AutoReply
-X-Outbound-SMTP-Client: 171.70.59.233, sjc-ads-1541.cisco.com
-X-Outbound-Node: rcdn-core-11.cisco.com
+References: <20240417053530.30995-1-wangyao@lemote.com> <CAPWE4_yuDpLG7bLywEq7xQwB6+NVCUP0AwE+VgOZ-3hHpRVyUQ@mail.gmail.com>
+In-Reply-To: <CAPWE4_yuDpLG7bLywEq7xQwB6+NVCUP0AwE+VgOZ-3hHpRVyUQ@mail.gmail.com>
+From: Ainux Wang <ainux.wang@gmail.com>
+Date: Sat, 11 May 2024 09:03:14 +0800
+Message-ID: <CAPWE4_zzNniXzw-SV4V=mzEZ54CLkFaRSw8KwE6SQ4fDvssaPQ@mail.gmail.com>
+Subject: Re: [PATCH] modules: Drop the .export_symbol section from the final modules
+To: mcgrof@kernel.org, masahiroy@kernel.org, Wang Yao <wangyao@lemote.com>, 
+	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Cc: xe-linux-external@cisco.com
-Cc: Valerii Chernous <vchernou@cisco.com>
-Signed-off-by: Valerii Chernous <vchernou@cisco.com>
----
- README.deps.alternatives.txt | 40 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
- create mode 100644 README.deps.alternatives.txt
+Hi, everyone:
 
-diff --git a/README.deps.alternatives.txt b/README.deps.alternatives.txt
-new file mode 100644
-index 0000000..9ad3ce5
---- /dev/null
-+++ b/README.deps.alternatives.txt
-@@ -0,0 +1,40 @@
-+Modules alternatives feature allow to calculate dependency alternatives
-+during build time and aviod to regenerate modules db into runtime
-+
-+To enable deps alternatives calculation use "-D" flag with depmod,
-+it will create indexes modules.alternatives and modules.alternatives.bin
-+This indexes will be used by modprobe in runtime
-+By default modprobe will load first(primary/major) dependency from list
-+If it required to load alternative module, it should be done manually before
-+loading main modules set.
-+For example systemd service that detect platform type can load required platform
-+modules and after it run main device initialization
-+In case when alternative module loaded, modprobe detect this and skip to load primary
-+dependency
-+
-+modules deps alternatives generation basic algorithm description
-+1. Load modules information(imported/exported symbols)
-+2. Find depended symbol alternatives(create list available symbols
-+   alternatives instead of storing last one)
-+3. Choise primary/major alternative per depended symbol correspond to
-+   build time dependency(build time deps getting from module info section)
-+4. Create a list of dependency modules alternatives correspond to next rule:
-+4.1 All modules alternatives for module dependency should provide all symbols
-+    from primary/major dependency module
-+5 Store modules alternatives index(modules.alternatives) as key:value where
-+key is a pair depended#_#primary_depency,
-+value is list of all modules that provide all symbols from primary_depency
-+for depended module
-+
-+Note:
-+Current implementation/algorithm doesn't cover variant where requred symbols
-+from primary deps provided by more that one modules. Exporting all symbols in
-+alternative depency that used by depended module from primary_depency is
-+mandatory!
-+
-+Note:
-+modules.dep index different for standard/basic and modules alternatives algorithms
-+modules.dep for modules alternatives algorithm contain only direct dependencies and
-+full dependency list will be calculated into runtime correspond to preferred alternative.
-+modules.dep for standard/basic algorithm contain full dependency list for module and
-+can't be changed during runtime without rebuild database via depmod
--- 
-2.35.6
+Could someone help to review this patch?
 
+Best regards,
+ Ainux Wang.
+
+
+Ainux Wang <ainux.wang@gmail.com> =E4=BA=8E2024=E5=B9=B45=E6=9C=887=E6=97=
+=A5=E5=91=A8=E4=BA=8C 13:15=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Hi, everyone:
+>
+> Could someone review this patch?
+>
+> Best regards,
+> Ainux Wang.
+>
+> <wangyao@lemote.com> =E4=BA=8E2024=E5=B9=B44=E6=9C=8817=E6=97=A5=E5=91=A8=
+=E4=B8=89 13:35=E5=86=99=E9=81=93=EF=BC=9A
+>
+> >
+> > From: Wang Yao <wangyao@lemote.com>
+> >
+> > Commit ddb5cdbafaaa ("kbuild: generate KSYMTAB entries by modpost")
+> > forget drop the .export_symbol section from the final modules.
+> >
+> > Signed-off-by: Wang Yao <wangyao@lemote.com>
+> > ---
+> >  scripts/module.lds.S | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/scripts/module.lds.S b/scripts/module.lds.S
+> > index bf5bcf2836d8..89ff01a22634 100644
+> > --- a/scripts/module.lds.S
+> > +++ b/scripts/module.lds.S
+> > @@ -13,6 +13,7 @@ SECTIONS {
+> >         /DISCARD/ : {
+> >                 *(.discard)
+> >                 *(.discard.*)
+> > +               *(.export_symbol)
+> >         }
+> >
+> >         __ksymtab               0 : { *(SORT(___ksymtab+*)) }
+> > --
+> > 2.27.0
+> >
 
