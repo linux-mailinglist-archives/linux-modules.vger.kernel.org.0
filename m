@@ -1,52 +1,53 @@
-Return-Path: <linux-modules+bounces-1385-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1387-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9650A903FA1
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 17:07:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91C88903FA3
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 17:07:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BF7F1F256EC
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 162E92878B0
 	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 15:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ED562E417;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0DE02E631;
 	Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qjMOfDDT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Phjsyapx"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB282C6B6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB8C2C6BD
 	for <linux-modules@vger.kernel.org>; Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718118304; cv=none; b=EKsLYvuGVyJk6B+A0AdD68uJn4svz4fo9EXAfDG/QBY4PNzOvgrH1hnLcMA1Rec7O6hz1Q8M1ngcawrF9O8v56OSKnF83e2QY4JNcybdvWYqS5MWX82KwBDglN2j4mTKwbj29EpPy0RdFMojeBe7YmfwVwQyMbyrMgGpikgxSJg=
+	t=1718118304; cv=none; b=uyMiys5f/2tcxz55VMi7G3rrQm1U48w8yfuJYo5s37VibqWBC1nTsOhNaxjiA3Q9WLDsj056Vl3ZVGZBtDtYWIeBRdkeYk+cC+Do3EvG1vghQUwl2v1aeEZEQtu+n2gJxqHU1MHa7xlBDSV67RHS00trydMJivLeyXzMbrIfY5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718118304; c=relaxed/simple;
-	bh=RFkOy+VcBIp8PGf6CZ7uyHIwi3+bmpr7lx7YYLx8y/o=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dNfm3B4EDORvv3+isvHZg/9/LbFBUMdOCSy4drHhF9o9QmbYYjYShEWeYUbCEOudwP2pN7EpVAWu5TbIdVP7yPEtJSuvxmpZh6teDizzKx7ihdzvjbfigHNY99uQQt5FTRO1qAJMhRGSj5TMjeXstV3GnzgqHgDLR/cGOI1gi0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qjMOfDDT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1E506C32789;
+	bh=tj0XOGBSzmoJZInyyhmovkdJ4bOXtedRihkqHVH1Pzo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=h5W36v4WpC2/mcU9HmlKFKSolsqsxCbh8XKsUN5L8HnMgR8TB4PZ/Gp+6PZx3Mq/zKHrM/EEfUBTzqkhSF9S1/Nwk2x3Nmoe2goriF49S21Mj9muCkL5eam0Nzxhb0vl5ghzWvc+zilBtjQvR541XImF+IMF3MQCM9oYnNPIecs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Phjsyapx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2E935C2BD10;
 	Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1718118304;
-	bh=RFkOy+VcBIp8PGf6CZ7uyHIwi3+bmpr7lx7YYLx8y/o=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=qjMOfDDTo0VHXBg5lR1TYv0OrXa23NEcWeLW/SqvCg/tsVgnKpi0mF+6V+Fe5U2mr
-	 uigtbGEgYy3yResCyngm77c+bHZYn3v8OTS6xnoyN5KdDNEsRsQMSj1HLDr5LF6hXh
-	 bU9RMhpCi1WyGICrZScg3HRmJQQXH6Xr/dFA+Pi+dIvl0xMgc6BGtldsApR/mdzVvo
-	 dclykqFOWVgWCKPTaDQFYny7L68GC7I5u4TvEhcytXuW5JNIrEUMFXJbnNYMA+EkDS
-	 dE37hBpek3h50bc6rIyGTJ9tZW9ze5QLEMoz4EdeiANa7/uEQGkXqVeyGPFr6/YUwi
-	 Lr/L3Dq42GT1A==
+	bh=tj0XOGBSzmoJZInyyhmovkdJ4bOXtedRihkqHVH1Pzo=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=PhjsyapxPxufqGwn8MUNtuoY1L5yZDz2+IUTL3CXhA82nWUtUaeZgENkyIWD6+b9A
+	 9sl2ZL91166whfTk4e3669Gdi9Dp1lyvCpNqxjffKsjWCEHpm6fAlGU6LMGhHPvBX0
+	 dayzVLALH8lalDYFstfBzRsbPIdyJLfSWF59mUElUqGAyuvZ7XPwwyGi1KkQUovbNU
+	 FT+rChb5nUDPrFkYuNDQI68+1G4Yn8liIoEyORSuTBfHklS/wnW6MWJA03fwHQTVxQ
+	 /Wmb025xBmNNwAcKwZ7pT9PdQIuBJa8Js0so2cuEDHKZBiQyjSg/YpQA71TG4FIHuL
+	 hUmSBB3EKJCRQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08567C27C75;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 156BCC27C77;
 	Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Subject: [PATCH kmod 00/20] man: convert to scdoc and minor improvements
-Date: Tue, 11 Jun 2024 16:05:00 +0100
-Message-Id: <20240611-man-v1-0-bd6864d49639@gmail.com>
+Date: Tue, 11 Jun 2024 16:05:01 +0100
+Subject: [PATCH kmod 01/20] man: add script to generate/compare the xslt vs
+ upcoming scdoc
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,17 +56,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJxnaGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDUyNj3dzEPF1zE+MUs1RTw9QkszQloMqCotS0zAqwKdGxtbUAATAKBFU
- AAAA=
+Message-Id: <20240611-man-v1-1-bd6864d49639@gmail.com>
+References: <20240611-man-v1-0-bd6864d49639@gmail.com>
+In-Reply-To: <20240611-man-v1-0-bd6864d49639@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1718118301; l=3692;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1718118301; l=1480;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=RFkOy+VcBIp8PGf6CZ7uyHIwi3+bmpr7lx7YYLx8y/o=;
- b=4aKm1XCgvdlf7i4+ouL0Rawlym2O9TweVQxok/8omATRQOe9AP3rKh/64Wx/nmHtsF0RAPVR3
- suB1nzQUuY0Ap5G8jucmgaEkStxaYQG9tQNNzhzwcmHtVAnePnFa+01
+ bh=wl8y3cCAXvkyBcYxfCkLgOSs/6n6t5ifCxlBs/k7x6I=;
+ b=Lo2mmoP5zfrYdpxqFhJA2HGysoY+JMSnam2FhSYYf+v4tmMS4fpr7t0pb73yVlWbI681n33Xb
+ kRG6S655KCKCnsKQAam275T186SdStufp6n66SySItkII75tliGR13V
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -73,97 +74,85 @@ X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
 X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
 Reply-To: emil.l.velikov@gmail.com
 
-Hello all,
+From: Emil Velikov <emil.l.velikov@gmail.com>
 
-As mentioned previously, here is a series converting the existing xml
-based documentation to scdoc.
-
-Despite the size of this series, one should be able to review nearly all
-of it during their first morning coffee ;-)
-
-I've went ahead with scdoc instead of other solutions since it's a
-simple 1K LoC, C99 program with trivial markdown-like syntax. Which is
-practically available for any distro [1].
-
-A quick search in Arch shows that over 50 packages/projects use scdoc.
-
-This series:
- - patch 1 - simple comparison script of man page _output_ (the roff
-   files themselves vary significantly) - DO NOT MERGE
- - patch 2 - the scdoc files themselves, including typos to make diff vs
-   original smaller
- - patch 3 - wires scdoc to the build and removes the old xml files
-
- - patch 4-9 - trivial fixes as white space, punctuation, etc
- - patch 10-18 - expand documentation around {depmod,modprobe}.d handling
-
- - patch 19 - remove "maintained by" references
- - patch 20 - list short and long options on separate lines
-
-The last two might be little controversial, so feel free to drop them.
-
-NOTE: Some patches have respective question or two within.
-
-As always - comments and suggestions are greatly appreciated.
-
-[1] https://repology.org/project/scdoc/versions
-[2] https://archlinux.org/packages/extra/x86_64/scdoc/
-
+Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
-Emil Velikov (20):
-      man: add script to generate/compare the xslt vs upcoming scdoc
-      man: add scdoc based man pages
-      man: build the scdoc based man pages
-      man: remove no longer used XML files
-      man: add some extra bold/italic annotations
-      man: white space fixes
-      man: misc punctuation fixes
-      man: some options take an argument, mention that
-      man: couple of grammar/language fixes
-      man: stop removing DISTCONFDIR lines
-      man: depmod.d: document the config file order handling
-      man: depmod.d: factor out a CONFIGURATION FORMAT section
-      man: depmod.d: rework the opening description sentence
-      man: depmod: remove hard-coded /etc/depmod.d references
-      man: modprobe.d: document the config file order handling
-      man: modprobe.d: factor out a CONFIGURATION FORMAT section
-      man: modprobe.d: mention about MODPROBE_OPTIONS
-      man: modprobe: remove hard-coded /etc/modprobe.d references
-      man: remove the "Maintained by" references
-      man: list options one per line
+ man/compare.sh | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
- configure.ac          |   2 +-
- man/Makefile.am       |  30 +--
- man/compare.sh        |  63 ++++++
- man/depmod.8.scd      | 139 +++++++++++++
- man/depmod.8.xml      | 343 -------------------------------
- man/depmod.d.5.scd    | 115 +++++++++++
- man/depmod.d.5.xml    | 164 ---------------
- man/insmod.8.scd      |  35 ++++
- man/insmod.8.xml      |  87 --------
- man/kmod.8.scd        |  49 +++++
- man/kmod.8.xml        | 120 -----------
- man/lsmod.8.scd       |  29 +++
- man/lsmod.8.xml       |  73 -------
- man/modinfo.8.scd     |  84 ++++++++
- man/modinfo.8.xml     | 201 -------------------
- man/modprobe.8.scd    | 232 +++++++++++++++++++++
- man/modprobe.8.xml    | 544 --------------------------------------------------
- man/modprobe.d.5.scd  | 187 +++++++++++++++++
- man/modprobe.d.5.xml  | 265 ------------------------
- man/modules.dep.5.scd |  43 ++++
- man/modules.dep.5.xml |  80 --------
- man/modules.dep.bin.5 |   1 +
- man/rmmod.8.scd       |  53 +++++
- man/rmmod.8.xml       | 148 --------------
- 24 files changed, 1041 insertions(+), 2046 deletions(-)
----
-base-commit: 8837461494761d58be579641f20cc043274adddf
-change-id: 20240523-man-743d6e51eb6f
+diff --git a/man/compare.sh b/man/compare.sh
+new file mode 100755
+index 0000000..7579ab5
+--- /dev/null
++++ b/man/compare.sh
+@@ -0,0 +1,63 @@
++#!/bin/bash
++
++the_sed()
++{
++	sed -e 's|@DISTCONFDIR@|/TEST|g;s|@MODULE_DIRECTORY@|/TEST|g' $1
++}
++
++gen_xslt()
++{
++			#--output ${xml//.xml}.xslt \
++			#--noout \
++	for xml in *xml; do
++		the_sed $xml | xsltproc \
++			--stringparam man.output.quietly 1 \
++			--param funcsynopsis.style "'ansi'" \
++			http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl -
++		# The output and noout args seems cosmetic, sigh
++		mv ${xml//.xml}{,.xslt}
++	done
++}
++
++gen_scdoc()
++{
++	for scd in *scd; do
++		the_sed $scd | scdoc > ${scd//.scd}.scdoc
++	done
++}
++
++comp_output()
++{
++	export LESS='-F -i -M -R -S -w -X -z-4'
++	unset MANPAGER
++
++	for xslt in $(ls --sort=version *xslt); do
++		_name=${xslt//.xslt}
++
++		echo "Checking $_name"
++
++		diff --unified --color=always \
++			<(man ./$_name.xslt) \
++			<(man ./$_name.scdoc) | less
++
++		read
++	done
++}
++
++comp_raw()
++{
++	for xslt in *xslt; do
++		_name=${xslt//.xslt}
++
++		diff --unified --color=always ./$_name.{xslt,scdoc}
++	done
++}
++
++time gen_xslt
++time gen_scdoc
++
++comp_output
++#comp_raw
++
++rm -f *xslt
++rm -f *scdoc
 
-Best regards,
 -- 
-Emil Velikov <emil.l.velikov@gmail.com>
+2.45.0
 
 
 
