@@ -1,52 +1,53 @@
-Return-Path: <linux-modules+bounces-1391-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1395-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EB80903FA6
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 17:07:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1208903FAB
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 17:07:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0E671C25063
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 15:07:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7A3B1F25749
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Jun 2024 15:07:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1D103BB47;
-	Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FCAA3BBFB;
+	Tue, 11 Jun 2024 15:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QmGABBa4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ku7P/sS5"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA1E364CD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5C62C6B6
 	for <linux-modules@vger.kernel.org>; Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718118304; cv=none; b=VGtyylApWS5Ym8VqzXAjBmJuDF8L77eUUotvpsPJXsE4rzKp8ilOqE6pEuhK5cVZ0SmBwf2RTn+GE8/MHNImy40xNQYY/F5AzV6k8xw1006eTk5ciVBSxugVphsoODMQntxa9+gQ5Ck1h7uMd2F6IRCQk4AZfY4ImRbnjv6zUNI=
+	t=1718118304; cv=none; b=IOaWPacNtkY3gjp5C3UVGu5+y0wPqgEYxOMMxJWwS1HjCexNdy88WRiIoFpG70STy7JYxaTIkbossIdR6B0btm59umZcGgpoLjbFA/aDoUwSZFGPfgDk9ss+AO5VTNNl0wcmK9Fh81ibBmuW9KKRPW4N+jnn2euyQ2u8/tBGQHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718118304; c=relaxed/simple;
-	bh=HwyKXISv9S4WxlzFdaXjM7tZiTJw5UUoHOwCipu49ZQ=;
+	bh=ZKAkrl1Jwj9r3pKh/RgpwJzxPHENUuBb/A4qqq/dFeA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SZ09bv9Qt7bJ2ddAfcEoSEh7lzynsK4iuDfpO/3zqdtKoefIjGHZZzocVjPwJ/EO1bmTc3Wnt1n9GtQfI/OnfGgKwUgXNIMAZPW3uYe/V+EZjffAoJLfvpPTR06Zh/hzexaZvATUC1w9Az/u6pEDIzsZJdKFtEJGcoYyiYOiGcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QmGABBa4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 86061C4AF5F;
+	 In-Reply-To:To:Cc; b=S7po/0hlfQRQEE86o8t5EsrOYIieEu0i1by4Atts64BNdn46Zrpn9E77mbTLGWUQPiemVFTShc2ds74WDfzHzNy+iJcpHlBM7LAeAToCuWx9uRAIQ4VxtMKRdick31c2Uv5HnyIDX+Z2fP6bi6aaPBlPfRDmRAFD7hPL1Oh0Nw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ku7P/sS5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 96A2BC4AF48;
 	Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1718118304;
-	bh=HwyKXISv9S4WxlzFdaXjM7tZiTJw5UUoHOwCipu49ZQ=;
+	bh=ZKAkrl1Jwj9r3pKh/RgpwJzxPHENUuBb/A4qqq/dFeA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=QmGABBa4o+/I1UH6l2yJbPU9IDDi5HBfgiHTb4oyCLt6ZGr9YUnpK4o26uMEZHQG2
-	 Y6j68fcXYZVWSHpCzSprUv6q2TbeU8YdNRFXbpPaeN8mJkgoEu/k0/Pi0RBFxTOubA
-	 W+NwVY1Axub1Qs/gdVPIC0pfbahyMEOefngGWoXxkE3KVWCb3tHqLYAEFZIIQsc5hR
-	 np+LoDDGdHl9LsWDSLnpLK/J/Ko/zITBIZu0HpCweuAgKWuJvVFIPiihZAY+s9B9rm
-	 qCI1Q41IZtaGPsKBQ0SFcrpNiwlHaY1kI2eMn/9sYj7MHy0Bspn3nV1/fHZ6bLnSGJ
-	 QyO1Chy2mVGSQ==
+	b=ku7P/sS5F6cL0RihGEksy+6dRcLXMyqhktt1Q4lrZnQr1ut6UbfQb3tXz5bfxwsDf
+	 cIA1wAgtARtkVNthV+6NMsyLCyldTmAYZW8rw5wftjLgS+8feHkpzJqqyhP/MWYHV1
+	 D1Fj8Mab+IKA6om8eKsl7FcFo4oRj7ZQ9bmIvcvPZLtOBCPNXj7XOtDmcyE3QWHj3Z
+	 M9xe5jsFPk1eSxtPFP2RMTVI/JO2Ui1rEzu/ORcuEr9bNxK03mNMaPkPGOzXWucN2Y
+	 PYOIhiE/kaEKYhRlXx9UWk75ZP7MBKeuuTooIS6Xuqh7Dtx3cK7WcbzA4y4oM/oSmp
+	 6B2KW1/ItNzlw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E733C27C77;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF28C27C75;
 	Tue, 11 Jun 2024 15:05:04 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Tue, 11 Jun 2024 16:05:07 +0100
-Subject: [PATCH kmod 07/20] man: misc punctuation fixes
+Date: Tue, 11 Jun 2024 16:05:08 +0100
+Subject: [PATCH kmod 08/20] man: some options take an argument, mention
+ that
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,17 +56,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240611-man-v1-7-bd6864d49639@gmail.com>
+Message-Id: <20240611-man-v1-8-bd6864d49639@gmail.com>
 References: <20240611-man-v1-0-bd6864d49639@gmail.com>
 In-Reply-To: <20240611-man-v1-0-bd6864d49639@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1718118301; l=2203;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1718118301; l=3010;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=O4mu2lAXXNBJUE43RRJdu3Q2copKlkDtEMzQhh1mrMU=;
- b=bf27jvIz4dFXaGJTtn3WmEq7Zgtaa13pPfUuJXq51d7ys1Hhj/hkNjTTUpgK7iFsvLOXn/XBc
- 2L+zcwx2TYDBXrH6R9KTuA0wVDkBXsY5J2W7afxNZkQhqB+ASDSavUF
+ bh=ujIDwGUQV0FOmUpTbz7QEpgmiqJ/HE3dkWV2TNVcd/Y=;
+ b=ZxbtX+lbUqtIULQ/Cq8wTcj19J34F/PJt1NxsI/SqhMNsFbSIhC5lAhMLEwfawBX4TCn8LLe4
+ RcXN2fRQ3dvBudkctvV5FOgY5wdW2EQut1CaiE9CTq3m5+8ElEOH8ZS
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -75,85 +76,81 @@ Reply-To: emil.l.velikov@gmail.com
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-Some commas and a full stop was missing ;-)
+For example modinfo -F requires the field name, although the
+documentation was missing the "field".
+
+Similarly modprobe has omissions, so let's fix those as well.
 
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
- man/depmod.d.5.scd | 2 +-
- man/kmod.8.scd     | 4 ++--
- man/lsmod.8.scd    | 2 +-
- man/modprobe.8.scd | 2 +-
- man/rmmod.8.scd    | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+There are two different styles across the man pages:
+ -s, --short foo
+ -s foo, --short foo
 
-diff --git a/man/depmod.d.5.scd b/man/depmod.d.5.scd
-index 4e05b93..9cf99d5 100644
---- a/man/depmod.d.5.scd
-+++ b/man/depmod.d.5.scd
-@@ -73,7 +73,7 @@ exclude _excludedir_
- 	This specifies the trailing directories that will be excluded during the
- 	search for kernel modules.
+A proposal to resolve these comes with a later patch in this series.
+---
+ man/depmod.8.scd   | 2 +-
+ man/modinfo.8.scd  | 4 ++--
+ man/modprobe.8.scd | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/man/depmod.8.scd b/man/depmod.8.scd
+index 80cc48d..7a2e84b 100644
+--- a/man/depmod.8.scd
++++ b/man/depmod.8.scd
+@@ -72,7 +72,7 @@ rather than the current kernel version (as returned by *uname -r*).
+ 	assumption can break especially when additionally updated third party
+ 	drivers are not correctly installed or were built incorrectly.
  
--	The _excludedir_ is the trailing directory to exclude
-+	The _excludedir_ is the trailing directory to exclude.
+-*-E*, *--symvers*
++*-E*, *--symvers* _Module.symvers_
+ 	When combined with the *-e* option, this reports any symbol versions
+ 	supplied by modules that do not match with the symbol versions provided
+ 	by the kernel in its _Module.symvers_. This option is mutually
+diff --git a/man/modinfo.8.scd b/man/modinfo.8.scd
+index 75267bc..9545257 100644
+--- a/man/modinfo.8.scd
++++ b/man/modinfo.8.scd
+@@ -31,8 +31,8 @@ architecture.
+ *-V*, *--version*
+ 	Print the *modinfo* version.
  
- # COPYRIGHT
- 
-diff --git a/man/kmod.8.scd b/man/kmod.8.scd
-index 7bef863..2007a2d 100644
---- a/man/kmod.8.scd
-+++ b/man/kmod.8.scd
-@@ -15,10 +15,10 @@ Linux Kernel modules. Most users will only run it using its other names.
- 
- # OPTIONS
- 
--*-V --version*
-+*-V*, *--version*
- 	Show the program version and exit.
- 
--*-h --help*
-+*-h*, *--help*
- 	Show the help message.
- 
- # COMMANDS
-diff --git a/man/lsmod.8.scd b/man/lsmod.8.scd
-index 7195cba..eb2f2e8 100644
---- a/man/lsmod.8.scd
-+++ b/man/lsmod.8.scd
-@@ -19,7 +19,7 @@ Maintained by Jon Masters and others.
- 
- # SEE ALSO
- 
--*insmod*(8), *modprobe*(8), *modinfo*(8) *depmod*(8)
-+*insmod*(8), *modprobe*(8), *modinfo*(8), *depmod*(8)
- 
- # AUTHORS
- 
+-*-F*, *--field*
+-	Only print this field value, one per line. This is most useful for
++*-F* _field_, *--field* _field_
++	Only print this _field_ value, one per line. This is most useful for
+ 	scripts. Field names are case-insensitive. Common fields (which may not
+ 	be in every module) include author, description, license, parm, depends,
+ 	and alias. There are often multiple parm, alias and depends fields. The
 diff --git a/man/modprobe.8.scd b/man/modprobe.8.scd
-index aac3a74..f4ce0be 100644
+index f4ce0be..9594798 100644
 --- a/man/modprobe.8.scd
 +++ b/man/modprobe.8.scd
-@@ -202,7 +202,7 @@ Maintained by Jon Masters and others.
+@@ -55,7 +55,7 @@ database.
+ 	configuration files (if any) to module names as well. It is usually used
+ 	by *udev*(7).
  
- # SEE ALSO
+-*-C*, *--config*
++*-C* _directory_, *--config* _directory_
+ 	This option overrides the default configuration directory
+ 	(/etc/modprobe.d).
  
--*modprobe.d*(5), *insmod*(8), *rmmod*(8), *lsmod*(8), *modinfo*(8) *depmod*(8)
-+*modprobe.d*(5), *insmod*(8), *rmmod*(8), *lsmod*(8), *modinfo*(8), *depmod*(8)
+@@ -151,14 +151,14 @@ database.
+ 	require it. Your distribution kernel may not have been built to support
+ 	removal of modules at all.
  
- # AUTHORS
+-*-w*, *--wait=*TIMEOUT_MSEC
++*-w* _TIMEOUT_MSEC_, *--wait* _TIMEOUT_MSEC_
+ 	This option causes *modprobe -r *to continue trying to remove a module
+ 	if it fails due to the module being busy, i.e. its refcount is not 0 at
+ 	the time the call is made. Modprobe tries to remove the module with an
+ 	incremental sleep time between each tentative up until the maximum wait
+ 	time in milliseconds passed in this option.
  
-diff --git a/man/rmmod.8.scd b/man/rmmod.8.scd
-index 7813448..e1f656f 100644
---- a/man/rmmod.8.scd
-+++ b/man/rmmod.8.scd
-@@ -39,7 +39,7 @@ Maintained by Jon Masters and others.
- 
- # SEE ALSO
- 
--*modprobe*(8), *insmod*(8), *lsmod*(8), *modinfo*(8) *depmod*(8)
-+*modprobe*(8), *insmod*(8), *lsmod*(8), *modinfo*(8), *depmod*(8)
- 
- # AUTHORS
+-*-S*, *--set-version*
++*-S* _version_, *--set-version* _version_
+ 	Set the kernel version, rather than using *uname*(2) to decide on the
+ 	kernel version (which dictates where to find the modules).
  
 
 -- 
