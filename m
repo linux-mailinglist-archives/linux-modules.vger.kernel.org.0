@@ -1,53 +1,52 @@
-Return-Path: <linux-modules+bounces-1504-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1507-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E06E892A3DE
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24CF792A3DD
 	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4802DB21FC1
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56E551C21A44
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83C8A13A87A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEE1013AD07;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7pCvbYR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WCLHi6Lq"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5674B1386BF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C35713A3FF
 	for <linux-modules@vger.kernel.org>; Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720446212; cv=none; b=eDot9c7imeFx3P7IAgdcJ0qNIOKkIqdWPV7sS9Q++DiN4vhLuh95S/na/owM32b0cdedaDzHKhCPT/Jve95CCpa45lFKw5KQXBXlxOMKMusdJonO4ot4M+BowlfdsSGskrdTwZAjURreNvo9OWzkyRHQzdwIlHl7k//bFZ5mTfU=
+	t=1720446212; cv=none; b=u03rfALIGEOJQWCCkpSqKO5vs+VBppjYZvI656TcLM1sGexbmbWpRXsagGamOVwh23YTzhyBkdmjyfDU/eXbsJyEE2sR9ucizxJC8tfzshrQEWDpL+YHwL+NB57DOmQDVpuRj+zbntQT+8Ltk68CDXbPHyAx9gkv5lFTYEjDP5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1720446212; c=relaxed/simple;
-	bh=Xa1Kg8+8T35bZndd2R9xxn8nZwRZ3Sry+KmDXBNXD68=;
+	bh=reX775AdHtgwryW4rzmIxVLlWJDaQLw3RSOwGwr/TBk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=O+laEQ1jZGcpibP1eflW7NWosEComJ8IVOhKZGOeZB1EGBAk6T9xeNH2/Ce5/q3OaeVDn+GJi+A319VLKhbPp66kvZw1tPCrlH7P0v132+XItB7WeyiA0Ady216BHsMVvQIri7tNRBi7W/LAkP59ys9A2RI3GhVeSw8TQtR2a28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U7pCvbYR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 18268C4AF0C;
+	 In-Reply-To:To:Cc; b=QZMKV7q9+tHJ5l3LZPgckm2IwjspZZwv3lModYiMCqWYUfySAumJGFsZFm/3vbY8qk5eeXy1Q4Yt3F3KJ2/0vyMDN4+bWGM+/UV594dFLTutILFbRJBYTk91m0e+pqoEORX74mIUUvLKt8LzdXRN30nid5WkWVE7ahBNCHUrLR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WCLHi6Lq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 261AFC4AF0F;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1720446212;
-	bh=Xa1Kg8+8T35bZndd2R9xxn8nZwRZ3Sry+KmDXBNXD68=;
+	bh=reX775AdHtgwryW4rzmIxVLlWJDaQLw3RSOwGwr/TBk=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=U7pCvbYRIWYYnfKkq97e+7JOE0V3V7R+fj0MZXdFN4eWvln4p5CsOi9bpbQw9ImVM
-	 PTkH0YdX2LtmMllguVJC5QwXjOpmb8kxcx8kDS+9TZlZnLKG8bTUEIXeNi+4nUYdNM
-	 mguLvnJUNQJn42E7fJzXJ5ZDMyV3q4oW3s1CA7ZLqycMKxZf3wh0lc9srqYZ70SNpN
-	 KVtn2hGk9lfs0GFmOE22/aWIhOGe8YLqrH5OekO3TSijZ7+kQjFOXivWzwOX7LGUVq
-	 ufIDQBujqpa2fAtUtwr4DmnvgYirczyLY8gN+m6FrhWIvXRPAYmVpcGa4DjwgxsK6m
-	 C/3R8ohBX+Tcw==
+	b=WCLHi6LqHUPlBfxs6wFg54L4bj7imvVu3HMDys/Hh0Twzbp+jC0BC2kgVOkABjLdd
+	 j/HZi/Q7hBC7d2J86sOxNpoCjTm6WnSTFwY3rJHyurl/9tQ/X2SD1k1vMxWbi8oP/e
+	 HL7inwecPIlI9QPNrn4abY4oYW9if3ypbLNbo+hlZjyDUutvP4LevYv7XB5qGS2pkC
+	 8zZQ3aaDeZ9u6+ivECbMPfEFVnYWIsgcAcU+A2MRVh3EuKFjkyArBSbL9hx47bUJdY
+	 wh/rglselhZAhjc4znesFKzJKAo1TMczPPG8v9nwMwlQeiOnLAxkhbEcCsvd9GTGbp
+	 fAO3wXjqB2fDA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12849C3DA42;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E24EC3DA44;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 08 Jul 2024 14:43:12 +0100
-Subject: [PATCH kmod v2 04/17] man: some options take an argument, mention
- that
+Date: Mon, 08 Jul 2024 14:43:13 +0100
+Subject: [PATCH kmod v2 05/17] man: couple of grammar/language fixes
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -56,17 +55,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240708-man-v2-4-a23df6ef871e@gmail.com>
+Message-Id: <20240708-man-v2-5-a23df6ef871e@gmail.com>
 References: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 In-Reply-To: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=3010;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=1047;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=4nifnH+aFZgDG/0iYx0jvMq7OJ9mzuQHKrnYYQU00gI=;
- b=gdwivDCnk3BmhDSRsr8LGrCcGF0bTox0fmG7ry8Nm4a3RBQhpWPQELzeKTueUq9k8lnkpcclF
- VWfzuX4hgQSBICz+syn4E+ox/uHT7JTOBvtvm/o1h7iuQER60BgBfG0
+ bh=ghp1yuMPaFDIfrK29UeBaDCxUNFTVzebnE9Fx50cEnI=;
+ b=qlJHCkU+ErMxwUATAGB/1X+4BZ4gPuqH4eNb5lxRFjeJIMRTzfA7gzeywbUJ+W6mjq5iV5zYl
+ 5ReFlqC1vYxDXQ0HElS+bqXkBZ8N4p+KtYG/asIufqq5bwUBXXCzpJe
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -76,82 +75,33 @@ Reply-To: emil.l.velikov@gmail.com
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-For example modinfo -F requires the field name, although the
-documentation was missing the "field".
-
-Similarly modprobe has omissions, so let's fix those as well.
-
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
-There are two different styles across the man pages:
- -s, --short foo
- -s foo, --short foo
+ man/modprobe.8.scd | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-A proposal to resolve these comes with a later patch in this series.
----
- man/depmod.8.scd   | 2 +-
- man/modinfo.8.scd  | 4 ++--
- man/modprobe.8.scd | 6 +++---
- 3 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/man/depmod.8.scd b/man/depmod.8.scd
-index 80cc48d..7a2e84b 100644
---- a/man/depmod.8.scd
-+++ b/man/depmod.8.scd
-@@ -72,7 +72,7 @@ rather than the current kernel version (as returned by *uname -r*).
- 	assumption can break especially when additionally updated third party
- 	drivers are not correctly installed or were built incorrectly.
- 
--*-E*, *--symvers*
-+*-E*, *--symvers* _Module.symvers_
- 	When combined with the *-e* option, this reports any symbol versions
- 	supplied by modules that do not match with the symbol versions provided
- 	by the kernel in its _Module.symvers_. This option is mutually
-diff --git a/man/modinfo.8.scd b/man/modinfo.8.scd
-index 75267bc..9545257 100644
---- a/man/modinfo.8.scd
-+++ b/man/modinfo.8.scd
-@@ -31,8 +31,8 @@ architecture.
- *-V*, *--version*
- 	Print the *modinfo* version.
- 
--*-F*, *--field*
--	Only print this field value, one per line. This is most useful for
-+*-F* _field_, *--field* _field_
-+	Only print this _field_ value, one per line. This is most useful for
- 	scripts. Field names are case-insensitive. Common fields (which may not
- 	be in every module) include author, description, license, parm, depends,
- 	and alias. There are often multiple parm, alias and depends fields. The
 diff --git a/man/modprobe.8.scd b/man/modprobe.8.scd
-index f4ce0be..9594798 100644
+index 9594798..b47908b 100644
 --- a/man/modprobe.8.scd
 +++ b/man/modprobe.8.scd
-@@ -55,7 +55,7 @@ database.
- 	configuration files (if any) to module names as well. It is usually used
- 	by *udev*(7).
+@@ -101,7 +101,7 @@ database.
+ 	Naturally, this check is there for your protection, so using this option
+ 	is dangerous unless you know what you're doing.
  
--*-C*, *--config*
-+*-C* _directory_, *--config* _directory_
- 	This option overrides the default configuration directory
- 	(/etc/modprobe.d).
+-	This applies any modules inserted: both the module (or alias) on the
++	This applies to any modules inserted: both the module (or alias) on the
+ 	command line and any modules on which it depends.
  
-@@ -151,14 +151,14 @@ database.
- 	require it. Your distribution kernel may not have been built to support
- 	removal of modules at all.
+ *-f*, *--force*
+@@ -112,7 +112,7 @@ database.
+ 	know what you are doing.
  
--*-w*, *--wait=*TIMEOUT_MSEC
-+*-w* _TIMEOUT_MSEC_, *--wait* _TIMEOUT_MSEC_
- 	This option causes *modprobe -r *to continue trying to remove a module
- 	if it fails due to the module being busy, i.e. its refcount is not 0 at
- 	the time the call is made. Modprobe tries to remove the module with an
- 	incremental sleep time between each tentative up until the maximum wait
- 	time in milliseconds passed in this option.
+ 	This applies to any modules inserted: both the module (or alias) on the
+-	command line and any modules it on which it depends.
++	command line and any modules on which it depends.
  
--*-S*, *--set-version*
-+*-S* _version_, *--set-version* _version_
- 	Set the kernel version, rather than using *uname*(2) to decide on the
- 	kernel version (which dictates where to find the modules).
- 
+ *-i*, *--ignore-install*, *--ignore-remove*
+ 	This option causes *modprobe* to ignore *install* and *remove* commands
 
 -- 
 2.45.2
