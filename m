@@ -1,52 +1,52 @@
-Return-Path: <linux-modules+bounces-1507-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1509-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24CF792A3DD
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0D6C92A3E0
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56E551C21A44
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 962E31F22436
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEE1013AD07;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB0613AD2F;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WCLHi6Lq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MvLe8dvX"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C35713A3FF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985F213AA26
 	for <linux-modules@vger.kernel.org>; Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720446212; cv=none; b=u03rfALIGEOJQWCCkpSqKO5vs+VBppjYZvI656TcLM1sGexbmbWpRXsagGamOVwh23YTzhyBkdmjyfDU/eXbsJyEE2sR9ucizxJC8tfzshrQEWDpL+YHwL+NB57DOmQDVpuRj+zbntQT+8Ltk68CDXbPHyAx9gkv5lFTYEjDP5Y=
+	t=1720446212; cv=none; b=rMYOoicBB8dWM6OC98SjkAvSX3p/hrUBTuVQZT6jpG1Cej2Vg78eW3KInMHXMaZHBVJR+m8CQ1gvErVf47Q3nJwnaB0ltwd0AM96lh/ouYdOb7272HAsuQH96rfj0ZVC3nAPxKH6Gc8p0P38ePSbgrIqpeaHi3PU9ud9CoPbUeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1720446212; c=relaxed/simple;
-	bh=reX775AdHtgwryW4rzmIxVLlWJDaQLw3RSOwGwr/TBk=;
+	bh=Ci8+frHbpsqa/LfLtqKUASl0oLPRCznx4EzNDMZHahw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QZMKV7q9+tHJ5l3LZPgckm2IwjspZZwv3lModYiMCqWYUfySAumJGFsZFm/3vbY8qk5eeXy1Q4Yt3F3KJ2/0vyMDN4+bWGM+/UV594dFLTutILFbRJBYTk91m0e+pqoEORX74mIUUvLKt8LzdXRN30nid5WkWVE7ahBNCHUrLR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WCLHi6Lq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 261AFC4AF0F;
+	 In-Reply-To:To:Cc; b=eaJ4pzIqLWLil5nKUt9bD4XdaYS6hqqX8ESQKYRUZipeTvk3Hiraselgh9Jj+miFYiOpg/a6+nlgQYSLeGPx0ymS5iZJZhvX0FyFqCol1RyMrED3jE6NbY/L6ItWIE0mpuFr28ZeBillF62JY0tNhmyWntSVLUV7eCz9UJ7PrQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MvLe8dvX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 30C42C4AF0E;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1720446212;
-	bh=reX775AdHtgwryW4rzmIxVLlWJDaQLw3RSOwGwr/TBk=;
+	bh=Ci8+frHbpsqa/LfLtqKUASl0oLPRCznx4EzNDMZHahw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=WCLHi6LqHUPlBfxs6wFg54L4bj7imvVu3HMDys/Hh0Twzbp+jC0BC2kgVOkABjLdd
-	 j/HZi/Q7hBC7d2J86sOxNpoCjTm6WnSTFwY3rJHyurl/9tQ/X2SD1k1vMxWbi8oP/e
-	 HL7inwecPIlI9QPNrn4abY4oYW9if3ypbLNbo+hlZjyDUutvP4LevYv7XB5qGS2pkC
-	 8zZQ3aaDeZ9u6+ivECbMPfEFVnYWIsgcAcU+A2MRVh3EuKFjkyArBSbL9hx47bUJdY
-	 wh/rglselhZAhjc4znesFKzJKAo1TMczPPG8v9nwMwlQeiOnLAxkhbEcCsvd9GTGbp
-	 fAO3wXjqB2fDA==
+	b=MvLe8dvXSk7y9voqMT6mR4rq6ZE2SuEFrIoeCY7WB2av23kZy7f0+fgaiKGzHB/Dm
+	 dfHSdFmJkjbjy53lEQ2lcq+Jc9ziqz7CbYTJFIikN8kCASVv6bnCzAh9RjreHiSEFz
+	 lntRUJL8ivkmmPSvppeS1ehGKT5ej5pkZgABRloS6PZt7cCs9VUoDMtQV/Sy1MhhIO
+	 e4a97pMDYNVhuq2nof5kQyN9qUjHVijYrCWltzJYnlz6bOeSg+k5eMeGbRypPUtDz9
+	 ThBM42dVaZi40pDosXdGV+z2v568d2iAHy2PoMMpGJEtP+19p5lRzbVTMvdmQ14oY2
+	 uHQzHaYhhQdpg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E24EC3DA44;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E05C3DA46;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 08 Jul 2024 14:43:13 +0100
-Subject: [PATCH kmod v2 05/17] man: couple of grammar/language fixes
+Date: Mon, 08 Jul 2024 14:43:14 +0100
+Subject: [PATCH kmod v2 06/17] man: stop removing DISTCONFDIR lines
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,17 +55,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240708-man-v2-5-a23df6ef871e@gmail.com>
+Message-Id: <20240708-man-v2-6-a23df6ef871e@gmail.com>
 References: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 In-Reply-To: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=1047;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=1116;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=ghp1yuMPaFDIfrK29UeBaDCxUNFTVzebnE9Fx50cEnI=;
- b=qlJHCkU+ErMxwUATAGB/1X+4BZ4gPuqH4eNb5lxRFjeJIMRTzfA7gzeywbUJ+W6mjq5iV5zYl
- 5ReFlqC1vYxDXQ0HElS+bqXkBZ8N4p+KtYG/asIufqq5bwUBXXCzpJe
+ bh=D6xvHTo+v2kzK3NQz14BeM4H1z9+URlZ49VIK5g1yzg=;
+ b=3YKV4A8Pb2O2BSmoRphpo1m2hilUytQEshPtJmlpzL+3aMlzvtHjtn3HpxKkOXQC7hJttiZQe
+ 8z4YOhiRq3MC5zkInTuzwD1AB2vH4GADIy05tC8NEHTUttzOVE6mTDQ
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -75,33 +75,38 @@ Reply-To: emil.l.velikov@gmail.com
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
+Presently when DISTCONFDIR is identical to /lib we remove the whole
+line, since the man pages already have an /lib instance.
+
+At the same time, there are in-text DISTCONFDIR entries, and removing
+the whole line outright breaks the documentation.
+
+Drop the removal line - worst case scenario we get a duplicate entry in
+the synopsis.
+
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
- man/modprobe.8.scd | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ man/Makefile.am | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/man/modprobe.8.scd b/man/modprobe.8.scd
-index 9594798..b47908b 100644
---- a/man/modprobe.8.scd
-+++ b/man/modprobe.8.scd
-@@ -101,7 +101,7 @@ database.
- 	Naturally, this check is there for your protection, so using this option
- 	is dangerous unless you know what you're doing.
+diff --git a/man/Makefile.am b/man/Makefile.am
+index 77a0035..39a0015 100644
+--- a/man/Makefile.am
++++ b/man/Makefile.am
+@@ -14,11 +14,8 @@ EXTRA_DIST = $(MAN5:%.5=%.5.scd) $(MAN8:%.8=%.8.scd)
+ CLEANFILES = $(filter-out $(MAN_STUB), $(dist_man_MANS))
  
--	This applies any modules inserted: both the module (or alias) on the
-+	This applies to any modules inserted: both the module (or alias) on the
- 	command line and any modules on which it depends.
- 
- *-f*, *--force*
-@@ -112,7 +112,7 @@ database.
- 	know what you are doing.
- 
- 	This applies to any modules inserted: both the module (or alias) on the
--	command line and any modules it on which it depends.
-+	command line and any modules on which it depends.
- 
- *-i*, *--ignore-install*, *--ignore-remove*
- 	This option causes *modprobe* to ignore *install* and *remove* commands
+ define generate_manpage
+-	$(AM_V_SCDOC)if [ '$(distconfdir)' != '/lib' ] ; then \
+-		sed -e 's|@DISTCONFDIR@|$(distconfdir)|g' $< ; \
+-	else \
+-		sed -e '/@DISTCONFDIR@/d' $< ; \
+-	fi | \
++	$(AM_V_SCDOC)cat $< | \
++	sed -e 's|@DISTCONFDIR@|$(distconfdir)|g' | \
+ 	sed -e 's|@MODULE_DIRECTORY@|$(module_directory)|g' | \
+ 	$(SCDOC) > $@
+ endef
 
 -- 
 2.45.2
