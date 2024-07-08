@@ -1,53 +1,53 @@
-Return-Path: <linux-modules+bounces-1508-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1517-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6748392A3E3
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 121EB92A3E9
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0E2AB21F68
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4403E1C20FC9
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEF5A13AD0F;
-	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0344013B285;
+	Mon,  8 Jul 2024 13:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kwJelx70"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ojsyNkFZ"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A6613A405
-	for <linux-modules@vger.kernel.org>; Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D0413BAD7
+	for <linux-modules@vger.kernel.org>; Mon,  8 Jul 2024 13:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720446212; cv=none; b=UnEBKy0cbzZhI+SJeqSVUThs9DPElUlCVdEcKg3jrSaLblSJMb9DQFcBQgqyi+oJWLGx4c4BmLcx7uYCUkjkeOjqUNUMeTOaTfDaQe2xwvhJL4vNUAf2fZjbwqh49/44f7++7BDU1f7/mHToJJk0ZrvMHx5y855dAf2i7NwnH48=
+	t=1720446213; cv=none; b=rkMmBUrq9oa7mKDtUvHBfsjzGzu/nuvZKWkyft3zW4+9IU547aTNBUL2Hw+EdAmpWeG7kCXhbxnwb5xluR3rGyDidf3aauiJ87ZOCoCoFl0ohPgs/aZq1H70Tm9UB6srN8kq3mnGWIZy0nffjEfA2JBFyutxgyi+1GVp5zBeGy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720446212; c=relaxed/simple;
-	bh=vN8aMynDo9oMB4Na5YFX+R3h7UUtJkF92o5TyWM7hbg=;
+	s=arc-20240116; t=1720446213; c=relaxed/simple;
+	bh=FhUuHoYV3Rg6K07mVJxVxbDz61msD5CpsDOtAzTw9P0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JP8GZqnBD9ygLW3HpToNUA1fKn4+7e7oqxUMPcl8v0hPL8eR8BSacTGZq/flmGqhgbTd+AtIIR8tEtQiSDLDbBT9BKxLzzH9LnuW5Qkinv1AJNMaM8WaXF4AckiHWduHOXKCfNP/byJPqSQvrTmKEXr0ORJur8q7+sBWR5Pch+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kwJelx70; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 51AB2C4AF13;
+	 In-Reply-To:To:Cc; b=TAQn0klwKjpl/2+PjjNCQ/e1Mnn9mR/QFkNGRjrafIRSdwccz7wcpvX7sLtjm1s54Y44SX0rZNGEOd6qQYHXWm+bSLXzlxuDHlRgqFQAw55rtuRonTPj1BDksUZVuiw1th12femQyiuD3kJkvNomzjFKmUr/R8Kh5OMzshaNVC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ojsyNkFZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5EB23C32786;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720446212;
-	bh=vN8aMynDo9oMB4Na5YFX+R3h7UUtJkF92o5TyWM7hbg=;
+	s=k20201202; t=1720446213;
+	bh=FhUuHoYV3Rg6K07mVJxVxbDz61msD5CpsDOtAzTw9P0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=kwJelx70UJ7FKAy4qgnDwyLTyzBRHgCk9GnkpR1BqKoNENuQmBfp5XzyGPitM3+AH
-	 m9ipIbP1o6hX2OKe9wdYx7crcoaPiaa9MAezKVS7XVNDl6LzNL5kvvqodAcIKt6Q8G
-	 jtw+F4vf5mMZJp+e2TAVWX9LsCghHimh59OgUYXVN3IEo3NXXxydhI3GNo3RBPQoI6
-	 aQ9RH5uZOWuPckDt9Qiu9se49QMVhPgGyMQox1IJs2WLMpPWXOIhxMDj8osyaLV52H
-	 EhhbLvm2Md1mc0tvaaOsdFmcXnkIhfJV4nftHEMI9E89/8lDhQ6IqyiXAFC/hjF7M+
-	 GgPqgIKGXW3Lg==
+	b=ojsyNkFZsHItId/MAPBPeDIcLZUppf4j5p4jt+C2IQcbsUXStzag+niNOLkqU8ErR
+	 XO3Lp+cIpFfp87TgPgjMesEBzHhKIVWk+LTPHdTKeC8TE60npiiaXsy7F640BYcnTA
+	 ampXl3R1IJuOdik0Lp+TXEKUej9wmifHszp840kurWE9AA4Qw95WAW/5WcrsnFGBCK
+	 pqtYVb849cfVEBiUA1dYMdRQFVenYgaU2K8vYtt2Z0U/JZWknrjBVzn5u/fapNzUnf
+	 GeXh6ieFlty9qZRT5kiyrTvh0hd4R9HuBu76N8AS7hRJY3V4GMKZCSSDcXTPzN6uBN
+	 2XAkwIQmBN/Zg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A71BC3DA46;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 559FEC3271E;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 08 Jul 2024 14:43:17 +0100
-Subject: [PATCH kmod v2 09/17] man: depmod.d: rework the opening
- description sentence
+Date: Mon, 08 Jul 2024 14:43:18 +0100
+Subject: [PATCH kmod v2 10/17] man: depmod: remove hard-coded /etc/depmod.d
+ references
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -56,17 +56,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240708-man-v2-9-a23df6ef871e@gmail.com>
+Message-Id: <20240708-man-v2-10-a23df6ef871e@gmail.com>
 References: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 In-Reply-To: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=1496;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=753;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=83pOnT6yg/gw40nxC3Dd7S2ZNLn9m8aBas3g3i5wP+M=;
- b=461tCIdPUfs2zMojecEeXOvyCxRf+k8ix2HQ5qblwYjlVlY3KOW3WPHgs35BViLJ3A+XVqGef
- qZw17VsyCCdBPNPX6xtFdqa+YOS4PGpSUpLxWHjGEJzwCIiWg1Qt7v0
+ bh=otdwumXn7ZUPlDKiwK3+mO+jr/HiZ1lNqtK6tXl61go=;
+ b=KKDGco88/YAybeur/dVau0GEX/Xlr2IgWSZP3wu7xtDJJvZQDrwWTEtee4Zy3AIQaYyoiSsAU
+ 2IOebVskVsJAWTDTtvq6zQ84vkTEnlYz5ld0pq03VzEMRf0yEK9O9Xd
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -76,42 +76,28 @@ Reply-To: emil.l.velikov@gmail.com
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-Use a slightly longer, more gradual introduction.
+Point the users to depmod.d(5) instead.
 
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
-Lucas, I'm reading the first sentence and struggling a bit. What does
-the "global or per-module" refer to?
+ man/depmod.8.scd | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks in advance o/
----
- man/depmod.d.5.scd | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/man/depmod.d.5.scd b/man/depmod.d.5.scd
-index ddb1340..dc13ec7 100644
---- a/man/depmod.d.5.scd
-+++ b/man/depmod.d.5.scd
-@@ -18,11 +18,14 @@ depmod.d - Configuration directory for depmod
+diff --git a/man/depmod.8.scd b/man/depmod.8.scd
+index 7a2e84b..0252a72 100644
+--- a/man/depmod.8.scd
++++ b/man/depmod.8.scd
+@@ -61,8 +61,8 @@ rather than the current kernel version (as returned by *uname -r*).
+ 	being the one set by _outdir_.
  
- # DESCRIPTION
+ *-C*, *--config* _file_ _or_ _directory_
+-	This option overrides the default configuration directory at
+-	/etc/depmod.d/.
++	This option overrides the default configuration files. See
++	*depmod.d*(5).
  
--The order in which modules are processed by the *depmod* command can be altered
--on a global or per-module basis. This is typically useful in cases where
--built-in kernel modules are complemented by custom built versions of the same
--and the user wishes to affect the priority of processing in order to override
--the module version supplied by the kernel.
-+On execution *depmod* reads the configuration files from the above location and
-+based on that it processes the available modules and their dependencies. For
-+example: one can change the search order, exclude folders, override specific
-+module's location and more.
-+
-+This is typically useful in cases where built-in kernel modules are complemented
-+by custom built versions of the same and the user wishes to affect the priority
-+of processing in order to override the module version supplied by the kernel.
- 
- # CONFIGURATION FORMAT
- 
+ *-e*, *--errsyms*
+ 	When combined with the *-F* option, this reports any symbols which a
 
 -- 
 2.45.2
