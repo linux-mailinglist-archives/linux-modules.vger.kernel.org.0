@@ -1,53 +1,53 @@
-Return-Path: <linux-modules+bounces-1512-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1513-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F254F92A3E4
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D42D492A3E8
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 15:43:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5CD61F223B8
-	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5BFFBB22224
+	for <lists+linux-modules@lfdr.de>; Mon,  8 Jul 2024 13:43:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFE6913B792;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E048213B7A3;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u8GdP697"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fydPh8Ul"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86941386A7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86EF1386BF
 	for <linux-modules@vger.kernel.org>; Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720446212; cv=none; b=ubbRpfUCqU4O136v4sO46Nie1Mxo+UDelMHFgC3vI5xYiBOi69SqricxcAxub3NN4zu7bDP8+GKcjy5YYt9kBh++VvllFA2PXHA1cit8QGXtWtTytU3uyTwybNQl5DmWGWiOQOp+uSoI/jmal/GjPXkxQ96Hm8VEURn5v7WomLs=
+	t=1720446212; cv=none; b=VyHLGyaugZwKeWYM56mdFvyAwEheGockTgkXabl5ylkb//4p++aXWENRjnQnsKvl4RcNl6yYzZJnb4VBKf6WmTmEW6GrAeK59vQzXlAEABJuPaMIqkmKoEvd+ktbulxqoV9MIHyfybw0CjiJF92YLw3lEncz2cNdZ23ZAkCHUEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1720446212; c=relaxed/simple;
-	bh=qA+xrWzdXmexhgbqdl39T3PvOLtTamKAIdT4Tuq4pBg=;
+	bh=ytixmSQoLKTlstIy6Vj6ec4mCC+y87go2ZLTk3iKbqs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AZTHl+sR0aaZNj2glXKxhCB/NqCR9I8v9vOSSeGQopJ7ou0yhtVhOpGCPdqugGtY5/JW6U3DvGhOrf291WmQXJuqjPxFPI6Y/9VARn2gCaGlN6VuEh7KSW337nW0S2psR4v+KeV/6nBufnnVg9osojW4HoFUNW0V3j8y7gXuZu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u8GdP697; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6A8EBC4AF14;
+	 In-Reply-To:To:Cc; b=tT5fE2X7hyKORH870qBaytEsXd3JjcIcLaQ4fBrMydMNILZC67tsOmgio5gcyB2+5EgSC1zhJ5KOSR8qEzpDeNj48XnRLUNNhYdbUneP7PXVzfxW5DyWXLYVRSDK0vBJK3K1aqMh5Lo16uGGZNFxTQWQ/coeTG6TgQ3O4ynj7r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fydPh8Ul; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 77C70C32786;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1720446212;
-	bh=qA+xrWzdXmexhgbqdl39T3PvOLtTamKAIdT4Tuq4pBg=;
+	bh=ytixmSQoLKTlstIy6Vj6ec4mCC+y87go2ZLTk3iKbqs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=u8GdP697eCwziA80qoGZEWkF6lui1jlENaMs9m0YGipPTzO4q0GDMb8Ry2Y1xjVck
-	 vQlUCGFFYjn+1gPabUAeWgt3alJ2Z1dJ+blNqu79IKL6AekLfvLF8JzVsuoh4BY0P3
-	 hdr7Ur97w8CGJmCq9VWBZ4bFhgycINHD/UkFg/BlD/84kLussWuyHTNN6gt8t05sp4
-	 mRGk6WahgyuBrYmGHCgrWtzt1SE1F1Y2uYMboPEmdGnUs/vnzC9/v/jbJDH28QgScF
-	 7nXYlpVHAvvUOx6uZ5wEvfkGX64A90hIykFA2B/zM3pNzE6uP7YyaRkXCS0/DS1rIX
-	 LP2re5E3gxE5w==
+	b=fydPh8Ulw88cY4c2klKjFrc7Vkin8u7srk3JwmIyhClttHBD/dsBljMmLoYCySMin
+	 X00Ys3cL49G8Lm9YRUwykpSTx+oKl9PheAjLX24azjyIBIsk05c8+bdcbeKG0LVGE6
+	 dOUesk6L+5l78EKsXjpeLwULSQRTIYe71N3g+FgPjtWZdsVgkDkWUhKb/qvpoDj9Dy
+	 ziJ4IOvpC59d0i/AJX/i7pUNF2X4YcDVdZIn7eEWC1R/FBFDYg9KyQI4KTR39gJPQw
+	 LUqcsQVU0WeZhsbCnpfxsR3/k0t3Nok3A6OJsoKRGLJJlHPABDHCE88HKLRqgpfr3x
+	 M6tEPZXK1K4rQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6226EC3DA42;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D618C3DA47;
 	Mon,  8 Jul 2024 13:43:32 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 08 Jul 2024 14:43:19 +0100
-Subject: [PATCH kmod v2 11/17] man: modprobe.d: document the config file
- order handling
+Date: Mon, 08 Jul 2024 14:43:20 +0100
+Subject: [PATCH kmod v2 12/17] man: modprobe.d: factor out a CONFIGURATION
+ FORMAT section
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -56,17 +56,17 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240708-man-v2-11-a23df6ef871e@gmail.com>
+Message-Id: <20240708-man-v2-12-a23df6ef871e@gmail.com>
 References: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 In-Reply-To: <20240708-man-v2-0-a23df6ef871e@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=2855;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720446209; l=1209;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=sHnxPSEDp+jGz2aoQmjrQ0qwAhdHkK+ahhBrcRC6veE=;
- b=JSrSnWWN4TSL2Gkcoyv+qGiihcr0kvtScdrOpyS2VpmNqdkvMTVwaB2QZ7RuJBOmaVrzhYJFZ
- nvOPXvKJT7TBjYdykQ6Uf9IbMxHd4nT8gaXbQAllLmaMkvdDNCv2oZU
+ bh=NiOhn7IMbJ4OSc6NZUJE+4c+XAAVRQTVxShgJHylHo4=;
+ b=9YD5uK+5V72UztVpMETyIgDZY4jL8ArhdBZHxdkdYKcncl1XClzGoQhLWFE0Or6fDuNudfXwI
+ R3LuMZ9K2I2AqWGCF9QSzYmzGj6rJWHYz39YCoxhzdEx49FOy7JoIId
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -76,77 +76,35 @@ Reply-To: emil.l.velikov@gmail.com
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-The modprobe.d configuration order/handling aligns with existing tools
-such as sysctl.d, even though there is no mention in the manual.
-
-Reorder the list in SYNOPSIS and add a bit of verbiage describing things.
-
-Section is inspired by sysctl.d(5) and sysctl(8).
+Keep the description neat and tidy.
 
 Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
-v2: Reword as per Lucas' suggestion.
----
- man/modprobe.d.5.scd | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ man/modprobe.d.5.scd | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/man/modprobe.d.5.scd b/man/modprobe.d.5.scd
-index 2907175..2a6a789 100644
+index 2a6a789..823ba62 100644
 --- a/man/modprobe.d.5.scd
 +++ b/man/modprobe.d.5.scd
-@@ -6,25 +6,24 @@ modprobe.d - Configuration directory for modprobe
- 
- # SYNOPSIS
- 
--/lib/modprobe.d/\*.conf
-+@SYSCONFDIR@/modprobe.d/\*.conf
- 
--@DISTCONFDIR@/modprobe.d/\*.conf
-+/run/modprobe.d/\*.conf
- 
- /usr/local/lib/modprobe.d/\*.conf
- 
--/run/modprobe.d/\*.conf
-+@DISTCONFDIR@/modprobe.d/\*.conf
- 
--/etc/modprobe.d/\*.conf
-+/lib/modprobe.d/\*.conf
- 
- # DESCRIPTION
- 
- Because the *modprobe* command can add or remove more than one module, due to
- modules having dependencies, we need a method of specifying what options are to
--be used with those modules. All files underneath the /etc/modprobe.d directory
--which end with the .conf extension specify those options as required. They can
--also be used to create convenient aliases: alternate names for a module, or they
--can override the normal *modprobe* behavior altogether for those with special
--requirements (such as inserting more than one module).
-+be used with those modules. One can also use them to create convenient aliases:
-+alternate names for a module, or they can override the normal *modprobe*
-+behavior altogether for those with special requirements (such as inserting more
-+than one module).
- 
- Note that module and alias names (like other module names) can have - or \_ in
+@@ -29,10 +29,13 @@ Note that module and alias names (like other module names) can have - or \_ in
  them: both are interchangeable throughout all the module commands as underscore
-@@ -35,6 +34,18 @@ lines and lines starting with '#' ignored (useful for adding comments). A '\\'
- at the end of a line causes it to continue on the next line, which makes the
- file a bit neater.
+ conversion happens automatically.
  
-+# CONFIGURATION DIRECTORIES AND PRECEDENCE
+-The format of files under modprobe.d is simple: one command per line, with blank
+-lines and lines starting with '#' ignored (useful for adding comments). A '\\'
+-at the end of a line causes it to continue on the next line, which makes the
+-file a bit neater.
++# CONFIGURATION FORMAT
 +
-+Configuration files are read from directories in listed in SYNOPSYS in that
-+order of precedence. Once a file of a given filename is loaded, any file of the
-+same name in subsequent directories is ignored.
++The configuration files contain one command per line, with blank lines and lines
++starting with '#' ignored (useful for adding comments). A '\\' at the end of a
++line causes it to continue on the next line, which makes the files a bit neater.
 +
-+All configuration files are sorted in lexicographic order, regardless of the
-+directory they reside in. Configuration files can either be completely replaced
-+(by having a new configuration file with the same name in a directory of higher
-+priority) or partially replaced (by having a configuration file that is ordered
-+later).
-+
- # COMMANDS
++See the COMMANDS section below for more.
  
- alias _wildcard_ _modulename_
+ # CONFIGURATION DIRECTORIES AND PRECEDENCE
+ 
 
 -- 
 2.45.2
