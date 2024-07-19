@@ -1,52 +1,53 @@
-Return-Path: <linux-modules+bounces-1564-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1565-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1E91937A92
-	for <lists+linux-modules@lfdr.de>; Fri, 19 Jul 2024 18:15:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F37937A8F
+	for <lists+linux-modules@lfdr.de>; Fri, 19 Jul 2024 18:15:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2DEFFB2373F
-	for <lists+linux-modules@lfdr.de>; Fri, 19 Jul 2024 16:15:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C52321C21D47
+	for <lists+linux-modules@lfdr.de>; Fri, 19 Jul 2024 16:15:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A89B146596;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A85E146595;
 	Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SZK4kDTC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZCnKX5fo"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AAE13F435
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A612CA6
 	for <linux-modules@vger.kernel.org>; Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721405563; cv=none; b=h4piNFHmLnwuNof7TmJafCgdhdBrRXkWNrfBwowgTAgjjLlx1kpN2605sBoxVziREGAOF91qXt95spLlS9KV6aHoOBh+OGXYMzM/yE/MYhUF8IIsntzZB9RBjAiu5b9V4ecnVz4S23v76Su68Y9FrzcJ23UzvFVaj5ofhv8602A=
+	t=1721405563; cv=none; b=LE5FsfD97EUNlxnI6G11LPCEr81B0xE15y+C4B5FHBL3tjRqweQMFDiCqBApy0uO9im/ulSnjMMEO8plNWWUB1yVEDjXYO+Muc5gP06HR+3cbgYJ+ssQ4cknQLs2Z7flM0FBhbf93s4A/JzaM52t57WSUtygZtLlfDKAnrOXay0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721405563; c=relaxed/simple;
-	bh=eV3qb5B+I1nDNQOkwqUHc7RO6Qbz3kjLk+d5HXT++yg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ta36JuWhWxB1tl7mPNYbUWbUH3eXzYCtwTQ2KQLWwUWpUXt4eSe/ZtoWRG8dTotqh5udSuf/Js3N/E+Rp+d12zO6ibgYGJTLvFPULZqkzhRaCrtFg56AJlgUfUhpwsXewPC3NAnXh21TLDE7SGjTiixDr2kQhPyOEIhVFtZK1vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SZK4kDTC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1C860C32782;
+	bh=hwFpOOZXNjN4VymfHrn632VSPvfq4GkUSetMM4BUh1k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=AfidqHPT3KFZNtMMJkV6h5Vbl2LRDF+LEil7yT0VGBEjVO2uo/uqY0J+k++1tY9VmOcdV8bnG9+RtSHk8B0SysdLs+JhX819l+Uvn8XEau4uAbWgw0f4rJAd5aOskD9izq4DR60R28fzHbBPjYpsXRZrR7Ox9DhRwtzSPXgOfHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZCnKX5fo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2B8F2C4AF09;
 	Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1721405563;
-	bh=eV3qb5B+I1nDNQOkwqUHc7RO6Qbz3kjLk+d5HXT++yg=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=SZK4kDTCh8rx75i0t7FvB2ZNZ8HFfA9VyrTYQdtIBqWfkj3dJoXyOIi/qn3BclzL9
-	 v9IG/eogctp3KB17OCk+HQEgnAuHUy0Sz8uVbDyYz1aHzo3pEgODXS6ap2uRiqTbzo
-	 M8UCRKwRJDquhNS2beWogmyEbKPGySjz6Tam/SupIr2rIM8vTxxltVly+7lqliwzNS
-	 4q/0rZoC5Hnduq1+0R/gVdHbFLvkGsh1EjGhsHiTcJS4Z/Qnxd6Gnk6j6zwmSUn9/E
-	 pHprgOCOzvBjSkz22zEqlhn1BfIyTHRGUqh/5hn1KOwpluB9gBnPlY1D/O+ju6hWn6
-	 Ys2VmAVDL62Wg==
+	bh=hwFpOOZXNjN4VymfHrn632VSPvfq4GkUSetMM4BUh1k=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=ZCnKX5foctJJ7lf60Ay6EBHZ801zaPxZ1FuO+kPMLURU5b1sxW72BcYx1+kVO7Zls
+	 ox9iTkD/Ul7oxi7BnRWatpZS292/VZEMSEBUp9iNIiVGJF+iaC+260wdrC/wYYkUJp
+	 csNPEddy0Zb7YQJKvNOgrhyyq62829guIKZuomv624CUjTM3cpnpVbhow5wtXQoder
+	 xcP/gJKgg4BkMw0WUKXr5Wu2N3xpwvFlCXhT+SEotBnIAsQlt98XU2Vh0nR+oPN8qJ
+	 eH+RRvJIzzcpeMxpTpz1RDVY53k40XnKAEUwFPuRdLfjoFh3g2aBTGSd2GrSZGDwt+
+	 fONxxmHpshEow==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06682C3DA5D;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DFAC3DA59;
 	Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Subject: [PATCH kmod 0/3] libkmod: misc ABI changes
-Date: Fri, 19 Jul 2024 17:12:40 +0100
-Message-Id: <20240719-abi-fixes-v1-0-1e6d99a2846b@gmail.com>
+Date: Fri, 19 Jul 2024 17:12:41 +0100
+Subject: [PATCH kmod 1/3] libkmod: document
+ KMOD_INDEX_MODULES_BUILTIN_ALIAS in kmod_dump_index()
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,22 +56,21 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHiQmmYC/x3KQQqAIBBA0avIrBtQCYa6SrQwG2s2FgoRiHdva
- Pn4v0HlIlxhNg0KP1Llygo3GIhnyAej7Grw1o+WHGHYBJO8XJEskQspbuwm0P8u/Afdl7X3D+K
- l1KpbAAAA
+Message-Id: <20240719-abi-fixes-v1-1-1e6d99a2846b@gmail.com>
+References: <20240719-abi-fixes-v1-0-1e6d99a2846b@gmail.com>
+In-Reply-To: <20240719-abi-fixes-v1-0-1e6d99a2846b@gmail.com>
 To: linux-modules@vger.kernel.org
 Cc: Marco d'Itri <md@linux.it>, Eugene Syromiatnikov <esyr@redhat.com>, 
  Josh Boyer <jwboyer@fedoraproject.org>, 
  Yauheni Kaliuta <ykaliuta@fedoraproject.org>, 
  Alexey Gladkov <gladkov.alexey@gmail.com>, 
- Emil Velikov <emil.l.velikov@gmail.com>, 
- Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+ Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721405562; l=1640;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721405562; l=1746;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=eV3qb5B+I1nDNQOkwqUHc7RO6Qbz3kjLk+d5HXT++yg=;
- b=PcWb4wLN548NuD7u1acnOtM+vH3kD+FNTQilSOgqp1eVc1t82LZd+2NFjBL4IjTx1MRGE2gem
- kDCe4SrrPAhAGti36MLLUVZAm45cjZzgeR/afLbXItBd3diq5kzBToI
+ bh=8AhtTXAyZZ10eWdz87tQwKwm866stviAIl/eVpSKW9U=;
+ b=DB495+JOHzWaoxN3xLGaBrchoWkB1mvIa7tfARaIdUPZBMCoX/bHAf3YOHOrohst9OfbFmlf0
+ vgvXqYM92ryCI05jNUfGdBx6VF21rSpkzkeKlZzk5bbbfGyK665WZTc
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
@@ -78,51 +78,54 @@ X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
 X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
 Reply-To: emil.l.velikov@gmail.com
 
-Hello all,
+From: Emil Velikov <emil.l.velikov@gmail.com>
 
-Recently I've noticed that new API was added into the incorrect section
-of the version script. Thus the resulting library had incorrectly tagged
-symbol(s) in the exports list.
+The extra enum was introduced a few years ago, although the (only)
+function using it did not have it's documentation updated.
 
-As result I went ahead and checked for other ABI issues and I've noticed
-that v26 and v27 have some changes in enum kmod_index. Although on
-inspection neither of these should have caused issues in reality:
+The commit itself has caused an ABI break with kmod v27, since the
+KMOD_INDEX_MODULES_BUILTIN value has changed.
 
- - v26 changes the _KMOD_INDEX_PAD from signed to unsigned, all other
-   enum values are identical
- - v27 adds new enum, effectively changing the final (non-pad) enum
-   value. My search has found zero users of change and new enums, and
-   single (abandoned) user of the kmod_dump_index() API (which uses the
-   enum in the first place)
+A search through Google, Github and Arch packages have shown one user of
+kmod_dump_index() - the only API that uses the enum.
 
-The respective commits have additional details and reasoning.
+In that case and all others, no projects referencing the changed enum
+were found. Although since recent and/or supported distros use kmod v27
+or later we've decided to only update the documentation.
 
-Personally I would recommend picking patch 2 across all distros and
-patch 3, if your distro is shipping kmod version from git.
-
-Cc-ing Debian, Fedora and RedHat maintainers - team, please forward this
-to any fellow maintainers I may have missed.
-
-Thanks in advance,
-
-To: linux-modules@vger.kernel.org
-
+Cc: Alexey Gladkov <gladkov.alexey@gmail.com>
+Fixes: b866b21 ("Lookup aliases in the modules.builtin.modinfo")
+Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
-Emil Velikov (3):
-      libkmod: document KMOD_INDEX_MODULES_BUILTIN_ALIAS in kmod_dump_index()
-      libkmod: correctly tag kmod_module_new_from_name_lookup
-      libkmod: move new weak API to separate section
+The project itself being https://github.com/falconindy/modtree which
+hasn't been updated in 12 years.
 
- libkmod/libkmod.c   |  1 +
- libkmod/libkmod.sym | 14 +++++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+The following distros/versions ship kmod v26 or older, where bunch of
+them are no longer supported.
+
+ - RHEL 8 + community variants Alma/Amazon/CentOS/Rocky/Scientific
+ - Alpine Linux 3.11
+ - Debian 10 + derivatives
+ - Ubuntu 18.04
 ---
-base-commit: fa715f8c8b78a09f47701ce1cf46e9b67a49b8d0
-change-id: 20240717-abi-fixes-70771afcbe19
+ libkmod/libkmod.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Best regards,
+diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
+index 213b424..fecb8e7 100644
+--- a/libkmod/libkmod.c
++++ b/libkmod/libkmod.c
+@@ -971,6 +971,7 @@ KMOD_EXPORT void kmod_unload_resources(struct kmod_ctx *ctx)
+  * KMOD_INDEX_MODULES_DEP: index of module dependencies;
+  * KMOD_INDEX_MODULES_ALIAS: index of module aliases;
+  * KMOD_INDEX_MODULES_SYMBOL: index of symbol aliases;
++ * KMOD_INDEX_MODULES_BUILTIN_ALIAS: index of builtin module aliases.
+  * KMOD_INDEX_MODULES_BUILTIN: index of builtin module.
+  * @fd: file descriptor to dump index to
+  *
+
 -- 
-Emil Velikov <emil.l.velikov@gmail.com>
+2.45.2
 
 
 
