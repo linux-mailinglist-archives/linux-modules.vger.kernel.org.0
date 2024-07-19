@@ -1,115 +1,128 @@
-Return-Path: <linux-modules+bounces-1563-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1564-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39E16935125
-	for <lists+linux-modules@lfdr.de>; Thu, 18 Jul 2024 19:16:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1E91937A92
+	for <lists+linux-modules@lfdr.de>; Fri, 19 Jul 2024 18:15:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E93D6281792
-	for <lists+linux-modules@lfdr.de>; Thu, 18 Jul 2024 17:16:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2DEFFB2373F
+	for <lists+linux-modules@lfdr.de>; Fri, 19 Jul 2024 16:15:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E65144D13;
-	Thu, 18 Jul 2024 17:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A89B146596;
+	Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="qKm1Wzpd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SZK4kDTC"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0C61E4AD;
-	Thu, 18 Jul 2024 17:15:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AAE13F435
+	for <linux-modules@vger.kernel.org>; Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721322958; cv=none; b=VydC0ntlbEkSNerqXnIyhKe7dQo65S6nfFy87+jPfxQtvnqf1ClgbMHFoQsFaSKARD5TSOshJro1RJHvsSWvl6/qhvGvzBboiP+G6SnY+C+N/4lOF6y7A/6cDildDh3YF2/Bib9Mbz1JRXq3xBQCGXyi5CwhEgjg8Xp7/LNAUrE=
+	t=1721405563; cv=none; b=h4piNFHmLnwuNof7TmJafCgdhdBrRXkWNrfBwowgTAgjjLlx1kpN2605sBoxVziREGAOF91qXt95spLlS9KV6aHoOBh+OGXYMzM/yE/MYhUF8IIsntzZB9RBjAiu5b9V4ecnVz4S23v76Su68Y9FrzcJ23UzvFVaj5ofhv8602A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721322958; c=relaxed/simple;
-	bh=Q8zNgc+7hrY5JnU4IWEXyGDGa6A8Rxwhz3jMgMcDeqE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PD8Y6uh7k+VJSIljg/AneX/JA+MjfGfAk/MILljw0Ht37x82uMip+LV8cKwmnvrco02wLC+6Hrry4Q6i6YSezclxQ7/YMl7VQ6t9i8CvqFowXI+Cv9MYOD+619FKxRvVFXdtRhH/cARgwNgbw57lenGhlx+Iy+HseCmLbhizcGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=qKm1Wzpd; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
-	bh=nzofLT5tIYdWN9XeUlSlttsrRWtNc7/F41l2/uaJDwU=; b=qKm1Wzpd4/tkRJSx9UoLrzQ4ES
-	Bmx7of+BO45TPaDcR/ePUKt5MGLuTgm9Jp5gmP/mFI3oZpdBfFDZpBSAEA9DLtIlJixV1tQONcEKE
-	pSdXUEpmlGC5sNBXQ6bBIS7NQMRtMGW6qTV5ORRNvPm/hlWl6sZW4rScvdu1K33NEBiGqeIDAV6lF
-	Ul1uli4d2/nOPCMmE4D+EOQrBniROkKIRndxvfQ030wvDcZ2tkJu5d0Nm1zhwZDPw/9ixcZu9pY5V
-	R84jinTY3etz4ejKQ8X5p1ExTgmIlr1RCt21EofaVHSiEUJ+L7GubA9mUG3wOd74gRYdVX5+mBAn5
-	7V1vW1vg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sUUjP-000000004Wm-1hBk;
-	Thu, 18 Jul 2024 17:15:51 +0000
-Date: Thu, 18 Jul 2024 10:15:51 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	Kris Van Hees <kris.van.hees@oracle.com>,
-	Sami Tolvanen <samitolvanen@google.com>
-Cc: Andreas Hindborg <nmi@metaspace.dk>, Miguel Ojeda <ojeda@kernel.org>,
-	rust-for-linux@vger.kernel.org, linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Adam Bratschi-Kaye <ark.email@gmail.com>
-Subject: Re: [PATCH] rust: add `module_params` macro
-Message-ID: <ZplNxxXS3RLULeI6@bombadil.infradead.org>
-References: <20240705111455.142790-1-nmi@metaspace.dk>
- <ZoxdRjpy2hRndqmc@bombadil.infradead.org>
- <CANiq72=VU+PHfkiq8HokfeCEKvQoeBiUaB76XbW6s3f2zYmEtA@mail.gmail.com>
+	s=arc-20240116; t=1721405563; c=relaxed/simple;
+	bh=eV3qb5B+I1nDNQOkwqUHc7RO6Qbz3kjLk+d5HXT++yg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ta36JuWhWxB1tl7mPNYbUWbUH3eXzYCtwTQ2KQLWwUWpUXt4eSe/ZtoWRG8dTotqh5udSuf/Js3N/E+Rp+d12zO6ibgYGJTLvFPULZqkzhRaCrtFg56AJlgUfUhpwsXewPC3NAnXh21TLDE7SGjTiixDr2kQhPyOEIhVFtZK1vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SZK4kDTC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1C860C32782;
+	Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721405563;
+	bh=eV3qb5B+I1nDNQOkwqUHc7RO6Qbz3kjLk+d5HXT++yg=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=SZK4kDTCh8rx75i0t7FvB2ZNZ8HFfA9VyrTYQdtIBqWfkj3dJoXyOIi/qn3BclzL9
+	 v9IG/eogctp3KB17OCk+HQEgnAuHUy0Sz8uVbDyYz1aHzo3pEgODXS6ap2uRiqTbzo
+	 M8UCRKwRJDquhNS2beWogmyEbKPGySjz6Tam/SupIr2rIM8vTxxltVly+7lqliwzNS
+	 4q/0rZoC5Hnduq1+0R/gVdHbFLvkGsh1EjGhsHiTcJS4Z/Qnxd6Gnk6j6zwmSUn9/E
+	 pHprgOCOzvBjSkz22zEqlhn1BfIyTHRGUqh/5hn1KOwpluB9gBnPlY1D/O+ju6hWn6
+	 Ys2VmAVDL62Wg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06682C3DA5D;
+	Fri, 19 Jul 2024 16:12:43 +0000 (UTC)
+From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
+Subject: [PATCH kmod 0/3] libkmod: misc ABI changes
+Date: Fri, 19 Jul 2024 17:12:40 +0100
+Message-Id: <20240719-abi-fixes-v1-0-1e6d99a2846b@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72=VU+PHfkiq8HokfeCEKvQoeBiUaB76XbW6s3f2zYmEtA@mail.gmail.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHiQmmYC/x3KQQqAIBBA0avIrBtQCYa6SrQwG2s2FgoRiHdva
+ Pn4v0HlIlxhNg0KP1Llygo3GIhnyAej7Grw1o+WHGHYBJO8XJEskQspbuwm0P8u/Afdl7X3D+K
+ l1KpbAAAA
+To: linux-modules@vger.kernel.org
+Cc: Marco d'Itri <md@linux.it>, Eugene Syromiatnikov <esyr@redhat.com>, 
+ Josh Boyer <jwboyer@fedoraproject.org>, 
+ Yauheni Kaliuta <ykaliuta@fedoraproject.org>, 
+ Alexey Gladkov <gladkov.alexey@gmail.com>, 
+ Emil Velikov <emil.l.velikov@gmail.com>, 
+ Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721405562; l=1640;
+ i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
+ bh=eV3qb5B+I1nDNQOkwqUHc7RO6Qbz3kjLk+d5HXT++yg=;
+ b=PcWb4wLN548NuD7u1acnOtM+vH3kD+FNTQilSOgqp1eVc1t82LZd+2NFjBL4IjTx1MRGE2gem
+ kDCe4SrrPAhAGti36MLLUVZAm45cjZzgeR/afLbXItBd3diq5kzBToI
+X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
+ pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
+X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
+ auth_id=35
+X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
+Reply-To: emil.l.velikov@gmail.com
 
-On Tue, Jul 09, 2024 at 12:08:16PM +0200, Miguel Ojeda wrote:
-> On Mon, Jul 8, 2024 at 11:42 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
-> >
-> > The rationale here is that a rust binding means commitment then also
-> > from fresh blood to help co-maintain review C / Rust for exising code
-> > when there is will / desire to collaborate from an existing C maintainer.
-> >
-> > I realize this may be a lot to ask, but I think this is one of the
-> > responsible ways to ask to scale here.
-> 
-> But, yes, I think Rust is a great opportunity to get new
-> co-maintainers, as well as getting new developers involved with kernel
-> maintenance in general, which could help with other issues too.
+Hello all,
 
-Great well then my preference is to not have Rust bindings for modules
-unless the Rust community can commit to not only a co-maintianer for
-both C And Rust but also commit to not ditching the role; if a C/Rust
-co-maintainer gets hits by a bus the Rust community would strive to
-look for someone else to step in. This would proactively help with
-upstream responsibilities understood by companies who hire developers
-in this context. It is why I brought up Andreas's work, I already know
-he has a lot of work to do and responsibilities. If not Andreas, who else
-can step up to help with this, Sami? While each company varies in
-accepting a developer's roles in the community, I think we would stand
-to gain to consider the long term aspects of this before it becomes an
-issue, so we get employers to understand / accept this as part of our
-work. I don't think this is an unreasonable for companies or developers
-interested in Rust advancements.
+Recently I've noticed that new API was added into the incorrect section
+of the version script. Thus the resulting library had incorrectly tagged
+symbol(s) in the exports list.
 
-This includes testing, helping improve tests and using existing tests
-or automation tools for them so we don't regress.
+As result I went ahead and checked for other ABI issues and I've noticed
+that v26 and v27 have some changes in enum kmod_index. Although on
+inspection neither of these should have caused issues in reality:
 
-Clearly, this isn't just about a module_params macro, for example
-I'm starting to see other module related code I need to review and
-having to be very careful to ensure all of what is ongoing with modules
-like Kris's work on kbuild CONFIG_BUILTIN_MODULE_RANGES will still work
-in a Rust modules world with Sami's work on module modversions.
+ - v26 changes the _KMOD_INDEX_PAD from signed to unsigned, all other
+   enum values are identical
+ - v27 adds new enum, effectively changing the final (non-pad) enum
+   value. My search has found zero users of change and new enums, and
+   single (abandoned) user of the kmod_dump_index() API (which uses the
+   enum in the first place)
 
-[0] https://lkml.kernel.org/r/20240716031045.1781332-1-kris.van.hees@oracle.com
+The respective commits have additional details and reasoning.
 
-  Luis
+Personally I would recommend picking patch 2 across all distros and
+patch 3, if your distro is shipping kmod version from git.
+
+Cc-ing Debian, Fedora and RedHat maintainers - team, please forward this
+to any fellow maintainers I may have missed.
+
+Thanks in advance,
+
+To: linux-modules@vger.kernel.org
+
+---
+Emil Velikov (3):
+      libkmod: document KMOD_INDEX_MODULES_BUILTIN_ALIAS in kmod_dump_index()
+      libkmod: correctly tag kmod_module_new_from_name_lookup
+      libkmod: move new weak API to separate section
+
+ libkmod/libkmod.c   |  1 +
+ libkmod/libkmod.sym | 14 +++++++++++---
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+---
+base-commit: fa715f8c8b78a09f47701ce1cf46e9b67a49b8d0
+change-id: 20240717-abi-fixes-70771afcbe19
+
+Best regards,
+-- 
+Emil Velikov <emil.l.velikov@gmail.com>
+
+
 
