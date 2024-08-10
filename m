@@ -1,52 +1,81 @@
-Return-Path: <linux-modules+bounces-1673-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-1676-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0F5D94DCBA
-	for <lists+linux-modules@lfdr.de>; Sat, 10 Aug 2024 14:25:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0867A94DD97
+	for <lists+linux-modules@lfdr.de>; Sat, 10 Aug 2024 18:09:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FE0C1F214EB
-	for <lists+linux-modules@lfdr.de>; Sat, 10 Aug 2024 12:25:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05F3F1C208B2
+	for <lists+linux-modules@lfdr.de>; Sat, 10 Aug 2024 16:09:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DCDC156F5E;
-	Sat, 10 Aug 2024 12:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31B2B15FCE7;
+	Sat, 10 Aug 2024 16:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MACnCDTl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RHpf0Gy6"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DE713E02A
-	for <linux-modules@vger.kernel.org>; Sat, 10 Aug 2024 12:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12463C062
+	for <linux-modules@vger.kernel.org>; Sat, 10 Aug 2024 16:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723292727; cv=none; b=FEWvi2OzicTZxYt0bsmAVU8YA7I5XDkIdQQUvOnYFe7Bxqc9x93tTocEwuUdL26H0nUA4XA91OELIhsLDGLLnYmMKVwtIIiLc/eXIpYHIBu1RJ7F6iXlmywWJ0KahoqdY5tD80EDWyc6wWtjN6XOI1CNq6l2xaX40n4zixExxRE=
+	t=1723306160; cv=none; b=JT2alFN0kAOghUcpk2VH77zbCcfRSlZKjWiewaW71Eoh6HaTtWFhhpLCb2cKhlfUchBVxvPAp0A2ntdMo1Bx2LhD4CwXlfQMPGgaVrSY6cK0MxlyKUHM0ntr2y09CPuR5+zXd2QR71IEtmUHoDoG+EB/A09iKduu3SsTiWEFKEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723292727; c=relaxed/simple;
-	bh=jKLWG81C9L7T6MeJh+poogsU6/o0mKi42/7OOCmdamY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DI6SSwPW0aWMI3oNYNrqzgpTVt0a7QWFToFTajS5iie6mdanj8WUeCgLNOpLZkQwi0asVYFyASgMc+Z7Zf3+7HQ7lhookU0QtQpsu+I1JD/I9YrfzWlFaevYzaov6pYQFp+lJANndJxnAJWEwukIk9WvhkqBMkU2J55ItAARHY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MACnCDTl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4C4CCC4AF0E;
-	Sat, 10 Aug 2024 12:25:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723292727;
-	bh=jKLWG81C9L7T6MeJh+poogsU6/o0mKi42/7OOCmdamY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=MACnCDTl0uiGUcysNTY65LycaYGAB8weu/hkt2pnaDq1ZqeqnVkA6vWr8p4Nq2sDX
-	 hZ0+ZtUTdKQtuzyRe3rx4m7sMQZyo/431hgk+6l3BI7TfQQld6q6eYeJQzRk2pdh0n
-	 U6nco31we9OMKeaozcCxZPZYaVMAbXn8IfM0H5Pd46fck3fzhmYExNPGO1+2+0gtLL
-	 8VTRXf0Pkco/T3aSR6j3qzC6m92mu15uh9cIUZXdNmeLDB/SsYBhPGGPEIGn5gZGOl
-	 BHXzDJPLZoLA1p0Gi2/cRvRsvXRpkiPIdDS3s4i45EOO47UZAYANC8wbsk/o0piAh5
-	 IMPWMJiKzfwYg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 377A4C531DC;
-	Sat, 10 Aug 2024 12:25:27 +0000 (UTC)
-From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Sat, 10 Aug 2024 13:25:16 +0100
-Subject: [PATCH kmod 2/2] m4: remove verbose license exception clause
+	s=arc-20240116; t=1723306160; c=relaxed/simple;
+	bh=dZreob/C2Dh0OiJTwgOZcHi4rPQ/ybG39UlC6oKjSNo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=A7s5TByNGk1bTjfMwlPOz7ETkaKOyTNYloNdF3/9i/i6qfDfmalyrCnhIHgtwOtqnOoj5L/0nHnp8B+fjC3o1AW3kIJ9cpSiQDKulC17I0cb3J81lozfWfuECROnwT1v5HwcGipNhsh6YPm9lgmWGwp3QfaP3epvO944ScWKCSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RHpf0Gy6; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6b97097f7fdso19062666d6.0
+        for <linux-modules@vger.kernel.org>; Sat, 10 Aug 2024 09:09:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723306157; x=1723910957; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jJl41PUahpsS88SJFbu5iiu7Pp+n0YRGI+XVpFynndM=;
+        b=RHpf0Gy6xiTwTuQ68oATdbmDdhzi6XOkNNUfmLA8vpxLD/IezmtoJC4ltUOt3SY4dl
+         ldbpfJkyClJbZS4a56Wdtlp9kece6p0d/Tr9p4JfrerCRPZ+dkK4kyAcJD8bmS8vDohq
+         2Q7+t7ipUvLCLsqAgUW3/eN2a7ule5BiP9jxJtuYMfLDfxas07GZ44kqlcfXUyALc4gC
+         ESM60z5LLtVOopGs5b0e56RXrPNH2xDb8UctpVq/RSr3eesX/G8rFf2QqDnUMgxkDbur
+         iyhhu0Rcef7BKousGG3DH+UwVeBuLzJYF4gKKarSMIY3DVPk3I+Bift+YGbo9g0VNUYL
+         29Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723306157; x=1723910957;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jJl41PUahpsS88SJFbu5iiu7Pp+n0YRGI+XVpFynndM=;
+        b=eCkSqiLLLoXSmqlfXJl+IuGpACPYXXsgzF5XQ86IUOHzNTn2NzecrDQFc016Q8oX8E
+         HlbIZEEiY24FBD7H/3JATVzRlLdj8Q7mwX69SFNANhaOKETfSZYOKDp069HWmsRbNKbc
+         CyzxhMead059K+nPi9x7eQtLONBoUIZ83u+5g2onAKICZd8ykIH9d+mA9P55f3KwZ0W6
+         fqmRv1zmt4Org8iMvoF+mQG0QvENxGFiKlaMh+RhitP8B1MNaASff8JN1HyhF0DVBJCo
+         2xl0ATvWQwgd+yQ0YbPdkMGE4Pz6AHnRZndzehykknd/zMWaI89Jg4MZ6JcboRClbX6P
+         mNKw==
+X-Gm-Message-State: AOJu0Yx7WPI73hVTK6YKyKPVySzyCOlW6vE1ta5p0poOit0eSR3tmV5Q
+	RM9PyHCOfGdUYM2bkx360eZ66oSvqNCgDravkJQ9fUsirNyvvuvROk0oag==
+X-Google-Smtp-Source: AGHT+IEu+CL4nA5E5VYh/WIt3F/p+2+WtcPqNRlXmNEyZxz2p4eAGwqKvQTcjRyZF78q3wjWwaQb9A==
+X-Received: by 2002:a05:6214:318c:b0:6bd:69a5:4fc4 with SMTP id 6a1803df08f44-6bd78d1d481mr55944906d6.8.1723306156948;
+        Sat, 10 Aug 2024 09:09:16 -0700 (PDT)
+Received: from ldmartin-desk2.lan ([134.134.137.76])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bd82e65c15sm8091186d6.130.2024.08.10.09.09.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Aug 2024 09:09:15 -0700 (PDT)
+From: Lucas De Marchi <lucas.de.marchi@gmail.com>
+To: linux-modules@vger.kernel.org,
+	Emil Velikov <emil.l.velikov@gmail.com>
+Cc: Lucas De Marchi <lucas.de.marchi@gmail.com>
+Subject: Re: [PATCH kmod 0/2] Couple of SPDX fixes
+Date: Sat, 10 Aug 2024 11:09:07 -0500
+Message-ID: <172330613666.229774.5993123078340385331.b4-ty@gmail.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240810-b4-spdx-fixup-v1-0-b9c84d637fb3@gmail.com>
+References: <20240810-b4-spdx-fixup-v1-0-b9c84d637fb3@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -54,64 +83,29 @@ List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240810-b4-spdx-fixup-v1-2-b9c84d637fb3@gmail.com>
-References: <20240810-b4-spdx-fixup-v1-0-b9c84d637fb3@gmail.com>
-In-Reply-To: <20240810-b4-spdx-fixup-v1-0-b9c84d637fb3@gmail.com>
-To: linux-modules@vger.kernel.org
-Cc: Lucas De Marchi <lucas.de.marchi@gmail.com>, 
- Emil Velikov <emil.l.velikov@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1723292726; l=1516;
- i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=4i3lPNK55/Jj+IH1COzPpCNGv9x/md4G29+CkWIv0Os=;
- b=fGnn/BmKGEG0Ko/XAgBKGXb+V0KzcimIZdE5SzHwbL5FJWcxXjAiKzHtKr243Ryw/2dD35cx4
- Qc4uncwgtTSC55hI5nkpgBSe500XCuezBgG7kKzVCZFjZI2YOfjnFgJ
-X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
- pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
-X-Endpoint-Received: by B4 Relay for emil.l.velikov@gmail.com/20230301 with
- auth_id=35
-X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
-Reply-To: emil.l.velikov@gmail.com
+Content-Transfer-Encoding: 8bit
 
-From: Emil Velikov <emil.l.velikov@gmail.com>
 
-It is already encoded in the SPDX license identifier.
+On Sat, 10 Aug 2024 13:25:14 +0100, Emil Velikov wrote:
+> Seems like the revision of the SPDX license identifiers, that landed in
+> master, dropped the wrong hunk/paragraph.
+> 
+> Namely: a function description/summary was removed in one m4 file, while
+> the license exception in the second m4 file was intended.
+> 
+> I've left the two changes as separate patches, since I'm not 100% sure
+> if dropping the former wasn't semi-intentional.
+> 
+> [...]
 
-Cc: Lucas De Marchi <lucas.de.marchi@gmail.com>
-Fixes: b5a2cd0 ("Use SPDX header for license")
-Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
----
- m4/features.m4 | 13 -------------
- 1 file changed, 13 deletions(-)
+Applied, thanks!
 
-diff --git a/m4/features.m4 b/m4/features.m4
-index 87ed2fb..6384a05 100644
---- a/m4/features.m4
-+++ b/m4/features.m4
-@@ -1,19 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-or-later WITH Autoconf-exception-macro
- #
- #  Copyright (c) 2015 Lucas De Marchi <lucas.de.marchi@gmail.com>
--#
--#  As a special exception, the respective Autoconf Macro's copyright owner
--#  gives unlimited permission to copy, distribute and modify the configure
--#  scripts that are the output of Autoconf when processing the Macro. You
--#  need not follow the terms of the GNU General Public License when using
--#  or distributing such scripts, even though portions of the text of the
--#  Macro appear in them. The GNU General Public License (GPL) does govern
--#  all other use of the material that constitutes the Autoconf Macro.
--#
--#  This special exception to the GPL applies to versions of the Autoconf
--#  Macro released by the Autoconf Archive. When you make and distribute a
--#  modified version of the Autoconf Macro, you may extend this special
--#  exception to the GPL to apply to your modified version as well.
- 
- # CC_FEATURE_APPEND([FLAGS], [ENV-TO-CHECK], [FLAG-NAME])
- AC_DEFUN([CC_FEATURE_APPEND], [
+[1/2] m4: reinstate CC_CHECK_FLAG_APPEND summary
+      commit: 0cdd9847206b368800dac9099d5af2332340a0eb
+[2/2] m4: remove verbose license exception clause
+      commit: 5535278c8d6e05ebc9b5c413d495c155a8c09bba
 
+Best regards,
 -- 
-2.45.2
-
-
+Lucas De Marchi <lucas.de.marchi@gmail.com>
 
