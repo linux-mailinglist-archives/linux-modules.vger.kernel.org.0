@@ -1,79 +1,117 @@
-Return-Path: <linux-modules+bounces-2681-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2689-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DC539DEC50
-	for <lists+linux-modules@lfdr.de>; Fri, 29 Nov 2024 20:19:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAE919E0837
+	for <lists+linux-modules@lfdr.de>; Mon,  2 Dec 2024 17:17:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B6E3281E49
-	for <lists+linux-modules@lfdr.de>; Fri, 29 Nov 2024 19:19:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F1AC7B37C21
+	for <lists+linux-modules@lfdr.de>; Mon,  2 Dec 2024 15:17:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CEC719D891;
-	Fri, 29 Nov 2024 19:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C348020ADC6;
+	Mon,  2 Dec 2024 15:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f9OF0Rpv"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Fnbh6psY"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3199A450EE;
-	Fri, 29 Nov 2024 19:19:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C2B209F43;
+	Mon,  2 Dec 2024 15:11:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732907994; cv=none; b=duMsZyTmo7/b/Rx92dpcE6kYHTywak2cvpXyIE8pUJXd9bg4MhIO5Zu0FDrnyMHPtiSKvTMi6HEr5aZGb7Do7e8OujqD7Gga6mMP47OSMf1YF8Cs+r1K9pWbUghikP6QxGi7Qzhv8OT2OZAQP+QtWcWRQbSBN2LmMIqpmzauHT4=
+	t=1733152299; cv=none; b=JTf7B0Dh1nvReVM5id7FYTNSSrY2mdMEEEnv/GfcBKJSGIjwoosyjfD2XE/WkuphxD5qvibvIPc8P9k76MHSauTduIt8Ah2XObnj0cEPRUTegIAtYvIFxVW4wVo8wJ2bFmZGtHw3TZel6l6W2AqSsQK9hwUg2VunLR9e4Rz66E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732907994; c=relaxed/simple;
-	bh=N0R9fuHuP+Aam5eKycEo6pKAy95ex427QgL7eTS5U1c=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=pzqp57i8T+gyrbr8LXPUrsW4sD7lmGIc3fwOcgkv2pNrP4mx9XNJ8J62pPWCOELI9jRt/CZz6x+gXYWhximQujrLH9nRFiXv+1B3YCQ1FuXrsqqmeGSsf9rGFJpMT/LEzdLTGp0bkeCBkJs9bvCTSZu+xbFIdgr9tSFd4mZiKgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f9OF0Rpv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D46C4CECF;
-	Fri, 29 Nov 2024 19:19:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732907994;
-	bh=N0R9fuHuP+Aam5eKycEo6pKAy95ex427QgL7eTS5U1c=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=f9OF0Rpvs0rqL7QqjcDt0cYkXXR8qSKMbD+Vv6HwAbqP+vh6wmtP6atdiR9p/qNng
-	 XfvHNLCifKUV0fB35xnKy9HZ7Rr9Lzzj417kj/E0Y2M5W5OrrcmkkAqAfsCA6YkB6R
-	 4sFnM24kjXCZvGY3PsicmWsN7dowbDW6qH/f/UYSzBl/EBEfiJ8jPfNN5DJZzL6Mij
-	 jpsOLOeSo2FFCTD2kjS18gf13ue9i5iLW62arfw9KiZIvj+FZOtQd7Pc2wHE4wTi6S
-	 TJIOna/j5B9jP1St4/CPQw7BDNPIspVF7ATekNscEG92PczLNjcaq40yVFI4V6P1yg
-	 sKt1tuLeQMOaQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id AE2F0380A944;
-	Fri, 29 Nov 2024 19:20:08 +0000 (UTC)
-Subject: Re: [GIT PULL] Modules fixes for v6.13-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
-References: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <linux-modules.vger.kernel.org>
-X-PR-Tracked-Message-Id: <Z0jEBLLRoUKoBVPk@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/modules/linux.git/ tags/modules-6.13-rc1-v2
-X-PR-Tracked-Commit-Id: c5efad88a94613cf60fed010b96dbc3044389316
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 93e064ce854abfacdeb0ac526a13ad29d093e813
-Message-Id: <173290800727.2154162.7216402406203444354.pr-tracker-bot@kernel.org>
-Date: Fri, 29 Nov 2024 19:20:07 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, samitolvanen@google.com, petr.pavlu@suse.com, da.gomez@samsung.com, linux-modules@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, geert@linux-m68k.org, masahiroy@kernel.org, mmaurer@google.com, arnd@arndb.de, deller@gmx.de, song@kernel.org
+	s=arc-20240116; t=1733152299; c=relaxed/simple;
+	bh=jCq9Hmkd8YjDFv+26S0VAnOIYjbcyTSuRXRHXq6WfdA=;
+	h=Message-ID:Date:From:To:Cc:Subject; b=D/Q5BWrp20KH5ixhTS5/cKtMBQACn0z+/5I15hgX4HWtZwT2jVaiKiAiBpQ2SzuvQeXs2bYIBiLIlVn3c8ob8C0Y/iuuPhWNimjwY+ao6uHmAnPJn+FEk6w6plCR7+KIMkkpSzNdRvVNFDWQELAdJZrw72n+wissD3TPIPMqbj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Fnbh6psY; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=Subject:Cc:To:From:Date:Message-ID:
+	Sender:Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=mIDblaCJImqyIwpr1OpwkjMm/2RN8PKElVUd1eIcx3I=; b=Fnbh6psYu7vE2KG80F+3Jc2ImK
+	1tKsV+L+8Zq4hkp0xEqeO1zJz3rGE34r4lvhDeV7pPYxTuOfjMoyZjiAQtBMXDDJiGscnZb4Xydd3
+	GmnUTH5pJg9Dl9q7tbpv10E56p2DlM4bG7iKmR2ymEvVRhUd1P+/AsAh9h4osXQ/1UzcYbldxIghb
+	ENlWSQiZoIWnpN42MFQb29zp8hTIawa6sJwTMMGq3ga/wZrq+zsl3AOS05OAgu3NjSsE5/6l2HVbG
+	OD6fKww16lQDR0IJgU4/rUTFeUL276xFuGakZr/C1BdUG5OVKkHEgUJfwM4XJSFSK3/pqXrTG3QuP
+	L4JxLFKQ==;
+Received: from 77-249-17-89.cable.dynamic.v4.ziggo.nl ([77.249.17.89] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+	id 1tI859-00000008CPo-18Xv;
+	Mon, 02 Dec 2024 15:11:28 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 0)
+	id BA446300402; Mon,  2 Dec 2024 16:11:27 +0100 (CET)
+Message-ID: <20241202145946.108093528@infradead.org>
+User-Agent: quilt/0.66
+Date: Mon, 02 Dec 2024 15:59:46 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: mcgrof@kernel.org
+Cc: x86@kernel.org,
+ hpa@zytor.com,
+ petr.pavlu@suse.com,
+ samitolvanen@google.com,
+ da.gomez@samsung.com,
+ masahiroy@kernel.org,
+ nathan@kernel.org,
+ nicolas@fjasle.eu,
+ linux-kernel@vger.kernel.org,
+ linux-modules@vger.kernel.org,
+ linux-kbuild@vger.kernel.org,
+ hch@infradead.org,
+ gregkh@linuxfoundation.org
+Subject: [PATCH -v2 0/7] module: Strict per-modname namespaces
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 
-The pull request you sent on Thu, 28 Nov 2024 11:27:00 -0800:
+Hi!
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/modules/linux.git/ tags/modules-6.13-rc1-v2
+Implement a means for exports to be available only to an explicit list of named
+modules. By explicitly limiting the usage of certain exports, the abuse
+potential/risk is greatly reduced.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/93e064ce854abfacdeb0ac526a13ad29d093e813
+The first 'patch' is an awk scripts that cleans up the existing module
+namespace code along the same lines of commit 33def8498fdd ("treewide: Convert
+macro and uses of __section(foo) to __section("foo")") and for the same reason,
+it is not desired for the namespace argument to be a macro expansion itself.
 
-Thank you!
+The remainder of the patches introduce the special "MODULE_<modname-list>"
+namespace, which shall be forbidden from being explicitly imported. A module
+that matches the simple modname-list will get an implicit import.
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Lightly tested with something like:
+
+  git grep -l EXPORT_SYMBOL arch/x86/kvm/ | while read file;
+  do
+    sed -i -e 's/EXPORT_SYMBOL_GPL(\(.[^)]*\))/EXPORT_SYMBOL_GPL_FOR(\1, "kvm,kvm-intel,kvm-amd")/g' $file;
+  done
+
+With that, some configs generate:
+
+  ERROR: modpost: module kvmgt uses symbol kvm_write_track_add_gfn from namespace MODULE_kvm,kvm-intel,kvm-amd, but does not import it.
+  ERROR: modpost: module kvmgt uses symbol kvm_write_track_remove_gfn from namespace MODULE_kvm,kvm-intel,kvm-amd, but does not import it.
+  ERROR: modpost: module kvmgt uses symbol kvm_page_track_register_notifier from namespace MODULE_kvm,kvm-intel,kvm-amd, but does not import it.
+  ERROR: modpost: module kvmgt uses symbol kvm_page_track_unregister_notifier from namespace MODULE_kvm,kvm-intel,kvm-amd, but does not import it.
+
+Showing it works :-). Also verified that once booted, the module kvm_intel does
+actually load.
+
+
+Also available at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git module/namespace
+
+Changes since RFC/v1:
+
+ - use awk instead of sed so all changes are a single script (hch)
+ - deal with kbuild mangling the module names like s/-/_/g (sean)
+ - fixup clang-ias 'funnies'
+
 
