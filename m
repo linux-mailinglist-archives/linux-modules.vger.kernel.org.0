@@ -1,149 +1,99 @@
-Return-Path: <linux-modules+bounces-2684-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2694-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0E1C9E0AEA
-	for <lists+linux-modules@lfdr.de>; Mon,  2 Dec 2024 19:24:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B44539E0B98
+	for <lists+linux-modules@lfdr.de>; Mon,  2 Dec 2024 20:05:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 514ECBA70F2
-	for <lists+linux-modules@lfdr.de>; Mon,  2 Dec 2024 15:16:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 24BE7B25CEF
+	for <lists+linux-modules@lfdr.de>; Mon,  2 Dec 2024 17:37:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0150209F33;
-	Mon,  2 Dec 2024 15:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E841F1DDC26;
+	Mon,  2 Dec 2024 17:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="sJnm9gen"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A6AAG4GU"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414F52040A7;
-	Mon,  2 Dec 2024 15:11:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F091DDC25;
+	Mon,  2 Dec 2024 17:36:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733152297; cv=none; b=lVVTWCVrsihHo1VP3X4L0TLRK0izVbN3V0UL8UkZfDUX8Jhr8CwNlRclm8ifh2j3k97Ad7P2VHT4z46645WaQMiK7rpDQcYPjsU8RSlMbRC/LAS/OzoQJpne3RXtgph7IX6fVm5Fc/O5o99ssW76iH3+zmiLOEQOHmviH62N0pw=
+	t=1733160997; cv=none; b=RO/RDXl3N/I4QKfkzXOiajYWyoOevzaQxNA8inAQBMImqKiU9tM1l8OsW8iYowgRiklCgkdC3fqUk/iiczo4g/NRhtRxAwps236H0MnNrFDpioItRoO/MYr/1zkHaFBhk5rxrokLLKMtRKR0NDg2bdRvDLsXZPPjUr5DzCW9Y8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733152297; c=relaxed/simple;
-	bh=XhHU543T1F3w14Rm03rZzs+C84JVQ8YZfAkynEfLBx8=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type; b=Fum0A0ujlSPMDS0ve6ocgVZAgayFuKpizowsl93750mY1pYcAx942OA7WoF4pjq8wTNoCQGdR6Vamncz+vSjDo+1Ych5syKS961DUNBkJFrrGeevBz5FhsoshLgdqlSb59lwGFAmile1Pb1K0pmQudC22hxJRK8y4sygF1qcS3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=sJnm9gen; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Type:MIME-Version:References:
-	Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To;
-	bh=6N0qDSelpM+yvXc7hsTj7XyqDv+BJKuq3m0opDDR0WI=; b=sJnm9genTuMS+qdJXmTcHhqpMk
-	0QCvDJz71FSGYaavs78RRfugwdz/0jzKFEY7oHfIDpjOAmnyeRZIXOERbNlAD5hj/Wc1a3OzZq8fH
-	vkFh8KpePxNfFP18TsMJm7KOj7MJ5g6u3LcGiZ2S8ftGl6tKNXki5jl6zE6Oaqh959E26K/frjOeN
-	idRCOoiJvi/Y7cKLh/0Xu9VlCoFLkPZmHu8ImOrU/q/vLZO1EztapC4RMpyVrmWILtkvfQK6ZKp5L
-	A59hr6aM07FaCMVpHG2CU1G0RodyIo2JKhD78kEKeJ4id9fENm4+4w4X66Sie7IliSE/VXCSTNMAa
-	7GkwlEUA==;
-Received: from 77-249-17-89.cable.dynamic.v4.ziggo.nl ([77.249.17.89] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
-	id 1tI859-00000008CQ5-3q67;
-	Mon, 02 Dec 2024 15:11:29 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 0)
-	id D4AFF300ABE; Mon,  2 Dec 2024 16:11:27 +0100 (CET)
-Message-ID: <20241202150810.713959190@infradead.org>
-User-Agent: quilt/0.66
-Date: Mon, 02 Dec 2024 15:59:53 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: mcgrof@kernel.org
-Cc: x86@kernel.org,
- hpa@zytor.com,
- petr.pavlu@suse.com,
- samitolvanen@google.com,
- da.gomez@samsung.com,
- masahiroy@kernel.org,
- nathan@kernel.org,
- nicolas@fjasle.eu,
- linux-kernel@vger.kernel.org,
- linux-modules@vger.kernel.org,
- linux-kbuild@vger.kernel.org,
- hch@infradead.org,
- gregkh@linuxfoundation.org,
- "Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH -v2 7/7] module: Provide EXPORT_SYMBOL_GPL_FOR() helper
+	s=arc-20240116; t=1733160997; c=relaxed/simple;
+	bh=zHI4obpWdbu09MOJBanUKMpjJiwHqJ8gWb3psfdQkCE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V0i5M0mQBYWUCb6F5LJj/ilA9l1l9kD5vnhxJ9FiVM+2jjYP0vwwZ3BQytZg+QNIvbtx+/Mc/VadPqer2exjdSgUay8kgWOFmeumkerQ9pPqw+YnVX+Bl59XQIyAB+nKff/HsdJN/PTfSDUKbergdF52PkqwUbG+4FKC7YE4zVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=A6AAG4GU; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1733160996; x=1764696996;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=zHI4obpWdbu09MOJBanUKMpjJiwHqJ8gWb3psfdQkCE=;
+  b=A6AAG4GUoW1huZywYaC0seJtpkW0pI9TWP7BQdBQibZiB9m+Qh68Vws1
+   o3KosR6O8PGMiTFsjGv4ZaKZtR4QO1R1NBHYaGYS53KQLoH7tjQYQXkNJ
+   DHO9sKHDCIAM3CBx/+u+3TdN5KyWvhRnJFMIJcN4zzjtkLIVN8FQ/8RHN
+   y6/GfUQ0dYh+t0SBLZorF6Y6dgQ8E1oNTOel6xJ2US3kFQToalEuLKzS+
+   F1rEkTrQVFSgMAw6jq1i+OlO+PklG6NVFsfmOWYp3RqXFDR0b/OOitm73
+   YRPAKx4G3Ddmsr11rd/02FbKaziKl/xtO1BiwHj52pQMVw9RZtqUBnpQV
+   A==;
+X-CSE-ConnectionGUID: wMWf0tplSSiwp2KmZ3+9ng==
+X-CSE-MsgGUID: h5DlZ5JPShKZZ5pLV3GGrA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11274"; a="58746407"
+X-IronPort-AV: E=Sophos;i="6.12,203,1728975600"; 
+   d="scan'208";a="58746407"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2024 09:36:35 -0800
+X-CSE-ConnectionGUID: xyK3a6dhRcasZFQgn3I+lw==
+X-CSE-MsgGUID: Rdwxi7MMRJuME0JfD1ktRA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,203,1728975600"; 
+   d="scan'208";a="116439327"
+Received: from tassilo.jf.intel.com (HELO tassilo.localdomain) ([10.54.38.190])
+  by fmviesa002.fm.intel.com with ESMTP; 02 Dec 2024 09:36:35 -0800
+Received: by tassilo.localdomain (Postfix, from userid 1000)
+	id 18D17301AA5; Mon, 02 Dec 2024 09:36:35 -0800 (PST)
+From: Andi Kleen <ak@linux.intel.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: mcgrof@kernel.org,  x86@kernel.org,  hpa@zytor.com,
+  petr.pavlu@suse.com,  samitolvanen@google.com,  da.gomez@samsung.com,
+  masahiroy@kernel.org,  nathan@kernel.org,  nicolas@fjasle.eu,
+  linux-kernel@vger.kernel.org,  linux-modules@vger.kernel.org,
+  linux-kbuild@vger.kernel.org,  hch@infradead.org,
+  gregkh@linuxfoundation.org
+Subject: Re: [PATCH -v2 0/7] module: Strict per-modname namespaces
+In-Reply-To: <20241202145946.108093528@infradead.org> (Peter Zijlstra's
+	message of "Mon, 02 Dec 2024 15:59:46 +0100")
 References: <20241202145946.108093528@infradead.org>
+Date: Mon, 02 Dec 2024 09:36:35 -0800
+Message-ID: <878qsy7zrw.fsf@linux.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 
+Peter Zijlstra <peterz@infradead.org> writes:
 
-Requested-by: Masahiro Yamada <masahiroy@kernel.org>
-Requested-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
----
- include/linux/export.h |   26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+> Hi!
+>
+> Implement a means for exports to be available only to an explicit list of named
+> modules. By explicitly limiting the usage of certain exports, the abuse
+> potential/risk is greatly reduced.
 
---- a/include/linux/export.h
-+++ b/include/linux/export.h
-@@ -24,11 +24,23 @@
- 	.long sym
- #endif
- 
--#define ___EXPORT_SYMBOL(sym, license, ns)		\
-+/*
-+ * LLVM intregrated assembler refuses to merge adjacent string literals (like
-+ * C and GNU-as) and chokes on:
-+ *
-+ *   .asciz "MODULE_" "kvm" ;
-+ *
-+ * As would be generated when using EXPORT_SYMBOL_GPL_FOR(foo, "kvm"), use
-+ * varargs to assemble it like so:
-+ *
-+ *   .ascii "MODULE_", "kvm", "\0" ;
-+ *
-+ */
-+#define ___EXPORT_SYMBOL(sym, license, ns...)		\
- 	.section ".export_symbol","a"		ASM_NL	\
- 	__export_symbol_##sym:			ASM_NL	\
- 		.asciz license			ASM_NL	\
--		.asciz ns			ASM_NL	\
-+		.ascii ns, "\0"			ASM_NL	\
- 		__EXPORT_SYMBOL_REF(sym)	ASM_NL	\
- 	.previous
- 
-@@ -39,20 +51,20 @@
-  * be reused in other execution contexts such as the UEFI stub or the
-  * decompressor.
-  */
--#define __EXPORT_SYMBOL(sym, license, ns)
-+#define __EXPORT_SYMBOL(sym, license, ns...)
- 
- #elif defined(__GENKSYMS__)
- 
--#define __EXPORT_SYMBOL(sym, license, ns)	__GENKSYMS_EXPORT_SYMBOL(sym)
-+#define __EXPORT_SYMBOL(sym, license, ns...)	__GENKSYMS_EXPORT_SYMBOL(sym)
- 
- #elif defined(__ASSEMBLY__)
- 
--#define __EXPORT_SYMBOL(sym, license, ns) \
-+#define __EXPORT_SYMBOL(sym, license, ns...) \
- 	___EXPORT_SYMBOL(sym, license, ns)
- 
- #else
- 
--#define __EXPORT_SYMBOL(sym, license, ns)			\
-+#define __EXPORT_SYMBOL(sym, license, ns...)			\
- 	extern typeof(sym) sym;					\
- 	__ADDRESSABLE(sym)					\
- 	asm(__stringify(___EXPORT_SYMBOL(sym, license, ns)))
-@@ -70,4 +82,6 @@
- #define EXPORT_SYMBOL_NS(sym, ns)	__EXPORT_SYMBOL(sym, "", ns)
- #define EXPORT_SYMBOL_NS_GPL(sym, ns)	__EXPORT_SYMBOL(sym, "GPL", ns)
- 
-+#define EXPORT_SYMBOL_GPL_FOR(sym, mods) __EXPORT_SYMBOL(sym, "GPL", "MODULE_", mods)
-+
- #endif /* _LINUX_EXPORT_H */
+Blast from the past: https://lists.linuxcoding.com/kernel/2007-q4/msg19926.html
 
+Yes it makes sense.
 
+-Andi
 
