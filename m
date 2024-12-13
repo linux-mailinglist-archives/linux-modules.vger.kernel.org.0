@@ -1,132 +1,167 @@
-Return-Path: <linux-modules+bounces-2745-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2747-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E99259F05A4
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Dec 2024 08:43:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1B129F0C38
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Dec 2024 13:28:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10AE9169ED1
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Dec 2024 07:43:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5CB721887C1F
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Dec 2024 12:28:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69BC91993BA;
-	Fri, 13 Dec 2024 07:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B6B41DF746;
+	Fri, 13 Dec 2024 12:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="ohI0IvaJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RvfWGXCQ"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F097196D8F;
-	Fri, 13 Dec 2024 07:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290A8364D6;
+	Fri, 13 Dec 2024 12:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734075834; cv=none; b=Wj+hz//hnQcJwJEzWS6wHNaXlMwBZ2ijxtqOdO3U2UXCjSI/I9iq2buSrhnZTDFwPFeKMI9DcsQkZqAow3nOioMabRJCNR6k4Wz/t/GakAcuWARqWVy6rbIQGxyZPGRG0zXGfWh9iyeoyReotOTQ8dKoo9toz2gf0aryuDLBcmw=
+	t=1734092920; cv=none; b=Br5jifFSJkrioJySAIgdm/JRYcELsJn9HFsaTI9oXct5pbtnK4rXBkwCWOGkbRhD2RMgzi8lE0q8szONBSSplvVhcE328waBNUq0YsNb42au6XynrmtRt6si/UzalknE2EIz4wrCRN9ACnO9NsmyJHZ+nNzyvaxphFifdZCf+js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734075834; c=relaxed/simple;
-	bh=lHwtD1iPNGzdJwYjIGoo8w0zLrhQgGX7/hX9tiBWhM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MN1T8uBOT+bxrs/M5qQOuRarwyp34nn+hObMu9afr5LhmvxdVHSVk4MtcFgoSE6yT/avli5HnQdRyOtIpTjMWkt15ntnc1HuhyLBsa3c1qf0oCYvOe8yxAxkHeGIHiASZMKj3QI3wLoJOSsR0qrxMDgH+WkCoG3fl0C8uLQbEUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=ohI0IvaJ; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1734075826;
-	bh=lHwtD1iPNGzdJwYjIGoo8w0zLrhQgGX7/hX9tiBWhM4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ohI0IvaJ5l9TNKXFl3u2YGdIyF/Va5/dQjCulUrI7V490GJY9EOjo9j7wMsjITTC7
-	 pc3iTWYawwbQ9UmwE2rFrXjOFGwmG6JEWGIGIV+E172fpwZa2XnJ2KxDF3NkpU/50o
-	 uOeiloPI/w2dHQjKKp4tLqJokisytzKAKFS6T77w=
-Date: Fri, 13 Dec 2024 08:43:46 +0100
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-To: Armin Wolf <W_Armin@gmx.de>
-Cc: Michael Ellerman <mpe@ellerman.id.au>, 
-	Nicholas Piggin <npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, 
-	Naveen N Rao <naveen@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
-	Sami Tolvanen <samitolvanen@google.com>, Daniel Gomez <da.gomez@samsung.com>, 
-	Hans de Goede <hdegoede@redhat.com>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
-	Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <martin.lau@linux.dev>, 
-	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, 
-	Yonghong Song <yonghong.song@linux.dev>, John Fastabend <john.fastabend@gmail.com>, 
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>, 
-	Hao Luo <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>, linuxppc-dev@lists.ozlabs.org, 
-	linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH 2/4] platform/x86: wmi-bmof: Switch to
- sysfs_bin_attr_simple_read()
-Message-ID: <d1580513-6297-46b5-b4e0-c2063496b2ed@t-8ch.de>
-References: <20241205-sysfs-const-bin_attr-simple-v1-0-4a4e4ced71e3@weissschuh.net>
- <20241205-sysfs-const-bin_attr-simple-v1-2-4a4e4ced71e3@weissschuh.net>
- <2fbf5d9d-8cfe-4ce4-a268-ec84c261d1bd@gmx.de>
+	s=arc-20240116; t=1734092920; c=relaxed/simple;
+	bh=L+eBbx2GkNIdEiNf+4ZQbQzQvej80TZ2xwSaVBQq8Uw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oH7cyJntmtlFomFYuEoBi9Tqi/SYhFgj1O+5lJ8wyxbq27aKy8Srvp0HVUlWgrLVlE3LzYlTufyJFUc8mbrtcBIclmheyzT4nbfdomOtggONc21mwXg1Zpv/wljmj8YOXV7uSXaT06GfiXN4pqxGb3r/Fxg3y3tpeKeEf6THi78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RvfWGXCQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C481C4CED7;
+	Fri, 13 Dec 2024 12:28:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734092919;
+	bh=L+eBbx2GkNIdEiNf+4ZQbQzQvej80TZ2xwSaVBQq8Uw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=RvfWGXCQ4fe/yqpH+kHkNrVpRKHl4CDZu638YQnZdA3Dsydg1LVW2XD+2hzzkT20u
+	 /jRE6vVY+kTsd/dZSRrdMSbVRWXQc9o70e2cjtlO5iF6TmeaHW1WbKD27QIR1secd4
+	 oEn0B8wPHsQ0Md19ykhu6k+9PTcglVlotC1i3gjvI5+ruCt4rItdfYX7+wA5exngDL
+	 OPpW6LGEu048kyg+jmhIQWwP9MJ9IVaf6AtMBJFOQ+oYCEpmgNlIx3KJEKJUpmhMvq
+	 aL5xpF7vLqN3wGhaA9YeH7cDEOnea3fJivjACUDGNpmlLlzD/gEuMuwdxCPWRaHxEu
+	 PdK9hPzvxBKfA==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>,
+    Petr Pavlu <petr.pavlu@suse.com>,
+    Sami Tolvanen <samitolvanen@google.com>,
+    Daniel Gomez <da.gomez@samsung.com>
+Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>,  "Boqun Feng" <boqun.feng@gmail.com>,  "Gary Guo"
+ <gary@garyguo.net>,  =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
+ <bjorn3_gh@protonmail.com>,  "Benno
+ Lossin" <benno.lossin@proton.me>,  "Alice Ryhl" <aliceryhl@google.com>,
+  "Masahiro Yamada" <masahiroy@kernel.org>,  "Nathan Chancellor"
+ <nathan@kernel.org>,  "Nicolas Schier" <nicolas@fjasle.eu>,  "Trevor
+ Gross" <tmgross@umich.edu>,  "Adam Bratschi-Kaye" <ark.email@gmail.com>,
+  <rust-for-linux@vger.kernel.org>,  <linux-kernel@vger.kernel.org>,
+  <linux-kbuild@vger.kernel.org>, linux-modules@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] rust: extend `module!` macro with integer
+ parameter support
+In-Reply-To: <20241213-module-params-v3-v3-0-485a015ac2cf@kernel.org> (Andreas
+	Hindborg's message of "Fri, 13 Dec 2024 12:30:45 +0100")
+References: <xK59-BGgPeRPn4PEeT498C5hexwXQ1H5sDle5WuMs3OtTzS0cA4NTRiBh1zLr_4p6o64eXKYOlEka_xzUHG5jA==@protonmail.internalid>
+	<20241213-module-params-v3-v3-0-485a015ac2cf@kernel.org>
+Date: Fri, 13 Dec 2024 13:28:27 +0100
+Message-ID: <87bjxfephw.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2fbf5d9d-8cfe-4ce4-a268-ec84c261d1bd@gmx.de>
+Content-Type: text/plain
 
-Hi Armin,
 
-On 2024-12-13 01:21:37+0100, Armin Wolf wrote:
-> Am 05.12.24 um 18:35 schrieb Thomas Weißschuh:
-> 
-> > The generic function from the sysfs core can replace the custom one.
-> 
-> Sorry for taking quite a bit to respond, i totally overlooked this patch.
-> 
-> This patch is superseded by a patch of mine: https://lore.kernel.org/platform-driver-x86/20241206215650.2977-1-W_Armin@gmx.de/
-> 
-> This reworks the binary attribute handling inside the driver to use the new .bin_size() callback. This allows the
-> driver to have a static binary attribute which does not need a memory allocation.
-> 
-> Because i think we cannot use sysfs_bin_attr_simple_read() anymore. So maybe you can just drop this patch?
+Hi Luis, Petr, Sami, Dani,
 
-Works for me, thanks!
+I just noticed that I failed in email and forgot to add you to the
+recipient list of this series. Do you want a resend, or is this
+sufficient?
 
-Thomas
+Best regards,
+Andreas Hindborg
 
-> > Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-> > ---
-> >   drivers/platform/x86/wmi-bmof.c | 12 ++----------
-> >   1 file changed, 2 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/drivers/platform/x86/wmi-bmof.c b/drivers/platform/x86/wmi-bmof.c
-> > index df6f0ae6e6c7904f97c125297a21166f56d0b1f0..e6c217d70086a2896dc70cf8ac1c27dafb501a95 100644
-> > --- a/drivers/platform/x86/wmi-bmof.c
-> > +++ b/drivers/platform/x86/wmi-bmof.c
-> > @@ -25,15 +25,6 @@ struct bmof_priv {
-> >   	struct bin_attribute bmof_bin_attr;
-> >   };
-> > 
-> > -static ssize_t read_bmof(struct file *filp, struct kobject *kobj, struct bin_attribute *attr,
-> > -			 char *buf, loff_t off, size_t count)
-> > -{
-> > -	struct bmof_priv *priv = container_of(attr, struct bmof_priv, bmof_bin_attr);
-> > -
-> > -	return memory_read_from_buffer(buf, count, &off, priv->bmofdata->buffer.pointer,
-> > -				       priv->bmofdata->buffer.length);
-> > -}
-> > -
-> >   static int wmi_bmof_probe(struct wmi_device *wdev, const void *context)
-> >   {
-> >   	struct bmof_priv *priv;
-> > @@ -60,7 +51,8 @@ static int wmi_bmof_probe(struct wmi_device *wdev, const void *context)
-> >   	sysfs_bin_attr_init(&priv->bmof_bin_attr);
-> >   	priv->bmof_bin_attr.attr.name = "bmof";
-> >   	priv->bmof_bin_attr.attr.mode = 0400;
-> > -	priv->bmof_bin_attr.read = read_bmof;
-> > +	priv->bmof_bin_attr.read_new = sysfs_bin_attr_simple_read;
-> > +	priv->bmof_bin_attr.private = priv->bmofdata->buffer.pointer;
-> >   	priv->bmof_bin_attr.size = priv->bmofdata->buffer.length;
-> > 
-> >   	ret = device_create_bin_file(&wdev->dev, &priv->bmof_bin_attr);
-> > 
+
+"Andreas Hindborg" <a.hindborg@kernel.org> writes:
+
+> This series extends the `module!` macro with support module parameters. It
+> also adds some string to integer parsing functions and updates `BStr` with
+> a method to strip a string prefix.
+>
+> This series stated out as code by Adam Bratschi-Kaye lifted from the original
+> `rust` branch [1].
+>
+> Link: https://github.com/Rust-for-Linux/linux/tree/bc22545f38d74473cfef3e9fd65432733435b79f [1]
+> Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+> ---
+> Changes since v2 [1]:
+> - use `SyncUnsafeCell` rather than `static mut` and simplify parameter access
+> - remove `Display` bound from `ModuleParam`
+> - automatically generate documentation for `PARAM_OPS_.*`
+> - remove `as *const _ as *mut_` phrasing
+> - inline parameter name in struct instantiation in  `emit_params`
+> - move `RacyKernelParam` out of macro template
+> - use C string literals rather than byte string literals with explicit null
+> - template out `__{name}_{param_name}` in `emit_param`
+> - indent template in `emit_params`
+> - use let-else expression in `emit_params` to get rid of an indentation level
+> - document `expect_string_field`
+> - move invication of `impl_int_module_param` to be closer to macro def
+> - move attributes after docs in `make_param_ops`
+> - rename `impl_module_param` to impl_int_module_param`
+> - use `ty` instead of `ident` in `impl_parse_int`
+> - use `BStr` instead of `&str` for string manipulation
+> - move string parsing functions to seperate patch and add examples, fix bugs
+> - degrade comment about future support from doc comment to regular comment
+> - remove std lib path from `Sized` marker
+> - update documentation for `trait ModuleParam`
+>
+> Changes since v1 [2]:
+> - Remove support for params without values (`NOARG_ALLOWED`).
+> - Improve documentation for `try_from_param_arg`.
+> - Use prelude import.
+> - Refactor `try_from_param_arg` to return `Result`.
+> - Refactor `ParseInt::from_str` to return `Result`.
+> - Move C callable functions out of `ModuleParam` trait.
+> - Rename literal string field parser to `expect_string_field`.
+> - Move parameter parsing from generation to parsing stage.
+> - Use absolute type paths in macro code.
+> - Inline `kparam`and `read_func` values.
+> - Resolve TODO regarding alignment attributes.
+> - Remove unnecessary unsafe blocks in macro code.
+> - Improve error message for unrecognized parameter types.
+> - Do not use `self` receiver when reading parameter value.
+> - Add parameter documentation to `module!` macro.
+> - Use empty `enum` for parameter type.
+> - Use `addr_of_mut` to get address of parameter value variable.
+> - Enabled building of docs for for `module_param` module.
+>
+> Link: https://lore.kernel.org/rust-for-linux/20240705111455.142790-1-nmi@metaspace.dk/ [2]
+> Link: https://lore.kernel.org/all/20240819133345.3438739-1-nmi@metaspace.dk/ [1]
+>
+> ---
+>
+> ---
+> Andreas Hindborg (4):
+>       rust: str: implement `PartialEq` for `BStr`
+>       rust: str: implement `strip_prefix` for `BStr`
+>       rust: str: add radix prefixed integer parsing functions
+>       rust: add parameter support to the `module!` macro
+>
+>  rust/kernel/lib.rs           |   2 +
+>  rust/kernel/module_param.rs  | 238 +++++++++++++++++++++++++++++++++++++++++++
+>  rust/kernel/str.rs           | 138 +++++++++++++++++++++++++
+>  rust/macros/helpers.rs       |  10 ++
+>  rust/macros/lib.rs           |  31 ++++++
+>  rust/macros/module.rs        | 188 ++++++++++++++++++++++++++++++----
+>  samples/rust/rust_minimal.rs |  10 ++
+>  scripts/Makefile.build       |   2 +-
+>  8 files changed, 600 insertions(+), 19 deletions(-)
+> ---
+> base-commit: fac04efc5c793dccbd07e2d59af9f90b7fc0dca4
+> change-id: 20241211-module-params-v3-ae7e5c8d8b5a
+>
+> Best regards,
+
 
