@@ -1,177 +1,138 @@
-Return-Path: <linux-modules+bounces-2763-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2767-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FFF79F398D
-	for <lists+linux-modules@lfdr.de>; Mon, 16 Dec 2024 20:17:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 532FB9F3EC9
+	for <lists+linux-modules@lfdr.de>; Tue, 17 Dec 2024 01:29:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 045C0188ED1E
-	for <lists+linux-modules@lfdr.de>; Mon, 16 Dec 2024 19:17:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0B2E418865F7
+	for <lists+linux-modules@lfdr.de>; Tue, 17 Dec 2024 00:29:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E38D2080C1;
-	Mon, 16 Dec 2024 19:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8861E545;
+	Tue, 17 Dec 2024 00:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="Vu2BaTSd"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mN5EcNW9"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC381E87B;
-	Mon, 16 Dec 2024 19:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00709A933
+	for <linux-modules@vger.kernel.org>; Tue, 17 Dec 2024 00:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734376625; cv=none; b=OB//4Boa7omaS63vZ7GW1N4T9Xn5oC1BmkagiVRaoprvxxuGLae6BT+eqF2jDwHp93B3L2CK1KWKmwWTlrOFpUPFKPtCJDxXGqIp53usaPWamgtecv/lLeQXwwtBMQnT+sf72urDy4i7DOBrmklxUIiMoNicRLvDD1+YVOUL0oU=
+	t=1734395373; cv=none; b=SnusSzxY0XVhjI5ZOsbiUz/VRvl7oFFcJldceKo59xg/n0GubfwxyPHdPaKb1ISk4XYWLZO/p7+27O/1Nzg7O3547lKL8AEp6XWOZgSzgQfWIkZw3tq1qGB+QapiW0Oxxu9OuzMonVQ6zYVN7qdGtHzDun1sA0qLre1oIYKFMWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734376625; c=relaxed/simple;
-	bh=V7KbNN5UX1x8tPH3JWy/OtA6LHRL65sZkslzVlB6VgA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VUQ5TvZExebHjUsng081nVke4O4MnUfrdz5bWAcohvMKIwKO+gfZ04ixpKwZKR4/HMurT/mOXog/hsFIFyvwD6BVyPdYcKstZfbIQ72qc4HJ1QO4rRu0kT/TnfTaRRNo5mT1wZrUNd5mRL6jzUbplfqs/heVhasJHIL1y0NjwR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=Vu2BaTSd; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1734376618;
-	bh=V7KbNN5UX1x8tPH3JWy/OtA6LHRL65sZkslzVlB6VgA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Vu2BaTSdejNlyctdYqRrzqZkUN+MuNVcmtXtdDqbEcH2v2M13ZOiQG7aoMlglarpq
-	 mvU8oaCpe6E7I3N6L5c2jGPWGIeNo4CqJy5yRar0CPGZfxD5KjOuMsmvtQEZNzmrvC
-	 ODmyjnDal6hMvLGYmP89xx6hvvjdHMrDHoDVJK+E=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Mon, 16 Dec 2024 20:16:44 +0100
-Subject: [PATCH 4/4] module: sysfs: Use const 'struct bin_attribute'
+	s=arc-20240116; t=1734395373; c=relaxed/simple;
+	bh=EcMHthg8w1+nS6G5Zs4+7mc0M0kkZqrbK9TwcDBa+AQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cLt5C1FfBgYtlSbD9Uq7Ru5wIJgwXX7YNtRsOXs827GJmp7iZ4EMezBHMnfRMkk2WKV4XE4jlGqjqMeF1VSgYnt9jo2hricHrFPS4zY7HWCHoMpQzNvMfR5ghIRCHDRC5XiYBA4kWyCu4RWncjEZP5SUuQiEXf+4CUxhTBmIwM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mN5EcNW9; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5d3cfdc7e4fso4339a12.0
+        for <linux-modules@vger.kernel.org>; Mon, 16 Dec 2024 16:29:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1734395370; x=1735000170; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EcMHthg8w1+nS6G5Zs4+7mc0M0kkZqrbK9TwcDBa+AQ=;
+        b=mN5EcNW99p0a/m15MLCy5FgbzR73l83cvVDY3nylpKt0BVLymchG1XSdFYwt9t1Vve
+         THoJ9JjfazCJdHEAe0vcXCvOcRzdBy++hcTPwL7b3v5DA/phnxi3+4Pb4AmpywvjofCn
+         NfiL4PXGfESvLpCcyGnc20f4G81c7bfM3KfHdlokpu/HMSRQkn3dYQR/Af/saEvHu4lh
+         FaoWYpc+/fnqYZ7Icu1Nm4eMl6NWE8Z/SpvWEwhloiBlDDbgeg2AiHqQZzmLQX9lTSXj
+         3uDA5k5HA9ab0HlTbNbSCPDdt5x7VoncrmaS3+3OvwhiyIxxbRmCrBMzA/hppgw20lmk
+         7uPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734395370; x=1735000170;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EcMHthg8w1+nS6G5Zs4+7mc0M0kkZqrbK9TwcDBa+AQ=;
+        b=nMhk2cj/U6mnfvWgYT0OzI2HgcaezhddcMwi3cqa5qFcl2NHFbMt4ErOSVXVBnEoTg
+         qbK836g3bbNarbt18vbcHEzMfZ2+VFXLmhwS4nT2bEZfTuk9+mhyT9S6EArOi8lZLJmm
+         LHi9CYzGo+HIAcv06fATNX6Bgf8CwQCOjibLee6jcdrctaaENavKJVyKsedmajl6+kcM
+         y8tOr4jpsZ1UuI07xTlIZAvyxX5A0JOyE+3aYUX7fKodgZAIYvwT+GjXB8f05Dpaloc5
+         xM3Y6WvZOlY3nKB63iAdjNKHokURtCB1+FCihD/V6de39gS1XFtfbSLtP/t5ffFqdFKN
+         flXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWU+vhGNhh+4ZaSGV1khtghV5Jn/MZlQHdF1nj/YgJ+vGO98wMz9Di7n+eiENSa2LdqGasPwyMIxiwg+vtG@vger.kernel.org
+X-Gm-Message-State: AOJu0YzH09vJthLOUV5dyrxqLFcG29uWs6wFuB992r9FtnkOIC+7vJKm
+	F2WUwVJY7VvOwO9NF1GpbJVKFBAVcum0HISED8NLxS3rbnmXmbz0QbsUzB4yrazKvVeh+wn3H7N
+	CyGPZe4qqHCBbC3UIVz3MX7EOzpKAhCMDIJH8
+X-Gm-Gg: ASbGncuT7iv9a87Jey4QiSElwSqKAHU8Xep+KVLe7+M4T/2HTu/CpdHzJFHTOhEhLSq
+	kQloW31g9UpEPcb4WWlGLJNwFLhz85ORtbmU=
+X-Google-Smtp-Source: AGHT+IGJ2vMJeNxhiowuw33Qt/H3cjobYWBekImH6tWUBKuxTu+odWdOFkVa8jp2BkFSKsaw+CS/TQ1/n07AUP5JKDM=
+X-Received: by 2002:aa7:d3d2:0:b0:5d0:d7ca:7bf4 with SMTP id
+ 4fb4d7f45d1cf-5d7d638f84dmr41885a12.0.1734395370189; Mon, 16 Dec 2024
+ 16:29:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241216-sysfs-const-bin_attr-module-v1-4-f81e49e54ce4@weissschuh.net>
-References: <20241216-sysfs-const-bin_attr-module-v1-0-f81e49e54ce4@weissschuh.net>
-In-Reply-To: <20241216-sysfs-const-bin_attr-module-v1-0-f81e49e54ce4@weissschuh.net>
-To: Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
- Sami Tolvanen <samitolvanen@google.com>, 
- Daniel Gomez <da.gomez@samsung.com>, Kees Cook <kees@kernel.org>, 
- "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-hardening@vger.kernel.org, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1734376617; l=3705;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=V7KbNN5UX1x8tPH3JWy/OtA6LHRL65sZkslzVlB6VgA=;
- b=dku+SY1IqoJujrFsPN/9QwRW8kNQruu/B1cX/cx5kwNTA7yqPERm0wTRmnamkfg5rzxDjh7IC
- Uyk15uFVqf8BhIqFUMSAFYZlI71GfTvUeInK734zuM35TQ1LDC/kWR1
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+References: <20241121204220.2378181-20-samitolvanen@google.com>
+ <20241121204220.2378181-38-samitolvanen@google.com> <CAK7LNAS7Pi9=Hcm7Kr=Ju4fMWK4taXEPLOqYombSLqGQ3ehR+w@mail.gmail.com>
+In-Reply-To: <CAK7LNAS7Pi9=Hcm7Kr=Ju4fMWK4taXEPLOqYombSLqGQ3ehR+w@mail.gmail.com>
+From: Sami Tolvanen <samitolvanen@google.com>
+Date: Mon, 16 Dec 2024 16:28:53 -0800
+X-Gm-Features: AbW1kvaGgMMEILJN5boY_yIqECmEZxfHxS0KrWFUsA14957v4WM1ex3EXvwLDI0
+Message-ID: <CABCJKudLD15R1YoR37NcKGZPqdwrwBVLcoCiH1m-HDZYUt+Gfw@mail.gmail.com>
+Subject: Re: [PATCH v6 18/18] Documentation/kbuild: Add DWARF module versioning
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Matthew Maurer <mmaurer@google.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@samsung.com>, Neal Gompa <neal@gompa.dev>, 
+	Hector Martin <marcan@marcan.st>, Janne Grunau <j@jannau.net>, Miroslav Benes <mbenes@suse.cz>, 
+	Asahi Linux <asahi@lists.linux.dev>, Sedat Dilek <sedat.dilek@gmail.com>, 
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-modules@vger.kernel.org, rust-for-linux@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The sysfs core is switching to 'const struct bin_attribute's.
-Prepare for that.
+Hi,
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
- kernel/module/sysfs.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+On Sat, Dec 14, 2024 at 3:34=E2=80=AFAM Masahiro Yamada <masahiroy@kernel.o=
+rg> wrote:
+>
+> On Fri, Nov 22, 2024 at 5:43=E2=80=AFAM Sami Tolvanen <samitolvanen@googl=
+e.com> wrote:
+> >
+> > +When a symbol pointer is found in DWARF, gendwarfksyms can use its
+> > +type for calculating symbol versions even if the symbol is defined
+> > +elsewhere. The name of the symbol pointer is expected to start with
+> > +`__gendwarfksyms_ptr_`, followed by the name of the exported symbol.
+>
+> I am interested in this sentence.
+>
+> __GENDWARFKSYMS_EXPORT() is primarily introduced to handle
+> EXPORT_SYMBOL() in *.S files.
+> In fact, .discard.gendwarfksyms is always output for EXPORT_SYMBOL()
+> from *.c files.
+>
+> Can we make it faster by processing only symbol references in the
+> .dscard.gendwarfksyms section, and skipping all other sections entirely?
 
-diff --git a/kernel/module/sysfs.c b/kernel/module/sysfs.c
-index 4f37970f99c999589257713926395686f03103e6..99177cd55f7edec05abd079577ccf161666d8a20 100644
---- a/kernel/module/sysfs.c
-+++ b/kernel/module/sysfs.c
-@@ -31,11 +31,11 @@ struct module_sect_attrs {
- 
- #define MODULE_SECT_READ_SIZE (3 /* "0x", "\n" */ + (BITS_PER_LONG / 4))
- static ssize_t module_sect_read(struct file *file, struct kobject *kobj,
--				struct bin_attribute *battr,
-+				const struct bin_attribute *battr,
- 				char *buf, loff_t pos, size_t count)
- {
--	struct module_sect_attr *sattr =
--		container_of(battr, struct module_sect_attr, battr);
-+	const struct module_sect_attr *sattr =
-+		container_of_const(battr, struct module_sect_attr, battr);
- 	char bounce[MODULE_SECT_READ_SIZE + 1];
- 	size_t wrote;
- 
-@@ -61,11 +61,11 @@ static ssize_t module_sect_read(struct file *file, struct kobject *kobj,
- 
- static void free_sect_attrs(struct module_sect_attrs *sect_attrs)
- {
--	struct bin_attribute **bin_attr;
-+	const struct bin_attribute *const *bin_attr;
- 
--	for (bin_attr = sect_attrs->grp.bin_attrs; *bin_attr; bin_attr++)
-+	for (bin_attr = sect_attrs->grp.bin_attrs_new; *bin_attr; bin_attr++)
- 		kfree((*bin_attr)->attr.name);
--	kfree(sect_attrs->grp.bin_attrs);
-+	kfree(sect_attrs->grp.bin_attrs_new);
- 	kfree(sect_attrs);
- }
- 
-@@ -73,7 +73,7 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
- {
- 	struct module_sect_attrs *sect_attrs;
- 	struct module_sect_attr *sattr;
--	struct bin_attribute **gattr;
-+	const struct bin_attribute **gattr;
- 	unsigned int nloaded = 0, i;
- 	int ret;
- 
-@@ -93,7 +93,7 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
- 
- 	/* Setup section attributes. */
- 	sect_attrs->grp.name = "sections";
--	sect_attrs->grp.bin_attrs = gattr;
-+	sect_attrs->grp.bin_attrs_new = gattr;
- 
- 	sattr = &sect_attrs->attrs[0];
- 	for (i = 0; i < info->hdr->e_shnum; i++) {
-@@ -109,7 +109,7 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
- 			ret = -ENOMEM;
- 			goto out;
- 		}
--		sattr->battr.read = module_sect_read;
-+		sattr->battr.read_new = module_sect_read;
- 		sattr->battr.size = MODULE_SECT_READ_SIZE;
- 		sattr->battr.attr.mode = 0400;
- 		*(gattr++) = &(sattr++)->battr;
-@@ -151,11 +151,11 @@ struct module_notes_attrs {
- 
- static void free_notes_attrs(struct module_notes_attrs *notes_attrs)
- {
--	struct bin_attribute **bin_attr;
-+	const struct bin_attribute *const *bin_attr;
- 
--	for (bin_attr = notes_attrs->grp.bin_attrs; *bin_attr; bin_attr++)
-+	for (bin_attr = notes_attrs->grp.bin_attrs_new; *bin_attr; bin_attr++)
- 		kfree((*bin_attr)->attr.name);
--	kfree(notes_attrs->grp.bin_attrs);
-+	kfree(notes_attrs->grp.bin_attrs_new);
- 	kfree(notes_attrs);
- }
- 
-@@ -163,7 +163,7 @@ static int add_notes_attrs(struct module *mod, const struct load_info *info)
- {
- 	unsigned int notes, loaded, i;
- 	struct module_notes_attrs *notes_attrs;
--	struct bin_attribute **gattr;
-+	const struct bin_attribute **gattr;
- 	struct bin_attribute *nattr;
- 	int ret;
- 
-@@ -189,7 +189,7 @@ static int add_notes_attrs(struct module *mod, const struct load_info *info)
- 	}
- 
- 	notes_attrs->grp.name = "notes";
--	notes_attrs->grp.bin_attrs = gattr;
-+	notes_attrs->grp.bin_attrs_new = gattr;
- 
- 	nattr = &notes_attrs->attrs[0];
- 	for (loaded = i = 0; i < info->hdr->e_shnum; ++i) {
+I don't think we can, because the DWARF type information is still all
+in the same .debug_info section no matter where we place the actual
+symbol references. Also, locating exported symbols from the debugging
+information is already pretty quick, the slow part is actually
+recursing through the types, which would still be the same amount of
+work even if we had separate debugging information only for
+.discard.gendwarfksyms.
 
--- 
-2.47.1
+> > +4.3. Adding structure members
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> > +
+> > +Perhaps the most common ABI compatible changeis adding a member to a
+>
+> changeis -> change is
 
+Thanks, I'll fix this.
+
+Sami
 
