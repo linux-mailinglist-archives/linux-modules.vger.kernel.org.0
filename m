@@ -1,35 +1,35 @@
-Return-Path: <linux-modules+bounces-2802-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2804-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0A199F98DB
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 18:59:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C381E9F98DE
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 18:59:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEDE9163207
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 17:59:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29D5F1663C3
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 17:59:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07E0B227569;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CC34227B86;
 	Fri, 20 Dec 2024 17:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="t+NIZr1J";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="6plwZ2Ya"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="o+ROmk5T";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="5NvTcBPK"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DFA225A36;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21CB225A37;
 	Fri, 20 Dec 2024 17:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734716864; cv=none; b=tQb3NtOhKmXlgsRU4GLbv6yFkZ2tnWnj3/0MAPI/b5reTi5sBQ8NNOpNwuVBnxqguX4tjlcRKi6Ib+lTen7QewGSLVkuEWdVK7TyXDL9iVlkXVSuZfgpzbxkweiMXjEH3oleojnpFhQ9X9I7FQdBMsLpg1/jKe00BrGYre+AGLA=
+	t=1734716865; cv=none; b=TsdBOVGsDKTwOuySRnwcQRjE/UUUyJ+zgKG7Yhdos0j/4byj8c43Pb+/q17BFA77NNEGg0CrY49oQf/z0ZhnTqFOIYY+uaN1KXvnJKzJCXaihHmDQJC1ifpldLknVwzacPQglLq2RpxWgnEhNwDci4kW1mKuipGZL/K9jIK1958=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734716864; c=relaxed/simple;
-	bh=VpIIPt2CV4LrZsknKLmqtKCrrarrj5IxRTnAIqBP4/0=;
+	s=arc-20240116; t=1734716865; c=relaxed/simple;
+	bh=p46Zi8HZh7rK2wim6LSHAw0u6ln86cdHlUXQPiayMx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lb9WsgS4UOquv7NcHAcZWEx5NeBSYoBA5smNoKnvJJAWasmxbNFmsagbWSatiBbtjM6wrSVv+qnYo3WQ05x3mYqHpy/axOJev8PtUHeNoY67z8DIaCu+VTiTqeOcOLXmfi5bGjcxmMXeT9X9tPpqNknd9JPEs1PsQRbM7HmU8WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=t+NIZr1J; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=6plwZ2Ya; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=LhDOBu1QAJNNA8RZ5l3Rzqek7so2Yz7WihyPc76PHvigghuCF9mMBJlHB/GydMl58akl5VG/0xYkwQgDp5JWA022INRHgCmB5U/8qNLEBYGeiEM12UBY2hC8L2sisgleR5gLSoI23kWqSygKgwYxQlyElSGjYlXLHl5T//qsaNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=o+ROmk5T; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=5NvTcBPK; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
@@ -39,21 +39,21 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AnLbUlJTtBlesn5+tJwa7V6G+8fL1YHPmCXigSuptPg=;
-	b=t+NIZr1J5VzthNHQlHyQrK/fXgtFzUyavo9uKi8POl0ajC3O857YW9mtQ+9ptInJng9pHW
-	CcLQWJKb9GeBCs4tbd4ZTDhPF1xfIo3VH5C6yk2CSLqc/GHqqAlJGz4SZpYBHsvC9cc4IE
-	VvSE56PM+YcjfdnrVqL7VYDZ7MmR3c+1yQY7jVNx/thwb7ihUWKBqwg4jZrTigStIcCI8F
-	bLCerTXnkSl4xcCXSwoK6Y6vJXaAgw/0aCjxPUWM06RHdNKSoG1CiLLTguKbVeOgMKafFV
-	Atj6EVcXc8YMWK6utafZry1u4W3oFDri4Jr/puDQS3D3Ws5sy1XN3ywlQ4EiYQ==
+	bh=l93Mh1PZlJhbIRISSNiIm8u+tlwexgZoP5TCMyYdWPA=;
+	b=o+ROmk5TAuaTgso64Q/7cJgKj0hOCyVciBTWw621y6APXIBVDQpM5bQdoWFMch5XX+y2Qa
+	RjN3m1IIWRAvo0Fk730d4hxW+e0FmSnsW+SnYu9zqR34GNUOe6mTkZOJPMH98k/vlQyl53
+	eCVKFqm+yr3T0ypGjaxJctv/amiZpmX86OuuYlz+p1L9u6UI1czjnUZD4Q0N6vJbV7L/AS
+	SIKHMG5DNBz9E5Yi2A1f+eqwqledI5c3H1oO9TYF4AGf2GOwJRrRI+QY1rVmAiBNWIYvsM
+	zZn+/gBEYP2Ql7GYS31LioCHqa7hdURTE3d0eyVjPKkGYr9OQbHlcFVUh2z0Xw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
 	s=2020e; t=1734716860;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AnLbUlJTtBlesn5+tJwa7V6G+8fL1YHPmCXigSuptPg=;
-	b=6plwZ2YasoSBrfLC9HnHyj9HMiALSdt01g0emA0tJCicggl6kEmSbR7tqnzk5I8iRnalPV
-	dF3bX9RsO3C1YdAA==
+	bh=l93Mh1PZlJhbIRISSNiIm8u+tlwexgZoP5TCMyYdWPA=;
+	b=5NvTcBPK+/978UnkmArQeLjGyEbLTqxCdAZPw1+NAuxqfMKRx9Wai6XyAalE26mULikd1X
+	AOxnw3HapkjS+aAg==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -64,9 +64,9 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH v2 11/28] module: Use RCU in __is_module_percpu_address().
-Date: Fri, 20 Dec 2024 18:41:25 +0100
-Message-ID: <20241220174731.514432-12-bigeasy@linutronix.de>
+Subject: [PATCH v2 12/28] module: Allow __module_address() to be called from RCU section.
+Date: Fri, 20 Dec 2024 18:41:26 +0100
+Message-ID: <20241220174731.514432-13-bigeasy@linutronix.de>
 In-Reply-To: <20241220174731.514432-1-bigeasy@linutronix.de>
 References: <20241220174731.514432-1-bigeasy@linutronix.de>
 Precedence: bulk
@@ -77,45 +77,67 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-The modules list can be accessed under RCU assumption.
+mod_find() uses either the modules list to find a module or a tree
+lookup (CONFIG_MODULES_TREE_LOOKUP). The list and the tree can both be
+iterated under RCU assumption (as well as RCU-sched).
 
-Use RCU protection instead preempt_disable().
+Remove module_assert_mutex_or_preempt() from __module_address() and
+entirely since __module_address() is the last user.
+Update comments.
 
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---
- kernel/module/main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ kernel/module/internal.h | 11 -----------
+ kernel/module/main.c     |  4 +---
+ 2 files changed, 1 insertion(+), 14 deletions(-)
 
+diff --git a/kernel/module/internal.h b/kernel/module/internal.h
+index daef2be839022..030d2ed175fa8 100644
+--- a/kernel/module/internal.h
++++ b/kernel/module/internal.h
+@@ -122,17 +122,6 @@ char *module_next_tag_pair(char *string, unsigned long=
+ *secsize);
+ #define for_each_modinfo_entry(entry, info, name) \
+ 	for (entry =3D get_modinfo(info, name); entry; entry =3D get_next_modinfo=
+(info, name, entry))
+=20
+-static inline void module_assert_mutex_or_preempt(void)
+-{
+-#ifdef CONFIG_LOCKDEP
+-	if (unlikely(!debug_locks))
+-		return;
+-
+-	WARN_ON_ONCE(!rcu_read_lock_sched_held() &&
+-		     !lockdep_is_held(&module_mutex));
+-#endif
+-}
+-
+ static inline unsigned long kernel_symbol_value(const struct kernel_symbol=
+ *sym)
+ {
+ #ifdef CONFIG_HAVE_ARCH_PREL32_RELOCATIONS
 diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 71e73deed76c0..126f7f05dedf8 100644
+index 126f7f05dedf8..686b74c7c17f5 100644
 --- a/kernel/module/main.c
 +++ b/kernel/module/main.c
-@@ -450,8 +450,7 @@ bool __is_module_percpu_address(unsigned long addr, uns=
-igned long *can_addr)
- 	struct module *mod;
- 	unsigned int cpu;
+@@ -3667,7 +3667,7 @@ bool is_module_address(unsigned long addr)
+  * __module_address() - get the module which contains an address.
+  * @addr: the address.
+  *
+- * Must be called with preempt disabled or module mutex held so that
++ * Must be called within RCU read section or module mutex held so that
+  * module doesn't get freed during this.
+  */
+ struct module *__module_address(unsigned long addr)
+@@ -3685,8 +3685,6 @@ struct module *__module_address(unsigned long addr)
+ 	return NULL;
 =20
--	preempt_disable();
+ lookup:
+-	module_assert_mutex_or_preempt();
 -
-+	guard(rcu)();
- 	list_for_each_entry_rcu(mod, &modules, list) {
- 		if (mod->state =3D=3D MODULE_STATE_UNFORMED)
- 			continue;
-@@ -468,13 +467,10 @@ bool __is_module_percpu_address(unsigned long addr, u=
-nsigned long *can_addr)
- 						per_cpu_ptr(mod->percpu,
- 							    get_boot_cpu_id());
- 				}
--				preempt_enable();
- 				return true;
- 			}
- 		}
- 	}
--
--	preempt_enable();
- 	return false;
- }
-=20
+ 	mod =3D mod_find(addr, &mod_tree);
+ 	if (mod) {
+ 		BUG_ON(!within_module(addr, mod));
 --=20
 2.45.2
 
