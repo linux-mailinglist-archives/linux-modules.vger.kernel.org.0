@@ -1,59 +1,59 @@
-Return-Path: <linux-modules+bounces-2796-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2795-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50A119F9903
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 19:06:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BFB19F9922
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 19:10:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 760CF196584D
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 17:57:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2D86189AE26
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 17:57:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72224223705;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EED822332F;
 	Fri, 20 Dec 2024 17:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="uzaDzhxy";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UCDe4W+R"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="UzPefDkJ";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="XFV5oera"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A59221B8EC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8302221C9EF;
 	Fri, 20 Dec 2024 17:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734716861; cv=none; b=oHFWiNBpo5wY8/qqqsRPZyFwpjauitLanIbE1JxFXj8bg/cB4UuCKZ/fCwD8BCBZtabZHGBQSunOHt4qNdKx6iZo2L0uXSYOcf5zmXFV38Kt92HizILWqVlVyKxAxhSGbbxzuBEkWQitiYWCtU5KXvMBJdNr6E/i+OV8di0xP/o=
+	t=1734716861; cv=none; b=NRFIVdy6xltuyMzMv1v8Wx/D9xQ5oPv39Iu/8W7/b63d9RbkKan+8wmmARwyFveq1L4rC+ETB/OfkwKK7V4wm2qte7u0hiTqy/eQaP7V+6elvZQRdN/Ir0q07Ze8Z0W1am3Byzb6cGpHp5Le5PDQ7nGXxyJZkDtY0ivEgmMyIXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1734716861; c=relaxed/simple;
-	bh=QdGgvi5tGLhqK/dn8eqwWdqKTl7Q/eJpMW6qel5l0U4=;
+	bh=ApxMQvvcCvnB5ydSNW0iQzeRyKqqIkkgQTrsnUfXqX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkWOVzmyV7ZFgVbeyj45PlzxcgZ44YvIMQNu9Lcrs+COe3Xg/cRtcaSTLwE9bdSKP8y15clw4rG0X1fOPCqMnmOEYx5GVJ2V4yzZRlfLK81C94bxU2/MBo/oNmR1l5klQZM/faT9eujyd9tn8/cMuoVwcgLxgm5EcGKz0f3FlAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=uzaDzhxy; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UCDe4W+R; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=gHN7AGobhb3JTbXGoHpWUAcpZySshFGn/fNMQv1M3bLpoCeXBkKdF3fhOYVjqXWNliyto+SAj0p+UEB8hsNCqOvnRfs/WjjcYNX1ucE+DbXfvkCOO/qo+aeCgsPrLhm6vPzJQWmkjy8o86J9lgkud8c+Pr07+CCUwjkoWp3/hYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=UzPefDkJ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=XFV5oera; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1734716857;
+	s=2020; t=1734716858;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AZPVA+hMuMw4hY+ZysB1dEUHiJRu5pyZbasptXv2BLE=;
-	b=uzaDzhxyXTmQkSAc0K1o4EMvNAGHIaRmJgFnXUDBLpnvTUnNrZF3IxQkXMle9DOIFP09p/
-	O7zZLgMPdleFJZIXFqLSZJcrzBvqqKE/kEvGg0zipZGBRgVKz+mhEmDP1287wupJV/gLxF
-	ypzJD+OaLRCOvUuBu8NmmmJ0bGMOHWk20iKmmZreszoLH0892mlHLatJ1MtUAyeUv4ESn0
-	mNgAaImBa82wn6k4oDam631nNIqzntqcABW1NoiMb5HF/vlwSwLpME4lHkktI92H76Gy+J
-	UfFAC79ayMJdVL2FR69lvI1bz3KOtmPS5NJkHKLzEI42zrSvAOfpG9+5Pcdw/Q==
+	bh=bQ6ZqxuwJeNb/vKpE3WEBj3zTXNytGr0GQv7pX1w1to=;
+	b=UzPefDkJBXEBPRcOg51PLcgiYOmoVQvAfNE6budNXvJeQ0Y/rvWgvX945kODJtJgnHSQco
+	3n/X4L8NYrsD2FYRjRLvWsbE3y27iLoGprzkowXGaV90DNfNMSlZQU4JViVfmL2gLxE/jW
+	lDiUEHvc035IZ99+pRGbvsIFbc2YxFfp858r0qjWQMzcJkWs81V73i2dlRm+4+hwJmmUV/
+	2rMJYpFFA8I+1A19m2xlsF9G8EOfQtOTiKBcs5xt9V5mVvYuvQ6JpPQKKErYdkqiqsQ/iD
+	ZVDFLin9DVDQFKa+Tf6LhW2aj11gh66+LkKaEyDwMYQKhAHrSehXM1DTFE790g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1734716857;
+	s=2020e; t=1734716858;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=AZPVA+hMuMw4hY+ZysB1dEUHiJRu5pyZbasptXv2BLE=;
-	b=UCDe4W+R3XaIKdQffGUi5fHZGIwds2AsVpryRDLi64OiuicjkjUwQiZYw0G0az544Oncy+
-	VrA1AxFUfEkyrVDw==
+	bh=bQ6ZqxuwJeNb/vKpE3WEBj3zTXNytGr0GQv7pX1w1to=;
+	b=XFV5oeraBYcJoGPH+xe621s4U2cGAEAwxxLYBpAgHvuuxbj+tO1K7rQJMNhSzcQmFdy5Hf
+	3AP89P23zOluCGCA==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -64,9 +64,9 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH v2 02/28] module: Begin to move from RCU-sched to RCU.
-Date: Fri, 20 Dec 2024 18:41:16 +0100
-Message-ID: <20241220174731.514432-3-bigeasy@linutronix.de>
+Subject: [PATCH v2 03/28] module: Use proper RCU assignment in add_kallsyms().
+Date: Fri, 20 Dec 2024 18:41:17 +0100
+Message-ID: <20241220174731.514432-4-bigeasy@linutronix.de>
 In-Reply-To: <20241220174731.514432-1-bigeasy@linutronix.de>
 References: <20241220174731.514432-1-bigeasy@linutronix.de>
 Precedence: bulk
@@ -77,115 +77,94 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-The RCU usage in module was introduced in commit d72b37513cdfb ("Remove
-stop_machine during module load v2") and it claimed not to be RCU but
-similar. Then there was another improvement in commit e91defa26c527
-("module: don't use stop_machine on module load"). It become a mix of
-RCU and RCU-sched and was eventually fixed 0be964be0d450 ("module:
-Sanitize RCU usage and locking"). Later RCU & RCU-sched was merged in
-commit cb2f55369d3a9 ("modules: Replace synchronize_sched() and
-call_rcu_sched()") so that was aligned.
+add_kallsyms() assigns the RCU pointer module::kallsyms and setups the
+structures behind it which point to init-data. The module was not
+published yet, nothing can see the kallsyms pointer and the data behind
+it. Also module's init function was not yet invoked.
+There is no need to use rcu_dereference() here, it is just to keep
+checkers quiet. The whole RCU read section is also not needed.
 
-Looking at it today, there is still leftovers. The preempt_disable() was
-used instead rcu_read_lock_sched(). The RCU & RCU-sched merge was not
-complete as there is still rcu_dereference_sched() for module::kallsyms.
-
-The RCU-list modules and unloaded_tainted_modules are always accessed
-under RCU protection or the module_mutex. The modules list iteration can
-always happen safely because the module will not disappear.
-Once the module is removed (free_module()) then after removing the
-module from the list, there is a synchronize_rcu() which waits until
-every RCU reader left the section. That means iterating over the list
-within a RCU-read section is enough, there is no need to disable
-preemption. module::kallsyms is first assigned in add_kallsyms() before
-the module is added to the list. At this point, it points to init data.
-This pointer is later updated and before the init code is removed there
-is also synchronize_rcu() in do_free_init(). That means A RCU read lock
-is enough for protection and rcu_dereference() can be safely used.
-
-Convert module code and its users step by step. Update comments and
-convert print_modules() to use RCU.
+Use a local kallsyms pointer and setup the data structures. Assign that
+pointer to the data structure at the end via rcu_assign_pointer().
 
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---
- kernel/module/main.c        | 9 ++++-----
- kernel/module/tree_lookup.c | 8 ++++----
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ kernel/module/kallsyms.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 5399c182b3cbe..5cce4a92d7ba3 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -67,7 +67,7 @@
+diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
+index bf65e0c3c86fc..45846ae4042d1 100644
+--- a/kernel/module/kallsyms.c
++++ b/kernel/module/kallsyms.c
+@@ -177,19 +177,15 @@ void add_kallsyms(struct module *mod, const struct lo=
+ad_info *info)
+ 	unsigned long strtab_size;
+ 	void *data_base =3D mod->mem[MOD_DATA].base;
+ 	void *init_data_base =3D mod->mem[MOD_INIT_DATA].base;
++	struct mod_kallsyms *kallsyms;
 =20
- /*
-  * Mutex protects:
-- * 1) List of modules (also safely readable with preempt_disable),
-+ * 1) List of modules (also safely readable within RCU read section),
-  * 2) module_use links,
-  * 3) mod_tree.addr_min/mod_tree.addr_max.
-  * (delete and add uses RCU list operations).
-@@ -1348,7 +1348,7 @@ static void free_module(struct module *mod)
- 	mod_tree_remove(mod);
- 	/* Remove this module from bug list, this uses list_del_rcu */
- 	module_bug_cleanup(mod);
--	/* Wait for RCU-sched synchronizing before releasing mod->list and buglis=
-t. */
-+	/* Wait for RCU synchronizing before releasing mod->list and buglist. */
- 	synchronize_rcu();
- 	if (try_add_tainted_module(mod))
- 		pr_err("%s: adding tainted module to the unloaded tainted modules list f=
-ailed.\n",
-@@ -2965,7 +2965,7 @@ static noinline int do_init_module(struct module *mod)
- #endif
+-	/* Set up to point into init section. */
+-	mod->kallsyms =3D (void __rcu *)init_data_base +
+-		info->mod_kallsyms_init_off;
++	kallsyms =3D init_data_base + info->mod_kallsyms_init_off;
+=20
+-	rcu_read_lock();
+-	/* The following is safe since this pointer cannot change */
+-	rcu_dereference(mod->kallsyms)->symtab =3D (void *)symsec->sh_addr;
+-	rcu_dereference(mod->kallsyms)->num_symtab =3D symsec->sh_size / sizeof(E=
+lf_Sym);
++	kallsyms->symtab =3D (void *)symsec->sh_addr;
++	kallsyms->num_symtab =3D symsec->sh_size / sizeof(Elf_Sym);
+ 	/* Make sure we get permanent strtab: don't use info->strtab. */
+-	rcu_dereference(mod->kallsyms)->strtab =3D
+-		(void *)info->sechdrs[info->index.str].sh_addr;
+-	rcu_dereference(mod->kallsyms)->typetab =3D init_data_base + info->init_t=
+ypeoffs;
++	kallsyms->strtab =3D (void *)info->sechdrs[info->index.str].sh_addr;
++	kallsyms->typetab =3D init_data_base + info->init_typeoffs;
+=20
  	/*
- 	 * We want to free module_init, but be aware that kallsyms may be
--	 * walking this with preempt disabled.  In all the failure paths, we
-+	 * walking this within an RCU read section. In all the failure paths, we
- 	 * call synchronize_rcu(), but we don't want to slow down the success
- 	 * path. execmem_free() cannot be called in an interrupt, so do the
- 	 * work and call synchronize_rcu() in a work queue.
-@@ -3754,7 +3754,7 @@ void print_modules(void)
+ 	 * Now populate the cut down core kallsyms for after init
+@@ -199,20 +195,19 @@ void add_kallsyms(struct module *mod, const struct lo=
+ad_info *info)
+ 	mod->core_kallsyms.strtab =3D s =3D data_base + info->stroffs;
+ 	mod->core_kallsyms.typetab =3D data_base + info->core_typeoffs;
+ 	strtab_size =3D info->core_typeoffs - info->stroffs;
+-	src =3D rcu_dereference(mod->kallsyms)->symtab;
+-	for (ndst =3D i =3D 0; i < rcu_dereference(mod->kallsyms)->num_symtab; i+=
++) {
+-		rcu_dereference(mod->kallsyms)->typetab[i] =3D elf_type(src + i, info);
++	src =3D kallsyms->symtab;
++	for (ndst =3D i =3D 0; i < kallsyms->num_symtab; i++) {
++		kallsyms->typetab[i] =3D elf_type(src + i, info);
+ 		if (i =3D=3D 0 || is_livepatch_module(mod) ||
+ 		    is_core_symbol(src + i, info->sechdrs, info->hdr->e_shnum,
+ 				   info->index.pcpu)) {
+ 			ssize_t ret;
 =20
- 	printk(KERN_DEFAULT "Modules linked in:");
- 	/* Most callers should already have preempt disabled, but make sure */
--	preempt_disable();
-+	guard(rcu)();
- 	list_for_each_entry_rcu(mod, &modules, list) {
- 		if (mod->state =3D=3D MODULE_STATE_UNFORMED)
- 			continue;
-@@ -3762,7 +3762,6 @@ void print_modules(void)
+ 			mod->core_kallsyms.typetab[ndst] =3D
+-			    rcu_dereference(mod->kallsyms)->typetab[i];
++				kallsyms->typetab[i];
+ 			dst[ndst] =3D src[i];
+ 			dst[ndst++].st_name =3D s - mod->core_kallsyms.strtab;
+-			ret =3D strscpy(s,
+-				      &rcu_dereference(mod->kallsyms)->strtab[src[i].st_name],
++			ret =3D strscpy(s, &kallsyms->strtab[src[i].st_name],
+ 				      strtab_size);
+ 			if (ret < 0)
+ 				break;
+@@ -220,7 +215,9 @@ void add_kallsyms(struct module *mod, const struct load=
+_info *info)
+ 			strtab_size -=3D ret + 1;
+ 		}
  	}
+-	rcu_read_unlock();
++
++	/* Set up to point into init section. */
++	rcu_assign_pointer(mod->kallsyms, kallsyms);
+ 	mod->core_kallsyms.num_symtab =3D ndst;
+ }
 =20
- 	print_unloaded_tainted_modules();
--	preempt_enable();
- 	if (last_unloaded_module.name[0])
- 		pr_cont(" [last unloaded: %s%s]", last_unloaded_module.name,
- 			last_unloaded_module.taints);
-diff --git a/kernel/module/tree_lookup.c b/kernel/module/tree_lookup.c
-index 277197977d438..d3204c5c74eb7 100644
---- a/kernel/module/tree_lookup.c
-+++ b/kernel/module/tree_lookup.c
-@@ -12,11 +12,11 @@
-=20
- /*
-  * Use a latched RB-tree for __module_address(); this allows us to use
-- * RCU-sched lookups of the address from any context.
-+ * RCU lookups of the address from any context.
-  *
-- * This is conditional on PERF_EVENTS || TRACING because those can really =
-hit
-- * __module_address() hard by doing a lot of stack unwinding; potentially =
-from
-- * NMI context.
-+ * This is conditional on PERF_EVENTS || TRACING || CFI_CLANG because thos=
-e can
-+ * really hit __module_address() hard by doing a lot of stack unwinding;
-+ * potentially from NMI context.
-  */
-=20
- static __always_inline unsigned long __mod_tree_val(struct latch_tree_node=
- *n)
 --=20
 2.45.2
 
