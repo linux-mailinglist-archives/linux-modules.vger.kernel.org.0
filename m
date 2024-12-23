@@ -1,121 +1,117 @@
-Return-Path: <linux-modules+bounces-2820-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2823-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E4CE9F98FB
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 19:03:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EB399FAC0D
+	for <lists+linux-modules@lfdr.de>; Mon, 23 Dec 2024 10:39:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 683F116BAC7
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Dec 2024 18:02:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A50447A20E6
+	for <lists+linux-modules@lfdr.de>; Mon, 23 Dec 2024 09:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 493E023236D;
-	Fri, 20 Dec 2024 17:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D69193404;
+	Mon, 23 Dec 2024 09:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="zWIUN96C";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="cgHM558s"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="KG6lrfRR"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E133E229666;
-	Fri, 20 Dec 2024 17:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AF11922CC
+	for <linux-modules@vger.kernel.org>; Mon, 23 Dec 2024 09:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734716871; cv=none; b=WaOw6IiMYutrEX1BY8egUj8god1oCaZfVBiyQ/L/MAzk6QTAB316ZRMKdSd+FCjMLNs7BAS9yPs1yP7B60MdV3H4bdzuetgZOFyEfSFpCeYDVSkg4tVd0gizU06TSldijEgA+FRiqsV5vJfg8O4pdohcYTHw3pOsfzPWpvrBww8=
+	t=1734946751; cv=none; b=QbbS94N3UW3f48SV9VfLbOISeEsssfYpWE5nB7ZcNY7vtX4aRoKrFGgwQGz2LAG5/2iydFPmUxpL54cJhYw3Exm/EZZdX/Wg+oDZAJ4mIRFXn/wbaR2ABoDClPDOPRIapmKWQqMIgx2ue9/gdrSjwi2V/9BtT1GamhsKXUF5x4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734716871; c=relaxed/simple;
-	bh=qCVZ6MXEQCZKbpVFTGMRYGzHJ160bIV49ZUWguKAVVQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEQqYIBnzBNL0zqhm5UiaJ5PNNDZBJGax8SvoGQzGb66Ibj+WQ8DQ3+W107fXGwBYRAW+YJ6328qWxYTKSu00qnfyFqTPpRT3qXG6cfk5g2uF3xKGu1C/WCszB73lf/afd3pIYzmaYijyKVTSHlUIcHvF8xRHOGBWvWU40SGFv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=zWIUN96C; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=cgHM558s; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1734716867;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cEtU1/INZZG1AUWOp9SKyBC5+mBME4Va/ulzQZtpooU=;
-	b=zWIUN96CcPeolG0ZYxkjsK3EL720Iqhm6WEVV1bZMz2m4KEpGzQNCtPBIctID3jC7krnh2
-	xp4eneV0EHTCOCfMrcwJJ7ttjjE3gAurfXNEdf7Bf0jz9aw0ThN5LeaipKMGir80vqDGnO
-	tAE09a7+LBcENXf4yYTxynf7DvCXawjNkJEo6WpEEH+x0jrUeHqMR97a8wj5P2dXnKhV7x
-	sFu1ebBkibO/F+qGCOdbyiYUSdsxoFUn+SSabS4clejR5Oy5oZ+yBZEM2xVvtqGD3rfNV2
-	Og6D0qp/Nu2m1bk1jg8QqRR2MWOmo3bu4ZCgk80gcdg3uff/TQyiIz2zWUzWMg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1734716867;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cEtU1/INZZG1AUWOp9SKyBC5+mBME4Va/ulzQZtpooU=;
-	b=cgHM558sw+JBKQVTWQKLskEmlEA2lnQiirxPbv5hwgQVEUyuvQ7N4KKVtC98bVutse8xND
-	h295X/l0fNAHkBBw==
-To: linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Daniel Gomez <da.gomez@samsung.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	s=arc-20240116; t=1734946751; c=relaxed/simple;
+	bh=u2pbYXao7gSBkL9N3hiVi/YA5ogzqx6GtUP21gPXpJo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=J+9XksuFcRxKXgORRRINmTYrp5ZfqDNCgyTAL0UZI3GZRG9j350AZNuwvWjYL04ee2erXHZCOKfQlbCsG2o2Iv50d+o2Vro7UXcAOOGUgwdUBuX3cPmnsJlAyjzwKWdg2IaIQQmKsVicS1ZN/xRnF300F3EA3ULpxnKd8gnea28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=KG6lrfRR; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-38632b8ae71so2987405f8f.0
+        for <linux-modules@vger.kernel.org>; Mon, 23 Dec 2024 01:39:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1734946747; x=1735551547; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dpB5AXQXFoUsjUJ3T1UA5h3wIALVsUUYh2PJwRQg/x0=;
+        b=KG6lrfRR/BstlyYDgAA+e6ynTPVl2MK8+fYttl5CdG0ZKZlB0I4LmaReYKZkIYsJQR
+         btwRbtoRgAUkgL2VcijAMrz1ZT6Bfj0aR4Xmk0LPU6iH9rJtcp7OLxgA5cO7tmvyM7zz
+         W0ZigLzki1yYhX5rcMYASImBebB5dcayYibEzx+zUM3cxIas2D+K875zzll7kPkxX4nE
+         ArsCt8TOOgxVNnIYVDNv2QamhKnZ4k3JIRRrMCOtAOSsrJepZL0YFCh6NS1bkU4zKoBs
+         NlxJk/WcqYNkYZlq9OrNwcb0Sm/PcADV2cnizUJW/1zEuLEfIxR1+GDW7eKaNgY6KpW1
+         ADuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734946747; x=1735551547;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dpB5AXQXFoUsjUJ3T1UA5h3wIALVsUUYh2PJwRQg/x0=;
+        b=TFUROgqNIK9ZpRuYAt1RplDE9ZsdBdo80BdGBjDKaVZH6JTSsY4aquyh05XQb2ssc/
+         Jbc4Ju9rSJGBc0FnExgAp3PE+AbEoYE1khuhW8ZIGZ/mLkiZLdUA6kJKVQBMtZspOQxP
+         Uzs2+yLOaRoanpP5I1W6UAFpriQu/FurHd3RxELpqIPt2+wjy2fmBMbFeuDc0ycOJOzW
+         Af3pu80hAFCFkNx5jHJQDXCdaBsIDd4useIGUg3iBEJ8MovgVSKpe6X+n5qAJehEcUF5
+         hD9oxRSBANfFSZt4uo9hHu+t1yNPKYLZrjIlJV5Rq0VpKC8zAFjh8un085y5Gi9lmJnz
+         XCng==
+X-Gm-Message-State: AOJu0Yy8nTCVT6t9VdMo1z3NpfmZ49QKIGoeqs2cwndDPI9eQdhYk8I1
+	8OehiowiOQX3owexi7TaEClv5hZs25vxjjMfrdL1glTSFFDi9fOe71azFvU2wFPQ/yEzoALxhgr
+	o
+X-Gm-Gg: ASbGncsLYNp1fpyC38rIKtX+TalSaA+Xy1F0oCyAsC+1GIomY5/u3comnxr/PzQ7NrL
+	RR+y4RB0ULaAf1rcATXQDOhMehj/G0YesavDXHN45hd0P3WloeQ4uiULntkcQwB0DOMblZaeRgc
+	9v1bOBcQWx3487fwZ0MoRHhudDUqS/0wigBHoJm9lLQXtSzeOZwb+06L/pQivoLjsQZQQkeD/HI
+	U6UZIhHcvU8EkPZL1RuLftiOZO40be1i+KtrtHGouDh7yMzhBJixFJoJd2L
+X-Google-Smtp-Source: AGHT+IFcf7gk6ft69jYRmrDzLuvuFBRs68NZ4Ocwea3I49yZ/EifY7LVldN/imD2Xv9xt2LBJpl4gA==
+X-Received: by 2002:a05:6000:470c:b0:385:f5c4:b318 with SMTP id ffacd0b85a97d-38a221f9186mr8513739f8f.31.1734946746556;
+        Mon, 23 Dec 2024 01:39:06 -0800 (PST)
+Received: from dhcp161.suse.cz ([193.86.92.181])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c829235sm10773868f8f.15.2024.12.23.01.39.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Dec 2024 01:39:06 -0800 (PST)
+From: Petr Pavlu <petr.pavlu@suse.com>
+To: Luis Chamberlain <mcgrof@kernel.org>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Kees Cook <kees@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jason Baron <jbaron@akamai.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
-	llvm@lists.linux.dev
-Subject: [PATCH v2 28/28] cfi: Use RCU while invoking __module_address().
-Date: Fri, 20 Dec 2024 18:41:42 +0100
-Message-ID: <20241220174731.514432-29-bigeasy@linutronix.de>
-In-Reply-To: <20241220174731.514432-1-bigeasy@linutronix.de>
-References: <20241220174731.514432-1-bigeasy@linutronix.de>
+	Ard Biesheuvel <ardb@kernel.org>
+Cc: linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] module: Make .static_call_sites read-only after init
+Date: Mon, 23 Dec 2024 10:37:46 +0100
+Message-ID: <20241223093840.29417-1-petr.pavlu@suse.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-__module_address() can be invoked within a RCU section, there is no
-requirement to have preemption disabled.
+Section .static_call_sites holds data structures that need to be sorted and
+processed only at module load time. The section is never modified afterwards.
+Make it therefore read-only after module initialization to avoid any
+(non-)accidental modifications.
 
-I'm not sure if using rcu_read_lock() will introduce the regression that
-has been fixed in commit 14c4c8e41511a ("cfi: Use
-rcu_read_{un}lock_sched_notrace").
+Petr Pavlu (3):
+  module: Constify parameters of module_enforce_rwx_sections()
+  module: Add a separate function to mark sections as read-only after
+    init
+  module: Make .static_call_sites read-only after init
 
-Cc: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Sami Tolvanen <samitolvanen@google.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: llvm@lists.linux.dev
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
----
- kernel/cfi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/module/internal.h   |  7 ++++--
+ kernel/module/main.c       | 18 +++------------
+ kernel/module/strict_rwx.c | 47 ++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 53 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/cfi.c b/kernel/cfi.c
-index 08caad7767176..c8f2b5a51b2e6 100644
---- a/kernel/cfi.c
-+++ b/kernel/cfi.c
-@@ -71,6 +71,10 @@ static bool is_module_cfi_trap(unsigned long addr)
- 	struct module *mod;
- 	bool found =3D false;
-=20
-+	/*
-+	 * XXX this could be RCU protected but would it introcude the regression
-+	 * fixed in 14c4c8e41511a ("cfi: Use rcu_read_{un}lock_sched_notrace")
-+	 */
- 	rcu_read_lock_sched_notrace();
-=20
- 	mod =3D __module_address(addr);
---=20
-2.45.2
+
+base-commit: 4bbf9020becbfd8fc2c3da790855b7042fad455b
+-- 
+2.43.0
 
 
