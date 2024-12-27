@@ -1,47 +1,46 @@
-Return-Path: <linux-modules+bounces-2852-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2856-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C31069FD4E4
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 14:23:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 637319FD4ED
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 14:24:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67E8F162276
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 13:23:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF323162B29
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 13:24:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CB8F1F37D6;
-	Fri, 27 Dec 2024 13:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A4CC1F4E48;
+	Fri, 27 Dec 2024 13:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="pooX4bma"
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="tvnGtSfe"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28BC1F2C56;
-	Fri, 27 Dec 2024 13:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78611F4288;
+	Fri, 27 Dec 2024 13:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735305821; cv=none; b=epLt0DDSFRERcU4gb4S3asN3zft+O3ZUr/h9+fkKr+K4N+tQkSX77x8ga5CkR77XzoqUxLpxAqv2LHlPFfPNCqJbGPPohnQwQ30pQ3hy2OeeE3O+olPA5OZGjgt7Rr0p63LNom6U33/0UAHcNmmGY3gak6tkozDjwYxvvHUlbeo=
+	t=1735305824; cv=none; b=l9beJq1IZjqM/s+rnXewddxzeTLzyl0gizps3VbC7ikH9GxICYGXwMbJTUPCmtXLNELgsLtZVWsT+8c2bW9/VI389zQpS/q5YA59Hn0+YNPLHgYdwg5yRc9qHc9AXR8MpugXndtu45b2eYqoo6QMZDQmmwk1EJxAUWQu67TYUNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735305821; c=relaxed/simple;
-	bh=NyHZ3hkjhrnYderQwPxSsaZMIcwAhrt2JhACazI/sTg=;
+	s=arc-20240116; t=1735305824; c=relaxed/simple;
+	bh=FhZcpa+oH0AuaI//x4ZCk0kWcoGzPTmlzuGyc897LEI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R3CqeJs8etwQbWCSosE6kFKA/aoB47VJdr979sNpxje6220fBYKKmU1ixx8VTIxMiXJQZ7X+jgyYUgTFEiYugQyQt4Vv+RSxVa4adE2gwMjooxvFDL46VNc5J46uueM45i4m9xtdygM1i7yQOZj/oArnsDq0g9V/Q3gGUIExqBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=pooX4bma; arc=none smtp.client-ip=159.69.126.157
+	 In-Reply-To:To:Cc; b=cQFg2xloxcfJUsdjttg6EmDDp4OWU0cWa95LOooRLcjI67uOFBW9JkXwGwYsn77kIuEtd/5FxnnHFLSYy1ET/UR5wlrCeeycSsYN/5Qnimd/AJL8wAVgfHO3uM91SPJaUQ4uO7LR9IdDtKbqQTwddlymbnGHNArfQvvDyV5Jd0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=tvnGtSfe; arc=none smtp.client-ip=159.69.126.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
 	s=mail; t=1735305810;
-	bh=NyHZ3hkjhrnYderQwPxSsaZMIcwAhrt2JhACazI/sTg=;
+	bh=FhZcpa+oH0AuaI//x4ZCk0kWcoGzPTmlzuGyc897LEI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=pooX4bma7jAaRAWYjllADvOAvPpwInQfV7wIyNjk9Na0P/qFKr5jT77K1WXfyiO8L
-	 z9Wi8zvig7q6xHiyWPkYsgFc2SY8qXf1xlvdOda98JUrHNModmr/Zs/caFowflrUk5
-	 k4dK2jG/gIcYjkzcWH0OiyJJxNajn357jqgrMgfk=
+	b=tvnGtSfePS7SbtytS/Caiv2qPt+/8KzLete/W1WoHxfOLXkeS2cgegg680xcEtsJy
+	 0FfQAUY8da68c1UR4weIpx1DwjDe3LSba74o150reC+zDGirDwKMf7PHd1gi3Ab8hJ
+	 9VRvKGLZ9Veb+EuK/ePCvOKHwWVbdg9jiw/P7ps0=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Fri, 27 Dec 2024 14:23:21 +0100
-Subject: [PATCH v2 2/6] module: sysfs: Drop member
- 'module_sect_attr::address'
+Date: Fri, 27 Dec 2024 14:23:22 +0100
+Subject: [PATCH v2 3/6] module: sysfs: Drop 'struct module_sect_attr'
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -50,7 +49,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20241227-sysfs-const-bin_attr-module-v2-2-e267275f0f37@weissschuh.net>
+Message-Id: <20241227-sysfs-const-bin_attr-module-v2-3-e267275f0f37@weissschuh.net>
 References: <20241227-sysfs-const-bin_attr-module-v2-0-e267275f0f37@weissschuh.net>
 In-Reply-To: <20241227-sysfs-const-bin_attr-module-v2-0-e267275f0f37@weissschuh.net>
 To: Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
@@ -61,69 +60,87 @@ Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-hardening@vger.kernel.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1735305809; l=2030;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1735305809; l=2536;
  i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=NyHZ3hkjhrnYderQwPxSsaZMIcwAhrt2JhACazI/sTg=;
- b=qorr1OiOp9Q218uSJEB+xwCv3OxULp3uoZXXNx+skBODc2tr9b+7YqaekUGi0Ky6uD7ntxi0p
- n0ZAHDJTOvvA+AROQEn1wa0l2vUPZhO0YWP9BSu0Gv5uQTkDbwFGWdY
+ bh=FhZcpa+oH0AuaI//x4ZCk0kWcoGzPTmlzuGyc897LEI=;
+ b=u0qKz3BMtEpVGZXUui3SoMB/EwETgeN08i19n73QAIeK4X/aiflTBqEyt4MDXvG7NGaEOmPsS
+ 6L5hReKxg6tCSIhs3ntGT8bWm7LnzZF8Aend7nQMZtcRYudgyQWCyTk
 X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 
-'struct bin_attribute' already contains the member 'private' to pass
-custom data to the attribute handlers.
-Use that instead of the custom 'address' member.
+This is now an otherwise empty wrapper around a 'struct bin_attribute',
+not providing any functionality. Remove it.
 
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 ---
- kernel/module/sysfs.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ kernel/module/sysfs.c | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/module/sysfs.c b/kernel/module/sysfs.c
-index b7841f76a933114e6dbd0fc2d32a60b66b7966b6..8955b3da1b499881256670418d41c5d52d9e5a5e 100644
+index 8955b3da1b499881256670418d41c5d52d9e5a5e..3d507005d7111b8328c04d35476a73193f73db1c 100644
 --- a/kernel/module/sysfs.c
 +++ b/kernel/module/sysfs.c
-@@ -21,7 +21,6 @@
+@@ -19,13 +19,9 @@
+  * J. Corbet <corbet@lwn.net>
+  */
  #ifdef CONFIG_KALLSYMS
- struct module_sect_attr {
- 	struct bin_attribute battr;
--	unsigned long address;
+-struct module_sect_attr {
+-	struct bin_attribute battr;
+-};
+-
+ struct module_sect_attrs {
+ 	struct attribute_group grp;
+-	struct module_sect_attr attrs[];
++	struct bin_attribute attrs[];
  };
  
- struct module_sect_attrs {
-@@ -34,8 +33,6 @@ static ssize_t module_sect_read(struct file *file, struct kobject *kobj,
- 				struct bin_attribute *battr,
- 				char *buf, loff_t pos, size_t count)
+ #define MODULE_SECT_READ_SIZE (3 /* "0x", "\n" */ + (BITS_PER_LONG / 4))
+@@ -69,8 +65,8 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
  {
--	struct module_sect_attr *sattr =
--		container_of(battr, struct module_sect_attr, battr);
- 	char bounce[MODULE_SECT_READ_SIZE + 1];
- 	size_t wrote;
+ 	unsigned int nloaded = 0, i, size[2];
+ 	struct module_sect_attrs *sect_attrs;
+-	struct module_sect_attr *sattr;
+ 	struct bin_attribute **gattr;
++	struct bin_attribute *sattr;
+ 	int ret;
  
-@@ -52,7 +49,7 @@ static ssize_t module_sect_read(struct file *file, struct kobject *kobj,
- 	 */
- 	wrote = scnprintf(bounce, sizeof(bounce), "0x%px\n",
- 			  kallsyms_show_value(file->f_cred)
--				? (void *)sattr->address : NULL);
-+				? battr->private : NULL);
- 	count = min(count, wrote);
- 	memcpy(buf, bounce, count);
+ 	/* Count loaded sections and allocate structures */
+@@ -95,18 +91,18 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
  
-@@ -99,7 +96,6 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
  		if (sect_empty(sec))
  			continue;
- 		sysfs_bin_attr_init(&sattr->battr);
--		sattr->address = sec->sh_addr;
- 		sattr->battr.attr.name =
+-		sysfs_bin_attr_init(&sattr->battr);
+-		sattr->battr.attr.name =
++		sysfs_bin_attr_init(sattr);
++		sattr->attr.name =
  			kstrdup(info->secstrings + sec->sh_name, GFP_KERNEL);
- 		if (!sattr->battr.attr.name) {
-@@ -107,6 +103,7 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
+-		if (!sattr->battr.attr.name) {
++		if (!sattr->attr.name) {
+ 			ret = -ENOMEM;
  			goto out;
  		}
- 		sattr->battr.read = module_sect_read;
-+		sattr->battr.private = (void *)sec->sh_addr;
- 		sattr->battr.size = MODULE_SECT_READ_SIZE;
- 		sattr->battr.attr.mode = 0400;
- 		*(gattr++) = &(sattr++)->battr;
+-		sattr->battr.read = module_sect_read;
+-		sattr->battr.private = (void *)sec->sh_addr;
+-		sattr->battr.size = MODULE_SECT_READ_SIZE;
+-		sattr->battr.attr.mode = 0400;
+-		*(gattr++) = &(sattr++)->battr;
++		sattr->read = module_sect_read;
++		sattr->private = (void *)sec->sh_addr;
++		sattr->size = MODULE_SECT_READ_SIZE;
++		sattr->attr.mode = 0400;
++		*(gattr++) = sattr++;
+ 	}
+ 	*gattr = NULL;
+ 
+@@ -186,7 +182,7 @@ static int add_notes_attrs(struct module *mod, const struct load_info *info)
+ 			continue;
+ 		if (info->sechdrs[i].sh_type == SHT_NOTE) {
+ 			sysfs_bin_attr_init(nattr);
+-			nattr->attr.name = mod->sect_attrs->attrs[loaded].battr.attr.name;
++			nattr->attr.name = mod->sect_attrs->attrs[loaded].attr.name;
+ 			nattr->attr.mode = 0444;
+ 			nattr->size = info->sechdrs[i].sh_size;
+ 			nattr->private = (void *)info->sechdrs[i].sh_addr;
 
 -- 
 2.47.1
