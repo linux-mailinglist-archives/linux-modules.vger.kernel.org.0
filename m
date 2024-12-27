@@ -1,164 +1,124 @@
-Return-Path: <linux-modules+bounces-2851-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2857-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 711C19FD4E3
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 14:23:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 05E3B9FD689
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 18:18:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B81713A11E7
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 13:23:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2A853A1EC8
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Dec 2024 17:18:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C0831F37D4;
-	Fri, 27 Dec 2024 13:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="IZweKvep"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43EC71F8679;
+	Fri, 27 Dec 2024 17:18:48 +0000 (UTC)
 X-Original-To: linux-modules@vger.kernel.org
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799D11F37AE;
-	Fri, 27 Dec 2024 13:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2E01F7557;
+	Fri, 27 Dec 2024 17:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735305821; cv=none; b=AnRQMHordknCfObVwPsYfRs0rhxfwzEqs4gcWdf969mRMKP0rAv5JO4R52u/V7AkIGVO434wAjqR+XED6pqszJFBRimHSsD86RmfQJm5MGJ1P3cssKCvQ8vX+FFe+8vWP9rnVRs+f6Jy/lYOr+NrI7TihjLE9d97A112tdPM3SY=
+	t=1735319928; cv=none; b=WF/gvtMQIzvQp4Ov6H1FrOA9J3DXaa7wdslg9c+KxnBedtRU2+rLu+3C56YSXyr2TxaXsmVsGUZqaq77ppblVZxXR0RIAzgQHCvsvynkrXtqy6prVobjFC9XCIbxONutLyEgMC5KG5cosQ+cerUlRHM/6u3otRuJZu0Pz/ugLqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735305821; c=relaxed/simple;
-	bh=QoqqZMdscJifL85sSU4W8OY4Djn0uzs7qpMPaw0acy0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=raYTK0SE0WP/163n7PqtYXErCIFx79RyS9rsOHSyylZxtpLYEP5TEyW4kx/0XiK3YcReCcTEAydIwaarrx/zeXypANP/m6/VGjoEoDU2ogZcFGg2Zgi54Pr1gzmB7ltDFfArIL8Le+JBnXNn5EZoY83xy2HcGTB/h06JugoHhQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=IZweKvep; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1735305810;
-	bh=QoqqZMdscJifL85sSU4W8OY4Djn0uzs7qpMPaw0acy0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=IZweKvepjmNrroQf7LtKcfatQkN+yorL/6R2ymJD7ZCmmEI792MIwp1sXzBlT1C5O
-	 3hMJiXYij7GpMFTGDmdiv82vSLgrisgIAP0PxVCxLS+pHNmswNhLsOBxfbmwPBC0/n
-	 7/932UB1IfmN76G5BULIDU0Ms16jHDdS67GpC/mQ=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Fri, 27 Dec 2024 14:23:25 +0100
-Subject: [PATCH v2 6/6] module: sysfs: Use const 'struct bin_attribute'
+	s=arc-20240116; t=1735319928; c=relaxed/simple;
+	bh=cyPvuQG7rkgpWUrFujtHBOQ2InrAHxiLlkoqpRdbE34=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TQ902vtB8hl1OXLOgwJF4UDUW0ScJaIMHWCz29+dxudQW1kjpT02E8k5hgrRaOHjoC1wvsmAkVSkI1zG5M2X6/ebnVQK7S100I0WwcREfQtJoPaXeDSkFNGzjq4xxKqiakxGB4s/dXVCDR/bd5IVNOFNCpxtUTW/Ym+d2y4mFLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E66C4CED0;
+	Fri, 27 Dec 2024 17:18:45 +0000 (UTC)
+Date: Fri, 27 Dec 2024 12:19:46 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, Daniel
+ Gomez <da.gomez@samsung.com>, Luis Chamberlain <mcgrof@kernel.org>, "Paul E
+ . McKenney" <paulmck@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Petr Pavlu <petr.pavlu@suse.com>, Sami Tolvanen <samitolvanen@google.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Huacai Chen <chenhuacai@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Masami Hiramatsu
+ <mhiramat@kernel.org>, WANG Xuerui <kernel@xen0n.name>,
+ linux-trace-kernel@vger.kernel.org, loongarch@lists.linux.dev
+Subject: Re: [PATCH v2 19/28] LoongArch: ftrace: Use RCU in all users of
+ __module_text_address().
+Message-ID: <20241227121946.1643decf@gandalf.local.home>
+In-Reply-To: <20241220174731.514432-20-bigeasy@linutronix.de>
+References: <20241220174731.514432-1-bigeasy@linutronix.de>
+	<20241220174731.514432-20-bigeasy@linutronix.de>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241227-sysfs-const-bin_attr-module-v2-6-e267275f0f37@weissschuh.net>
-References: <20241227-sysfs-const-bin_attr-module-v2-0-e267275f0f37@weissschuh.net>
-In-Reply-To: <20241227-sysfs-const-bin_attr-module-v2-0-e267275f0f37@weissschuh.net>
-To: Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
- Sami Tolvanen <samitolvanen@google.com>, 
- Daniel Gomez <da.gomez@samsung.com>, Kees Cook <kees@kernel.org>, 
- "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-hardening@vger.kernel.org, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1735305809; l=3169;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=QoqqZMdscJifL85sSU4W8OY4Djn0uzs7qpMPaw0acy0=;
- b=GuaY64bsgH40d08xbPdonBvAes0cdWVElxunF+rL4jI1VlFfWopEe02t5GzNyq1ZVbNcu+jj/
- TxfzRl6frftArjL8DhH1HxBUujw56qi592q0GzRInSqBG+odDVfhKHW
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-The sysfs core is switching to 'const struct bin_attribute's.
-Prepare for that.
+On Fri, 20 Dec 2024 18:41:33 +0100
+Sebastian Andrzej Siewior <bigeasy@linutronix.de> wrote:
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
- kernel/module/sysfs.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+> --- a/arch/loongarch/kernel/ftrace_dyn.c
+> +++ b/arch/loongarch/kernel/ftrace_dyn.c
+> @@ -85,14 +85,13 @@ static bool ftrace_find_callable_addr(struct dyn_ftrace *rec, struct module *mod
+>  	 * dealing with an out-of-range condition, we can assume it
+>  	 * is due to a module being loaded far away from the kernel.
+>  	 *
+> -	 * NOTE: __module_text_address() must be called with preemption
+> -	 * disabled, but we can rely on ftrace_lock to ensure that 'mod'
+> +	 * NOTE: __module_text_address() must be called within a RCU read
+> +	 * section, but we can rely on ftrace_lock to ensure that 'mod'
+>  	 * retains its validity throughout the remainder of this code.
+>  	 */
+>  	if (!mod) {
+> -		preempt_disable();
+> +		guard(rcu)();
+>  		mod = __module_text_address(pc);
+> -		preempt_enable();
+>  	}
+>  
+>  	if (WARN_ON(!mod))
+> -- 
 
-diff --git a/kernel/module/sysfs.c b/kernel/module/sysfs.c
-index d04cb12eac7be63dd0bb65bd55e97280e7875e4e..853745e353381204161541c6f29bf97c42ec6df3 100644
---- a/kernel/module/sysfs.c
-+++ b/kernel/module/sysfs.c
-@@ -26,7 +26,7 @@ struct module_sect_attrs {
- 
- #define MODULE_SECT_READ_SIZE (3 /* "0x", "\n" */ + (BITS_PER_LONG / 4))
- static ssize_t module_sect_read(struct file *file, struct kobject *kobj,
--				struct bin_attribute *battr,
-+				const struct bin_attribute *battr,
- 				char *buf, loff_t pos, size_t count)
- {
- 	char bounce[MODULE_SECT_READ_SIZE + 1];
-@@ -54,18 +54,18 @@ static ssize_t module_sect_read(struct file *file, struct kobject *kobj,
- 
- static void free_sect_attrs(struct module_sect_attrs *sect_attrs)
- {
--	struct bin_attribute **bin_attr;
-+	const struct bin_attribute *const *bin_attr;
- 
--	for (bin_attr = sect_attrs->grp.bin_attrs; *bin_attr; bin_attr++)
-+	for (bin_attr = sect_attrs->grp.bin_attrs_new; *bin_attr; bin_attr++)
- 		kfree((*bin_attr)->attr.name);
--	kfree(sect_attrs->grp.bin_attrs);
-+	kfree(sect_attrs->grp.bin_attrs_new);
- 	kfree(sect_attrs);
- }
- 
- static int add_sect_attrs(struct module *mod, const struct load_info *info)
- {
- 	struct module_sect_attrs *sect_attrs;
--	struct bin_attribute **gattr;
-+	const struct bin_attribute **gattr;
- 	struct bin_attribute *sattr;
- 	unsigned int nloaded = 0, i;
- 	int ret;
-@@ -86,7 +86,7 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
- 
- 	/* Setup section attributes. */
- 	sect_attrs->grp.name = "sections";
--	sect_attrs->grp.bin_attrs = gattr;
-+	sect_attrs->grp.bin_attrs_new = gattr;
- 
- 	sattr = &sect_attrs->attrs[0];
- 	for (i = 0; i < info->hdr->e_shnum; i++) {
-@@ -101,7 +101,7 @@ static int add_sect_attrs(struct module *mod, const struct load_info *info)
- 			ret = -ENOMEM;
- 			goto out;
- 		}
--		sattr->read = module_sect_read;
-+		sattr->read_new = module_sect_read;
- 		sattr->private = (void *)sec->sh_addr;
- 		sattr->size = MODULE_SECT_READ_SIZE;
- 		sattr->attr.mode = 0400;
-@@ -144,7 +144,7 @@ struct module_notes_attrs {
- 
- static void free_notes_attrs(struct module_notes_attrs *notes_attrs)
- {
--	kfree(notes_attrs->grp.bin_attrs);
-+	kfree(notes_attrs->grp.bin_attrs_new);
- 	kfree(notes_attrs);
- }
- 
-@@ -152,7 +152,7 @@ static int add_notes_attrs(struct module *mod, const struct load_info *info)
- {
- 	unsigned int notes, loaded, i;
- 	struct module_notes_attrs *notes_attrs;
--	struct bin_attribute **gattr;
-+	const struct bin_attribute **gattr;
- 	struct bin_attribute *nattr;
- 	int ret;
- 
-@@ -178,7 +178,7 @@ static int add_notes_attrs(struct module *mod, const struct load_info *info)
- 	}
- 
- 	notes_attrs->grp.name = "notes";
--	notes_attrs->grp.bin_attrs = gattr;
-+	notes_attrs->grp.bin_attrs_new = gattr;
- 
- 	nattr = &notes_attrs->attrs[0];
- 	for (loaded = i = 0; i < info->hdr->e_shnum; ++i) {
+I personally dislike swapping one line of protection for the guard() code.
 
--- 
-2.47.1
+Although, I do think scoped_guard() can work.
+
+That is:
+
+	if (!mod) {
+		read_rcu_lock();
+		mod = __module_text_address(pc);
+		read_rcu_unlock();
+	}
+
+Is easier to understand than:
+
+	if (!mod) {
+		guard(rcu)();
+		mod = __module_text_address(pc);
+	}
+
+Because it makes me wonder, why use a guard() for a one liner?
+
+But, when I saw your other patch, if we had:
+
+	if (!mod) {
+		scoped_guard(rcu)()
+			mod = __module_text_address(pc);
+	}
+
+To me, hat looks much better than the guard() as it is obvious to what the
+code is protecting. Even though, I still prefer the explicit, lock/unlock.
+Maybe, just because I'm more used to it.
+
+IMHO, guard() is for complex functions that are error prone. A single line
+is not something that is error prone (unless you don't match the lock and
+unlock properly, but that's pretty obvious when that happens).
+
+But this is just my own opinion.
+
+-- Steve
 
 
