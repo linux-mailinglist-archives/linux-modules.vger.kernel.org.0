@@ -1,129 +1,93 @@
-Return-Path: <linux-modules+bounces-2859-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2862-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BCEB9FD982
-	for <lists+linux-modules@lfdr.de>; Sat, 28 Dec 2024 09:44:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 015169FDB89
+	for <lists+linux-modules@lfdr.de>; Sat, 28 Dec 2024 16:46:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88BEA3A2981
-	for <lists+linux-modules@lfdr.de>; Sat, 28 Dec 2024 08:43:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5A601880795
+	for <lists+linux-modules@lfdr.de>; Sat, 28 Dec 2024 15:46:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC3B86320;
-	Sat, 28 Dec 2024 08:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 280AC1448F2;
+	Sat, 28 Dec 2024 15:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="sK2qcuK+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CC9+1b2m"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A6D7083E;
-	Sat, 28 Dec 2024 08:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F092638FAD;
+	Sat, 28 Dec 2024 15:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735375432; cv=none; b=T868dIBk0RD4JbKZ5Uv+8jl2UO/f/8gA4CTDYRzLdC9ant5WFA9pfj5F5Ax3HXfoaiqrYsuA86rHHf7SISuEVxs8BDBsmfoXlrO7xBWW6MB2zSffZc+mfghE/uXFuPoTiG6LEw7rxbtkWsNjT6r/KqLOnlBN2o4R+TnRTkPnAFY=
+	t=1735400809; cv=none; b=TZ2s8k+6C4HTxN9fy/WfIg4zNRl8qDWLQxlxFDRNNeXTmhfn3qtaLSZpcap5nN3p0jpNgNixHgV+JANGewjZruPs3aSNuZ7Oz+vLQuPnoKvOMr7Mq2a+EtPBqi/pIQaytHoNZV301vCSDhT4kUqQwsjmKvjTE+bDfrn0OYbcduM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735375432; c=relaxed/simple;
-	bh=wz1z8EiyfVhVbt4qr9tEdssHSlJmEHuAhD1PCW7Z+GY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=u6ot6w0iryaCQ/VFD95EX3UZe07h5pkqfvs9qXTiBlK1YfE3Xa2AlolGOKY6tEgKl2K4As/Dv+axi0gqWPNsblzWAQoau5GaDQXrlE2fMQrWPh2Rp5YFDE1N18RbFNW+pNmhkxtJas2h6uFI83OzPRqerSWuwsPY5sfe9mzbCd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=sK2qcuK+; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1735375425;
-	bh=wz1z8EiyfVhVbt4qr9tEdssHSlJmEHuAhD1PCW7Z+GY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=sK2qcuK+yGlFRTv0drQ/tSHIXIlyiafpZODXd1Cm4O5wUM0gOva8V1J2ZyHzGqyoy
-	 iZy7SI3bFvLtDdk878Dx750SrTZxWuL5i0r/kYrR2rRf8qG/y/DS699t4lbpoWqu0V
-	 aGKj4YfwnkO+Jem/l+omRqCywWTpARWzAldhQV4Y=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Sat, 28 Dec 2024 09:43:43 +0100
-Subject: [PATCH v2 3/3] btf: Switch module BTF attribute to
- sysfs_bin_attr_simple_read()
+	s=arc-20240116; t=1735400809; c=relaxed/simple;
+	bh=EbioE1fYXi25EGTAgK8ipToHTGMcZ/tvkSAzZwbL9M0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=keIx7uuiwBtAU5FP3L/PnPWEdrHZhx3tOU8YDwtjYRjTodkcPp0g1o+1YV7JED95K7vU2QkzreOQfgcVZH7SAZ4Dp9OSnzx/74Fb2bmB9Hay2psLQ75Jsm6AcUc89x3xaHz242O2KjGZ7l/kqCq8Ch+HmUtAc4J/QiJzaFH7Ozg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CC9+1b2m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2526BC4CECD;
+	Sat, 28 Dec 2024 15:46:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735400808;
+	bh=EbioE1fYXi25EGTAgK8ipToHTGMcZ/tvkSAzZwbL9M0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CC9+1b2mqhcQr632sQMJc2oAlq4p6NrLV0accP7RSq4N2CIhXyKKB4tR1XNzUaI0h
+	 iv4RQ0KMI4WEKYWGlk0QLARiC3/xmz3Hwg1QJGOV5I97cNeLLmiBHrB4OSHeO95DDR
+	 A0IBlPap59z2AGIHRRh9NFc/qh0a1nTSDH4A8Y8XTDzXnYVRFzzE84bwFQ1L3ufZ3k
+	 W3YCvtMjS0boDoPaurSOpOVfoxCeu69uKYc/g6ZV9NSk5s/ArnVZp2mVW6TWrP0pni
+	 dPpDP6jUhE80THiAcl/oTqpkMuIvxG6eJEYsQctCQQrv+s+knB7BuWq8o4z7uIy9J3
+	 j7rnG1Fsmhj4w==
+From: Masahiro Yamada <masahiroy@kernel.org>
+To: linux-kbuild@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	linux-modules@vger.kernel.org,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Matthew Maurer <mmaurer@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>
+Subject: [PATCH 0/2] Fixups before RUST modversions support
+Date: Sun, 29 Dec 2024 00:45:27 +0900
+Message-ID: <20241228154603.2234284-1-masahiroy@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20241228-sysfs-const-bin_attr-simple-v2-3-7c6f3f1767a3@weissschuh.net>
-References: <20241228-sysfs-const-bin_attr-simple-v2-0-7c6f3f1767a3@weissschuh.net>
-In-Reply-To: <20241228-sysfs-const-bin_attr-simple-v2-0-7c6f3f1767a3@weissschuh.net>
-To: Michael Ellerman <mpe@ellerman.id.au>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Christophe Leroy <christophe.leroy@csgroup.eu>, 
- Naveen N Rao <naveen@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
- Sami Tolvanen <samitolvanen@google.com>, 
- Daniel Gomez <da.gomez@samsung.com>, Alexei Starovoitov <ast@kernel.org>, 
- Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, 
- Martin KaFai Lau <martin.lau@linux.dev>, 
- Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, 
- Yonghong Song <yonghong.song@linux.dev>, 
- John Fastabend <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>, 
- Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>, 
- Jiri Olsa <jolsa@kernel.org>
-Cc: linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
- linux-modules@vger.kernel.org, bpf@vger.kernel.org, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1735375424; l=1403;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=wz1z8EiyfVhVbt4qr9tEdssHSlJmEHuAhD1PCW7Z+GY=;
- b=H/wGBJzQrmCrKy2Y3Rb0Y68++ySdjfE7idPzg55qBSVH2MHWx1FPtKo8MlnyUx47kvNeGXYlQ
- vMM+NGIIRAUCUYj71p4EXyyMjvF47hbQPHq4QtNrPMIHcjM6PPWHOee
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 
-The generic function from the sysfs core can replace the custom one.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
----
- kernel/bpf/btf.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ - Fix s32 -> u32
+ - Make printf() format consistent
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index e5a5f023cedd5c288c2774218862c69db469917f..76de36d2552002d1e25c826d701340d9cde07ba1 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -8011,17 +8011,6 @@ struct btf_module {
- static LIST_HEAD(btf_modules);
- static DEFINE_MUTEX(btf_module_mutex);
- 
--static ssize_t
--btf_module_read(struct file *file, struct kobject *kobj,
--		struct bin_attribute *bin_attr,
--		char *buf, loff_t off, size_t len)
--{
--	const struct btf *btf = bin_attr->private;
--
--	memcpy(buf, btf->data + off, len);
--	return len;
--}
--
- static void purge_cand_cache(struct btf *btf);
- 
- static int btf_module_notify(struct notifier_block *nb, unsigned long op,
-@@ -8082,8 +8071,8 @@ static int btf_module_notify(struct notifier_block *nb, unsigned long op,
- 			attr->attr.name = btf->name;
- 			attr->attr.mode = 0444;
- 			attr->size = btf->data_size;
--			attr->private = btf;
--			attr->read = btf_module_read;
-+			attr->private = btf->data;
-+			attr->read_new = sysfs_bin_attr_simple_read;
- 
- 			err = sysfs_create_bin_file(btf_kobj, attr);
- 			if (err) {
+Matthew Maurer is adding more 's32'.
+
+I need to fix the code now.
+Otherwise, I would need to fix more places.
+
+
+
+Masahiro Yamada (2):
+  module: get symbol crc back to unsigned
+  modpost: zero-pad CRC values in modversion_info array
+
+ include/linux/module.h   |  4 ++--
+ kernel/module/internal.h | 10 +++++-----
+ kernel/module/main.c     |  2 +-
+ kernel/module/version.c  |  2 +-
+ scripts/mod/modpost.c    |  2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
 -- 
-2.47.1
+2.43.0
 
 
