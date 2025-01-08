@@ -1,59 +1,59 @@
-Return-Path: <linux-modules+bounces-2976-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2975-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A043A05648
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:08:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF08AA05647
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:08:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89F4F1888355
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:08:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92549188868C
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:08:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6463F1FA830;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61F3A1FA826;
 	Wed,  8 Jan 2025 09:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Smh3V6vU";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="TCMkjn4t"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KEX+o1uS";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="kNF4ExyG"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8664E1F8ADE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C51F8AE6;
 	Wed,  8 Jan 2025 09:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736327127; cv=none; b=Q0Oya7k58rogaxur9A4jiObrmassvgAjJ8HdyGVSEHmb15KJEe355dEdQRHJ8Wpn01v2Gwxtawa03Aksm5gVLr3VrXmqLixOCoxHEym2Kzp+y2s8x1EBEvWf+8h+qc4zlLPIG5lrj6Bgd7afGKN9PhGTbPW91MAoL7uJtL1smlw=
+	t=1736327127; cv=none; b=temFjwtBaO9qA9Bh3KCguEi3E0OAQ67l3Kw98ERaBT8RhJhmyXbxQirBCai+MSnVjfA3AAud8rL1yGC4+grETbEzlPaYFI5AEPW802nFru1f8ip8x1ALFAJNENdKSNEcjJ+PWesYtHUrlrl5KbhTNDAfTbEk3F9YpXo+5ipJ1aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736327127; c=relaxed/simple;
-	bh=P8cpM73cMdV4X9RLYh8MiEJZf1KAJJ/PkpaW8qvgJ5I=;
+	bh=dnHZYtRQRqUncQkV4yyJr8LboGs1uhLkzkoM41kcf0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vq7642nvcqqlcwl2wxKvbnIqtJvNgGBFYZp9kNptYqcrJdrU54fyLEw99PNbUIEQ+Ire0BIpU4J9T0tqf4iK1uZMACIvoqRYwo7ZnqoEQehYL/tfMZwscKEcFDdzEPWJxvKYN+7DEc7BInqjmwhSMa/cY+p93zZPqvY+Uu44OTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Smh3V6vU; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=TCMkjn4t; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=MbsMDfLwtaxqmL9YBc9s2OAnYaYqTDGzoOiGmj7vwNqmCAoN22TmA1R7u95q8Rzl+MTaDI+vavBsZWc5lBJEg/ycjQFDmu1WThrCPh58M7A2Uh4Vtr8C1rejTaLJ3Kgui9iuzyEQ3m321qaiQ1cBrI0QPwQM0mw2BCgnsmwGtrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KEX+o1uS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=kNF4ExyG; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1736327122;
+	s=2020; t=1736327123;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lprawi1Wy0blHcfKhZWeO6Nu25/xNNrs6hneQ3+r2fM=;
-	b=Smh3V6vUWgb2Z4rtmOumtw4pf4+Q8qg1bz9YNY0OiT+E18yri12DCO8BBIxHyHnJpE7v+X
-	Di+T3/WzvbjkM2l+qI2eAJa9oZIpTKOnvPpJe8lEYBbgR7IdnNHw3sw9W7K/x7tFxcNViz
-	dKCfJo1BSccUD7iBuLEimuoyE3tMnJ89rKhKuPQJur5YnS/3vzXT54RZYqc+hkhqz6uO2Z
-	82Z0wJxBip8UNC+8UT1+mi3TeE9Jf4TA8SRVK0ksIemdsPMsVBKMeiPWmxPjTWPZlJlZRI
-	SmLl4LeV9/nAOU6FQ4EvRU454tl0oTAZa3k4hWVaVZ+ZIDCSa9m8YB7eB+bOnQ==
+	bh=Hfagbwpj3df9q7ePOIyVBofNwKk4yX9AX2H1Tk2ZCkc=;
+	b=KEX+o1uSt4ezKkiXlbcixjyMcaXTOpYuLKGxDN98o0SAs1N+ARvBDeILqSXQUEKvwExik/
+	/KCrHsVYKJV3GmxhPrduLM0WBFY54PNWPzCGD8Fp+0BHO3Cmkp+jFLvqi0vfzu8qvXj6it
+	Ju4cnNC/Iim0sGfzVJOy/U8DaD2ryM/KiKwWOKdHY4hHGO9BcT7PWXiQF05RxLTt8UNeMc
+	uPfXdCKiZukWbi0Y3DqytAlzE8SsMLldTOcvuybJyYJnWpZgDV062bwE2/aDM2PpAAaA64
+	mGqQ63F2hzit/ejryZ6h8mkvp13xpvwuoezi8fkgNAc6ve5HjVcig9i+cnhhUQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1736327122;
+	s=2020e; t=1736327123;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lprawi1Wy0blHcfKhZWeO6Nu25/xNNrs6hneQ3+r2fM=;
-	b=TCMkjn4tKyPMEXkg2pCiQnC3MTbFdMMSSH7u+iWfE3/HoOmxq+yZeEhfMffFdLoGQYQtX1
-	sV/EQOg0G+BujpBA==
+	bh=Hfagbwpj3df9q7ePOIyVBofNwKk4yX9AX2H1Tk2ZCkc=;
+	b=kNF4ExyGCnG/OhL7DX/Q6MpdEqr370zPqck+Xth++7nVaGZ+I9vRJrZDYPGIP8jcHhYdRH
+	a1YNiqpuT4uzzZBw==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -64,15 +64,13 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Jason Baron <jbaron@akamai.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
-	x86@kernel.org
-Subject: [PATCH v3 22/28] x86: Use RCU in all users of __module_address().
-Date: Wed,  8 Jan 2025 10:04:51 +0100
-Message-ID: <20250108090457.512198-23-bigeasy@linutronix.de>
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH v3 23/28] jump_label: Use RCU in all users of __module_address().
+Date: Wed,  8 Jan 2025 10:04:52 +0100
+Message-ID: <20250108090457.512198-24-bigeasy@linutronix.de>
 In-Reply-To: <20250108090457.512198-1-bigeasy@linutronix.de>
 References: <20250108090457.512198-1-bigeasy@linutronix.de>
 Precedence: bulk
@@ -86,69 +84,56 @@ Content-Transfer-Encoding: quoted-printable
 __module_address() can be invoked within a RCU section, there is no
 requirement to have preemption disabled.
 
-Replace the preempt_disable() section around __module_address() with
-RCU.
+Replace the preempt_disable() section around __module_address() with RCU.
 
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Jason Baron <jbaron@akamai.com>
 Cc: Josh Poimboeuf <jpoimboe@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: x86@kernel.org
+Cc: Steven Rostedt <rostedt@goodmis.org>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---
- arch/x86/kernel/callthunks.c | 3 +--
- arch/x86/kernel/unwind_orc.c | 4 +---
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ kernel/jump_label.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/x86/kernel/callthunks.c b/arch/x86/kernel/callthunks.c
-index f17d166078823..276b5368ff6b0 100644
---- a/arch/x86/kernel/callthunks.c
-+++ b/arch/x86/kernel/callthunks.c
-@@ -98,11 +98,10 @@ static inline bool within_module_coretext(void *addr)
- #ifdef CONFIG_MODULES
- 	struct module *mod;
-=20
--	preempt_disable();
-+	guard(rcu)();
- 	mod =3D __module_address((unsigned long)addr);
- 	if (mod && within_module_core((unsigned long)addr, mod))
- 		ret =3D true;
--	preempt_enable();
- #endif
- 	return ret;
- }
-diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
-index d4705a348a804..977ee75e047c8 100644
---- a/arch/x86/kernel/unwind_orc.c
-+++ b/arch/x86/kernel/unwind_orc.c
-@@ -476,7 +476,7 @@ bool unwind_next_frame(struct unwind_state *state)
- 		return false;
-=20
- 	/* Don't let modules unload while we're reading their ORC data. */
--	preempt_disable();
-+	guard(rcu)();
-=20
- 	/* End-of-stack check for user tasks: */
- 	if (state->regs && user_mode(state->regs))
-@@ -669,14 +669,12 @@ bool unwind_next_frame(struct unwind_state *state)
- 		goto err;
+diff --git a/kernel/jump_label.c b/kernel/jump_label.c
+index 93a822d3c468c..7fcf4017cb383 100644
+--- a/kernel/jump_label.c
++++ b/kernel/jump_label.c
+@@ -746,9 +746,9 @@ static int jump_label_add_module(struct module *mod)
+ 				kfree(jlm);
+ 				return -ENOMEM;
+ 			}
+-			preempt_disable();
+-			jlm2->mod =3D __module_address((unsigned long)key);
+-			preempt_enable();
++			scoped_guard(rcu)
++				jlm2->mod =3D __module_address((unsigned long)key);
++
+ 			jlm2->entries =3D static_key_entries(key);
+ 			jlm2->next =3D NULL;
+ 			static_key_set_mod(key, jlm2);
+@@ -906,13 +906,13 @@ static void jump_label_update(struct static_key *key)
+ 		return;
  	}
 =20
+-	preempt_disable();
+-	mod =3D __module_address((unsigned long)key);
+-	if (mod) {
+-		stop =3D mod->jump_entries + mod->num_jump_entries;
+-		init =3D mod->state =3D=3D MODULE_STATE_COMING;
++	scoped_guard(rcu) {
++		mod =3D __module_address((unsigned long)key);
++		if (mod) {
++			stop =3D mod->jump_entries + mod->num_jump_entries;
++			init =3D mod->state =3D=3D MODULE_STATE_COMING;
++		}
+ 	}
 -	preempt_enable();
- 	return true;
-=20
- err:
- 	state->error =3D true;
-=20
- the_end:
--	preempt_enable();
- 	state->stack_info.type =3D STACK_TYPE_UNKNOWN;
- 	return false;
- }
+ #endif
+ 	entry =3D static_key_entries(key);
+ 	/* if there are no users, entry can be NULL */
 --=20
 2.47.1
 
