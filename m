@@ -1,56 +1,59 @@
-Return-Path: <linux-modules+bounces-2953-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2957-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56C30A05613
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:05:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9E86A05619
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:05:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC2763A3BCF
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:05:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17F8B3A3AEF
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:05:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9C81E131B;
-	Wed,  8 Jan 2025 09:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9879D1F12FB;
+	Wed,  8 Jan 2025 09:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="w2W33BsJ";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="DcD6OLcc"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="fbL7PaM/";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="OSBg5lXo"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C6714B95A;
-	Wed,  8 Jan 2025 09:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3FC1E131B;
+	Wed,  8 Jan 2025 09:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736327109; cv=none; b=cvwWORH5GMt9L9Ck1Z9YoPwoUQsvRypqw43agDrSp40CF86+c1tY/26fq/Zm3yGbY5TyT+PVNUYfP6w/ctIRqpWlYI7mE70ZNCVV+4/gxb6ZmQvZgWanTsNghpJmnNMY9GGlPeH6do+ZOZh2XFAfNDUuAquBu0LFZ4ARpz3QB40=
+	t=1736327118; cv=none; b=HxbUf0WS6VFTR6K51VgvCcu7rpESz/C9L6NanJOevvTkb23IEU/Z3OK+b5ZbvK6ZZzQ19vFMTVkIVYpya07+f/6Otbx3RcjjVl7OYrj/SNd6Yj5yftvnCDfheGGO6HBwNU2xUwqNcxPcpFzf7SFP7x8gNRuTo5ec0wyoYcXU6mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736327109; c=relaxed/simple;
-	bh=kwfNMejAdMo5HrQqhxS078PhwTh0n+3I/nDs5yDiY00=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=F5G2srDlRDKT3BMCBYmT+BKAdhBUsIGte+2tyu660eGlSZ+FdvPpO89ipzIilSflaUJNWKfNhHHoUVDz3/4J7qk6W5Uv7SE8o0fTENoDpSq2MtPgmwZYqA2wHy/L2IKIDjHf6RcecZLthQJzT6aRApezS5mjkJ+q0t8R97EOanI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=w2W33BsJ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=DcD6OLcc; arc=none smtp.client-ip=193.142.43.55
+	s=arc-20240116; t=1736327118; c=relaxed/simple;
+	bh=F9jM9tja/ixm4H725fMZuMP2ARoMzvTSWq/U6XJx5R4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EjiPzUxT3Uvlu20pibpMbuF9oVME5+4v9srA01tLUMmGOUG9/ox/+IoMaEapKv4dN4GKxZUUlAFM+ZRcftQIIvDTBT532gIxdnda79Im2uLJa9AYpRCjHOsmyJbSer9YGRFZVR8sV5YbjnsYL4+zhRRiXkMuJwvNsIo0IjAcKcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=fbL7PaM/; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=OSBg5lXo; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1736327105;
+	s=2020; t=1736327114;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=4LNuLH55aligHmXIA5M9Xm1sUCkIpJgG2Sby21sss9c=;
-	b=w2W33BsJUJS/dCSdcvJHW+/2sBOtxSWq/QqSYTx41k78wencKdIeqxG2vPyVmjkTEfoNmd
-	EL8ta+6uKvFeStVZLLBOW3NFkOoL5EQypb2CrWRR8VDndeD2QVeiYwRYorevMruH37Pk6b
-	SSvKcawcUlg0SvPUza9u5pqCjqtmvoFoHO/cL21tiCKUohEUFz0K99teZXikHUs7MFu4rM
-	wCMdBMsSbfhg3Oa1u1asLcIvBB33mVoVkLvHovSHzK/8pW9otDifzKBL1+n2zoXts77e2s
-	SxMt8TE7QNNidwJCNtj7E36/88dyEBsmB9FNpvyXCX1Ysx+f8YDgT6KIlpsMAw==
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PPE2aj8MMacLBet/cFcEFX/RuW9ep+ZbC89Owtm7YeQ=;
+	b=fbL7PaM/jGm3qxpDrkSd+OOV7zI9CCrWhK14XQQj/sTBnt5P0YQD0RVra8HFOMFBUfOQ9o
+	ZeiwMHWOi5LYUi7Di9bJgMSxMDCUW3fiwPp2judcLdfWVK23tgF678cOtYn+yVpFoN/Gms
+	I7BHOMfWvtyv1WlXNjtgE8b3v2b2o9BAuH01E+17hUdm4tCDN7jwTWbpwetE+wKsYlEJdN
+	v2tTEdls+9oQiny3wsLcc02lP+uZFcluG4fQMCkxJSTbRWtzCVikVgqv3E6qJmVBwzPuLc
+	MgGtp/snz9ICbfa9JSaVWBETsCxx7ltqjFwZ1mEtKO1dTNwu9FmqvY5nz50DLA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1736327105;
+	s=2020e; t=1736327114;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=4LNuLH55aligHmXIA5M9Xm1sUCkIpJgG2Sby21sss9c=;
-	b=DcD6OLccuaUeC4M6HErFfL0Ob42odcxrTLtX4wAuh1fPCdPFXg05skamATK/B5k2fRd0Mh
-	2TCGwB35MVP0a5Cg==
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PPE2aj8MMacLBet/cFcEFX/RuW9ep+ZbC89Owtm7YeQ=;
+	b=OSBg5lXo+ufWWbp8J7i4SouYnhWhb4+QsBz5t/KMyFqT4Mz+2/cdk9gWc2IFkA4tH5UwY5
+	s+fGjtoLVNIUGsAg==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -60,97 +63,77 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH v3 00/28] module: Use RCU instead of RCU-sched.
-Date: Wed,  8 Jan 2025 10:04:29 +0100
-Message-ID: <20250108090457.512198-1-bigeasy@linutronix.de>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Helge Deller <deller@gmx.de>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Naveen N Rao <naveen@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>,
+	linux-parisc@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH v3 01/28] module: Extend the preempt disabled section in dereference_symbol_descriptor().
+Date: Wed,  8 Jan 2025 10:04:30 +0100
+Message-ID: <20250108090457.512198-2-bigeasy@linutronix.de>
+In-Reply-To: <20250108090457.512198-1-bigeasy@linutronix.de>
+References: <20250108090457.512198-1-bigeasy@linutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+dereference_symbol_descriptor() needs to obtain the module pointer
+belonging to pointer in order to resolve that pointer.
+The returned mod pointer is obtained under RCU-sched/ preempt_disable()
+guarantees and needs to be used within this section to ensure that the
+module is not removed in the meantime.
 
-This is an updated version of the initial post after PeterZ made me
-aware that there are users outside of the module directory.
-The goal is replace the mix auf rcu_read_lock(), rcu_read_lock_sched()
-and preempt_disable() with just rcu_read_lock().
+Extend the preempt_disable() section to also cover
+dereference_module_function_descriptor().
 
-I've split it into smaller chunks which can be applied/ reviewed
-independently.
+Fixes: 04b8eb7a4ccd9 ("symbol lookup: introduce dereference_symbol_descript=
+or()")
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>
+Cc: linux-parisc@vger.kernel.org
+Cc: linuxppc-dev@lists.ozlabs.org
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+---
+ include/linux/kallsyms.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v2=E2=80=A6v3: https://lore.kernel.org/all/20241220174731.514432-1-bigeasy@=
-linutronix.de/
-  - Converted cfi to use RCU.
-  - Use scoped_guard() in LoongArch's ftrace code after Steven suggested
-    it.
+diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
+index c3f075e8f60cb..1c6a6c1704d8d 100644
+--- a/include/linux/kallsyms.h
++++ b/include/linux/kallsyms.h
+@@ -57,10 +57,10 @@ static inline void *dereference_symbol_descriptor(void =
+*ptr)
+=20
+ 	preempt_disable();
+ 	mod =3D __module_address((unsigned long)ptr);
+-	preempt_enable();
+=20
+ 	if (mod)
+ 		ptr =3D dereference_module_function_descriptor(mod, ptr);
++	preempt_enable();
+ #endif
+ 	return ptr;
+ }
+--=20
+2.47.1
 
-v1=E2=80=A6v2: https://lore.kernel.org/all/20241205215102.hRywUW2A@linutron=
-ix.de/
-  - Split into smaller patches.
-  - Converted all users.
-
-Sebastian Andrzej Siewior (28):
-  module: Extend the preempt disabled section in
-    dereference_symbol_descriptor().
-  module: Begin to move from RCU-sched to RCU.
-  module: Use proper RCU assignment in add_kallsyms().
-  module: Use RCU in find_kallsyms_symbol().
-  module: Use RCU in module_get_kallsym().
-  module: Use RCU in find_module_all().
-  module: Use RCU in __find_kallsyms_symbol_value().
-  module: Use RCU in module_kallsyms_on_each_symbol().
-  module: Remove module_assert_mutex_or_preempt() from
-    try_add_tainted_module().
-  module: Use RCU in find_symbol().
-  module: Use RCU in __is_module_percpu_address().
-  module: Allow __module_address() to be called from RCU section.
-  module: Use RCU in search_module_extables().
-  module: Use RCU in all users of __module_address().
-  module: Use RCU in all users of __module_text_address().
-  ARM: module: Use RCU in all users of __module_text_address().
-  arm64: module: Use RCU in all users of __module_text_address().
-  LoongArch/orc: Use RCU in all users of __module_address().
-  LoongArch: ftrace: Use RCU in all users of __module_text_address().
-  powerpc/ftrace: Use RCU in all users of __module_text_address().
-  cfi: Use RCU while invoking __module_address().
-  x86: Use RCU in all users of __module_address().
-  jump_label: Use RCU in all users of __module_address().
-  jump_label: Use RCU in all users of __module_text_address().
-  bpf: Use RCU in all users of __module_text_address().
-  kprobes: Use RCU in all users of __module_text_address().
-  static_call: Use RCU in all users of __module_text_address().
-  bug: Use RCU instead RCU-sched to protect module_bug_list.
-
- arch/arm/kernel/module-plts.c            |   4 +-
- arch/arm64/kernel/ftrace.c               |   7 +-
- arch/loongarch/kernel/ftrace_dyn.c       |   9 +-
- arch/loongarch/kernel/unwind_orc.c       |   4 +-
- arch/powerpc/kernel/trace/ftrace.c       |   6 +-
- arch/powerpc/kernel/trace/ftrace_64_pg.c |   6 +-
- arch/x86/kernel/callthunks.c             |   3 +-
- arch/x86/kernel/unwind_orc.c             |   4 +-
- include/linux/kallsyms.h                 |   3 +-
- include/linux/module.h                   |   2 +-
- kernel/cfi.c                             |   5 +-
- kernel/jump_label.c                      |  31 ++++---
- kernel/kprobes.c                         |   4 +-
- kernel/livepatch/core.c                  |   4 +-
- kernel/module/internal.h                 |  11 ---
- kernel/module/kallsyms.c                 |  73 ++++++----------
- kernel/module/main.c                     | 103 ++++++++---------------
- kernel/module/tracking.c                 |   2 -
- kernel/module/tree_lookup.c              |   8 +-
- kernel/module/version.c                  |  14 +--
- kernel/static_call_inline.c              |  13 ++-
- kernel/trace/bpf_trace.c                 |  19 ++---
- kernel/trace/trace_kprobe.c              |   9 +-
- lib/bug.c                                |  22 ++---
- 24 files changed, 136 insertions(+), 230 deletions(-)
-
-Sebastian
 
