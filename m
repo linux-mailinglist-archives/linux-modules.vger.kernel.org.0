@@ -1,59 +1,59 @@
-Return-Path: <linux-modules+bounces-2961-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2959-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3E24A05624
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:06:11 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30682A05622
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:06:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11F4916604C
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:06:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3533718885E7
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99871F7554;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 287341F63CC;
 	Wed,  8 Jan 2025 09:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="2NWsnHYD";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Radbmlg1"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dQw546Fe";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="yELo2Ron"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598031F2C44;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598701F2C50;
 	Wed,  8 Jan 2025 09:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736327121; cv=none; b=bIeAsXKU+YXIVhiqbM6yR46U+o1S4YYVRUUL7iAu7mvNdDNMze4PjjWNiuKMnpiCBErhWAOyyo4YilFcA2YRsNZT75nJvniaTSrZ/U0O0C0kuHVtbO9w+ViNvoSNStkBoMys2+2EcxFlJyP71hMDg7usE6alQy8jeFqPshRzHHg=
+	t=1736327121; cv=none; b=BvJhrfLnQoYtYYd73gGLOe+G3wHOoXA7v8ydk6a4Mle90xG3lLtMw2oHRBsEYXlzaISBlSUAj/cUB6T+rBKPQ2tUEMLbOYNE622IOg2fEKs6ndKS6QXZKbBdZUD7WDOv73zWJEL2jwJj/YHger4meUHGsSxt64X/Q80m//VAFFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736327121; c=relaxed/simple;
-	bh=Lq/578psMJ7xGA1MC6Fb72suiu4e26yPqzxxiBL1vRY=;
+	bh=Y8KO8AjL4Wlp00NcVyzY4VrfkvuRnK0pthhJzJeBi5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQ6J+OE1EKKp6Y1bSGh8PPcqzwm9me6iCxGmLcu1iB6hRe9nzKp+hTuAi7mQ1KGUdilcEI89obq1fQDsm8DgTheDsu3tZZkIQ1r72YzwKbCA/NL0Z8Rx03dXL+FoP6hSv517VQkSak2kpLmwpdmEAB40TO+OAteeVdKoL60XoZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=2NWsnHYD; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Radbmlg1; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=ObXVnZUc7smiWu8bDNbqc9GJaB6/Y4XvxfwTY/4cOJKcJ4Q2NAnzXi9w+PIH0u0qcBxukKykJuICeKtW3jJlUbU/0zTGkutQxJ+LvK1XeGOYblsepI9lf532wxjZM1tMmBFeKNY5C7G2h5qeZAAZox2zc6Yhtgas4mgQhrG10Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dQw546Fe; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=yELo2Ron; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1736327115;
+	s=2020; t=1736327116;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Dl0IiwCR3ilXTxBcYNupLq7U5e515iyR9fTpq03YpK4=;
-	b=2NWsnHYDRTA58xM51vdPnzxpA853qVzlsE3h/6QMdiUM154kZ1qtsE9Baes12JWw9zjDuu
-	BeV/u9cBOxSnL5UudUvnUo6+yeMx1dABdZFshGHI1d8fU7UUT6oLxrg6uYdRjIwOLiqsoL
-	k+TalvqwOpDLOztEh7YN1xQK6J5Km/hYXGdRa93tjUcTZ+hzCyjtr5izfR+CPTn4w4r2A1
-	99raKF2o0NaeXyGImTxR9us6yKdPLyT1WhPmkImJ04m3JVCgB0Icq13a8BesDEkFb1Fp/j
-	Dw4RJVls2P+HyyFsrAdoSA8oJ2yVrzAkiQ+bD7yyPmrzcnhW01bjdjSqOcYdFQ==
+	bh=F/i2pw6yEUIHHaqk5xMWOKQ4ktctxeUDzPoI+9p2J9E=;
+	b=dQw546FemZWA5DZl3GgQ9Z9y7QJ95YI3DW+C5DaF34P0fbpmOq/II42Mf+3LhKCDkHfhFz
+	JLmdwpWpZPz9vV76LNDsCf4h6Pv98KZqd9VJ79ALyjqEXoMRDVpL89UvzIj5xR0D6MNPwD
+	kInzP969+40qAXeBZC5K1XCDZYEolhxgyXY+EpxZAgB1l0PbdPQBxXd8OQmjdL4faDh0E2
+	75Uw/s/X+HXqCaRu3OtRJ7Ju7d7qdnF6ChfjgTCdscziqwAqlDIDi33M+t64cmh81OX4oF
+	OBhJxPcPXCwvMLXp9pFQ2QSWAH75nnRSgjoZj+vCHl/QoC79bHoGHndnTRyTCA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1736327115;
+	s=2020e; t=1736327116;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Dl0IiwCR3ilXTxBcYNupLq7U5e515iyR9fTpq03YpK4=;
-	b=Radbmlg1VcUiFOGoj9wk5Vae7DRGB0WrW/kGlDYZe4YpKonGZXcr6qdzDK4LWmM/K4Ge8v
-	V6azuNKTwTBmCuBw==
+	bh=F/i2pw6yEUIHHaqk5xMWOKQ4ktctxeUDzPoI+9p2J9E=;
+	b=yELo2RonuTymhIA3uhM5pDJgXzKStGcLZB9ULHCytAJLeu/4p3x50qFT/CNFGNNHTHXpmj
+	DyWmRALNfWx+cGAw==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -63,20 +63,10 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jiri Kosina <jikos@kernel.org>,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Miroslav Benes <mbenes@suse.cz>,
-	Petr Mladek <pmladek@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	linux-trace-kernel@vger.kernel.org,
-	live-patching@vger.kernel.org
-Subject: [PATCH v3 06/28] module: Use RCU in find_module_all().
-Date: Wed,  8 Jan 2025 10:04:35 +0100
-Message-ID: <20250108090457.512198-7-bigeasy@linutronix.de>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH v3 07/28] module: Use RCU in __find_kallsyms_symbol_value().
+Date: Wed,  8 Jan 2025 10:04:36 +0100
+Message-ID: <20250108090457.512198-8-bigeasy@linutronix.de>
 In-Reply-To: <20250108090457.512198-1-bigeasy@linutronix.de>
 References: <20250108090457.512198-1-bigeasy@linutronix.de>
 Precedence: bulk
@@ -87,138 +77,62 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-The modules list and module::kallsyms can be accessed under RCU
-assumption.
+module::kallsyms can be accessed under RCU assumption.
 
-Remove module_assert_mutex_or_preempt() from find_module_all() so it can
-be used under RCU protection without warnings. Update its callers to use
-RCU protection instead of preempt_disable().
+Use rcu_dereference() to access module::kallsyms.
+Update callers.
 
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Joe Lawrence <joe.lawrence@redhat.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Miroslav Benes <mbenes@suse.cz>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: linux-trace-kernel@vger.kernel.org
-Cc: live-patching@vger.kernel.org
-Reviewed-by: Petr Mladek <pmladek@suse.com>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---
- include/linux/module.h      | 2 +-
- kernel/livepatch/core.c     | 4 +---
- kernel/module/kallsyms.c    | 1 +
- kernel/module/main.c        | 6 ++----
- kernel/trace/trace_kprobe.c | 9 +++------
- 5 files changed, 8 insertions(+), 14 deletions(-)
+ kernel/module/kallsyms.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/module.h b/include/linux/module.h
-index 94acbacdcdf18..5c1f7ea76c8cb 100644
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -663,7 +663,7 @@ static inline bool within_module(unsigned long addr, co=
-nst struct module *mod)
- 	return within_module_init(addr, mod) || within_module_core(addr, mod);
- }
-=20
--/* Search for module by name: must be in a RCU-sched critical section. */
-+/* Search for module by name: must be in a RCU critical section. */
- struct module *find_module(const char *name);
-=20
- extern void __noreturn __module_put_and_kthread_exit(struct module *mod,
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 3c21c31796db0..f8932c63b08e3 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -59,7 +59,7 @@ static void klp_find_object_module(struct klp_object *obj)
- 	if (!klp_is_module(obj))
- 		return;
-=20
--	rcu_read_lock_sched();
-+	guard(rcu)();
- 	/*
- 	 * We do not want to block removal of patched modules and therefore
- 	 * we do not take a reference here. The patches are removed by
-@@ -75,8 +75,6 @@ static void klp_find_object_module(struct klp_object *obj)
- 	 */
- 	if (mod && mod->klp_alive)
- 		obj->mod =3D mod;
--
--	rcu_read_unlock_sched();
- }
-=20
- static bool klp_initialized(void)
 diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
-index 4eef518204eb5..3cba9f933b24f 100644
+index 3cba9f933b24f..e3c55bc879c11 100644
 --- a/kernel/module/kallsyms.c
 +++ b/kernel/module/kallsyms.c
-@@ -450,6 +450,7 @@ unsigned long module_kallsyms_lookup_name(const char *n=
-ame)
- 	unsigned long ret;
+@@ -407,7 +407,7 @@ int module_get_kallsym(unsigned int symnum, unsigned lo=
+ng *value, char *type,
+ static unsigned long __find_kallsyms_symbol_value(struct module *mod, cons=
+t char *name)
+ {
+ 	unsigned int i;
+-	struct mod_kallsyms *kallsyms =3D rcu_dereference_sched(mod->kallsyms);
++	struct mod_kallsyms *kallsyms =3D rcu_dereference(mod->kallsyms);
 =20
+ 	for (i =3D 0; i < kallsyms->num_symtab; i++) {
+ 		const Elf_Sym *sym =3D &kallsyms->symtab[i];
+@@ -447,24 +447,15 @@ static unsigned long __module_kallsyms_lookup_name(co=
+nst char *name)
+ /* Look for this name: can be of form module:name. */
+ unsigned long module_kallsyms_lookup_name(const char *name)
+ {
+-	unsigned long ret;
+-
  	/* Don't lock: we're in enough trouble already. */
-+	guard(rcu)();
- 	preempt_disable();
- 	ret =3D __module_kallsyms_lookup_name(name);
- 	preempt_enable();
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 5cce4a92d7ba3..5aa56ec8e203e 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -374,16 +374,14 @@ bool find_symbol(struct find_symbol_arg *fsa)
+ 	guard(rcu)();
+-	preempt_disable();
+-	ret =3D __module_kallsyms_lookup_name(name);
+-	preempt_enable();
+-	return ret;
++	return __module_kallsyms_lookup_name(name);
  }
 =20
- /*
-- * Search for module by name: must hold module_mutex (or preempt disabled
-- * for read-only access).
-+ * Search for module by name: must hold module_mutex (or RCU for read-only
-+ * access).
-  */
- struct module *find_module_all(const char *name, size_t len,
- 			       bool even_unformed)
+ unsigned long find_kallsyms_symbol_value(struct module *mod, const char *n=
+ame)
  {
- 	struct module *mod;
-=20
--	module_assert_mutex_or_preempt();
+-	unsigned long ret;
 -
- 	list_for_each_entry_rcu(mod, &modules, list,
- 				lockdep_is_held(&module_mutex)) {
- 		if (!even_unformed && mod->state =3D=3D MODULE_STATE_UNFORMED)
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 935a886af40c9..37ff78ee17fe0 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -123,9 +123,8 @@ static nokprobe_inline bool trace_kprobe_module_exist(s=
-truct trace_kprobe *tk)
- 	if (!p)
- 		return true;
- 	*p =3D '\0';
--	rcu_read_lock_sched();
--	ret =3D !!find_module(tk->symbol);
--	rcu_read_unlock_sched();
-+	scoped_guard(rcu)
-+		ret =3D !!find_module(tk->symbol);
- 	*p =3D ':';
-=20
- 	return ret;
-@@ -800,12 +799,10 @@ static struct module *try_module_get_by_name(const ch=
-ar *name)
- {
- 	struct module *mod;
-=20
--	rcu_read_lock_sched();
+-	preempt_disable();
+-	ret =3D __find_kallsyms_symbol_value(mod, name);
+-	preempt_enable();
+-	return ret;
 +	guard(rcu)();
- 	mod =3D find_module(name);
- 	if (mod && !try_module_get(mod))
- 		mod =3D NULL;
--	rcu_read_unlock_sched();
--
- 	return mod;
++	return __find_kallsyms_symbol_value(mod, name);
  }
- #else
+=20
+ int module_kallsyms_on_each_symbol(const char *modname,
 --=20
 2.47.1
 
