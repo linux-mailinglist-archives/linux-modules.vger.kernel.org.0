@@ -1,59 +1,59 @@
-Return-Path: <linux-modules+bounces-2967-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2969-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE737A05633
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:06:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4A1BA0563F
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:07:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0DA697A2E27
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:06:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 41AFE1653F1
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:07:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 681A51F869F;
-	Wed,  8 Jan 2025 09:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F541F8EE5;
+	Wed,  8 Jan 2025 09:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0sVR6cTe";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="/2agCRE4"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="aHWOD9Uv";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="03lSaS47"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA301F6667;
-	Wed,  8 Jan 2025 09:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7AF1F76D8;
+	Wed,  8 Jan 2025 09:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736327123; cv=none; b=huERPS9EMFnwsg5u9FfCMqFDNZbv6uwun1B7iKcreVGFcTbaNI84kHtK7Yab2qUSFbrGM1e/n1OUwOnfjNW43yDvs0pwglNbgcuD+xaWjNps/TW1ib3/ciu4TLvza8IxLyaVRals5eWsna6xIDHzHduNcZ3C/rZSYFWzKuZVUM0=
+	t=1736327124; cv=none; b=ZQLA9i0hm45B4RQE4rwGn/JKiydALALxVVJb/GFYwhBXLHsfeDQbzDNXRBSJjdMXOr2V2uh2RJs1B4mDnlwAgB9OmMfrAwpjpTGv7Xs0vi7t4Tv6EeLE4Jf8M0UHguPjXpNGVGyghWPSMaLsBe2WcR3rwBH5tSJf+6HnEiITq4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736327123; c=relaxed/simple;
-	bh=4YfCwpsDNu10d16uLvt2ftKgzSjz5rZGc0e3lZY1kSg=;
+	s=arc-20240116; t=1736327124; c=relaxed/simple;
+	bh=aLRiik+82B5sq3YU4UIJY/BRKKGgXuEBGHtc33FevpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxtdZTiJDHweTQ2ZL3fz6WyfJlfiEY4HJ/uYRwZbW/EYkKepFcK1KiTNIjybVVa9RQi8xR7BpRUiOXfaH/ON4lE3V+SUtec7aaCR1D1qavDcm94HzVnPFLWwdAOvoP7eWfIjLpI3rkCvaxCk/c5iRm80WtQ0kXxwvkhVv7B9Fro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0sVR6cTe; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=/2agCRE4; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=QbQbZcMd7B0A7A55hgoAT04pMRHFaykiBxhYlekqBtE0i8i/yAtCRqOsLMdMDU9pK49+rlDGndlEqxNhJQmzj6/nkUwJ+9XsekQHZHhbPXxV7GNtNDI7dNiBCuM27JesSqtAec8wR+WTCUMMRNuGqcT2McvFH5Z2ht8v7g5PW6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=aHWOD9Uv; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=03lSaS47; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1736327119;
+	s=2020; t=1736327120;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=o25ZzV5RH6ZFftfvyXoFK8KiOkIRV6q0g+c/tnCIM0M=;
-	b=0sVR6cTev+LkI7Ca+JfYPKISZNzOMrBcWcY6BXH0ztCcWJJLGWAYNDDpfrQWWzyq53T3v+
-	X0BRM3OIIo2JzkFf0gn0pjTNTqh6nz2Hna4KqcvQRwJyxLGZMK6R51ig/WBCtf3xBGxgRs
-	d6B5xZzP76egaAloN3i4UMBRC9oilL2NF4t4Xxg2LySNxEPJUBYOzgCbyx23LWtTpFoWiC
-	yDhIt813TgAoAwWY9QwF589K1UeUz+wWyc0QCJe7j++pvtCZoxdNJQcjWwwJMpI49NaRI3
-	p1PeWwqC0y+OniC5DqP5QVcPGhBap5a3smrPKoZk6Wkg6cCAjEJAGNevaAzfJw==
+	bh=llMQUR+wwEgcNFKsWw7SwALRhRZ8Hk9MwBUMNVtb2mw=;
+	b=aHWOD9UvZeeU8Ir7Qavbls53FEG2Xe8Gv1/qATtpio2CaQM5AhaNUBpylTtnLd4e5z5i3B
+	HP/18AHWf0FN5MToKXBVSURD//SomAAqYKHnzWsfYGFSA58Zbo13m+Dk/Z6yezFdRxTBDG
+	mNoalLKtcvXr6vKRycAQuaJY5FkU29U4phi4/tqu9jgwSc0aYAN2GOopOPUJT6GbBbceaE
+	RL/NRUfSDZtGLNyQUvf3qiE6BGvhaW0wpOE0Xb46rnxRZjtsGbf4V0c2bWQpKZvUjmxR4+
+	jBZma0KTgNcHf2OSfxJZEBO606z1g588NXeCsjuL9+duzhcrcuZjowT8eas25Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1736327119;
+	s=2020e; t=1736327120;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=o25ZzV5RH6ZFftfvyXoFK8KiOkIRV6q0g+c/tnCIM0M=;
-	b=/2agCRE4MSuFSBvHxRUEYPTiwIdCGZbd8InWlbPPJ/33PZsCcg1r7pbNGbuTeFGx2Rx4DY
-	vMgZvT71aOnyCFCQ==
+	bh=llMQUR+wwEgcNFKsWw7SwALRhRZ8Hk9MwBUMNVtb2mw=;
+	b=03lSaS47ru0spuAwkaF2+tUNIqOm2UkglqnqHkgXkSl+watQnRd0jZv1xntHJBYnM8rGBe
+	ckU7+LKwwcQXw9CQ==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -63,10 +63,12 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH v3 15/28] module: Use RCU in all users of __module_text_address().
-Date: Wed,  8 Jan 2025 10:04:44 +0100
-Message-ID: <20250108090457.512198-16-bigeasy@linutronix.de>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v3 16/28] ARM: module: Use RCU in all users of __module_text_address().
+Date: Wed,  8 Jan 2025 10:04:45 +0100
+Message-ID: <20250108090457.512198-17-bigeasy@linutronix.de>
 In-Reply-To: <20250108090457.512198-1-bigeasy@linutronix.de>
 References: <20250108090457.512198-1-bigeasy@linutronix.de>
 Precedence: bulk
@@ -83,56 +85,33 @@ requirement to have preemption disabled.
 Replace the preempt_disable() section around __module_text_address()
 with RCU.
 
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: linux-arm-kernel@lists.infradead.org
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---
- kernel/module/main.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ arch/arm/kernel/module-plts.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 80877741ac7e5..6a99076146cbc 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -823,13 +823,12 @@ void symbol_put_addr(void *addr)
+diff --git a/arch/arm/kernel/module-plts.c b/arch/arm/kernel/module-plts.c
+index da2ee8d6ef1a7..354ce16d83cb5 100644
+--- a/arch/arm/kernel/module-plts.c
++++ b/arch/arm/kernel/module-plts.c
+@@ -285,11 +285,9 @@ bool in_module_plt(unsigned long loc)
+ 	struct module *mod;
+ 	bool ret;
 =20
- 	/*
- 	 * Even though we hold a reference on the module; we still need to
--	 * disable preemption in order to safely traverse the data structure.
-+	 * RCU read section in order to safely traverse the data structure.
- 	 */
 -	preempt_disable();
 +	guard(rcu)();
- 	modaddr =3D __module_text_address(a);
- 	BUG_ON(!modaddr);
- 	module_put(modaddr);
--	preempt_enable();
- }
- EXPORT_SYMBOL_GPL(symbol_put_addr);
-=20
-@@ -3694,20 +3693,15 @@ struct module *__module_address(unsigned long addr)
-  */
- bool is_module_text_address(unsigned long addr)
- {
--	bool ret;
--
--	preempt_disable();
--	ret =3D __module_text_address(addr) !=3D NULL;
+ 	mod =3D __module_text_address(loc);
+ 	ret =3D mod && (loc - (u32)mod->arch.core.plt_ent < mod->arch.core.plt_co=
+unt * PLT_ENT_SIZE ||
+ 		      loc - (u32)mod->arch.init.plt_ent < mod->arch.init.plt_count * PLT=
+_ENT_SIZE);
 -	preempt_enable();
 -
--	return ret;
-+	guard(rcu)();
-+	return __module_text_address(addr) !=3D NULL;
+ 	return ret;
  }
-=20
- /**
-  * __module_text_address() - get the module whose code contains an address.
-  * @addr: the address.
-  *
-- * Must be called with preempt disabled or module mutex held so that
-+ * Must be called within RCU read section or module mutex held so that
-  * module doesn't get freed during this.
-  */
- struct module *__module_text_address(unsigned long addr)
 --=20
 2.47.1
 
