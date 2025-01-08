@@ -1,59 +1,59 @@
-Return-Path: <linux-modules+bounces-2955-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-2958-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67EACA05616
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:05:27 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B012A05620
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 10:05:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E37361887FC4
-	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:05:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF3603A36A3
+	for <lists+linux-modules@lfdr.de>; Wed,  8 Jan 2025 09:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 418BB1F0E5E;
-	Wed,  8 Jan 2025 09:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A291A1F37D4;
+	Wed,  8 Jan 2025 09:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="dMGu5mNQ";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="eQ+S/9fz"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="wFeVnlqT";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="IJ0UJYZW"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6AD14B95A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1881E9B2B;
 	Wed,  8 Jan 2025 09:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736327118; cv=none; b=fJl7/1qPAPhzoORScBv1pPFj7AnaZ47EkEWoic5UTzBrhma3C/res7c6avi8jhldj0ke4O/ebgo8vJKiVA+ZUCSstZvDGEAVM5s6ffRhzd/9+xAy8rrMV+0u0WHNe7qubP8Q7S40gcA+QgZP73snTgHNcA8WPuZ8VFkXxCzlZAM=
+	t=1736327119; cv=none; b=HbuRrXm7MmwCBo9YE3TuyrerOhe15jJO6rSGcQSXSsuYfC8PQH6fjEgd6rV9fCu51s5Z3FLJBE9vTGkO3JJ+3L806faEsdcDFFWnAOjOzpwuzNGKbXHGfT7n+0M7TSqpzKe29K5iGr2gIEt8WtoBYN/XzrYfxMf2+ND4Yetdw+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736327118; c=relaxed/simple;
-	bh=zJzXwl6QYBFCHDOHlQ0pCX7P/0Z8hVJ6wcBRmnq1Mr4=;
+	s=arc-20240116; t=1736327119; c=relaxed/simple;
+	bh=GtZm9OUff8mdUA7NEazwjLhkXhghK5GN8Su5E/jEgMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAtU8jLn4qlECGw/CIZM3G9Fo6zvrwbo8IX1q6auE37Sv6QVlrhMZM4ckeKB6lVT6XHCIZF61nhvv3NA8BPk8o0aLUZMqM/jeeEwv/yaU8vR/n8OeS/LgA3XPqXIydYHlWwuDrSaoAPYzAlZ06YqT823Brik/Y8Ab4AsOaTgHsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=dMGu5mNQ; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=eQ+S/9fz; arc=none smtp.client-ip=193.142.43.55
+	 MIME-Version; b=TtW94Z0ZmQl/TPprHQ15Dy3p6Od8c+7+nNFVpEK4x0DAmUlviOfCCXsEgALsIZtuxbOZBGH2uKKJ7riDPeINcNYHJWif6Tpdh4qqcxGUEmPW/D2MSy/9OEc06qwCWXFTXauKoAXGq3qESFf1N8VpL/GuFezXvo1tIjZU/Wa1alE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=wFeVnlqT; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=IJ0UJYZW; arc=none smtp.client-ip=193.142.43.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1736327114;
+	s=2020; t=1736327115;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=nqFCtsDnDVNdkbpS3y+1msrlanYbghspKlyRIpJlAgU=;
-	b=dMGu5mNQ5Cy1C6m/T4Ld6y7GnPIo9vXCghR6ekMae/1QrCEEHq25IbnRnluJGT0umag4Pf
-	rhYW7zU7Kbzncf5TEw0o77Qub34O/dCmoqlLG+V6U6Q0C2xArd9Gpmv5Taa2fZACDMUXQI
-	raYO8jUDtCHnCzSbQa/+XWPZ4pGI9x5SZyNjCul5PhVjLDdlholVOY0hvfORVXgfrXlGOa
-	KK2KTJEdfN/sIkNitSPndgnkH3uG26tgxBdDdDXbR3jbJobJNk2Bl+2KCpQhI8ZXmMBQLf
-	rqbAZA25Mwb6if0aWn8fUt/AQxVBSVS/DSFBoMnEkwYE/4AfdlLYGtX+YVEPRw==
+	bh=IBep5q6+Gwd0en0hg4Rnt4q4GwKIUucRGk1ABlTBQ0U=;
+	b=wFeVnlqTo05QQPNvrygBQPKXhgiiulPS40wZLLtBjFjcXumKkpCL8EjX9TLfXJ5RTjcNe0
+	su2eawtw4eYbLrUCOeXDNcgCStTkiLOyO2JtJxjs4oeexQiKyvio5Ou/D+PTZ6A5UkY+cw
+	BZ4UdnCLXNoJf1lriy/ks+dx7MTh2eKOqKBAGRVGFrX7PY9brWyPAk0TFSja4U/VaYOb77
+	hlZRN1BsQjpFfIg0sCMaJps6/GG4yxmd7AKEukMcFRN4XmjUKmrRENcyG7ciuYX5cLTgmv
+	pYOc+FIrCnE/hNYcGmhxPCS59Fac638QWPoLgOJ12NQa/QBVM62Kig7RmDDwoA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1736327114;
+	s=2020e; t=1736327115;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=nqFCtsDnDVNdkbpS3y+1msrlanYbghspKlyRIpJlAgU=;
-	b=eQ+S/9fzFkx7/8onRJrmK/0J5ltmUAMyMKtwO9OofqDZAk5UNG+/h9kK38MIVE3AIPg0n0
-	nvTREfKfa/Sqw0AA==
+	bh=IBep5q6+Gwd0en0hg4Rnt4q4GwKIUucRGk1ABlTBQ0U=;
+	b=IJ0UJYZW7l1EQDyZdhP5XPywBVT1Pf65tlkVmztwkn60W9CWUIP+dPvMiBiuYY+X4uQpv3
+	ux1KQlX6a0b1ABAg==
 To: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Daniel Gomez <da.gomez@samsung.com>,
@@ -64,9 +64,9 @@ Cc: Daniel Gomez <da.gomez@samsung.com>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH v3 03/28] module: Use proper RCU assignment in add_kallsyms().
-Date: Wed,  8 Jan 2025 10:04:32 +0100
-Message-ID: <20250108090457.512198-4-bigeasy@linutronix.de>
+Subject: [PATCH v3 04/28] module: Use RCU in find_kallsyms_symbol().
+Date: Wed,  8 Jan 2025 10:04:33 +0100
+Message-ID: <20250108090457.512198-5-bigeasy@linutronix.de>
 In-Reply-To: <20250108090457.512198-1-bigeasy@linutronix.de>
 References: <20250108090457.512198-1-bigeasy@linutronix.de>
 Precedence: bulk
@@ -77,93 +77,64 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-add_kallsyms() assigns the RCU pointer module::kallsyms and setups the
-structures behind it which point to init-data. The module was not
-published yet, nothing can see the kallsyms pointer and the data behind
-it. Also module's init function was not yet invoked.
-There is no need to use rcu_dereference() here, it is just to keep
-checkers quiet. The whole RCU read section is also not needed.
+The modules list and module::kallsyms can be accessed under RCU
+assumption.
 
-Use a local kallsyms pointer and setup the data structures. Assign that
-pointer to the data structure at the end via rcu_assign_pointer().
+Use rcu_dereference() to reference the kallsyms pointer in
+find_kallsyms_symbol().  Use a RCU section instead of preempt_disable in
+callers of find_kallsyms_symbol(). Keep the preempt-disable in
+module_address_lookup() due to __module_address().
 
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---
- kernel/module/kallsyms.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ kernel/module/kallsyms.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
-index bf65e0c3c86fc..45846ae4042d1 100644
+index 45846ae4042d1..3f59d04795572 100644
 --- a/kernel/module/kallsyms.c
 +++ b/kernel/module/kallsyms.c
-@@ -177,19 +177,15 @@ void add_kallsyms(struct module *mod, const struct lo=
-ad_info *info)
- 	unsigned long strtab_size;
- 	void *data_base =3D mod->mem[MOD_DATA].base;
- 	void *init_data_base =3D mod->mem[MOD_INIT_DATA].base;
-+	struct mod_kallsyms *kallsyms;
+@@ -257,7 +257,7 @@ static const char *find_kallsyms_symbol(struct module *=
+mod,
+ {
+ 	unsigned int i, best =3D 0;
+ 	unsigned long nextval, bestval;
+-	struct mod_kallsyms *kallsyms =3D rcu_dereference_sched(mod->kallsyms);
++	struct mod_kallsyms *kallsyms =3D rcu_dereference(mod->kallsyms);
+ 	struct module_memory *mod_mem;
 =20
--	/* Set up to point into init section. */
--	mod->kallsyms =3D (void __rcu *)init_data_base +
--		info->mod_kallsyms_init_off;
-+	kallsyms =3D init_data_base + info->mod_kallsyms_init_off;
+ 	/* At worse, next value is at end of module */
+@@ -329,6 +329,7 @@ int module_address_lookup(unsigned long addr,
+ 	int ret =3D 0;
+ 	struct module *mod;
 =20
--	rcu_read_lock();
--	/* The following is safe since this pointer cannot change */
--	rcu_dereference(mod->kallsyms)->symtab =3D (void *)symsec->sh_addr;
--	rcu_dereference(mod->kallsyms)->num_symtab =3D symsec->sh_size / sizeof(E=
-lf_Sym);
-+	kallsyms->symtab =3D (void *)symsec->sh_addr;
-+	kallsyms->num_symtab =3D symsec->sh_size / sizeof(Elf_Sym);
- 	/* Make sure we get permanent strtab: don't use info->strtab. */
--	rcu_dereference(mod->kallsyms)->strtab =3D
--		(void *)info->sechdrs[info->index.str].sh_addr;
--	rcu_dereference(mod->kallsyms)->typetab =3D init_data_base + info->init_t=
-ypeoffs;
-+	kallsyms->strtab =3D (void *)info->sechdrs[info->index.str].sh_addr;
-+	kallsyms->typetab =3D init_data_base + info->init_typeoffs;
++	guard(rcu)();
+ 	preempt_disable();
+ 	mod =3D __module_address(addr);
+ 	if (mod) {
+@@ -356,7 +357,7 @@ int lookup_module_symbol_name(unsigned long addr, char =
+*symname)
+ {
+ 	struct module *mod;
 =20
- 	/*
- 	 * Now populate the cut down core kallsyms for after init
-@@ -199,20 +195,19 @@ void add_kallsyms(struct module *mod, const struct lo=
-ad_info *info)
- 	mod->core_kallsyms.strtab =3D s =3D data_base + info->stroffs;
- 	mod->core_kallsyms.typetab =3D data_base + info->core_typeoffs;
- 	strtab_size =3D info->core_typeoffs - info->stroffs;
--	src =3D rcu_dereference(mod->kallsyms)->symtab;
--	for (ndst =3D i =3D 0; i < rcu_dereference(mod->kallsyms)->num_symtab; i+=
-+) {
--		rcu_dereference(mod->kallsyms)->typetab[i] =3D elf_type(src + i, info);
-+	src =3D kallsyms->symtab;
-+	for (ndst =3D i =3D 0; i < kallsyms->num_symtab; i++) {
-+		kallsyms->typetab[i] =3D elf_type(src + i, info);
- 		if (i =3D=3D 0 || is_livepatch_module(mod) ||
- 		    is_core_symbol(src + i, info->sechdrs, info->hdr->e_shnum,
- 				   info->index.pcpu)) {
- 			ssize_t ret;
+-	preempt_disable();
++	guard(rcu)();
+ 	list_for_each_entry_rcu(mod, &modules, list) {
+ 		if (mod->state =3D=3D MODULE_STATE_UNFORMED)
+ 			continue;
+@@ -368,12 +369,10 @@ int lookup_module_symbol_name(unsigned long addr, cha=
+r *symname)
+ 				goto out;
 =20
- 			mod->core_kallsyms.typetab[ndst] =3D
--			    rcu_dereference(mod->kallsyms)->typetab[i];
-+				kallsyms->typetab[i];
- 			dst[ndst] =3D src[i];
- 			dst[ndst++].st_name =3D s - mod->core_kallsyms.strtab;
--			ret =3D strscpy(s,
--				      &rcu_dereference(mod->kallsyms)->strtab[src[i].st_name],
-+			ret =3D strscpy(s, &kallsyms->strtab[src[i].st_name],
- 				      strtab_size);
- 			if (ret < 0)
- 				break;
-@@ -220,7 +215,9 @@ void add_kallsyms(struct module *mod, const struct load=
-_info *info)
- 			strtab_size -=3D ret + 1;
+ 			strscpy(symname, sym, KSYM_NAME_LEN);
+-			preempt_enable();
+ 			return 0;
  		}
  	}
--	rcu_read_unlock();
-+
-+	/* Set up to point into init section. */
-+	rcu_assign_pointer(mod->kallsyms, kallsyms);
- 	mod->core_kallsyms.num_symtab =3D ndst;
+ out:
+-	preempt_enable();
+ 	return -ERANGE;
  }
 =20
 --=20
