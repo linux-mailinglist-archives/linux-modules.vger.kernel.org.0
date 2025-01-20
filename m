@@ -1,195 +1,156 @@
-Return-Path: <linux-modules+bounces-3048-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-3052-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAB3BA16A8C
-	for <lists+linux-modules@lfdr.de>; Mon, 20 Jan 2025 11:14:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8461A1724D
+	for <lists+linux-modules@lfdr.de>; Mon, 20 Jan 2025 18:46:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFE4C7A59C4
-	for <lists+linux-modules@lfdr.de>; Mon, 20 Jan 2025 10:10:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9F32A7A1001
+	for <lists+linux-modules@lfdr.de>; Mon, 20 Jan 2025 17:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DFC31B414F;
-	Mon, 20 Jan 2025 10:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06BF21EF097;
+	Mon, 20 Jan 2025 17:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="tEccHcZ2"
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="oz1+08NC"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F103398B;
-	Mon, 20 Jan 2025 10:10:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785F82033A;
+	Mon, 20 Jan 2025 17:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737367841; cv=none; b=uy5P1yzn4X4u56ve4UWB8iJvW8FDrv8BF16ACM0aRo3j6CrVPKWjqmbCMPEmvbT6EwztELgcOgSa4xel/tqFzuBjXSDE+UKolli3ha5IG3j6ryoPXm755BfAN9v7NAJAVHHx+Fnh7SpcrTMrDyENrvUo33xOfaWyn3LlMahqD0U=
+	t=1737395145; cv=none; b=uLXGBb0UuNfNZCGK/Fy1JkFgYYmhtX5IpCBap2RZeJvjGsq/7MfHBlYtiz7+wnMCbpk13Xv+VmOTI5bAxixeOoHfJ/5zpGIvY+Mnt6Gb1AcUK75VkxdhvZm3XaCinlfim21BSJQMl38G9qr0yNCxoPc77L22zkDHqrnXSuNxtyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737367841; c=relaxed/simple;
-	bh=Cjhg3UrrFp8D01VY4OoJzV8vlgfXvqulfmkjFvBAqJo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YtQoV2y2C+HkUsX8/C0OzYrlNIUrL++oOXn9TK9xmfRteclsr2UDv3UJsDfhomt7d/Aq2HnuOVVs9MGd0O4mWAyXuJ9U1puRJz1CkYp3CVoDVORxtgvvJAWia4djfV7HpfYW4GYEQBeoSlgx0YPtA65ePMxr7b5dL2PqxQ0GA2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=tEccHcZ2; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50K5NlpR002996;
-	Mon, 20 Jan 2025 10:10:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=9UQq6V
-	AGnHg3um68FsouhZBJ/1T15FdfUDIuKZW//7U=; b=tEccHcZ26PcZeBgjRxiYh+
-	7AZiDyVVj8cn9x23FWWwdKUAgozwR9Jgdb6Gz/2v9pS2bisAcxFJboK3j6AM37l0
-	bWKBK0PlFeB8RjEsrdDekq13Lwiyp6aVFwyc178p+OEV2HjIlUroQlWzq0QQnlms
-	ycp7eYjSoMzfpmQOJL8HNU2VljDEk0QLIb7Zp6DjgyB+Adi7LC5C0SALs7M1/2wx
-	zjsMcElUYnexjYfIcX6rC5Sr6vyVBU+CAyzi9OYDAcMiGcYHymYFht6gtfFCY3UU
-	3uv5KoqQcN0JPLdSFo0l7ZU7asMfay2XfCPCVoUeVceUlDniGKqmVMKQiKs1Jc8g
-	==
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 449ga7987c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jan 2025 10:10:06 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 50KA3pCR021938;
-	Mon, 20 Jan 2025 10:10:05 GMT
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 449ga79875-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jan 2025 10:10:05 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50K8pZcY032223;
-	Mon, 20 Jan 2025 10:10:04 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 448rujdj01-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 Jan 2025 10:10:04 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 50KAA2dh34472338
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 20 Jan 2025 10:10:02 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 875F92004B;
-	Mon, 20 Jan 2025 10:10:02 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4E1E22004D;
-	Mon, 20 Jan 2025 10:09:59 +0000 (GMT)
-Received: from [9.109.215.252] (unknown [9.109.215.252])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 20 Jan 2025 10:09:59 +0000 (GMT)
-Message-ID: <671a14f1-55a1-4d80-ae5c-83f20bf3037c@linux.ibm.com>
-Date: Mon, 20 Jan 2025 15:39:58 +0530
+	s=arc-20240116; t=1737395145; c=relaxed/simple;
+	bh=Anacu4YjU7Y+0UFvshDNslsiaYXQWIpLpz4Odcpokpo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=P7JM0TEXzgj6F9PZzoFedapb8iXh7NTBOuYE7beXNCI6q5L4Qo7RY8SsIfWCu0e2EMqXnsfrwoac/Moyj6IYPjXv3+TSbbbI4CZw6qxHgZ5UcLAAtA8cwHznLEOzrMajY1Q4+ofYd9B1vo0IHTFZ2W9ISL7o5H07I9y/RZ4FWro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=oz1+08NC; arc=none smtp.client-ip=159.69.126.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1737395132;
+	bh=Anacu4YjU7Y+0UFvshDNslsiaYXQWIpLpz4Odcpokpo=;
+	h=From:Subject:Date:To:Cc:From;
+	b=oz1+08NC3D+Rhd49WpzRylo0D1eWe2OT8a5wTIivYU5cjl3JtKdXh4Ln81QznbVUt
+	 BpwSg82Fu+Avhuurp8TmaaxU8/OV2rCosrm8dgANrflMmq2ffR/yft7tf01Y4FsCKo
+	 QzLduNvOYkBFAFDyIBlXqP+rkMi+iw6cnfRw8qX0=
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
+Subject: [PATCH v2 0/6] module: Introduce hash-based integrity checking
+Date: Mon, 20 Jan 2025 18:44:19 +0100
+Message-Id: <20250120-module-hashes-v2-0-ba1184e27b7f@weissschuh.net>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 20/28] powerpc/ftrace: Use RCU in all users of
- __module_text_address().
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Daniel Gomez <da.gomez@samsung.com>, Luis Chamberlain
- <mcgrof@kernel.org>,
-        "Paul E . McKenney" <paulmck@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Petr Pavlu <petr.pavlu@suse.com>,
-        Sami Tolvanen <samitolvanen@google.com>,
-        Thomas Gleixner
- <tglx@linutronix.de>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Madhavan Srinivasan <maddy@linux.ibm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Naveen N Rao <naveen@kernel.org>, Nicholas Piggin <npiggin@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        linux-trace-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250108090457.512198-1-bigeasy@linutronix.de>
- <20250108090457.512198-21-bigeasy@linutronix.de>
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20250108090457.512198-21-bigeasy@linutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: W23kHP3fl5d9f8v3moATuooEveeLO-eN
-X-Proofpoint-GUID: qkIVtfA37V68gBFWsUiduV7x__Ekg-Wm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-20_02,2025-01-20_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- impostorscore=0 suspectscore=0 clxscore=1011 spamscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0
- phishscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2411120000 definitions=main-2501200083
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAHOLjmcC/3XMQQrCMBCF4auUWTuSpJaAK+8hXYRkagY0lUwbl
+ ZK7G7t3+T943wZCmUng3G2QqbDwnFqYQwc+unQj5NAajDInbcyAjzmsd8LoJJKgdYNy1nvjegX
+ t88w08Xv3rmPryLLM+bPzRf/Wf1LRqDBYrTxZ109BX17EIuLjGo+JFhhrrV+L53jTrwAAAA==
+X-Change-ID: 20241225-module-hashes-7a50a7cc2a30
+To: Masahiro Yamada <masahiroy@kernel.org>, 
+ Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+ Arnd Bergmann <arnd@arndb.de>, Luis Chamberlain <mcgrof@kernel.org>, 
+ Petr Pavlu <petr.pavlu@suse.com>, Sami Tolvanen <samitolvanen@google.com>, 
+ Daniel Gomez <da.gomez@samsung.com>, Paul Moore <paul@paul-moore.com>, 
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
+ Jonathan Corbet <corbet@lwn.net>
+Cc: =?utf-8?q?Fabian_Gr=C3=BCnbichler?= <f.gruenbichler@proxmox.com>, 
+ Arnout Engelen <arnout@bzzt.net>, Mattia Rizzolo <mattia@mapreri.org>, 
+ kpcyrd <kpcyrd@archlinux.org>, linux-kbuild@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, 
+ linux-modules@vger.kernel.org, linux-security-module@vger.kernel.org, 
+ linux-doc@vger.kernel.org, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1737395132; l=3412;
+ i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
+ bh=Anacu4YjU7Y+0UFvshDNslsiaYXQWIpLpz4Odcpokpo=;
+ b=n8+AYe5cOrCdvMkfIk3unYSBDTJ/R6Pp6/qaXgD2sDJMYgTaiUbZDVr0KAUbEB3gqDIfVjOb5
+ xe5U1rXRsKNBER8mFF9akip/deC0okGKLPSwwC9ROq9AQ9Ah9xnfYX3
+X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
+ pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 
+The current signature-based module integrity checking has some drawbacks
+in combination with reproducible builds:
+Either the module signing key is generated at build time, which makes
+the build unreproducible, or a static key is used, which precludes
+rebuilds by third parties and makes the whole build and packaging
+process much more complicated.
+Introduce a new mechanism to ensure only well-known modules are loaded
+by embedding a list of hashes of all modules built as part of the full
+kernel build into vmlinux.
 
+Interest has been proclaimed by NixOS, Arch Linux, Proxmox, SUSE and the
+general reproducible builds community.
 
-On 1/8/25 14:34, Sebastian Andrzej Siewior wrote:
-> __module_text_address() can be invoked within a RCU section, there is no
-> requirement to have preemption disabled.
-> 
-> Replace the preempt_disable() section around __module_text_address()
-> with RCU.
-> 
-> Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-> Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: Masami Hiramatsu <mhiramat@kernel.org>
-> Cc: Michael Ellerman <mpe@ellerman.id.au>
-> Cc: Naveen N Rao <naveen@kernel.org>
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Cc: Steven Rostedt <rostedt@goodmis.org>
-> Cc: linux-trace-kernel@vger.kernel.org
-> Cc: linuxppc-dev@lists.ozlabs.org
-> Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-> ---
->   arch/powerpc/kernel/trace/ftrace.c       | 6 ++----
->   arch/powerpc/kernel/trace/ftrace_64_pg.c | 6 ++----
->   2 files changed, 4 insertions(+), 8 deletions(-)
-> 
+To properly test the reproducibility in combination with CONFIG_INFO_BTF
+another patch is needed:
+"[PATCH bpf-next] kbuild, bpf: Enable reproducible BTF generation" [0]
+(If you happen to test that one, please give some feedback)
 
-Ran ftrace (function graph) on preempt=full kernel with rcutorture while doing modprobe/rmmod.
-rcutorture succeeded and didn't see any splats.
-If there is any other method to test it out, please let me know.
+Questions for current patch:
+* Naming
+* Can the number of built-in modules be retrieved while building
+  kernel/module/hashes.o? This would remove the need for the
+  preallocation step in link-vmlinux.sh.
 
-So for powerpc bits:
-Tested-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Further improvements:
+* Use a LSM/IMA/Keyring to store and validate hashes
+* Use MODULE_SIG_HASH for configuration
+* UAPI for discovery?
 
-> diff --git a/arch/powerpc/kernel/trace/ftrace.c b/arch/powerpc/kernel/trace/ftrace.c
-> index 5ccd791761e8f..558d7f4e4bea6 100644
-> --- a/arch/powerpc/kernel/trace/ftrace.c
-> +++ b/arch/powerpc/kernel/trace/ftrace.c
-> @@ -115,10 +115,8 @@ static unsigned long ftrace_lookup_module_stub(unsigned long ip, unsigned long a
->   {
->   	struct module *mod = NULL;
->   
-> -	preempt_disable();
-> -	mod = __module_text_address(ip);
-> -	preempt_enable();
-> -
-> +	scoped_guard(rcu)
-> +		mod = __module_text_address(ip);
->   	if (!mod)
->   		pr_err("No module loaded at addr=%lx\n", ip);
->   
-> diff --git a/arch/powerpc/kernel/trace/ftrace_64_pg.c b/arch/powerpc/kernel/trace/ftrace_64_pg.c
-> index 98787376eb87c..531d40f10c8a1 100644
-> --- a/arch/powerpc/kernel/trace/ftrace_64_pg.c
-> +++ b/arch/powerpc/kernel/trace/ftrace_64_pg.c
-> @@ -120,10 +120,8 @@ static struct module *ftrace_lookup_module(struct dyn_ftrace *rec)
->   {
->   	struct module *mod;
->   
-> -	preempt_disable();
-> -	mod = __module_text_address(rec->ip);
-> -	preempt_enable();
-> -
-> +	scoped_guard(rcu)
-> +		mod = __module_text_address(rec->ip);
->   	if (!mod)
->   		pr_err("No module loaded at addr=%lx\n", rec->ip);
->   
+[0] https://lore.kernel.org/lkml/20241211-pahole-reproducible-v1-1-22feae19bad9@weissschuh.net/
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+---
+Changes in v2:
+- Drop RFC state
+- Mention interested parties in cover letter
+- Expand Kconfig description
+- Add compatibility with CONFIG_MODULE_SIG
+- Parallelize module-hashes.sh
+- Update Documentation/kbuild/reproducible-builds.rst
+- Link to v1: https://lore.kernel.org/r/20241225-module-hashes-v1-0-d710ce7a3fd1@weissschuh.net
+
+---
+Thomas Weißschuh (6):
+      kbuild: add stamp file for vmlinux BTF data
+      module: Make module loading policy usable without MODULE_SIG
+      module: Move integrity checks into dedicated function
+      module: Move lockdown check into generic module loader
+      lockdown: Make the relationship to MODULE_SIG a dependency
+      module: Introduce hash-based integrity checking
+
+ .gitignore                                   |  1 +
+ Documentation/kbuild/reproducible-builds.rst |  5 ++-
+ Makefile                                     |  8 ++++-
+ include/asm-generic/vmlinux.lds.h            | 11 ++++++
+ include/linux/module.h                       |  8 ++---
+ include/linux/module_hashes.h                | 17 +++++++++
+ kernel/module/Kconfig                        | 21 ++++++++++-
+ kernel/module/Makefile                       |  1 +
+ kernel/module/hashes.c                       | 52 +++++++++++++++++++++++++++
+ kernel/module/internal.h                     |  8 +----
+ kernel/module/main.c                         | 54 +++++++++++++++++++++++++---
+ kernel/module/signing.c                      | 24 +------------
+ scripts/Makefile.modfinal                    | 10 ++++--
+ scripts/Makefile.vmlinux                     |  5 +++
+ scripts/link-vmlinux.sh                      | 31 +++++++++++++++-
+ scripts/module-hashes.sh                     | 26 ++++++++++++++
+ security/lockdown/Kconfig                    |  2 +-
+ 17 files changed, 238 insertions(+), 46 deletions(-)
+---
+base-commit: 2cd5917560a84d69dd6128b640d7a68406ff019b
+change-id: 20241225-module-hashes-7a50a7cc2a30
+
+Best regards,
+-- 
+Thomas Weißschuh <linux@weissschuh.net>
 
 
