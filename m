@@ -1,153 +1,80 @@
-Return-Path: <linux-modules+bounces-3252-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-3254-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50115A3FB6D
-	for <lists+linux-modules@lfdr.de>; Fri, 21 Feb 2025 17:35:42 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFADBA3FC92
+	for <lists+linux-modules@lfdr.de>; Fri, 21 Feb 2025 18:02:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B99270692D
-	for <lists+linux-modules@lfdr.de>; Fri, 21 Feb 2025 16:20:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 052E77AF7AA
+	for <lists+linux-modules@lfdr.de>; Fri, 21 Feb 2025 16:59:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE9FD1DDA24;
-	Fri, 21 Feb 2025 16:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1928022B8B3;
+	Fri, 21 Feb 2025 17:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b="BJ7hB8pc"
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="cryrOQYN"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from mr85p00im-ztdg06011101.me.com (mr85p00im-ztdg06011101.me.com [17.58.23.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD5D1E1C36;
-	Fri, 21 Feb 2025 16:16:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740154600; cv=pass; b=t388+eFFEkX4bUBC/Cn6M6UvNpS/3Y8Otz6cnF2vRpmAzusB66o0wA7eHrMKU8kIvNZgX/nF87HuKlguwdge4PifWMED+EmTuc6VNlHKWdIIo8DiDN8HCz4Z/H/1zIXFjAq9YJiQ/+IwkNfyGLtDLv8mjPaScE+pVMbRpjKsOuc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740154600; c=relaxed/simple;
-	bh=jOzJHq8+4wQqwKjhyLa1Z3VwwS37RnvY9pGLMAgnTLw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=akP94vgUUU7ET04AQwui2LnUoZJZl0JC9PialSdzqJfb62oAsXUinIyMIktmGU8ctqGFnJM9XZi/aqWZtlyt6kgfe3IOk+LfmVvWpKbxq5coLGQcMtDzjgPLdMXrDsakRvqp799YtNTpIinAgMsS6dywNTYdpC3GPsJYO2ZOlpE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b=BJ7hB8pc; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1740154558; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=VhLhNhUzP54DD6vMRPUo125BM+LXQgfPZ8gjRvb0QXfqJXYHeLIPSqFAOh4J6JqX+Z6Xw+utK0ii0MK+441qG3PmnMLWJYLlnXi8Vtw5zz78yRFE75WqS1ppi7zP7bQxcJAqYqF4VYhNU3KXdKdHomZUnTMzq29qcz9vJuC5LJM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1740154558; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=l133VrdCg0Pj7Gbh3P0YhOoWAIun5QkcWnsNlg1Ey2Q=; 
-	b=KRJWysobFndxVP6cjpeH0YS+35yOdhfGVTkmaHjdS2m+FSJHutDREdF8hw8JDAVEMaKVO72O8MUZE4jZwWR3Gzdg82bAc9ZexNoLk+kvjovq1P2XWqm5hcoLt+AilecYgS8tqtnbG/hAfnp3bsJ+PnxCOtACQwVpxIE9CgJ3u20=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=daniel.almeida@collabora.com;
-	dmarc=pass header.from=<daniel.almeida@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1740154558;
-	s=zohomail; d=collabora.com; i=daniel.almeida@collabora.com;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
-	bh=l133VrdCg0Pj7Gbh3P0YhOoWAIun5QkcWnsNlg1Ey2Q=;
-	b=BJ7hB8pcl/l/K0B9LTPrK4t63Ju6TTkaeS5mogSLaM/GhoXmCGnuwwNBDMt2bqt/
-	rp3+6t8rMsfaYJraCvfNpIDNvjti4J6qOzLTdOrzgavHEnYSJwipxebx37B+HyyWBdD
-	SpVtXZoAwbtGNFexAoJaEWDZDYdIp1itFEpnJpjY=
-Received: by mx.zohomail.com with SMTPS id 174015455580945.3150431144137;
-	Fri, 21 Feb 2025 08:15:55 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C10522A81C
+	for <linux-modules@vger.kernel.org>; Fri, 21 Feb 2025 17:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.23.185
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740157226; cv=none; b=jCzyR5jFdw6lRAcmWtuW9KMlh5NRfgcKv+Z5G203czq/Z/HNGEjGleq5NRcXTqklX/VqtirLgyWIDtXvGwxdxLbHoI8iwgg1+dbvft3tT1jjTDJmeQJrj7N3U4vLO2WZt6+SM6vIlGKYY2s1Bt3YlVGGyVBpoQ0iicZArQWqh0M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740157226; c=relaxed/simple;
+	bh=k48eyJ2p7HyLaUv2o2mxvuTNXjQuhQ/0FgAmjAYDOHY=;
+	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:Cc:To; b=el4/Ag7nO8G1D9jU6zURItGwLrBXiS/qsWWP1Dr5PsZAZGZ1qIw+zLSDReFY4acHzEZvETlQAZ+4uHV+pLnioXM95ZyLOWd5B99T1p00ogx7o5lip5bf22YVU7rHKDTf2FoqPTASKJMYXPhySPpj//Wwj5lKfl+NLSeLjRzAIss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=cryrOQYN; arc=none smtp.client-ip=17.58.23.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; bh=k48eyJ2p7HyLaUv2o2mxvuTNXjQuhQ/0FgAmjAYDOHY=;
+	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:To:x-icloud-hme;
+	b=cryrOQYNAWELojRD0mBYV/p8Ou8xztj5ak+NZlc4aiUf9fzExWnDhQtQKWRAhJrIg
+	 WXH6P694BwSxvLR/kez0jinne1P9cxYLyNya478lGRvrSTbI4g9fRa+dlnq6d9zpFq
+	 Pu11JA+v4nExpOOWpVUbBpDHji6kmDUXDbiMd3FlUBYrDO7f2/oCQxkgbpUrkJKOTu
+	 XyQlTYtcBAs6uMTGepxUTem4j68YAM38rb5FvA9fiVTnTgUds1904Aai98RUod8I+8
+	 ETU2qFxbrlwmj6zH8u/CVS+HJ2s82r+MVr/tNLlL0yuW/YvCig+xpq3JibPWsLdbA2
+	 t4i70s5xQnARQ==
+Received: from smtpclient.apple (mr38p00im-dlb-asmtp-mailmevip.me.com [17.57.152.18])
+	by mr85p00im-ztdg06011101.me.com (Postfix) with ESMTPSA id 145EEDA06AC;
+	Fri, 21 Feb 2025 17:00:21 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: MICHAEL TURNER <kameronwayneturner@icloud.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.300.87.4.3\))
-Subject: Re: [PATCH v7 3/6] rust: str: implement `AsRef<BStr>` for `[u8]` and
- `BStr`
-From: Daniel Almeida <daniel.almeida@collabora.com>
-In-Reply-To: <87372128-2734-4402-B46F-EF81ECEE546A@collabora.com>
-Date: Fri, 21 Feb 2025 13:15:38 -0300
-Cc: Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>,
- Masahiro Yamada <masahiroy@kernel.org>,
- Nathan Chancellor <nathan@kernel.org>,
- Nicolas Schier <nicolas@fjasle.eu>,
- Luis Chamberlain <mcgrof@kernel.org>,
- rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Adam Bratschi-Kaye <ark.email@gmail.com>,
- linux-kbuild@vger.kernel.org,
- Petr Pavlu <petr.pavlu@suse.com>,
- Sami Tolvanen <samitolvanen@google.com>,
- Daniel Gomez <da.gomez@samsung.com>,
- Simona Vetter <simona.vetter@ffwll.ch>,
- Greg KH <gregkh@linuxfoundation.org>,
- linux-modules@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <94DA7409-439D-4D6B-98F5-687A743DB277@collabora.com>
-References: <20250218-module-params-v3-v7-0-5e1afabcac1b@kernel.org>
- <20250218-module-params-v3-v7-3-5e1afabcac1b@kernel.org>
- <87372128-2734-4402-B46F-EF81ECEE546A@collabora.com>
-To: Andreas Hindborg <a.hindborg@kernel.org>
-X-Mailer: Apple Mail (2.3826.300.87.4.3)
-X-ZohoMailClient: External
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 2/5] modules: Refactor + kdoc elf_validity_cached_copy
+Message-Id: <1DBAD107-A179-41CB-B389-0AE2F491F2FF@icloud.com>
+Date: Fri, 21 Feb 2025 11:00:11 -0600
+Cc: gary@garyguo.net, laura@labbott.name, linux-kbuild@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, masahiroy@kernel.org, mcgrof@kernel.org,
+ mmaurer@google.com, nathan@kernel.org, ndesaulniers@google.com,
+ nicolas@fjasle.eu, ojeda@kernel.org, rust-for-linux@vger.kernel.org
+To: greg@kroah.com
+X-Mailer: iPhone Mail (22D72)
+X-Proofpoint-GUID: Dlwmpce8l6-mV_ZriHRkhcE34hI0OpRT
+X-Proofpoint-ORIG-GUID: Dlwmpce8l6-mV_ZriHRkhcE34hI0OpRT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-21_05,2025-02-20_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 phishscore=0 bulkscore=0
+ suspectscore=0 mlxlogscore=643 adultscore=0 spamscore=0 mlxscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2502210120
 
+=EF=BB=BFRemove everything that is attacking me this is invalid
+All information. Has been stolen I=E2=80=99ve been attacked over 2yrs
+Please stop all of this
+I didn=E2=80=99t approve any of this
 
-
-> On 21 Feb 2025, at 13:01, Daniel Almeida =
-<daniel.almeida@collabora.com> wrote:
->=20
->=20
->=20
->> On 18 Feb 2025, at 10:00, Andreas Hindborg <a.hindborg@kernel.org> =
-wrote:
->>=20
->> Implement `AsRef<BStr>` for `[u8]` and `BStr` so these can be used
->> interchangeably for operations on `BStr`.
->>=20
->> Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
->> ---
->> rust/kernel/str.rs | 12 ++++++++++++
->> 1 file changed, 12 insertions(+)
->>=20
->> diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
->> index ba6b1a5c4f99d..c6bd2c69543dc 100644
->> --- a/rust/kernel/str.rs
->> +++ b/rust/kernel/str.rs
->> @@ -125,6 +125,18 @@ fn index(&self, index: Idx) -> &Self::Output {
->>    }
->> }
->>=20
->> +impl AsRef<BStr> for [u8] {
->> +    fn as_ref(&self) -> &BStr {
->> +        BStr::from_bytes(self)
->> +    }
->> +}
->> +
->> +impl AsRef<BStr> for BStr {
->> +    fn as_ref(&self) -> &BStr {
->> +        self
->> +    }
->> +}
->=20
-> Why do you need this last one?
-
-I see that this is used by the following patch.
-
->=20
->> +
->> /// Creates a new [`BStr`] from a string literal.
->> ///
->> /// `b_str!` converts the supplied string literal to byte string, so =
-non-ASCII
->>=20
->> --=20
->> 2.47.0
-
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-
-
+Sent from my iPhone=
 
