@@ -1,120 +1,96 @@
-Return-Path: <linux-modules+bounces-3514-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-3516-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17055AA716F
-	for <lists+linux-modules@lfdr.de>; Fri,  2 May 2025 14:17:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59FC9AA72B0
+	for <lists+linux-modules@lfdr.de>; Fri,  2 May 2025 14:57:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5034D17909D
-	for <lists+linux-modules@lfdr.de>; Fri,  2 May 2025 12:17:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0ED977A5546
+	for <lists+linux-modules@lfdr.de>; Fri,  2 May 2025 12:56:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C8E7254860;
-	Fri,  2 May 2025 12:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E16FE2550AA;
+	Fri,  2 May 2025 12:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LStqMa/W"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Tt/dLVX7"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DDE22578C;
-	Fri,  2 May 2025 12:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5AF24677A;
+	Fri,  2 May 2025 12:56:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746188233; cv=none; b=Te90V98rbuX+u1PgcasPTakJGIkPW+C8jngN6erbQ9SMnyhqKRz+rsGumDgxj4OQGxgz+Hjya8WlctD7v/KDQBWAOP3Fcm84NjxC8CS4R1v+dyWyWquisV3zMgnDihKB1FxlApTbRFTCoJZdjdRqMvLb+bfyaQSHXBaunDLiRJE=
+	t=1746190613; cv=none; b=ihj9e+OqOT8CK6zwozkjQSjzUqYJTMDe+3KK89WOzunU5JxRnubSw0cvwpqy3b0CFeEkZ0lAL6unjVEu3Sgt0QEWz6p5aoo0i4jqrJesFYcdD+JqsGhG/BeVRRgBv/cGPCiGaDoCoEqy6xNOYi58p8VF17H9j03Vx0ZuKCPhTfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746188233; c=relaxed/simple;
-	bh=S9xpT5II4HEFQ7Pcgab/h1zpYjOY04rscXr6GialsmY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s855Gi9cnema7Hy79RFqba4CN8siXIC//lMfKRGvg8mV5eLr1rHekv524/W90GkyYXPFOazhiMAwNa0mXDm2vmXXMlNP0PgmOqHYcLE4/9qySCDxhAYrrjGhz9dcFEMZ3RU92s9ElLddTcJF66fILiMCpQhNOoYFlq2JWgjPb0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LStqMa/W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9014C4CEEB;
-	Fri,  2 May 2025 12:17:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746188232;
-	bh=S9xpT5II4HEFQ7Pcgab/h1zpYjOY04rscXr6GialsmY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=LStqMa/WYkh6aJf8xqoodVQuaVIahuRzUjH1snYJow4JnsAerOQVanfiGAMyCxw5w
-	 GAPQ1tcimsvCkc7fAwS8aDmebL/bmmNJQvOPfSDlqm8qRXgO1eXoCW7REn498wiHWw
-	 /NGcGihmCaGlZP6MdFVLzDp6h2r8IYMfoPai/jpP3avsXyLYRDmxGpQweigm1jzdjI
-	 QMiTz1lsjFETuEziaqNY3DyQr+YqPf/TL02DJbJTGNfDG+xtv7WHTqBsj2h0+cHdch
-	 tADg+WXRxb9JsAYAIxQ+hgDkYz31tHVSQ3T5KH4/k+k56XXLQCif6j0zQxsLWvhwfL
-	 JgJAogJUlT4lg==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-Date: Fri, 02 May 2025 14:16:36 +0200
-Subject: [PATCH v11 3/3] modules: add rust modules files to MAINTAINERS
+	s=arc-20240116; t=1746190613; c=relaxed/simple;
+	bh=gEmQusnT88xq5t6pURHpX9DpFHyqeO2nqVJlJmsxM28=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DRxMLSZJq7dZbx1yrfssNGRFZb5nSZWfAR7yz3Y0hAZ/LMXMDeW9BybWyJnTfqsGRbSjvJBBB0ca/Mg6mVGMsBaRT+Z5Zh2eRxcF4dTqPvEwCbJopk33r/SBwsWYnu78WQ+xbv0qPzN06nPhpUPa7ThRGLw6V4makAo4LHp5d70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Tt/dLVX7; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=cmqee1HYHBv88eJpBlZDO4RoVAoln7l0mi+JPbL0Qgo=; b=Tt/dLVX7QOmwJNcyglKshiLn6b
+	6kbZw0HeV8vnD5itDjIq4XhGOQ1MBB2Xe7QogjpuRx5z4IdbZgdszhjuIw5jgwXE7Q+B8uMFXBBVM
+	D15gF3xz+gU8To2WRi1NQJ15T9OfR29DU01PyYsNNQq6T3ksTwJqm7HSvL9kNL3til/KFFv5+J9TL
+	82nK+9yPCVOgDudogsCogwxX5lJSFH2ttX4Yts3/amuIewFa+y5/o52zRIvcV/NUBW7bAEn13FCiM
+	cFG9EGfa/91CmCibYKK+/JQQYpX7IeOtErjgZqVVE3J5Bch8oNOsGD9K0DvinJPIhWieAkMP994Ia
+	C6DtZ+8w==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1uApvf-00000000GSE-1jCB;
+	Fri, 02 May 2025 12:55:48 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 3F43B30057C; Fri,  2 May 2025 14:55:33 +0200 (CEST)
+Date: Fri, 2 May 2025 14:55:33 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: "Roy, Patrick" <roypat@amazon.co.uk>
+Cc: "da.gomez@samsung.com" <da.gomez@samsung.com>,
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"hch@infradead.org" <hch@infradead.org>,
+	"hpa@zytor.com" <hpa@zytor.com>,
+	"linux-kbuild@vger.kernel.org" <linux-kbuild@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-modules@vger.kernel.org" <linux-modules@vger.kernel.org>,
+	"masahiroy@kernel.org" <masahiroy@kernel.org>,
+	"mcgrof@kernel.org" <mcgrof@kernel.org>,
+	"nathan@kernel.org" <nathan@kernel.org>,
+	"nicolas@fjasle.eu" <nicolas@fjasle.eu>,
+	"petr.pavlu@suse.com" <petr.pavlu@suse.com>,
+	"samitolvanen@google.com" <samitolvanen@google.com>,
+	"x86@kernel.org" <x86@kernel.org>
+Subject: Re: [PATCH -v2 0/7] module: Strict per-modname namespaces
+Message-ID: <20250502125533.GA4198@noisy.programming.kicks-ass.net>
+References: <20241202145946.108093528@infradead.org>
+ <20250502115553.27803-1-roypat@amazon.co.uk>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250502-module-params-v3-v11-3-6096875a2b78@kernel.org>
-References: <20250502-module-params-v3-v11-0-6096875a2b78@kernel.org>
-In-Reply-To: <20250502-module-params-v3-v11-0-6096875a2b78@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
- Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
- Masahiro Yamada <masahiroy@kernel.org>, 
- Nathan Chancellor <nathan@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
- Danilo Krummrich <dakr@kernel.org>, 
- Nicolas Schier <nicolas.schier@linux.dev>
-Cc: Trevor Gross <tmgross@umich.edu>, 
- Adam Bratschi-Kaye <ark.email@gmail.com>, rust-for-linux@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
- Petr Pavlu <petr.pavlu@suse.com>, Sami Tolvanen <samitolvanen@google.com>, 
- Daniel Gomez <da.gomez@samsung.com>, Simona Vetter <simona.vetter@ffwll.ch>, 
- Greg KH <gregkh@linuxfoundation.org>, Fiona Behrens <me@kloenk.dev>, 
- Daniel Almeida <daniel.almeida@collabora.com>, 
- linux-modules@vger.kernel.org, Andreas Hindborg <a.hindborg@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=806; i=a.hindborg@kernel.org;
- h=from:subject:message-id; bh=S9xpT5II4HEFQ7Pcgab/h1zpYjOY04rscXr6GialsmY=;
- b=owEBbQKS/ZANAwAIAeG4Gj55KGN3AcsmYgBoFLeqZKr071PEBKGjcF4JLDSdvvNNBoHbLblBP
- TLUPdGfK0+JAjMEAAEIAB0WIQQSwflHVr98KhXWwBLhuBo+eShjdwUCaBS3qgAKCRDhuBo+eShj
- dzpJEACl7UzV4T7qDQY2jDE3VOWm102mRinW7oCVXlX9+nR19RSoO0gL1hTfFeSEbkEwjRXm31N
- v6jTjVzJU0G6jYWONKpwWQVylbW0sZYWSEBJr20VOQ/iIXNaSBcaE8GmOyNWxUAQxueULf/bAqz
- Q6boIofC2kWuYrF/SUDGfd86PC17Tkb6iI40GVHYrhobj5E1fldhXSeP7lOtxFvKLrXoN4+GtaL
- reaptZZ4EcCkcyv54BnHDs5LqPVgdAbAdGa9G1IsU9CBYdul5oSFKMMKGsHjjZjmZHGpYnNUKxH
- QskE07s0QlSKtCMr0VQCy46sgAWOS+VmuOexwpYcLrAKXEJGOEk3DU4I4ux4XP5Mhc0ZEyvvtW0
- +de9/d1Q33EG4IrW2WV0l4puU7y5rcfOY4kAvfHorq5/G8BEaUp1eN4Fot5vy+rlAYekHS0CWEo
- kPKQfl7zkU6q2VMMNVnEhQo51dKztxQ+ATAz4KNCwSHNkyCgZAa7N7jtRLlEc7v8ZFzw5bXfhKc
- 6gUVUIrc4aU+dtB6efbzwOKO3nbQvtyjTHxdqcBUkx8QClDU7aZHQKLfKQxxNGeSM7KZtkZb81u
- kXCK4o6ynFc+wNCoz4nELLoFsGsalqnJcichXg5BuN00lPszFWqoFp3yylppE9cOIosstv5UaUK
- n5vZddtEdiBmYlA==
-X-Developer-Key: i=a.hindborg@kernel.org; a=openpgp;
- fpr=3108C10F46872E248D1FB221376EB100563EF7A7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250502115553.27803-1-roypat@amazon.co.uk>
 
-The module subsystem people agreed to maintain rust support for modules
-[1]. Thus, add entries for relevant files to modules entry in MAINTAINERS.
+On Fri, May 02, 2025 at 11:55:54AM +0000, Roy, Patrick wrote:
+> Hi Peter,
+> 
+> Are you still working on this patch series? I'm working on having KVM remove
+> virtual machine memory from the kernel's direct map, to harden again
+> speculative execution attacks [1]. At David H.'s LSF/MM/BPF task on
+> guest_memfd, it was suggested to use per-modname namespaces to export
+> set_direct_map_valid() specifically for use in KVM to achieve this.
+> 
+> Is there anything I can do to help get this across the finish line
+> (testing/etc.)?
 
-Link: https://lore.kernel.org/all/0d9e596a-5316-4e00-862b-fd77552ae4b5@suse.com/ [1]
-Acked-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+Hmm, I had more or less forgotten about this.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3cbf9ac0d83f..d283874843a0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16395,6 +16395,8 @@ F:	include/linux/module*.h
- F:	kernel/module/
- F:	lib/test_kmod.c
- F:	lib/tests/module/
-+F:	rust/kernel/module_param.rs
-+F:	rust/macros/module.rs
- F:	scripts/module*
- F:	tools/testing/selftests/kmod/
- F:	tools/testing/selftests/module/
-
--- 
-2.47.2
-
-
+Let me rebase and address the comments.
 
