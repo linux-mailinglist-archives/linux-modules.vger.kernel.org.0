@@ -1,49 +1,59 @@
-Return-Path: <linux-modules+bounces-3782-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-3786-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B440AD725B
-	for <lists+linux-modules@lfdr.de>; Thu, 12 Jun 2025 15:43:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20F0CAD74B6
+	for <lists+linux-modules@lfdr.de>; Thu, 12 Jun 2025 16:55:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8639176526
-	for <lists+linux-modules@lfdr.de>; Thu, 12 Jun 2025 13:43:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD1F87AD38E
+	for <lists+linux-modules@lfdr.de>; Thu, 12 Jun 2025 14:54:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20C6A255E23;
-	Thu, 12 Jun 2025 13:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0577F26C397;
+	Thu, 12 Jun 2025 14:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zve+8Us0"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="v01xndwn";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="z3l0ZEVL"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E561429405;
-	Thu, 12 Jun 2025 13:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6662842048;
+	Thu, 12 Jun 2025 14:54:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749735704; cv=none; b=jvk1GBWWlaS6D3cZuWC3NsWQ8ZLPolOns2Jy4FOHHGImIeVNgXUCgT9UalbrcG8wAKek/DDkjdaX649h0yS2gIifPzvZTc1xwL7CeIqgWSWiAwS0nBPYY0BnPnUp8R0wFyEvIsTT3di4SNOCWmgkSQ76Atqz3ZUqKXeqfKiBAC8=
+	t=1749740053; cv=none; b=KaWp9gcncOAUrrODarmFeIflhsLgEZef+b1VHvGnWwUD2LuW6jBq/Zlj13ybY+PI01iBhjvSHtzuZqepaD4YZjlT5A7Fj2/tIQsnMhFfDHmEkYkmjXZljt7fefomV1WHj7bZE+bWthYGNrtgpClRz49TXCmE+/4GhykWLZD1sPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749735704; c=relaxed/simple;
-	bh=PtuTc4hQCwkPkaeEcx5FuCImo6u7nfEiFFeDuVcRi+8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=scS38d9ACMRZD5/NQ1JJmStVPd4sm8Kt54oLAkinRX3Fiu+MIkq15f0F38BsZSCOadIreYCGT79GuRlVEiq6CjU5GOtV2AX014Lr2A9m6vfV4/4gJ595WXx1CBQdwO8Gl/P9kafLIX3kWCDbg/Tu0h383X7gLoLQRg7cHrKRZ6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zve+8Us0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD919C4CEF3;
-	Thu, 12 Jun 2025 13:41:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749735703;
-	bh=PtuTc4hQCwkPkaeEcx5FuCImo6u7nfEiFFeDuVcRi+8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Zve+8Us0w5wjasu/XWomWd5hMM8F6wniPNtUHEY44FW0R+Y3sQrnFv625tpuFP41+
-	 txzXWxSKvH5MV2P+7ZcCrZr8ex2+I2QEvzcNcSaERgNUNr6+8AbRIUu9G3ey4RnbLg
-	 1kWUZM3GgTKHCg9AwhLMEpq8U0dHrIekbnr5dKLzCu48fXl/8iFLLSj5xOH2axaufb
-	 i4jG1lnWrxab0PgafLygvevOmtv6cCwPVpgQy94lZ4iggQP8KTlGmL7d1CBwnNqAqW
-	 ftbpYZqM49g0a8KAJOFsaaOf0KEteuzhNTePhDLzqUECmusLEM+5MDtB9nbpvlaqm1
-	 iO5u+QlhvW9Mw==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-Date: Thu, 12 Jun 2025 15:40:07 +0200
-Subject: [PATCH v13 6/6] modules: add rust modules files to MAINTAINERS
+	s=arc-20240116; t=1749740053; c=relaxed/simple;
+	bh=JLpyd2g/Xe7Snc8TZSz2U73JR+zRBfDYm2l2i1X5yzQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KwRkUKH2Cjyxvjipfo0AQSaJ54B6ODdr8rzFJBz0CfIuyyJgfwcDtoUynTXB7AMkjxHagcgVTy3FfDzdPvZxg97RdC12abZHvNO/0K5Q2d4v76P+9yeH4eXJaOuEJBaQsP2igxgINTUuPgCr0keRBCEqIPg8DdXf5/NYr1esD9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=v01xndwn; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=z3l0ZEVL; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1749740050;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=fjwRLX2hmKU2M12T6FDQVTqpIRNQy8PjR1/oqRxiAuE=;
+	b=v01xndwn5kle1gJ1WXpR+eVWH9xR6k3hd9zUVmVFQY5M3ZZKcS0c9v+BJ81BpCiBmjci6N
+	WhJT6ONx/K4adk7NKGktPQ1mtHpSh7t0+LtFUEznSVH2+qo6PriILKAQRwS9si1BJaxXRT
+	zZkZ4NJJNfVy7b2s5hqc/u7T3xyTE0NZoRnnZNXqQNQex3jOQjbgE4V5NuI7dlUAzpOpZh
+	CfcqvUXgqXqPmFW9z/0yu5kqEGziJ4hXAPIP3F/CryyX5Ag7nCuh4dvUMoOr9UNb2jUBdl
+	fV2HtBLZucMJJ53J+HX/2Jcn99Xu+O3pgNsLgQ+z0hXdiSK9sIekRWfWwsHwkA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1749740050;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=fjwRLX2hmKU2M12T6FDQVTqpIRNQy8PjR1/oqRxiAuE=;
+	b=z3l0ZEVLqs494vuwhRCC0AaGkmClNHH1GPTRWwPaNjgLw32+8aA4HOCM937JRU6lsBanMG
+	uXOGy5rmwF4lnCDg==
+Subject: [PATCH 0/3] module: make structure definitions always visible
+Date: Thu, 12 Jun 2025 16:53:53 +0200
+Message-Id: <20250612-kunit-ifdef-modules-v1-0-fdccd42dcff8@linutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -51,70 +61,48 @@ List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250612-module-params-v3-v13-6-bc219cd1a3f8@kernel.org>
-References: <20250612-module-params-v3-v13-0-bc219cd1a3f8@kernel.org>
-In-Reply-To: <20250612-module-params-v3-v13-0-bc219cd1a3f8@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
- Alice Ryhl <aliceryhl@google.com>, Masahiro Yamada <masahiroy@kernel.org>, 
- Nathan Chancellor <nathan@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
- Danilo Krummrich <dakr@kernel.org>, Benno Lossin <lossin@kernel.org>, 
- Benno Lossin <lossin@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>
-Cc: Trevor Gross <tmgross@umich.edu>, 
- Adam Bratschi-Kaye <ark.email@gmail.com>, rust-for-linux@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
- Petr Pavlu <petr.pavlu@suse.com>, Sami Tolvanen <samitolvanen@google.com>, 
- Daniel Gomez <da.gomez@samsung.com>, Simona Vetter <simona.vetter@ffwll.ch>, 
- Greg KH <gregkh@linuxfoundation.org>, Fiona Behrens <me@kloenk.dev>, 
- Daniel Almeida <daniel.almeida@collabora.com>, 
- linux-modules@vger.kernel.org, Andreas Hindborg <a.hindborg@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=808; i=a.hindborg@kernel.org;
- h=from:subject:message-id; bh=PtuTc4hQCwkPkaeEcx5FuCImo6u7nfEiFFeDuVcRi+8=;
- b=owEBbQKS/ZANAwAIAeG4Gj55KGN3AcsmYgBoSti7f7BsTFkFbFOskmVS4/+QcJ4aUaQYBbQjc
- u8+JpR5o2mJAjMEAAEIAB0WIQQSwflHVr98KhXWwBLhuBo+eShjdwUCaErYuwAKCRDhuBo+eShj
- d2pNEACnbI0d469VxHqJtVI1ZNarSPJeilQVW6J6dQh5JvBNAIkcUK5AZEBQsV/OGQG9suT42g7
- +Q5LB5BgS8yKbKE2eDWN+zzdqyGzsno/unTxk+KOPXyw3wsnhv9N7WYIL0z0bRYsni2gyWem+1C
- 2NiVyuU50OBTR/930EnWbhdU6aVJjJSfDT3/RAFWeJXU46RZnB8w+z7fAFyDVI7YfhWxbk/FfyF
- mydPez6cGLpS8G9VBJVfyx+XvLsCXzELL49z+pNOj46Ah80QTzBbA13CmRYgQOCmi1hDTO3n2W+
- lNg4nYZB40m/nqXI2cGpw+F3ECX38Y3z31NPlW8wvoXbafwSGxK2AF3VeeClEVD6f5u7BFZgjM9
- T9dvRlj/gymgVtlNYUHI3+bQ6a8xDprgsrJQweiZxlhfukuOV1/oOT2AuYivIar2TMaRwcfml2N
- V6paR5z9uuI8KU4vF6o1S9K6eal5FfPTloW/pskhaU6h92QFKHohse/H4LMDKWuemYw0qiF2stP
- vOftpBfMsQwTUolE1kaftrVY0cV72g/7hiGI0V/rbgw7p4SRQB16j2TPEko8WMLwgt9ukl+srfO
- deEtA9WYjFHYGRk+uPwTjKAMeghe7e+EI4wEOdBzEPGAya0g0czzJDRBnZT4en/YCd3qLDm1Spm
- cNZlXPvQdrnhYdQ==
-X-Developer-Key: i=a.hindborg@kernel.org; a=openpgp;
- fpr=3108C10F46872E248D1FB221376EB100563EF7A7
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAALqSmgC/x3MQQqDMBBG4avIrB3IKHbhVaSLYP5pBzWRpEpBv
+ HtDl9/ivYsKsqHQ2FyUcVqxFCukbWh++/gCW6imznWDe4jwckT7sGmA8pbCsaKwU2iQ3kOGnmq
+ 5Z6h9/9fped8/RgDNVmUAAAA=
+X-Change-ID: 20250611-kunit-ifdef-modules-0fefd13ae153
+To: Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+ Sami Tolvanen <samitolvanen@google.com>, 
+ Daniel Gomez <da.gomez@samsung.com>, 
+ Brendan Higgins <brendan.higgins@linux.dev>, 
+ David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>
+Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
+ =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749740050; l=828;
+ i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
+ bh=JLpyd2g/Xe7Snc8TZSz2U73JR+zRBfDYm2l2i1X5yzQ=;
+ b=XWVHF8VTdoJM/mSgo4aVnOylh7DnsaPHQ6m/W9id/IzvZjlna/thD6sw9RK/dlNajeAj1CSjS
+ BermlnFdJ+yBemtIP2L8WVwRdD3Z9sXScrW5+34Z0JkngBs9V4d4jwi
+X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
+ pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
 
-The module subsystem people agreed to maintain rust support for modules
-[1]. Thus, add entries for relevant files to modules entry in MAINTAINERS.
+Code using IS_ENABLED(CONFIG_MODULES) as a C expression may need access
+to the module structure definitions to compile.
+Make sure these structure definitions are always visible.
 
-Link: https://lore.kernel.org/all/0d9e596a-5316-4e00-862b-fd77552ae4b5@suse.com/ [1]
-
-Acked-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 ---
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+Thomas Weißschuh (3):
+      module: move 'struct module_use' to internal.h
+      module: make structure definitions always visible
+      kunit: test: Drop CONFIG_MODULE ifdeffery
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a92290fffa16..e3f43583c9c6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16794,6 +16794,8 @@ F:	include/linux/module*.h
- F:	kernel/module/
- F:	lib/test_kmod.c
- F:	lib/tests/module/
-+F:	rust/kernel/module_param.rs
-+F:	rust/macros/module.rs
- F:	scripts/module*
- F:	tools/testing/selftests/kmod/
- F:	tools/testing/selftests/module/
+ include/linux/module.h   | 30 ++++++++++++------------------
+ kernel/module/internal.h |  7 +++++++
+ lib/kunit/test.c         |  8 --------
+ 3 files changed, 19 insertions(+), 26 deletions(-)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250611-kunit-ifdef-modules-0fefd13ae153
 
+Best regards,
 -- 
-2.47.2
-
+Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
 
