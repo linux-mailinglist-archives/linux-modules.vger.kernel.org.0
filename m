@@ -1,75 +1,76 @@
-Return-Path: <linux-modules+bounces-3896-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-3898-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 619B1AEE119
-	for <lists+linux-modules@lfdr.de>; Mon, 30 Jun 2025 16:41:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 935A9AEE11B
+	for <lists+linux-modules@lfdr.de>; Mon, 30 Jun 2025 16:41:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4015016BA09
-	for <lists+linux-modules@lfdr.de>; Mon, 30 Jun 2025 14:38:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5343C16D170
+	for <lists+linux-modules@lfdr.de>; Mon, 30 Jun 2025 14:38:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 147AA28C86C;
-	Mon, 30 Jun 2025 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E9E28DB67;
+	Mon, 30 Jun 2025 14:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="KNf3ykGG"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="dDeqjcsE"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5DD28B7FE
-	for <linux-modules@vger.kernel.org>; Mon, 30 Jun 2025 14:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855C028C2AF
+	for <linux-modules@vger.kernel.org>; Mon, 30 Jun 2025 14:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751294175; cv=none; b=UKtlnq1/BL967x4qQC8skVATQfWjdWtbiwMZ9pcIubNBTC1ob6e1X3S6FRlE1sJ6L6XuWRe60RXRLWtmOESlD73ilXN0/6lh1eNeLwDjyg/Tf7rwrl1XQMrQiERHflbB8Q52lmZ/8LZ3CCvYuxMyc0AIxf3fWud5A4UgtLmhUiw=
+	t=1751294176; cv=none; b=Q7Fpem3BWZ7NTgNlfuZ7bsvqstJPfTFW0J2Xczo8d4LeVPSHanMChgXvSnfLR6p7p5Zj3jZLCqay5WVRX6d8kp3b2moT2PuKNwHRjw5HqM0q3zvMPxEpa+JcjULuIuDj1GzoyRXGOnwGfXmIKRCVrA9OAsnmL8BbbkpQLeiwRsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751294175; c=relaxed/simple;
-	bh=ijmcaIoa3T+v1e2tSEIgWQRy27wlu82NxAcWi7tyNVo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s7VnxERMXKQ++UJToz9bZS9Xxqo5fw8TUizt6cTgZnWZP+5HaBtLtR8nAxzGJbCE+Y2mx2Cq6FBNMemiJKFlr8jTfe3HsOJwocEAakeIgy/cRAmeu6Gg9HImjTtdlWsVEnNn587gSdq+dpTT2bU23kA2fE8ZDDEnLUqQEFigo18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=KNf3ykGG; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1751294176; c=relaxed/simple;
+	bh=iJ7bqgXfPtMBXmUDY/YhJ+N8O2D9Z1dGk3Blw7bpjMI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=O5qaefPXZ4fXSKcaxhZelEHHWYXcty8rBG/ptmd0+Pb/4rqwf5mSEazBRvqv+ouusT9NFv1UObE4Kw5J5x7/tt2SdouNxLxAnK2W3B2P/3eiN63UJXlnyExaJ1IUm1vImDmdWUnHTc68tSDO8A1OWif45xkmrhyWK6ITy18fIDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=dDeqjcsE; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-450cf0120cdso22556105e9.2
-        for <linux-modules@vger.kernel.org>; Mon, 30 Jun 2025 07:36:12 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a50956e5d3so3886788f8f.1
+        for <linux-modules@vger.kernel.org>; Mon, 30 Jun 2025 07:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1751294171; x=1751898971; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yrJ26ovUMBn5wPlmSYUHRqvSgt1eO3iWTStApxaLMIE=;
-        b=KNf3ykGGMUGqTEfmMNqWc/Pg+V2g20cXO0Ux0R7q/JiV8yVqNfDLt9XIAQw+zqSfCU
-         tU0p1QDmUeJhoPTxlzALjMqJSYlYk5HiuDQau2MHnzRfxIdIeI8ZInEcjS2n6WpHN+Jw
-         MSH7k2kpJdNEISWkG/poRVqNZPXoofGgxWiWMViEsR1vGw11StkNga1p3AT1bIi97pG4
-         t5Ft2SA8aYdM7G8DRTtk96Hm5/sbiDcbtkvoEFxa+P4NNBzTqcuQugjPWIcqFn+zZd7c
-         y4kW262o6qtpSEcNMEks0z3IMd17zVwXQNvp5AkLGAwXT466NccH/d6U9Jccs/iG4szB
-         WA6Q==
+        d=suse.com; s=google; t=1751294172; x=1751898972; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NmutXua1lSKxORl0w3oIEp2FOLuV8/Za8RV+I5tfNXw=;
+        b=dDeqjcsEoTAmg0IuTWbaXRAn1R6cYoIF0wgSIJTPmR/pdJWxOxJfaPJGVpaiEE8vkb
+         mjycFblwzxfOi4MNggsUz9W5AzoVIdan2A0Ze64WIPBU7dS450G1/7X1NZItsl2npyAc
+         UUh1rt5pVqM64qCid+fm25rXv4TMLfhb9ANEJE/jmBu9XzMbh0yIi5JEW17QMEbuLqUk
+         I0g+lnuoh1xHmPRhR4rL1c5C6NFzRJxd6xboq4oUqukZruN+x5gE6HYp1ol0wxTwxD9C
+         d3YbKkbtDgvcr/mQSJ9SaN5JAEl8/cr72LtEmo7CR+opSQeqnY0ZLCN61mYtzq15DDyy
+         xa7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751294171; x=1751898971;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yrJ26ovUMBn5wPlmSYUHRqvSgt1eO3iWTStApxaLMIE=;
-        b=bMs13NiqGs7VHWfU92+SilLYQR/Ip9104fEO11HhugqLQm3fta8Iyvaj9jpY5XcHpa
-         PXWvEV8yrHTmH7DvoookfTBbD2qqq/ne36+h0Fh5pia5wi7G6ktbscJSWmK8TfY+clTa
-         zxZUXxN8P2TsqDYF5icuM2arwveHyPQ0Yvyl7BdRa93QbRqYSmSrAXxhOHc0we98ugTe
-         c34QVcJ3sFcldRfSNtrI4SN5K1qbe7MwvaQktvL2vnbErfOTxxH8C8o6KX1n69Xwob1R
-         HeZgU8KrIoqCm1niUAQCHButdjhsKtd/jnwFgpjG6qkaATR4tI2wAwCXbLrOvfOw9GKh
-         mosw==
-X-Gm-Message-State: AOJu0YyBwmpCoUUKoxP8WAKlX8RlL/4q/5M9svlocNPKDsIEUgl8V/qy
-	2khnYFgTC08MBpPdhQcqCCP7ndO23CsM9BVouqCP0iyfGHkYvd6R+PHCNU18OAJSTD9ue+q4dUD
-	2PAn1qwE=
-X-Gm-Gg: ASbGncuhCaA4Aiagq9r9/E1vf9CHg+PulCMiuQ1WB3EzwCHuEqNwu1oq7iCo7yhOTpo
-	l29/2+EX/tG9nh8JJi3khjG6wkekUM7I6DHBnAM4vgroC8E+FH9zSx/wgOHNumGK12TN137f6RO
-	S0mAYqvt6KhFbwDgBvDtMGAVKT2le0v2kEraW5qdGZbthdQFegwJUxPPDa8lOWUyOQvJIuJunE+
-	2fs2DXgV/LQ30MTGfKvmQDsoznPAbM5N9+7XKWiORYTxirxyTt+w+1pq/XQ1T27L7LEur7ZJ61o
-	RcQApEiwsbsIo8GZ1Ogs0YoZmyx0zmMoOaeokZoNXE//PCSy81LcA16IUTzekA==
-X-Google-Smtp-Source: AGHT+IHmF91CXXbMG1elqcOHyJHe0oSVxoNF5JEELyTlvftZNeN1Qp2AI1Kgqc2JrBLSS9DwFOwyMw==
-X-Received: by 2002:a05:6000:2d81:b0:3a4:cfbf:51ae with SMTP id ffacd0b85a97d-3a8f435e16dmr8103859f8f.4.1751294171089;
+        d=1e100.net; s=20230601; t=1751294172; x=1751898972;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NmutXua1lSKxORl0w3oIEp2FOLuV8/Za8RV+I5tfNXw=;
+        b=ajZQDJjXYZVRMBtQ35agsqK6QnmMOHAB8LlZ9t4qbYizid4tpFf689egGr5YLsonr2
+         towXrVAnAApGpHz1bLmqTl7nTK0zAw9eBvYMWtiIwIm63QOZFaGiqxjygOCGa28k435B
+         NR55DJfCU4Px/r8XceCcHRchdvKVTK3rPDjNWEczl+FXSnwaalQUsTqrbEg579U2SdDi
+         tWwpHm2Uq/QoJAce+I0MvIRqywPCWqNCsrr7eyCgwAMQhKz19sJqydHOxtJi+MENA5V2
+         WqE4IozyUsbzaqsVOTJhm36+1jV88SM2fvXqHjVvz4XSUy5Wae46Ncl25WyFtIw6BOeI
+         RcZw==
+X-Gm-Message-State: AOJu0Yws92gunp08czlJfrwaPzZCfpjvvEdHOEfzRMlfud4oagd6WxIq
+	/djL559Ot/8Me4Q+ayS/Vytg5YsJWP9LEE1OPFbjMlpbXQNkCz+wZc0J3PYtHP6pRw0=
+X-Gm-Gg: ASbGncu4cesvX9DhI0UCP7tSTl3ARdeJ/wuPPtaAELQ5AqNWDCyik+nhCyBzJast0C/
+	2vPP6hxrLQKiRRkDnycDwHgObZigDrLGXwXzfEY+Cb1ZrTlBdDcx6Ql7n0M8rF/+Qkj2Sl83YR1
+	ERzgg8ObOYt7Q3a5E+kHaQMI8H5DJIKUEU8+9wacjKazDBmS+RZ2W5/AwKYNWMs6jcFkf2ttYng
+	NfjAqyLHwbU4aESOyoBggwSLk2LAKN9VDBLbfOgHbaLBuY+yiros7kXkvJm6xbGOa6Xk1kQSr8u
+	7iy4AcwfQu355KM2dJ5w1snNB5tktExXYxb0bG+Q+ETzaHsatxAwI5dkns/SKQ==
+X-Google-Smtp-Source: AGHT+IFeTwmcYHOYYLMQoffaVlLFKMuHfFzsJq4UbYAwtBydXgF3vYE5RuiejytIxEYKIFATVTkqYg==
+X-Received: by 2002:a5d:46c2:0:b0:3a5:2fae:1348 with SMTP id ffacd0b85a97d-3a918281259mr9014396f8f.51.1751294171768;
         Mon, 30 Jun 2025 07:36:11 -0700 (PDT)
 Received: from zovi.suse.cz ([193.86.92.181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a4064b1sm139691695e9.29.2025.06.30.07.36.10
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a4064b1sm139691695e9.29.2025.06.30.07.36.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 07:36:10 -0700 (PDT)
+        Mon, 30 Jun 2025 07:36:11 -0700 (PDT)
 From: Petr Pavlu <petr.pavlu@suse.com>
 To: Luis Chamberlain <mcgrof@kernel.org>,
 	Petr Pavlu <petr.pavlu@suse.com>,
@@ -77,10 +78,12 @@ To: Luis Chamberlain <mcgrof@kernel.org>,
 	Daniel Gomez <da.gomez@samsung.com>
 Cc: linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/5] module: Fix minor problems related to MODULE_NAME_LEN
-Date: Mon, 30 Jun 2025 16:32:31 +0200
-Message-ID: <20250630143535.267745-1-petr.pavlu@suse.com>
+Subject: [PATCH 1/5] module: Prevent silent truncation of module name in delete_module(2)
+Date: Mon, 30 Jun 2025 16:32:32 +0200
+Message-ID: <20250630143535.267745-2-petr.pavlu@suse.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250630143535.267745-1-petr.pavlu@suse.com>
+References: <20250630143535.267745-1-petr.pavlu@suse.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -89,24 +92,47 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fix a few minor problems related to MODULE_NAME_LEN and
-MAX_PARAM_PREFIX_LEN, and clean up their usage.
+Passing a module name longer than MODULE_NAME_LEN to the delete_module
+syscall results in its silent truncation. This really isn't much of
+a problem in practice, but it could theoretically lead to the removal of an
+incorrect module. It is more sensible to return ENAMETOOLONG or ENOENT in
+such a case.
 
-Petr Pavlu (5):
-  module: Prevent silent truncation of module name in delete_module(2)
-  module: Remove unnecessary +1 from last_unloaded_module::name size
-  module: Restore the moduleparam prefix length check
-  tracing: Replace MAX_PARAM_PREFIX_LEN with MODULE_NAME_LEN
-  module: Rename MAX_PARAM_PREFIX_LEN to __MODULE_NAME_LEN
+Update the syscall to return ENOENT, as documented in the delete_module(2)
+man page to mean "No module by that name exists." This is appropriate
+because a module with a name longer than MODULE_NAME_LEN cannot be loaded
+in the first place.
 
- include/linux/module.h      |  2 +-
- include/linux/moduleparam.h | 15 +++++++++------
- kernel/module/main.c        | 12 +++++++-----
- kernel/trace/trace.c        |  2 +-
- 4 files changed, 18 insertions(+), 13 deletions(-)
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+---
+ kernel/module/main.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-
-base-commit: d0b3b7b22dfa1f4b515fd3a295b3fd958f9e81af
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 413ac6ea3702..933a9854cb7d 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -751,14 +751,16 @@ SYSCALL_DEFINE2(delete_module, const char __user *, name_user,
+ 	struct module *mod;
+ 	char name[MODULE_NAME_LEN];
+ 	char buf[MODULE_FLAGS_BUF_SIZE];
+-	int ret, forced = 0;
++	int ret, len, forced = 0;
+ 
+ 	if (!capable(CAP_SYS_MODULE) || modules_disabled)
+ 		return -EPERM;
+ 
+-	if (strncpy_from_user(name, name_user, MODULE_NAME_LEN-1) < 0)
+-		return -EFAULT;
+-	name[MODULE_NAME_LEN-1] = '\0';
++	len = strncpy_from_user(name, name_user, MODULE_NAME_LEN);
++	if (len == 0 || len == MODULE_NAME_LEN)
++		return -ENOENT;
++	if (len < 0)
++		return len;
+ 
+ 	audit_log_kern_module(name);
+ 
 -- 
 2.49.0
 
