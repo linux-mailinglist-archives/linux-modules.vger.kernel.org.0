@@ -1,120 +1,272 @@
-Return-Path: <linux-modules+bounces-3925-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-3928-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D937AF5892
-	for <lists+linux-modules@lfdr.de>; Wed,  2 Jul 2025 15:23:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DB53AF59A7
+	for <lists+linux-modules@lfdr.de>; Wed,  2 Jul 2025 15:41:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 81B381890C2D
-	for <lists+linux-modules@lfdr.de>; Wed,  2 Jul 2025 13:23:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4572C7BD700
+	for <lists+linux-modules@lfdr.de>; Wed,  2 Jul 2025 13:35:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A59EC2877E6;
-	Wed,  2 Jul 2025 13:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA2DE279DD5;
+	Wed,  2 Jul 2025 13:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FbF3K1F0"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tsgDG4ar"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796DC2798FE;
-	Wed,  2 Jul 2025 13:19:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19E127A13A
+	for <linux-modules@vger.kernel.org>; Wed,  2 Jul 2025 13:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751462381; cv=none; b=bDtk7Dhbsj3FxdLyQt7qbV54iN4vOMeYr7N8B911ymEzTc6BGmJn8y9ehbqJdiKOLohLlae+SJb8oVX0TYl0RpWLObdyY1YtXxFSXYpjPubo2YoPCqje02/nXWNCJ0MCZpBUCmVIWkEU4PNcUtJL4sSpQB9nAcfE6HlXQrGOzZI=
+	t=1751463142; cv=none; b=bgQPZzHR3lqo2yMru9fdvvHI7tPRuZiBtyOR8X9BLnU2OOdzklMfQqFZYJX/dlYVbYIQSK7oSrf8F//WUOeRCENYK6YBwKxBf2fh7VAlumKm6Akb975pJz6FK0IDmAMDTZCPxw6kjrHZ1Qc5a/MnqvbpeSfKcK1yzjHu/W9Q4Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751462381; c=relaxed/simple;
-	bh=QKv1eaNx8HXCqOejDO0r39rwgHrEEYHNlSfukU0dcXk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=f6/5I6FosoIwysUVb4ot375HK7ly6TKW6yZq7Qq3JBWPaRrEZjAB2F7pbWPXzk4FnzjJFZ0ZROxMw4JXIKp1wjyvnVxBvkLqq7LTBYRqT5HDsiWu8rY1JjHVNR1R9r6Gxx/G8XB7poLT2PIAYL0kEBxvQKsaSCakKYPowtNeALw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FbF3K1F0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B025C4CEF1;
-	Wed,  2 Jul 2025 13:19:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751462381;
-	bh=QKv1eaNx8HXCqOejDO0r39rwgHrEEYHNlSfukU0dcXk=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=FbF3K1F0xoMCvW2mCumeLkEI7lUkTga14EsFKlxYJXhpm/ctiwGe4N74gIPu3vIHx
-	 x6Ku4BYZEphGAar9XBVMNrE7Xs368n2HDMiUu4l2y/A6rTMK+aM8F+BFir5mMAOkpa
-	 WkuOh68i8M5i5+XMLuuERMgu5QBgEEeto/QfW6aFEWtwGj0sw9Gj62VDTCR6SvgHYK
-	 bCKPDj/FBNnB69N6OKwfdxbkH/bvAbiXuLAIND56oONr0ABCaUNXcV+yaFmRZzVBp4
-	 VVTNYbE1UY20D2io2LkOgeMeLmdQFpLn/qCMxr7mLnrIARczPBIrF4/I7gPB5KC4RL
-	 Eu6mf0qH8KZoA==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-Date: Wed, 02 Jul 2025 15:18:39 +0200
-Subject: [PATCH v14 7/7] modules: add rust modules files to MAINTAINERS
+	s=arc-20240116; t=1751463142; c=relaxed/simple;
+	bh=z7Gd2ZV19XvvqLtgd16QId8F4kQS/oThQ6mvOseMOeA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QY4jIisfxrV9G2PkP1rv9HJK1CIYpQ6VSCXC1piVRuaUhLOX1FQdMsQM4hwI6azMjU0L0jNjpis9A3+eIE7y9unxVAtKjHSYos37I8W+WUBX0NmxDW5NKyuWt5jlmN4ShJ/ZhLOUtw+MU/7wDKi8RaNUs6s5E9CqdvSg9joKt6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tsgDG4ar; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b31d489a76dso4090453a12.1
+        for <linux-modules@vger.kernel.org>; Wed, 02 Jul 2025 06:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1751463140; x=1752067940; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rLb/hiHcDswU0D4uNpcn2drPp3SCOUyv9DR9ui8PXlc=;
+        b=tsgDG4arB5k0MWH3m6IqSA4JrJ1cE46VRb7JreDK4X/naTp6liVD07yMDgbAi9z+qo
+         +9JBqnVawGjIc0Vcx6D0HNxn+uaJmRt4tpyk/gENgCZAkTuyolgL9na3PCiZHqndE+98
+         NfJie5wja6L3wRPI0vrOgFCQAswDXyey8Ps1V616s70s9XOkFCMj5uI1wxnXCrO4NL7T
+         HBI5Z1tZA+cYUBJKb4dNp8v/OxUx8UfPtcXvUUc7SA1q0p1Ywg9+PX2GEADWNpe//x3r
+         DFqsKzCbsLWmCJjG54jhf6f6SD7BlIAvM5BzkND8XepL6/zFGWTn567/tA8TvsIyZiRM
+         +/CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751463140; x=1752067940;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rLb/hiHcDswU0D4uNpcn2drPp3SCOUyv9DR9ui8PXlc=;
+        b=r7Yvbd29qloBB2pFL3XkdeD4gRARHccmj2wZtsS6OmV6Mu7/PK5NbXiFdLZkZ7ntyQ
+         Ez+58MZGpLVUEm1Hddz7vihe2BcdhsjivNAiGEl0Okm2tMSuVpi1K0TFp0alXij8rhZh
+         WgJusGVS4xyBLWu6E5PytZtg/aHGwwVUjEqwiou7gBSjDKAQJAsVeaqJ8nSgAjTGDD7P
+         kn3KwcDLBWV5Kivos2NTL324lzAwITHHCgUKQy+g3nlGv8xUVPbUEmRuwk4LWhdOMptL
+         ZzN+IlHd3uhrN5MriJUoM+jSqCwUgKJj1umME49F1CY1ey91RlRK6RTg7T+CI9+nksP4
+         1IbA==
+X-Forwarded-Encrypted: i=1; AJvYcCVHZdwUO4z/gim9o7xc0wMxcJV97WwWZxrGch1zKZeMShFGUHTTXALw24TfJ9Gc3MExDDNTaQznfaCUFYqq@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhNWzZjAp9zczU15tX/iBb+LhC/JLPrHNXYwy2t8VHI6WIRKde
+	s8+xRxNL+buCfZL/+9A8Xx492gd4Ppe3XAvg6rPnOYCjjkdy63+k1Te4K8pOYB0Dk2zGH3LHmw0
+	YjRzJ4Tj48oziB8Z3h+2/YU2jqiJ1XUHGdY4l5gIp
+X-Gm-Gg: ASbGnct3TKwzY9q1tDa0pVUT6n8ZWOp2VfFo0L81r0xiDOQNrE35PjVLdO1NLQjSFlN
+	RwQg9DfURQM8EdwRrDGa/95RR37l/UQbE7o5HqX49UaVZVaF6Yx02DWxld3/4AhgcuGY/N5hq7k
+	FQDAaODFmrCAA3TBUlrptXBm3ZTUG7bYFxHN7+i3vwILGNfF1sXCfI7EeqVNE/QkMoVtumWV6z1
+	GL/w84JwA==
+X-Google-Smtp-Source: AGHT+IGl/TSKdQK7b9WQhHkHUkAL99tfbfmIwoIuqDS1wkyiy3yWj1kqtAXrBjAXrNOeDXSrDfXhNvdyiTqbiD64MZ4=
+X-Received: by 2002:a17:90b:5788:b0:312:e91c:e340 with SMTP id
+ 98e67ed59e1d1-31a90c2f8f3mr4423923a91.35.1751463139949; Wed, 02 Jul 2025
+ 06:32:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-module-params-v3-v14-7-5b1cc32311af@kernel.org>
-References: <20250702-module-params-v3-v14-0-5b1cc32311af@kernel.org>
-In-Reply-To: <20250702-module-params-v3-v14-0-5b1cc32311af@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
- Alice Ryhl <aliceryhl@google.com>, Masahiro Yamada <masahiroy@kernel.org>, 
- Nathan Chancellor <nathan@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
- Danilo Krummrich <dakr@kernel.org>, Benno Lossin <lossin@kernel.org>, 
- Benno Lossin <lossin@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>
-Cc: Trevor Gross <tmgross@umich.edu>, 
- Adam Bratschi-Kaye <ark.email@gmail.com>, rust-for-linux@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
- Petr Pavlu <petr.pavlu@suse.com>, Sami Tolvanen <samitolvanen@google.com>, 
- Daniel Gomez <da.gomez@samsung.com>, Simona Vetter <simona.vetter@ffwll.ch>, 
- Greg KH <gregkh@linuxfoundation.org>, Fiona Behrens <me@kloenk.dev>, 
- Daniel Almeida <daniel.almeida@collabora.com>, 
- linux-modules@vger.kernel.org, Andreas Hindborg <a.hindborg@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=808; i=a.hindborg@kernel.org;
- h=from:subject:message-id; bh=QKv1eaNx8HXCqOejDO0r39rwgHrEEYHNlSfukU0dcXk=;
- b=owEBbQKS/ZANAwAIAeG4Gj55KGN3AcsmYgBoZTG4L057HjJ5TR9cS+a56ULFDPMPW9mzocfjJ
- Aei5uwPLiqJAjMEAAEIAB0WIQQSwflHVr98KhXWwBLhuBo+eShjdwUCaGUxuAAKCRDhuBo+eShj
- d5j2D/9sF/xwBInFVeLxWuLHtYlx4FfdgeB9B20QNmNCqnu9ZEGGRCv4E7ETYVzdCSYIgAAwQ1f
- EvT/iH9cmn5m+G9mcAQojIE8ZqrlcisATzKw4D1LKbDJ8TmV5FyWva2Lvo11kn+8lObcVcEmt7a
- WBAsGmE1VAiKskFe5Wt7zk+kNGKh7FjZcWvX1L9EvvrBF7u1P61BwxrJkAAhwDTq8F8H5DxghtI
- MMkAVLHZP+pNDsCKTrVI7FlRGHsnPoOldn0521AI3bawMC4y/0OtzSr958u8+fGBByAlDPqKHtG
- rJnMINI3VvgwyOKHhYEyhKQTirCNkNZZ6WaRl7gpqIWfddTq5u1fT4sft18Q/mDyfz6zu6P+phk
- dC6T8CU48RNwUsUDcD1aiKV4SUGbF5aewaAFqdCFLjt0woMIhMiSK8yGL0l+bOXPainnXn2Lt0R
- 6ll3QNuxZZYeZgqHeFPK5YR1fIpjxiEzl7E1QCKqgUmwjiVYeeXgc+6G9yO1BMohZeN4uJbd7lO
- VsRCejzqVqoZPwVNx5ayx5+ARamTXjt8QGLBEY3GqlwHBxVIT7iyaA+9QJNwUf07JhIMGkvYcBU
- Xqgk9TJqp1y4mL4/BkvTrFKnjfz3uFwBUxsUfmUc7U/hdk8UPy5+kUi9ZXvMZ2UFG4R57+j6xTk
- 6BXyhbtu0NRRgJA==
-X-Developer-Key: i=a.hindborg@kernel.org; a=openpgp;
- fpr=3108C10F46872E248D1FB221376EB100563EF7A7
+References: <20250702-module-params-v3-v14-0-5b1cc32311af@kernel.org> <20250702-module-params-v3-v14-1-5b1cc32311af@kernel.org>
+In-Reply-To: <20250702-module-params-v3-v14-1-5b1cc32311af@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Wed, 2 Jul 2025 15:32:05 +0200
+X-Gm-Features: Ac12FXyWI8bK1guggG5Rvhs0301hdIxUpCmaYFQClmsVD87QxHCiS9wDlqMCJQk
+Message-ID: <CAH5fLghw5TDrzmFZB=tORR5Lxx4WoG4wer6y5NuFdod2_tb6zg@mail.gmail.com>
+Subject: Re: [PATCH v14 1/7] rust: sync: add `OnceLock`
+To: Andreas Hindborg <a.hindborg@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Masahiro Yamada <masahiroy@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Luis Chamberlain <mcgrof@kernel.org>, Danilo Krummrich <dakr@kernel.org>, Benno Lossin <lossin@kernel.org>, 
+	Nicolas Schier <nicolas.schier@linux.dev>, Trevor Gross <tmgross@umich.edu>, 
+	Adam Bratschi-Kaye <ark.email@gmail.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	Petr Pavlu <petr.pavlu@suse.com>, Sami Tolvanen <samitolvanen@google.com>, 
+	Daniel Gomez <da.gomez@samsung.com>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	Greg KH <gregkh@linuxfoundation.org>, Fiona Behrens <me@kloenk.dev>, 
+	Daniel Almeida <daniel.almeida@collabora.com>, linux-modules@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The module subsystem people agreed to maintain rust support for modules
-[1]. Thus, add entries for relevant files to modules entry in MAINTAINERS.
+On Wed, Jul 2, 2025 at 3:19=E2=80=AFPM Andreas Hindborg <a.hindborg@kernel.=
+org> wrote:
+>
+> Introduce the `OnceLock` type, a container that can only be written once.
+> The container uses an internal atomic to synchronize writes to the intern=
+al
+> value.
+>
+> Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
 
-Link: https://lore.kernel.org/all/0d9e596a-5316-4e00-862b-fd77552ae4b5@suse.com/ [1]
+This type provides no way to wait for initialization to finish if it's
+ongoing. Do you not need that?
 
-Acked-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+> ---
+>  rust/kernel/sync.rs           |   1 +
+>  rust/kernel/sync/once_lock.rs | 104 ++++++++++++++++++++++++++++++++++++=
+++++++
+>  2 files changed, 105 insertions(+)
+>
+> diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
+> index c7c0e552bafe..f2ee07315091 100644
+> --- a/rust/kernel/sync.rs
+> +++ b/rust/kernel/sync.rs
+> @@ -15,6 +15,7 @@
+>  mod condvar;
+>  pub mod lock;
+>  mod locked_by;
+> +pub mod once_lock;
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fe0cf0a2e6e5..aa5618350723 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -16796,6 +16796,8 @@ F:	include/linux/module*.h
- F:	kernel/module/
- F:	lib/test_kmod.c
- F:	lib/tests/module/
-+F:	rust/kernel/module_param.rs
-+F:	rust/macros/module.rs
- F:	scripts/module*
- F:	tools/testing/selftests/kmod/
- F:	tools/testing/selftests/module/
+I would add a re-export so that users can import this as kernel::sync::Once=
+Lock.
 
--- 
-2.47.2
+>  pub mod poll;
+>  pub mod rcu;
+>
+> diff --git a/rust/kernel/sync/once_lock.rs b/rust/kernel/sync/once_lock.r=
+s
+> new file mode 100644
+> index 000000000000..cd311bea3919
+> --- /dev/null
+> +++ b/rust/kernel/sync/once_lock.rs
+> @@ -0,0 +1,104 @@
+> +//! A container that can be initialized at most once.
+> +
+> +use super::atomic::ordering::Acquire;
+> +use super::atomic::ordering::Release;
+> +use super::atomic::Atomic;
+> +use kernel::types::Opaque;
+> +
+> +/// A container that can be populated at most once. Thread safe.
+> +///
+> +/// Once the a [`OnceLock`] is populated, it remains populated by the sa=
+me object for the
+> +/// lifetime `Self`.
+> +///
+> +/// # Invariants
+> +///
+> +/// `init` tracks the state of the container:
+> +///
+> +/// - If the container is empty, `init` is `0`.
+> +/// - If the container is mutably accessed, `init` is `1`.
 
+I would phrase this as "being initialized" instead of "mutably
+accessed". I initially thought this was talking about someone calling
+a &mut self method.
 
+> +/// - If the container is populated and ready for shared access, `init` =
+is `2`.
+> +///
+> +/// # Example
+> +///
+> +/// ```
+> +/// # use kernel::sync::once_lock::OnceLock;
+> +/// let value =3D OnceLock::new();
+> +/// assert_eq!(None, value.as_ref());
+> +///
+> +/// let status =3D value.populate(42u8);
+> +/// assert_eq!(true, status);
+> +/// assert_eq!(Some(&42u8), value.as_ref());
+> +/// assert_eq!(Some(42u8), value.copy());
+> +///
+> +/// let status =3D value.populate(101u8);
+> +/// assert_eq!(false, status);
+> +/// assert_eq!(Some(&42u8), value.as_ref());
+> +/// assert_eq!(Some(42u8), value.copy());
+> +/// ```
+> +pub struct OnceLock<T> {
+> +    init: Atomic<u32>,
+> +    value: Opaque<T>,
+
+Opaque does not destroy the inner value. You are missing a destructor.
+
+> +}
+> +
+> +impl<T> Default for OnceLock<T> {
+> +    fn default() -> Self {
+> +        Self::new()
+> +    }
+> +}
+> +
+> +impl<T> OnceLock<T> {
+> +    /// Create a new [`OnceLock`].
+> +    ///
+> +    /// The returned instance will be empty.
+> +    pub const fn new() -> Self {
+> +        // INVARIANT: The container is empty and we set `init` to `0`.
+> +        Self {
+> +            value: Opaque::uninit(),
+> +            init: Atomic::new(0),
+> +        }
+> +    }
+> +
+> +    /// Get a reference to the contained object.
+> +    ///
+> +    /// Returns [`None`] if this [`OnceLock`] is empty.
+> +    pub fn as_ref(&self) -> Option<&T> {
+> +        if self.init.load(Acquire) =3D=3D 2 {
+> +            // SAFETY: As determined by the load above, the object is re=
+ady for shared access.
+> +            Some(unsafe { &*self.value.get() })
+> +        } else {
+> +            None
+> +        }
+> +    }
+> +
+> +    /// Populate the [`OnceLock`].
+> +    ///
+> +    /// Returns `true` if the [`OnceLock`] was successfully populated.
+> +    pub fn populate(&self, value: T) -> bool {
+> +        // INVARIANT: We obtain exclusive access to the contained alloca=
+tion and write 1 to
+> +        // `init`.
+> +        if let Ok(0) =3D self.init.cmpxchg(0, 1, Acquire) {
+
+This acquire can be Relaxed. All other accesses to self.value
+synchronize with the release store below, so you do not need acquire
+here to obtain exclusive access.
+
+> +            // SAFETY: We obtained exclusive access to the contained obj=
+ect.
+> +            unsafe { core::ptr::write(self.value.get(), value) };
+> +            // INVARIANT: We release our exclusive access and transition=
+ the object to shared
+> +            // access.
+> +            self.init.store(2, Release);
+> +            true
+> +        } else {
+> +            false
+> +        }
+> +    }
+> +}
+> +
+> +impl<T: Copy> OnceLock<T> {
+> +    /// Get a copy of the contained object.
+> +    ///
+> +    /// Returns [`None`] if the [`OnceLock`] is empty.
+> +    pub fn copy(&self) -> Option<T> {
+> +        if self.init.load(Acquire) =3D=3D 2 {
+> +            // SAFETY: As determined by the load above, the object is re=
+ady for shared access.
+> +            Some(unsafe { *self.value.get() })
+> +        } else {
+> +            None
+> +        }
+> +    }
+> +}
+>
+> --
+> 2.47.2
+>
+>
 
