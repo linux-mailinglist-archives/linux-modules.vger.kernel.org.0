@@ -1,143 +1,132 @@
-Return-Path: <linux-modules+bounces-4452-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4455-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7454FB839EF
-	for <lists+linux-modules@lfdr.de>; Thu, 18 Sep 2025 10:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D8144B83C39
+	for <lists+linux-modules@lfdr.de>; Thu, 18 Sep 2025 11:24:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C53A1C05C82
-	for <lists+linux-modules@lfdr.de>; Thu, 18 Sep 2025 08:56:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72729189C654
+	for <lists+linux-modules@lfdr.de>; Thu, 18 Sep 2025 09:25:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3A4C2FFDF4;
-	Thu, 18 Sep 2025 08:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2466301486;
+	Thu, 18 Sep 2025 09:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="bIWaS4lO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BqPEfk50"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5C42FFDCB
-	for <linux-modules@vger.kernel.org>; Thu, 18 Sep 2025 08:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B742FFDDB;
+	Thu, 18 Sep 2025 09:24:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758185739; cv=none; b=sTmPQhWCU9l5GGkgEsTzKGzpZSjCfakIIaarfyVW0LSrWrOdMmS48KfDNssBmBIApjfe4yx6tXS9DYEXRmQjwBiTnKAlNNeQqocft9VSC/Yrn0ZSv50pBEAy1+rj34RZF6nm5A1wk/NbooiRK9kU/PQqPfkZKVd6JpYzrf6rvaI=
+	t=1758187475; cv=none; b=t7qEA3bahNBIFRbVffVLrgVWxKlDMRhe9VTANumRZ9ZOIW9CVJnvGMK4XyZrUuCJ1wLSq+YwJ8c1QK5Gjcb/AbrMdF6XfFfyAo3ITAwXvkULculkLOQeSdaga3uHCIK9tccXcoTJPylu9soY9UXuC7CvlG7QGHxK6grEfax6F2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758185739; c=relaxed/simple;
-	bh=mWt60YV6Gi1FK2N9eOFScB9N2fh8Io+egXHO3E8EBz0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMacIN6XUFCLQErPwLNNS/er0RYlT48/QSugshFnGrWFlMAG6gOPwKMnwfu4m0oG7akIkgEUPFbAQ827Wq1xjwzBIFsqrJTXua6KFoq8kDVnt+sjtxnKbrrWoRYHmMryq+3YCiUd+pfMHj/Qszc0fJ+A0adHqBmN4dL4bJJqkDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=bIWaS4lO; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45f2f10502fso3727075e9.0
-        for <linux-modules@vger.kernel.org>; Thu, 18 Sep 2025 01:55:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1758185736; x=1758790536; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3LMDUzeCeiPfjqj5pBmFTbXJSloreEErrtdNyS4HqfY=;
-        b=bIWaS4lOZsvbUe+AOqZWno4o4Vq6yUlI1AaE88tpDrEhmJD3rTkWG8/Zg1AExEs5Zx
-         TvqVtEZx2lJN+WQB9yEkJ8gvT+aoAra9EKUtNv9AFsW726lbBqHPflmjQVCHX5RyWS9i
-         NQLNbhYnICQxFPvNvaOXGDAqZkNl+ecTlqhlZstI1k1JOmcULSR4hF2Nb/6E/go++A72
-         e3/6Xw4GoUajND2mexie7/RYPTFPDm06CJisfqmz6BsdPJEyv2mFkMWfE65pK9xuAguw
-         YDeKFS3rj0iUEZ/PcOaB9uQ+QqPGMBK9eKF6sh4FNdmLL+mLjFCgGVCNvp5yn/Ik9SqO
-         e07w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758185736; x=1758790536;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3LMDUzeCeiPfjqj5pBmFTbXJSloreEErrtdNyS4HqfY=;
-        b=fQFbkVM/3URx/zX3gsrvQCMWbEglAhCxFwCSHNLpXFU915GEUOweH3xmhRTDpAfckU
-         F1tDs34GScLeh29LPixBEEfHCV+wCupp5Zx6FTFKBx8tkBOci16lwYjM/3rF9l/zPmpE
-         FP6P196REJ9NU/Zy4+Fw46D54jZ5vi2myvm5G5si7319rlaKTUnUcTe9X7OQBLl9buRi
-         Uz4EqrGNQfkMqyYcNU1UdEkYCnnB0ilER8D3a0f4o2/nPOYRFQbjPNnRx+7arCmH4SSH
-         Nq+L4vQ9RKWKZiST4bsU8BxUZFaU39uavJFAH5X/Anx8AxBikupZ8DkVTmuh7yeKpNn/
-         nMew==
-X-Forwarded-Encrypted: i=1; AJvYcCVYfrDXQFijZEb07CkamgmveFW/SMWYvmmHAIbaFEv/XBUxSMHifC5p1+tymJB0ohY65ZsHYb2Jz8dFrEXp@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD7T7gNoPwk6O+O1r2guCqSvLEnRouVERusQkGskB2ctsZeOuK
-	dEfyWA1owBCPCb9JELtIbW6qErhoAqMgi/9UcO1TafsvQl4bNhX+Q1PGbDEhBHKIeP8=
-X-Gm-Gg: ASbGnctaSxDD9DUbSKU/mq5UhOx/KY5Gam2qgNTfjg97mv9px4lIxg+UErf6PEs8mah
-	nt13/dwWnMphC1IWEg89imcIdm6aIRGUkrwdcy+Di7Zy6rYPm/tl1x0Bl5DNpX+yloGPvhxIx87
-	DTuaaihhLH8Ela3EVAZ8cZ+xVMLT/oZeGCayNw+A7qPAehrG4PxS2FIRwBWqeWWQd223I9orez2
-	9Pti95jlLimF2lW+MRQIDsjm8rk+7K4MojT86kX9VbtTqoKyzwQx2jntMyC1Riy7YftJhFC6F8N
-	rYmBsErRctSmW9Xnn6o1VG8oZlGJM9tEuRO+nApmDuVP0WOeyTpXrM/nfb4SJrzmSpsDfuXi/Be
-	lsQfyZoR7qVtPxetDLb8YE7ApBkiq5OXiHjR7K6wuWjRT8EvayNIEFNOmibxX0afCuA==
-X-Google-Smtp-Source: AGHT+IGzEZ8QGuJcHkSFhqZ600VMukViim1KFRCkH+NhEb6cwENjWrH6dpG6dADIvnF8xjKmkuYSDw==
-X-Received: by 2002:a05:600c:1c90:b0:45d:e4ff:b642 with SMTP id 5b1f17b1804b1-46206655608mr52368905e9.25.1758185735776;
-        Thu, 18 Sep 2025 01:55:35 -0700 (PDT)
-Received: from localhost.localdomain ([2a00:6d43:105:c401:e307:1a37:2e76:ce91])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46139122a8fsm71491355e9.7.2025.09.18.01.55.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Sep 2025 01:55:35 -0700 (PDT)
-From: Marco Crivellari <marco.crivellari@suse.com>
-To: linux-kernel@vger.kernel.org,
-	linux-modules@vger.kernel.org
-Cc: Tejun Heo <tj@kernel.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Marco Crivellari <marco.crivellari@suse.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>
-Subject: [PATCH v2 1/1] module: replace use of system_wq with system_dfl_wq
-Date: Thu, 18 Sep 2025 10:55:25 +0200
-Message-ID: <20250918085525.122429-2-marco.crivellari@suse.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250918085525.122429-1-marco.crivellari@suse.com>
-References: <20250918085525.122429-1-marco.crivellari@suse.com>
+	s=arc-20240116; t=1758187475; c=relaxed/simple;
+	bh=LGd4NE5xucIBmY8TEZN2nv2o/wj6Qe3DoMkc6uy1Dow=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cplvLqaQOynymCD1tKkSlSzBXCk3H1UeMWTkJ5L6oeXIbyhe0Wlutw/UrzsY/D2o3T2ksoPJj4cGaJJIRey76cOuSAsye8kfQqSXJ/O1eVX/doioIg1/ygElISHL7mfCxUUpKKH8abrVon8SQascw6SbyWORXEX4fwdwODIU5ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BqPEfk50; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1AD87C4CEE7;
+	Thu, 18 Sep 2025 09:24:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758187475;
+	bh=LGd4NE5xucIBmY8TEZN2nv2o/wj6Qe3DoMkc6uy1Dow=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=BqPEfk50DVBTf887LhVDzmEYLLhmkP6TMPB27PHynolPG4Y4Q2w+i+NG2zrZ650kh
+	 QK3cH/74bOfC3mymgnadBnCiFGAfRGORHEAxslQ+Q3rs6EtdvGdSCC7IalLn5VT+uZ
+	 kWX71tMTHGLQ2R3+MPQ97pxcEWwfCKdIVr7EjxKX8V8rMDkauF2kKtTlY+G/J+E8J7
+	 nIteoskJEFwRPa6D1kOUg2KnEYs3GidzPBfQF0c9/nPikiC6LnhbW5nZw+8SM5dSaF
+	 WIGvwF5zRIStTUfAZtB5MERxGG60NxO71L4DwAGAVL2ENYXqDPRB21Ue7iy/ONupV4
+	 z9LFm+whUlJ5Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05DCECAC597;
+	Thu, 18 Sep 2025 09:24:35 +0000 (UTC)
+From: Cryolitia PukNgae via B4 Relay <devnull+cryolitia.uniontech.com@kernel.org>
+Subject: [PATCH v4 0/5] ALSA: usb-audio: add module param
+ device_quirk_flags
+Date: Thu, 18 Sep 2025 17:24:29 +0800
+Message-Id: <20250918-sound-v4-0-82cf8123d61c@uniontech.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM3Py2gC/23NQQ7CIBCF4as0rMXAtFrHlfcwLigMloXUQEs0T
+ e8ubWxiTJdvwvczskjBUWTnYmSBkouu83lUu4LpVvk7cWfyZiDgIFAKHrvBG65Q6tNRI5hGsfz
+ 2Gci619K53vJuXey78F6ySc7XtQDfQpJccK1RW4MWjJCXwee/e9LtXncPNlcSbErIUkhSpYEab
+ dVsyfJX1qsss0SghrCqQQn1L6dp+gB1mO8YEgEAAA==
+X-Change-ID: 20250910-sound-a91c86c92dba
+To: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Jonathan Corbet <corbet@lwn.net>, Luis Chamberlain <mcgrof@kernel.org>, 
+ Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>, 
+ Sami Tolvanen <samitolvanen@google.com>
+Cc: linux-sound@vger.kernel.org, linux-usb@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+ Mingcong Bai <jeffbai@aosc.io>, Kexy Biscuit <kexybiscuit@aosc.io>, 
+ Nie Cheng <niecheng1@uniontech.com>, Zhan Jun <zhanjun@uniontech.com>, 
+ Feng Yuan <fengyuan@uniontech.com>, qaqland <anguoli@uniontech.com>, 
+ kernel@uniontech.com, linux-modules@vger.kernel.org, 
+ Cryolitia PukNgae <cryolitia@uniontech.com>, Takashi Iwai <tiwai@suse.de>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758187473; l=1700;
+ i=cryolitia@uniontech.com; s=20250730; h=from:subject:message-id;
+ bh=LGd4NE5xucIBmY8TEZN2nv2o/wj6Qe3DoMkc6uy1Dow=;
+ b=o2HzUJjj8jUfJ9woKChJmX3gWxj5JbpwyEU3iaRqY0FfnwX6uiBX0fHNdH+fF0E5nfcvHmLBS
+ xu/wmAobUA0AZ7u5RdI2TJTlv9etPSjZ1pwL/8DdYCs3vLImHdcDw4m
+X-Developer-Key: i=cryolitia@uniontech.com; a=ed25519;
+ pk=tZ+U+kQkT45GRGewbMSB4VPmvpD+KkHC/Wv3rMOn/PU=
+X-Endpoint-Received: by B4 Relay for cryolitia@uniontech.com/20250730 with
+ auth_id=474
+X-Original-From: Cryolitia PukNgae <cryolitia@uniontech.com>
+Reply-To: cryolitia@uniontech.com
 
-Currently if a user enqueue a work item using schedule_delayed_work() the
-used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
-WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
-schedule_work() that is using system_wq and queue_work(), that makes use
-again of WORK_CPU_UNBOUND.
+As an implementation of what has been discussed previously[1].
 
-This lack of consistentcy cannot be addressed without refactoring the API.
+1. https://lore.kernel.org/all/87h5xm5g7f.wl-tiwai@suse.de/
 
-This specific patch replace system_wq with system_dfl_wq, the new unbound
-workqueue, because the users does not benefit from a per-cpu wq.
-
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
 ---
- kernel/module/dups.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Changes in v4:
+- Split basic parse and dynamic change
+- Drop usage of linked list
+- Link to v3: https://lore.kernel.org/r/20250917-sound-v3-0-92ebe9472a0a@uniontech.com
 
-diff --git a/kernel/module/dups.c b/kernel/module/dups.c
-index bd2149fbe117..0b633f2edda6 100644
---- a/kernel/module/dups.c
-+++ b/kernel/module/dups.c
-@@ -113,7 +113,7 @@ static void kmod_dup_request_complete(struct work_struct *work)
- 	 * let this linger forever as this is just a boot optimization for
- 	 * possible abuses of vmalloc() incurred by finit_module() thrashing.
- 	 */
--	queue_delayed_work(system_wq, &kmod_req->delete_work, 60 * HZ);
-+	queue_delayed_work(system_dfl_wq, &kmod_req->delete_work, 60 * HZ);
- }
- 
- bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
-@@ -240,7 +240,7 @@ void kmod_dup_request_announce(char *module_name, int ret)
- 	 * There is no rush. But we also don't want to hold the
- 	 * caller up forever or introduce any boot delays.
- 	 */
--	queue_work(system_wq, &kmod_req->complete_work);
-+	queue_work(system_dfl_wq, &kmod_req->complete_work);
- 
- out:
- 	mutex_unlock(&kmod_dup_mutex);
+Changes in v3:
+- Instead of a new param, improve the existed one.
+- Link to v2: https://lore.kernel.org/r/20250912-sound-v2-0-01ea3d279f4b@uniontech.com
+
+Changes in v2:
+- Cleaned up some internal rebase confusion, sorry for that
+- Link to v1: https://lore.kernel.org/r/20250912-sound-v1-0-cc9cfd9f2d01@uniontech.com
+
+---
+Cryolitia PukNgae (5):
+      ALSA: usb-audio: add two-way convert between name and bit for QUIRK_FLAG_*
+      param: export param_array related functions
+      ALSA: usb-audio: improve module param quirk_flags
+      ALSA: usb-audio: make param quirk_flags change-able in runtime
+      ALSA: doc: add docs about improved quirk_flags in snd-usb-audio
+
+ Documentation/sound/alsa-configuration.rst | 108 ++++++++++-----
+ include/linux/moduleparam.h                |   3 +
+ kernel/params.c                            |   9 +-
+ sound/usb/card.c                           |  63 ++++++++-
+ sound/usb/quirks.c                         | 206 ++++++++++++++++++++++++++++-
+ sound/usb/quirks.h                         |   6 +-
+ sound/usb/usbaudio.h                       |   6 +
+ 7 files changed, 352 insertions(+), 49 deletions(-)
+---
+base-commit: 4c421c40c8b30ab7aae1edc7f7e294fcd33fc186
+change-id: 20250910-sound-a91c86c92dba
+
+Best regards,
 -- 
-2.51.0
+Cryolitia PukNgae <cryolitia@uniontech.com>
+
 
 
