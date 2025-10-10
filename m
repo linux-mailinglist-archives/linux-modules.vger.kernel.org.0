@@ -1,137 +1,147 @@
-Return-Path: <linux-modules+bounces-4589-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4591-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7C70BCB779
-	for <lists+linux-modules@lfdr.de>; Fri, 10 Oct 2025 05:06:20 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 132BEBCBA0A
+	for <lists+linux-modules@lfdr.de>; Fri, 10 Oct 2025 06:19:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7C7A43504CB
-	for <lists+linux-modules@lfdr.de>; Fri, 10 Oct 2025 03:06:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AB77C4E2312
+	for <lists+linux-modules@lfdr.de>; Fri, 10 Oct 2025 04:19:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9C14246BA8;
-	Fri, 10 Oct 2025 03:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEC4A1E9B3D;
+	Fri, 10 Oct 2025 04:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUnB4Lws"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="KNnBjr0q"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D66230274;
-	Fri, 10 Oct 2025 03:06:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976381DF269
+	for <linux-modules@vger.kernel.org>; Fri, 10 Oct 2025 04:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760065571; cv=none; b=AsGBwm7hxdhTSbIhd9zLKBnUUig09VXIEisgB8xk1hrTItHZWmqZxIrG0DeKjNoZt3KPCu252jcJ7vKJ2Ec6Oah8DJa0Dr6O1/YuY0QauVxNKsD1ZgICiOm34tc8bkODBs9EwyqSUDgaylqTejbRwIL50Gh8I49vpanhp3HE2lc=
+	t=1760069959; cv=none; b=Kamg+VnUW7QDT66fG423rG3audSWbgAeJxDYCWXjEW75QoB8qkMu1pjZ0Dnc6+YQvu764C3k4Q0QIKVt3HCjHgjgc3zkbfVDc6UUPn6nOg9KNr4uYa1gARc+lGq3lb71MZMi4lj14bmR1/oJQGgDJdSScv7n60w4/S5K0O4BkHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760065571; c=relaxed/simple;
-	bh=Yk+IxpgFDi/O4uukQndL+6GJ8/MJq8TqjyKcdlLgPso=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YknOdfgdQRAhuXBMjijRB2iekd8E1A+UHTpOGS+QgSdPtj9pGzcp1C6aBq9d0ZE9snI2WddHDM3WemPjpeZzvDBtwoA3gIbTl4K6BvwH3oCRFQWGBie99xNogl3+jqruXqcAhuuRQ8vRBV3o7Ru5Ty8em3TQhnKsUuBZz4XolQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUnB4Lws; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EAFAC19424;
-	Fri, 10 Oct 2025 03:06:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760065571;
-	bh=Yk+IxpgFDi/O4uukQndL+6GJ8/MJq8TqjyKcdlLgPso=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUnB4LwsHHoQnJRurWn0xGZ0JOWwXMwsuyTpBETy6XXPBd1nDZoKhKfpgyQJ2hkmn
-	 5okw5UYuWsfPmgq429Exx3CIU48s/psB4QPPkXafRIQ16ruimkrr8mYkdP+5tFvJCu
-	 TevM+ceO4ZEgE+4l88mWJne7Uko7T/+uPXlKJ8MoT2otJnS8I6DNAghV+iVHQTUuhR
-	 p7O28UvQ0s2FpYa5LYXax5d4dpWfQiTlQS4kLJ3HPQcKu7tsokp7kfDO8fbVDD4bVq
-	 dVE4FE8ae29cxKm4JA8NaCAO854lpySwre7lY/QkL1pc739F1/Prt0vDjVwLEr6ZC/
-	 7FblcJ5pHI8sA==
-From: Kees Cook <kees@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Kees Cook <kees@kernel.org>,
-	Rusty Russell <rusty@rustcorp.com.au>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	linux-modules@vger.kernel.org,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Malcolm Priestley <tvboxspy@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH v2 3/3] module: Add compile-time check for embedded NUL characters
-Date: Thu,  9 Oct 2025 20:06:09 -0700
-Message-Id: <20251010030610.3032147-3-kees@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251010030348.it.784-kees@kernel.org>
-References: <20251010030348.it.784-kees@kernel.org>
+	s=arc-20240116; t=1760069959; c=relaxed/simple;
+	bh=xwBn4qXrK+XNYpR0WLdPTYV+y8T+IAIrJ3YSUkkzQC0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DPbd8IYu3WFi3fbIAeaxaRKkKIk3+siMroRZhxDTiCFhToegPPYHFoCJ/eyJi9q4ROUn1S7KOwx2DkRvMPkkUibr+Z7v+wLZab1UV1xfVk1CbYMNuMhPk6O4Wv4M1+vxibQnCPQ7KiO50atpPKB1M+aOtU0gLHl/JOow2bjCcuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=KNnBjr0q; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-46faa5b0372so10303045e9.1
+        for <linux-modules@vger.kernel.org>; Thu, 09 Oct 2025 21:19:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1760069956; x=1760674756; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WwOa80v1gASmUxbIlKVNpJ7pC74JVx0S1JpZYmF7fT4=;
+        b=KNnBjr0q5HdJcHl5KW1xWguYCm47g8hx1IkMR1zE4/dtFOxJneZHF+e/vQhNMA/v46
+         0O/yBa5nz3V8GKiXGcCvZ8BYDNjtexNaajr+6UOLWEL1QFQFy8JJYVp6CoXJ13goGpv8
+         xWxommaivpJU2vOGQSxjRMkySIIkQzb1gSiDJ/0ExzOIZSfn7bvaJ8mzsj+HXJCcw04E
+         AQZgRYU786KIw6YRGsAalBf9+5ED4JRfj+EA4myMJMu/DNoiUC5ExCYd02Ix9eA5CN3m
+         zvUb4hMHwWpnRRB5GMkEofL0mUVA+iT81dRClswUTeRPQPCOrS44AB7x+gsGvMVDmofT
+         9TUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760069956; x=1760674756;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WwOa80v1gASmUxbIlKVNpJ7pC74JVx0S1JpZYmF7fT4=;
+        b=kziWIe2DsLdHWj59VxYwwtOmW8czVONAF96haZ2tGxF3h5+CsV5rf2LnqwzyunTjzH
+         OwB6r8PcIWiNa1szceBUxeyVoJlZoifKL3dWJtwCdMd2n6bG/RJAjvmOoJhrEsjGkuQZ
+         2B6aLKiqQI764esqKUoVevTVEnp8+tQGexMRcslzay0QoPivUo4YioL0OnZIc84N9P4j
+         MSahkZ3PnPclYgss17Z1PEKS77V+Y7Zht/hCXbr0ybPlrFzh0mW8JYpU/75dk3FHfyKt
+         7COVrdCn10mNYdsamZu+gADhdZVYEp4vT20TYY7mL4Fy4o5xDmRgxxamF0AhWlNVIrep
+         oPOw==
+X-Forwarded-Encrypted: i=1; AJvYcCXu0xurtX5owjKIEG+uRplYsLjwrD9dJHyzaPokr4LTCYQb6aIX5UZyznC175j0OOcPeIf8oyROsdnOj8qW@vger.kernel.org
+X-Gm-Message-State: AOJu0YxtHuCK8waMeTCj4XvDjZEjMhsP1oEbJ9T8bYKGxA6tRi/d2V8g
+	cf0cMBOM8vZOxUaQVqN/pvZ8j3HIi11SG6Mmjk9xdvszubohtrMgGtlphlVCUBO/XhA=
+X-Gm-Gg: ASbGncvKDAo1F7u7BGgb7FNEbxeOG/bN5R+3jZl0yj048ae9PUJ7iBKi/19SthSt1gU
+	vScYXb8C0jDDT+TaSZuuPGbzvoHylcj++QDlu3orhQRHlQGrCTDF+MDI2bXdtclS5tnSHJnnVOF
+	m/+MMmiQFplU9c600CCKB+e2nivTZHI5U5MR7+QkhSFxI48pBr2PknWQ3fSeLIt6g/Ix3Bsxpe4
+	bSq3zzr6SFDhuuNxEcOa19PgjJuWH49+d2hqs1BjcDwu8mnWNEjVY4mb0l1TbTAVXgQPdTruslh
+	ePJaa0UiZ/PsPtBBPQCK9CQyK70XMdbb7GPfK5YsTEVsWD32SZCk/NedU2BHUQ4y7zP+FlZRTzr
+	WhlWHYG42NE+dTS6II2pXyiqwmPS6oOjQmPi6zmsqkFnD5kipzzzcU+YiGr7oAA==
+X-Google-Smtp-Source: AGHT+IGJgO2IvwgPLgeBx8x9ysG+IFbcbA482p2h3xQBgGrT2la38bcOWIrduOHO8n5qJqWFiyffew==
+X-Received: by 2002:a05:600c:a43:b0:46f:b32e:5094 with SMTP id 5b1f17b1804b1-46fb32e50fcmr30537085e9.32.1760069955819;
+        Thu, 09 Oct 2025 21:19:15 -0700 (PDT)
+Received: from [10.100.51.209] (nat2.prg.suse.com. [195.250.132.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fb4982b30sm24491365e9.6.2025.10.09.21.19.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Oct 2025 21:19:15 -0700 (PDT)
+Message-ID: <565d9afb-cdd0-44c0-a070-9c603689f123@suse.com>
+Date: Fri, 10 Oct 2025 06:19:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2355; i=kees@kernel.org; h=from:subject; bh=Yk+IxpgFDi/O4uukQndL+6GJ8/MJq8TqjyKcdlLgPso=; b=owGbwMvMwCVmps19z/KJym7G02pJDBkvKhRWrFv7qexHUptWlfF3/yhvZc33n59/WPLby+DFP hZR+07BjlIWBjEuBlkxRZYgO/c4F4+37eHucxVh5rAygQxh4OIUgIloCDL8dzv9IKGhZk3TRFfL 1XVPqzcoTL0Ve36tUmvrqc8rHv0/dJHhf7GmzO9Qw8DDmxWnZedkadR1puwJ2/Jz0puk399iO5O 1mAE=
-X-Developer-Key: i=kees@kernel.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] module: Add compile-time check for embedded NUL
+ characters
+To: Kees Cook <kees@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>,
+ Rusty Russell <rusty@rustcorp.com.au>, Daniel Gomez <da.gomez@kernel.org>,
+ Sami Tolvanen <samitolvanen@google.com>, linux-modules@vger.kernel.org,
+ Hans Verkuil <hverkuil+cisco@kernel.org>,
+ Malcolm Priestley <tvboxspy@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil@kernel.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+References: <20251010030348.it.784-kees@kernel.org>
+ <20251010030610.3032147-3-kees@kernel.org>
+Content-Language: en-US
+From: Petr Pavlu <petr.pavlu@suse.com>
+In-Reply-To: <20251010030610.3032147-3-kees@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Long ago, the kernel module license checks were bypassed by embedding a
-NUL character in the MODULE_LICENSE() string[1]. By using a string like
-"GPL\0proprietary text", the kernel would only read "GPL" due to C string
-termination at the NUL byte, allowing proprietary modules to avoid kernel
-tainting and access GPL-only symbols.
+On 10/10/25 5:06 AM, Kees Cook wrote:
+> Long ago, the kernel module license checks were bypassed by embedding a
+> NUL character in the MODULE_LICENSE() string[1]. By using a string like
+> "GPL\0proprietary text", the kernel would only read "GPL" due to C string
+> termination at the NUL byte, allowing proprietary modules to avoid kernel
+> tainting and access GPL-only symbols.
+> 
+> The MODULE_INFO() macro stores these strings in the .modinfo ELF
+> section, and get_next_modinfo() uses strcmp()-family functions
+> which stop at the first NUL. This split the embedded string into two
+> separate .modinfo entries, with only the first part being processed by
+> license_is_gpl_compatible().
+> 
+> Add a compile-time check using static_assert that compares the full
+> string length (sizeof - 1) against __builtin_strlen(), which stops at
+> the first NUL. If they differ, compilation fails with a clear error
+> message.
+> 
+> While this check can still be circumvented by modifying the ELF binary
+> post-compilation, it prevents accidental embedded NULs and forces
+> intentional abuse to require deliberate binary manipulation rather than
+> simple source-level tricks.
+> 
+> Build tested with test modules containing both valid and invalid license
+> strings. The check correctly rejects:
+> 
+>     MODULE_LICENSE("GPL\0proprietary")
+> 
+> while accepting normal declarations:
+> 
+>     MODULE_LICENSE("GPL")
+> 
+> Link: https://lwn.net/Articles/82305/ [1]
+> Suggested-by: Rusty Russell <rusty@rustcorp.com.au>
+> Signed-off-by: Kees Cook <kees@kernel.org>
 
-The MODULE_INFO() macro stores these strings in the .modinfo ELF
-section, and get_next_modinfo() uses strcmp()-family functions
-which stop at the first NUL. This split the embedded string into two
-separate .modinfo entries, with only the first part being processed by
-license_is_gpl_compatible().
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
 
-Add a compile-time check using static_assert that compares the full
-string length (sizeof - 1) against __builtin_strlen(), which stops at
-the first NUL. If they differ, compilation fails with a clear error
-message.
-
-While this check can still be circumvented by modifying the ELF binary
-post-compilation, it prevents accidental embedded NULs and forces
-intentional abuse to require deliberate binary manipulation rather than
-simple source-level tricks.
-
-Build tested with test modules containing both valid and invalid license
-strings. The check correctly rejects:
-
-    MODULE_LICENSE("GPL\0proprietary")
-
-while accepting normal declarations:
-
-    MODULE_LICENSE("GPL")
-
-Link: https://lwn.net/Articles/82305/ [1]
-Suggested-by: Rusty Russell <rusty@rustcorp.com.au>
-Signed-off-by: Kees Cook <kees@kernel.org>
----
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Petr Pavlu <petr.pavlu@suse.com>
-Cc: Daniel Gomez <da.gomez@kernel.org>
-Cc: Sami Tolvanen <samitolvanen@google.com>
-Cc: <linux-modules@vger.kernel.org>
----
- include/linux/moduleparam.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index 6907aedc4f74..915f32f7d888 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -26,6 +26,9 @@
- 
- /* Generic info of form tag = "info" */
- #define MODULE_INFO(tag, info)					  \
-+	static_assert(						  \
-+		sizeof(info) - 1 == __builtin_strlen(info),	  \
-+		"MODULE_INFO(" #tag ", ...) contains embedded NUL byte"); \
- 	static const char __UNIQUE_ID(modinfo)[]			  \
- 		__used __section(".modinfo") __aligned(1)		  \
- 		= __MODULE_INFO_PREFIX __stringify(tag) "=" info
 -- 
-2.34.1
-
+Thanks,
+Petr
 
