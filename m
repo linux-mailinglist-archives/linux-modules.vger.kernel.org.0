@@ -1,118 +1,95 @@
-Return-Path: <linux-modules+bounces-4616-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4618-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65D45BD5041
-	for <lists+linux-modules@lfdr.de>; Mon, 13 Oct 2025 18:27:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 257D3BD5D72
+	for <lists+linux-modules@lfdr.de>; Mon, 13 Oct 2025 21:03:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 12C3E351023
-	for <lists+linux-modules@lfdr.de>; Mon, 13 Oct 2025 16:27:21 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 928FC349600
+	for <lists+linux-modules@lfdr.de>; Mon, 13 Oct 2025 19:03:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2061E25B663;
-	Mon, 13 Oct 2025 16:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E510B2C21ED;
+	Mon, 13 Oct 2025 19:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IqxS7dqH"
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="M6nW1ISS"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB35223DC1;
-	Mon, 13 Oct 2025 16:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EA521ABD0;
+	Mon, 13 Oct 2025 19:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760372830; cv=none; b=kXiHjV2p7u46Z+3iA3z4/L7zOfm5euBQQnF/I2ZUQtcwR8NEx0JAg3rYerElMN6Y6NSCQsAgP32ApryWq7RK7HfE321Djp/xr7vW3BFB9lvIat0T/L6VwrQp/dmALPwyA0SuZPCS9PimEpmzmYpiqGAk66i/cdM1IDjA/cxfi9E=
+	t=1760382181; cv=none; b=d4oDICs+KifmAAB9JsrI+iilRuh9IML2Y+/KQKJK/9Qj+L8W0Q+izxbBH+9Fw3itfHEzCZPX+fsT3a+NiFsMDP1lkxBlCsVUIyY/CMPJKyroMz2AdGK+fNs6QkajOFbygLOkGBeaWbIlBdTmoHhpFFI4z5KGR2ftgTSOcUdH9fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760372830; c=relaxed/simple;
-	bh=9qS09/oL1ZW/4+fX9C/TuDIUBMfU9E9dZdPEuUhgxh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s9vr8V6YIYlj31cowi0ip6ylbV5CMUels0D1IoXHwnGMdR7g6QLgSH5Yz1WAWz0jIBFptLq09bsjZnTAiQTYxuTA8Xw5EMFw9yeWCbMD5mQklYMiirIYi2sFfeWnxW6uh2AtMyOAuPUoH+iD5RQ+cBEhc+UCU/KTTuo7eNAJcXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IqxS7dqH; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1760372829; x=1791908829;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=9qS09/oL1ZW/4+fX9C/TuDIUBMfU9E9dZdPEuUhgxh0=;
-  b=IqxS7dqHFaXjOjiq8V6RR0tr5HcDr0f3Gp5wLgHm5Tzy15TV7yiHaxCc
-   VUNjMvacojz3avI3CR1vchdHjBw6oCFO92iDspSEdIRwX3zHMBjnAZzlB
-   +o3brd9ADGaUrqDzahFP6fUqyl1Iy1+/vNK5y29b5d2FBRhlmHRBXEQbK
-   02O2c97FfbYBEIAU29PYrsWxR+wwzRIASPssw+Sz6jEphhuIYx6937Ucv
-   gbNjQQqxzODVU3q2yyIc22rpDOtTGVU2sbb6Ki7k93SUFxiZvWH4Cbjc3
-   uaZ8fEfo5sn1u7Qhfm7wV70MqS9SQWUcQ5nAJQ3TC5xFRzlRqawbRRqwf
-   Q==;
-X-CSE-ConnectionGUID: 5qpq3Bo5RDqFA7faGUD6uQ==
-X-CSE-MsgGUID: hBiYqKicTnKU27qE3xh67w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11581"; a="62409335"
-X-IronPort-AV: E=Sophos;i="6.19,225,1754982000"; 
-   d="scan'208";a="62409335"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 09:26:59 -0700
-X-CSE-ConnectionGUID: Ie2DvTwKTU67H+OMSUMQug==
-X-CSE-MsgGUID: FmJ/hBHIQ8mf9ipCEpV7wA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,225,1754982000"; 
-   d="scan'208";a="205331726"
-Received: from lucas-s2600cw.jf.intel.com ([10.54.55.69])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 09:26:58 -0700
-From: Lucas De Marchi <lucas.demarchi@intel.com>
-To: linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>,
-	Petr Pavlu <petr.pavlu@suse.com>
-Subject: [PATCH 2/2] module: Simplify warning on positive returns from module_init()
-Date: Mon, 13 Oct 2025 09:26:24 -0700
-Message-ID: <20251013-module-warn-ret-v1-2-ab65b41af01f@intel.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251013-module-warn-ret-v1-0-ab65b41af01f@intel.com>
-References: <20251013-module-warn-ret-v1-0-ab65b41af01f@intel.com>
+	s=arc-20240116; t=1760382181; c=relaxed/simple;
+	bh=j3JFInE4uEboS1h3cvrqQVXAUThb/4Aso5pJOsig16E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gqNERU0iP3WQGnBZcdbB+6hyl2xaapOXWsF867xNPk1Eg/VULkTQJBjAZDqWdKZwPyNQbFTjnX6FU/33VZVgfS7NZXdd1PsrvUgxdLHJkpM15n66dzf5dkLAdvyLTjKNDQardbUXMvPr/88CK1SQHBJkHt6q0CUdktYCeX7ZWHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=M6nW1ISS; arc=none smtp.client-ip=45.79.88.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net F027B40B1B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1760382173; bh=w7jJZlyqEMOvON5ktIvS7ruzua7nNGxvQi4Hhetil0w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=M6nW1ISSENMJuIjLjj4upP8TsPWclCX7mJIl+cD15NBijVdRh2nI8qcITy1S7PaKv
+	 Wtqty4w7naL/JIKoUvxCUA1jS6pDpIPxUfR1m/1prCpP4V0j7/96eLAFSG8jX6p3cf
+	 e4MSqkmbqbg7fmAOC6dPlAiZPWV4+7EMCdC6EL+uHnSfJPm0twSuIlOrWavhSY10vN
+	 dSrGWXmW1k4TCv41QfmF/x+cYREYAIVIIS0cAyLlVSz09iOTtCTN9hIEq8ZNo66knY
+	 ZN1BmAdO39cxG68x4UAqBPzVk4e/o/Qju3I00LHStNS1X4UOtEkJdr3gPB4Naf3qKh
+	 i/DNPIDvx31Tg==
+Received: from localhost (unknown [IPv6:2601:280:4600:2da9::1fe])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id F027B40B1B;
+	Mon, 13 Oct 2025 19:02:52 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Siddharth Nayyar <sidnayyar@google.com>, petr.pavlu@suse.com
+Cc: arnd@arndb.de, linux-arch@vger.kernel.org, linux-kbuild@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
+ mcgrof@kernel.org, nathan@kernel.org, nicolas.schier@linux.dev,
+ samitolvanen@google.com, sidnayyar@google.com, maennich@google.com,
+ gprocida@google.com
+Subject: Re: [PATCH v2 00/10] scalable symbol flags with __kflagstab
+In-Reply-To: <20251013153918.2206045-1-sidnayyar@google.com>
+References: <20251013153918.2206045-1-sidnayyar@google.com>
+Date: Mon, 13 Oct 2025 13:02:52 -0600
+Message-ID: <87ikgieiar.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.15-dev-bd47d
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-It should now be rare to trigger this warning - it doesn't need to be so
-verbose. Make it follow the usual style in the module loading code.
+Siddharth Nayyar <sidnayyar@google.com> writes:
 
-For the same reason, drop the dump_stack().
+> This patch series implements a mechanism for scalable exported symbol
+> flags using a separate section called __kflagstab. The series introduces
+> __kflagstab support, removes *_gpl sections in favor of a GPL flag,
+> simplifies symbol resolution during module loading, and adds symbol
+> import protection.
 
-Suggested-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
----
- kernel/module/main.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+This caught my eye in passing ... some questions ...
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 74ff87b13c517..31c54bf6df4b2 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -3045,13 +3045,9 @@ static noinline int do_init_module(struct module *mod)
- 		}
- 		goto fail_free_freeinit;
- 	}
--	if (ret > 0) {
--		pr_warn("%s: '%s'->init suspiciously returned %d, it should "
--			"follow 0/-E convention\n"
--			"%s: loading module anyway...\n",
--			__func__, mod->name, ret, __func__);
--		dump_stack();
--	}
-+	if (ret > 0)
-+		pr_warn("%s: init suspiciously returned %d, it should follow 0/-E convention\n",
-+			mod->name, ret);
- 
- 	/* Now it's a first class citizen! */
- 	mod->state = MODULE_STATE_LIVE;
+The import protection would appear to be the real point of this work?
+But it seems that you have kind of buried it; why not describe what you
+are trying to do here and how it will be used?
 
--- 
-2.51.0
+I ask "how it will be used" since you don't provide any way to actually
+mark exports with this new flag.  What is the intended usage here?
 
+If I understand things correctly, applying this series will immediately
+result in the inability to load any previously built modules, right?
+That will create a sort of flag day for anybody with out-of-tree modules
+that some may well see as a regression.  Is that really the intent?
+
+Thanks,
+
+jon
 
