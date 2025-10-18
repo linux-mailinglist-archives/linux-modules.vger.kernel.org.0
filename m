@@ -1,180 +1,113 @@
-Return-Path: <linux-modules+bounces-4648-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4650-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B69ACBECC3F
-	for <lists+linux-modules@lfdr.de>; Sat, 18 Oct 2025 11:20:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56675BECF64
+	for <lists+linux-modules@lfdr.de>; Sat, 18 Oct 2025 14:17:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7672F623AFD
-	for <lists+linux-modules@lfdr.de>; Sat, 18 Oct 2025 09:20:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6C6819C6616
+	for <lists+linux-modules@lfdr.de>; Sat, 18 Oct 2025 12:18:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A05D527F4F5;
-	Sat, 18 Oct 2025 09:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EC9B27A130;
+	Sat, 18 Oct 2025 12:17:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="co2jNg+p"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79699354AC2;
-	Sat, 18 Oct 2025 09:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6855125F98E
+	for <linux-modules@vger.kernel.org>; Sat, 18 Oct 2025 12:17:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760779207; cv=none; b=OtQXUNukYE2qW5x2gEJhgNtd/T7K2ge+hY8WgAc3VIAnGZkp9tq2pq73Xhy4lipqccjA/1a/5gsy6ghQo4KomEu9fWii5ux8darHWWXJoaR4/uPgYuf/85aqBJxIaqSVEXSnjKauoUKpu71G8DKLTImYbYaRJG2RrLmMbw3YG9A=
+	t=1760789864; cv=none; b=uF6wrAA5z78/F42h37igZTA+NTk8DRR+S4HELbzyO2NGB4wp/A7HbFVHnhDm7hAxb9FGds39KYo0HP/gstzBk1+5Ozaw0AO5krH52zdLMV8mzoQQsibDatzcBG4wyaqNk4Y7D99sf0E9UQ90k/NtjXzif3DhT5zSDNL7gucHfGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760779207; c=relaxed/simple;
-	bh=Js3Sv/xG8mYjoHec+OB1wgclcQpEP3pJbcpRQXSFxB4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pm2lnFn5lUtn1vUnscaSHxD62/OM9PxQrKBkjxfP6vIaUyOOrkfQaol0y8cDxS5L0d8lPjbxI1LTZqLRkpX2GriGy6Yc30G/SRZmeFNpmvrZOG3I4m2dOQ0x+SPE3LY7f26209fbtP3uWeEvJRJC+Qi1sso4tdEgoe0WUQrw2iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
-Received: from localhost (mailhub4.si.c-s.fr [172.26.127.67])
-	by localhost (Postfix) with ESMTP id 4cpbJ13kd9z9sSC;
-	Sat, 18 Oct 2025 11:00:33 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from pegase2.c-s.fr ([172.26.127.65])
-	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HJxa1yDcQJwG; Sat, 18 Oct 2025 11:00:33 +0200 (CEST)
-Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-	by pegase2.c-s.fr (Postfix) with ESMTP id 4cpbJ12blgz9sS8;
-	Sat, 18 Oct 2025 11:00:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id 468C38B765;
-	Sat, 18 Oct 2025 11:00:33 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from messagerie.si.c-s.fr ([127.0.0.1])
-	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-	with ESMTP id 0rhQCqUhMXYB; Sat, 18 Oct 2025 11:00:33 +0200 (CEST)
-Received: from [192.168.235.99] (unknown [192.168.235.99])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id 4BD6D8B764;
-	Sat, 18 Oct 2025 11:00:32 +0200 (CEST)
-Message-ID: <f2e43e3f-b4fc-4ebd-b6ae-7e610b2ea164@csgroup.eu>
-Date: Sat, 18 Oct 2025 11:00:32 +0200
+	s=arc-20240116; t=1760789864; c=relaxed/simple;
+	bh=gGt73CVvuv5BT7hEaNbmyxUbjAu15wTDGJLTO48O5vg=;
+	h=From:In-Reply-To:References:To:Cc:Subject:MIME-Version:
+	 Content-Type:Date:Message-ID; b=nXGdBzKid4tkA7BXa/tif//+ntGNXnU5nmYfOebGQMo3MyTOp2veboDQYHdel1y7EzS0hSCPix9eNqGilLUDY+o7aED318UTtBxk+gG3kKIlKAh69xbREuj78v6ChokQzm9R1PFlsTaQ7G4S/nLE/rJhAcRg9RwxKj1Klfh6TJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=co2jNg+p; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1760789861;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OlH8cS7HLtTecR83sZbVKnOJnUxVHiktjAnu92Jotug=;
+	b=co2jNg+p2FiukwqcprXlsODIB2pSElsrfRfHNFLAakv5N2PxdRyIpYpI0A8YaVPr1emJus
+	rmYeiacSrFC/SZMpZ/qDaEnhZmZhdmF2DFyYGDmKoeBbZGrvSR5BtyUqKEIaYjDgLs/H8V
+	3rubfmsCOYDbmiwDteoxTaTo/4ACpNw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-g8kbWojGPBKO4eyAIDi7jg-1; Sat,
+ 18 Oct 2025 08:17:36 -0400
+X-MC-Unique: g8kbWojGPBKO4eyAIDi7jg-1
+X-Mimecast-MFC-AGG-ID: g8kbWojGPBKO4eyAIDi7jg_1760789854
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 3C2D8195608A;
+	Sat, 18 Oct 2025 12:17:33 +0000 (UTC)
+Received: from warthog.procyon.org.uk (unknown [10.42.28.57])
+	by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id CD5F51800353;
+	Sat, 18 Oct 2025 12:17:27 +0000 (UTC)
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+From: David Howells <dhowells@redhat.com>
+In-Reply-To: <395b82fc-728b-45da-afa8-c4ac8b625a45@csgroup.eu>
+References: <395b82fc-728b-45da-afa8-c4ac8b625a45@csgroup.eu> <20251017144311.817771-1-dhowells@redhat.com> <20251017144311.817771-2-dhowells@redhat.com>
+To: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: dhowells@redhat.com, Eric Biggers <ebiggers@kernel.org>,
+    "Jason A . Donenfeld" <Jason@zx2c4.com>,
+    Ard Biesheuvel <ardb@kernel.org>,
+    Herbert Xu <herbert@gondor.apana.org.au>,
+    Stephan Mueller <smueller@chronox.de>,
+    Lukas Wunner <lukas@wunner.de>,
+    Ignat Korchagin <ignat@cloudflare.com>,
+    Luis Chamberlain <mcgrof@kernel.org>,
+    Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>,
+    Sami Tolvanen <samitolvanen@google.com>,
+    linux-crypto@vger.kernel.org, keyrings@vger.kernel.org,
+    linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+    Harald Freudenberger <freude@linux.ibm.com>,
+    Holger Dengler <dengler@linux.ibm.com>, linux-s390@vger.kernel.org
+Subject: Re: [PATCH v6 01/17] s390/sha3: Rename conflicting functions
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/17] arm64/sha3: Rename conflicting functions
-To: David Howells <dhowells@redhat.com>, Eric Biggers <ebiggers@kernel.org>
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>, Ard Biesheuvel
- <ardb@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>,
- Stephan Mueller <smueller@chronox.de>, Lukas Wunner <lukas@wunner.de>,
- Ignat Korchagin <ignat@cloudflare.com>, Luis Chamberlain
- <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>,
- Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>,
- linux-crypto@vger.kernel.org, keyrings@vger.kernel.org,
- linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- linux-arm-kernel@lists.infradead.org
-References: <20251017144311.817771-1-dhowells@redhat.com>
- <20251017144311.817771-3-dhowells@redhat.com>
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
-Content-Language: fr-FR
-In-Reply-To: <20251017144311.817771-3-dhowells@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 18 Oct 2025 13:17:26 +0100
+Message-ID: <937031.1760789846@warthog.procyon.org.uk>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 
+Christophe Leroy <christophe.leroy@csgroup.eu> wrote:
 
+> Le 17/10/2025 =C3=A0 16:42, David Howells a =C3=A9crit=C2=A0:
+> > Rename the s390 sha3_* functions to have an "s390_" prefix to avoid
+> > conflict with generic code.
+>=20
+> The functions are static, why would they conflict with generic code ?
 
-Le 17/10/2025 à 16:42, David Howells a écrit :
-> Rename the arm64 sha3_* functions to have an "arm64_" prefix to avoid
-> conflict with generic code.
+Because of #include <crypto/sha3.h>
 
-Same comment as previous patch, the functions are static, why would they 
-conflict with generic code ?
+> Also generic code doesn't have such functions at the moment, are they add=
+ed by
+> a follow patch ?
 
-Also generic code doesn't have such functions at the moment, are they 
-added by a follow patch ?
+Yes.  See patch 3.
 
-Christophe
-
-
-> 
-> Signed-off-by: David Howells <dhowells@redhat.com>
-> cc: Eric Biggers <ebiggers@kernel.org>
-> cc: Jason A. Donenfeld <Jason@zx2c4.com>
-> cc: Ard Biesheuvel <ardb@kernel.org>
-> cc: Catalin Marinas <catalin.marinas@arm.com>
-> cc: Will Deacon <will@kernel.org>
-> cc: Herbert Xu <herbert@gondor.apana.org.au>
-> cc: Stephan Mueller <smueller@chronox.de>
-> cc: linux-crypto@vger.kernel.org
-> cc: linux-arm-kernel@lists.infradead.org
-> ---
->   arch/arm64/crypto/sha3-ce-glue.c | 22 +++++++++++-----------
->   1 file changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/arch/arm64/crypto/sha3-ce-glue.c b/arch/arm64/crypto/sha3-ce-glue.c
-> index b4f1001046c9..426d8044535a 100644
-> --- a/arch/arm64/crypto/sha3-ce-glue.c
-> +++ b/arch/arm64/crypto/sha3-ce-glue.c
-> @@ -31,7 +31,7 @@ MODULE_ALIAS_CRYPTO("sha3-512");
->   asmlinkage int sha3_ce_transform(u64 *st, const u8 *data, int blocks,
->   				 int md_len);
->   
-> -static int sha3_update(struct shash_desc *desc, const u8 *data,
-> +static int arm64_sha3_update(struct shash_desc *desc, const u8 *data,
->   		       unsigned int len)
->   {
->   	struct sha3_state *sctx = shash_desc_ctx(desc);
-> @@ -55,8 +55,8 @@ static int sha3_update(struct shash_desc *desc, const u8 *data,
->   	return len;
->   }
->   
-> -static int sha3_finup(struct shash_desc *desc, const u8 *src, unsigned int len,
-> -		      u8 *out)
-> +static int arm64_sha3_finup(struct shash_desc *desc, const u8 *src, unsigned int len,
-> +			    u8 *out)
->   {
->   	struct sha3_state *sctx = shash_desc_ctx(desc);
->   	struct crypto_shash *tfm = desc->tfm;
-> @@ -90,8 +90,8 @@ static int sha3_finup(struct shash_desc *desc, const u8 *src, unsigned int len,
->   static struct shash_alg algs[] = { {
->   	.digestsize		= SHA3_224_DIGEST_SIZE,
->   	.init			= crypto_sha3_init,
-> -	.update			= sha3_update,
-> -	.finup			= sha3_finup,
-> +	.update			= arm64_sha3_update,
-> +	.finup			= arm64_sha3_finup,
->   	.descsize		= SHA3_STATE_SIZE,
->   	.base.cra_name		= "sha3-224",
->   	.base.cra_driver_name	= "sha3-224-ce",
-> @@ -102,8 +102,8 @@ static struct shash_alg algs[] = { {
->   }, {
->   	.digestsize		= SHA3_256_DIGEST_SIZE,
->   	.init			= crypto_sha3_init,
-> -	.update			= sha3_update,
-> -	.finup			= sha3_finup,
-> +	.update			= arm64_sha3_update,
-> +	.finup			= arm64_sha3_finup,
->   	.descsize		= SHA3_STATE_SIZE,
->   	.base.cra_name		= "sha3-256",
->   	.base.cra_driver_name	= "sha3-256-ce",
-> @@ -114,8 +114,8 @@ static struct shash_alg algs[] = { {
->   }, {
->   	.digestsize		= SHA3_384_DIGEST_SIZE,
->   	.init			= crypto_sha3_init,
-> -	.update			= sha3_update,
-> -	.finup			= sha3_finup,
-> +	.update			= arm64_sha3_update,
-> +	.finup			= arm64_sha3_finup,
->   	.descsize		= SHA3_STATE_SIZE,
->   	.base.cra_name		= "sha3-384",
->   	.base.cra_driver_name	= "sha3-384-ce",
-> @@ -126,8 +126,8 @@ static struct shash_alg algs[] = { {
->   }, {
->   	.digestsize		= SHA3_512_DIGEST_SIZE,
->   	.init			= crypto_sha3_init,
-> -	.update			= sha3_update,
-> -	.finup			= sha3_finup,
-> +	.update			= arm64_sha3_update,
-> +	.finup			= arm64_sha3_finup,
->   	.descsize		= SHA3_STATE_SIZE,
->   	.base.cra_name		= "sha3-512",
->   	.base.cra_driver_name	= "sha3-512-ce",
-> 
-> 
+David
 
 
