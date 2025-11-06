@@ -1,219 +1,113 @@
-Return-Path: <linux-modules+bounces-4749-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4753-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98B6EC3CEAB
-	for <lists+linux-modules@lfdr.de>; Thu, 06 Nov 2025 18:46:17 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EA89C3CF78
+	for <lists+linux-modules@lfdr.de>; Thu, 06 Nov 2025 18:54:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12F271898A6A
-	for <lists+linux-modules@lfdr.de>; Thu,  6 Nov 2025 17:46:42 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6E4AC4E1ADD
+	for <lists+linux-modules@lfdr.de>; Thu,  6 Nov 2025 17:54:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1E0F350A10;
-	Thu,  6 Nov 2025 17:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5BCD347FC7;
+	Thu,  6 Nov 2025 17:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SHdVmtuE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UicaYoie"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ED334FF61
-	for <linux-modules@vger.kernel.org>; Thu,  6 Nov 2025 17:45:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D57322537
+	for <linux-modules@vger.kernel.org>; Thu,  6 Nov 2025 17:54:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762451154; cv=none; b=cSmgguutgsKV1dQlJAtW2TqbhXyJz7fRKC+bt0JinAIL+09pwjZhJfT3vg5n6xfNrwmlkgz5S3Yj/6FdzGIhTLB2y/0LTuRKv04qY8wP/mBSXmPdtJ7IIrJ8RxRIBc4+fc9fI5Iiei2ZFv+eb4C0ZhK80RDaxNFE7Pj7xSQd+LY=
+	t=1762451683; cv=none; b=EGRP7oiHnb/hp2W356+WIckGzCD1+eLp+ea1W7aAwigN54QjMuGMIvGSHYXcYva2OwCjT0jfpzaHQsnad/j9lf0QHK8jmh1D2Kc68ywUNbV4OFAx0NkjACNmFViu2XCsWexxmh7q0HaK60mRdNPgZY9/5C0nz1nMh2OMMaPQJe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762451154; c=relaxed/simple;
-	bh=RvusHb8iCMBSU7BMwlq1o6N1lbxg25PBi5W0BeXHl0g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7+Hl2kjmw/sfj7fega2GEuv/WLQPIrfqN26YkL7UbxHbfnXK24A/rIRpUdjmrvqXynnF2z2RWTY8tLniaACaFTtE8HbiYepTJUGEj7I1o3ghC2N2FiVPWfe/Q/AbmUvzAog3A+fGJmwTdVoMNSayVfO3Az4qylseZXid9l6e0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SHdVmtuE; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1762451148;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dwXTvBD4Yvz8oojCSyImVAOTuEGuJkeQWe5NSzvpamE=;
-	b=SHdVmtuEAd2onL80wyhSpI0B49pLgQOmgtyD4DkYmTBOuzawF3fyVuWo64O9OF6U3zKVew
-	5svaBn1FHs+g3NMbysxwoxmzDaKle6mKK2cbpNgJ3cIbOEOZpifdUCpo5n1O/DJMQnybtT
-	QBVEDIV+Qs6xK32OFaUoYb9A9RPzqk8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-W1d-4TabM9iJJOSfvszwLg-1; Thu,
- 06 Nov 2025 12:45:45 -0500
-X-MC-Unique: W1d-4TabM9iJJOSfvszwLg-1
-X-Mimecast-MFC-AGG-ID: W1d-4TabM9iJJOSfvszwLg_1762451142
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 56BA01801234;
-	Thu,  6 Nov 2025 17:45:42 +0000 (UTC)
-Received: from warthog.procyon.org.com (unknown [10.42.28.6])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id D93121945110;
-	Thu,  6 Nov 2025 17:45:38 +0000 (UTC)
-From: David Howells <dhowells@redhat.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: David Howells <dhowells@redhat.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	"Jason A . Donenfeld" <Jason@zx2c4.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Stephan Mueller <smueller@chronox.de>,
-	Lukas Wunner <lukas@wunner.de>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	linux-crypto@vger.kernel.org,
-	keyrings@vger.kernel.org,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v7 7/8] pkcs7, x509: Add ML-DSA support
-Date: Thu,  6 Nov 2025 17:44:51 +0000
-Message-ID: <20251106174456.31818-8-dhowells@redhat.com>
-In-Reply-To: <20251106174456.31818-1-dhowells@redhat.com>
-References: <20251106174456.31818-1-dhowells@redhat.com>
+	s=arc-20240116; t=1762451683; c=relaxed/simple;
+	bh=Ksw1O2ILTa6nbNkzQ8ESg5jM935Th6BDveZ1S58oGbw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ek0P7LWIQOWT8IPIM25pNQwgNxHVmgVrL64RxbIVQipF9+9gcpCUCe1gshRC2FyEo5kEFzzhrFGJpvxGoMlH2qxPfj/63JxAeMqk36Z9AzpSXtOnuMszx0uyRiX10pM5TS6J9j9avaBQNOhnHzAidf8jimK7qEggSu/xW8zoemY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UicaYoie; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2950fab14beso538015ad.0
+        for <linux-modules@vger.kernel.org>; Thu, 06 Nov 2025 09:54:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762451682; x=1763056482; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Okn7qpZREP/wLijgmlrP2ZX+9ZeLo6Ylcde08Z9eoeg=;
+        b=UicaYoieNEAJldATNlWe0ilE0H5q6doUqvzQRLUzKckS8/tstHYz4ZtbolnwwnxLFZ
+         o6L8yrQN5rO4Q2sGf1NjnqfedRQmNqLSiSGto0ZHXDv1bWTgoRKn1IV/HO1SdSGMJehi
+         LdH4NZm/LHGR687OVH5Bo+WAgafDuVf7suWEoohtBdMZPy/qehl7ogLH5zAg9e6Ktn6L
+         sAxm1gw5yw/HlB3obsATOCC5/Fh9cCm/CPKIdpN4Bc/mVolsaTeRxANPNYM7FJmtbofO
+         r1kHPbCCxGSGd9zPj2HEU2i3h+a0cxHEsIc6RZNBYjKDvAWcA7Hf9U1OSiy3Ee8Ww9zd
+         Ng8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762451682; x=1763056482;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Okn7qpZREP/wLijgmlrP2ZX+9ZeLo6Ylcde08Z9eoeg=;
+        b=aT/jZeRDi+jUNP9jc4sQlQwFlvcew7rR+5C9DjkjL40ekuajyDyXAhucftHzbDoVre
+         ny28XRAsSyxH/iyClrPk1taPWEpevxjNbOuqFWyIXH07F1cK00mgeTdMaqnrWPHbBYml
+         9VybUqU88G9SAl73ixUoGBm8kHrywg1f6toUhH01OupGZ9KKWsukOytiMd4Dln5vqVeV
+         7d5suEJSvbGN2lUyJNLe18WhaBtccM3gRTAQOA0ZSj7hkoasT6tyn3HLPtfAoZQeu3+7
+         XeVMxSEo3WwIk5UpnK/irFBL4sxgI2ezDqSGOHALo7uLqAxR83s9egPJy3GeM13jz4Zz
+         J7ng==
+X-Forwarded-Encrypted: i=1; AJvYcCVvB3wlJBgdG+a0y6Yn4UCiVsPy9D5dVI04FNTicE0fsRHt3Do3jWm8ONbmd0wnUqEwdgP1AWPiDzUJakgX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwXQ/IS8zqyitXklumAogFLO6jN6xNxsfMD1Hmt5gQe2AxRnZR
+	b+BAyXUwELLwfyHM+h8U23fVdRlFGfqZzpP+EPFw1VlanbY598mFCK6trb7kYmddBqxyE0hvE/l
+	DoOlUGVuj3YcgP/eUBcC8LT0XUIAqZ+C/DEuwg14=
+X-Gm-Gg: ASbGncsRTb+JlODoNKPRWUPG3YMqZzCwDdLkwWq9B9e5WAJnkHyVSHfb6LzZ39ZRLIe
+	WeZt3IF35RY6q0xsPIGvQ1BExJMv9A1B5JB1tEM1HTX3bzwgAYHZNacrXLIEETmBoPHg5TZTfcT
+	sEqVsQOGV33fZzdV9LRFAOiWLFRWatt/YpxciMZ22aFg+nsfppq2GnwmB9ENZcn4liT/6/suLZz
+	l2gDY06OSSwdv25LFdNH8iuKVgQ5x7JB26ZqomAjQmLKucgMlYknzyMJNPkDdhDycpyNMY6erA0
+	QhRCemgxJnLvFAzJiYNL9gnQW+dLp8yMl3OVDIieGL4ftLrSHH+ixkufC7/tVQfNlzy1nXW8isE
+	dqU8=
+X-Google-Smtp-Source: AGHT+IEQFZLchjDduH4qWmZhyYV0o5WLbi5+ttwHSqi4gQaN3BU7nanFdl/mHX5HfcqMUadxoGA3i7/M5nE2rROJQ8c=
+X-Received: by 2002:a17:903:1cd:b0:296:4e0c:8013 with SMTP id
+ d9443c01a7336-297c045d1ecmr2192335ad.6.1762451681522; Thu, 06 Nov 2025
+ 09:54:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+References: <b8c1c73d-bf8b-4bf2-beb1-84ffdcd60547@163.com> <CANiq72kX4Yep3pNVq8Ge=txQbPnMO=zKsci5cPgz5LDS=D6NoQ@mail.gmail.com>
+ <CABCJKud0G+Xh+Wbtg4SDGvk4Yh5nmt5YgHEPj-H0y8GO5R3Amw@mail.gmail.com>
+In-Reply-To: <CABCJKud0G+Xh+Wbtg4SDGvk4Yh5nmt5YgHEPj-H0y8GO5R3Amw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 6 Nov 2025 18:54:28 +0100
+X-Gm-Features: AWmQ_bnB7dF3A5p5iTsNbh6uHhgvWv73d0_f2Do54xO3WHnB4_rI1cr-bP8T2Fw
+Message-ID: <CANiq72mw66ADx7LoUuqY6h9KCU=uFzcNQXZ21kMP7jBjCyyaHQ@mail.gmail.com>
+Subject: Re: Only rust/bindings.o build fail on rust-1.91.0
+To: Sami Tolvanen <samitolvanen@google.com>
+Cc: Haiyue Wang <haiyuewa@163.com>, rust-for-linux@vger.kernel.org, 
+	Miguel Ojeda <ojeda@kernel.org>, linux-modules@vger.kernel.org, 
+	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add support for ML-DSA keys and signatures to the PKCS#7 and X.509
-implementations.
+On Thu, Nov 6, 2025 at 5:07=E2=80=AFPM Sami Tolvanen <samitolvanen@google.c=
+om> wrote:
+>
+> I can reproduce the issue. With rustc 1.90, rust/bindings.o has
+> debugging information, but with 1.91, it no longer does:
+>
+> $ dwarfdump rust/bindings.o
+> No DWARF information present in rust/bindings.o
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Lukas Wunner <lukas@wunner.de>
-cc: Ignat Korchagin <ignat@cloudflare.com>
-cc: Stephan Mueller <smueller@chronox.de>
-cc: Eric Biggers <ebiggers@kernel.org>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: keyrings@vger.kernel.org
-cc: linux-crypto@vger.kernel.org
----
- crypto/asymmetric_keys/pkcs7_parser.c     | 15 ++++++++++++++
- crypto/asymmetric_keys/public_key.c       |  7 +++++++
- crypto/asymmetric_keys/x509_cert_parser.c | 24 +++++++++++++++++++++++
- include/linux/oid_registry.h              |  5 +++++
- 4 files changed, 51 insertions(+)
+Same, reproduced as well.
 
-diff --git a/crypto/asymmetric_keys/pkcs7_parser.c b/crypto/asymmetric_keys/pkcs7_parser.c
-index 3cdbab3b9f50..d7c88b90a4fd 100644
---- a/crypto/asymmetric_keys/pkcs7_parser.c
-+++ b/crypto/asymmetric_keys/pkcs7_parser.c
-@@ -297,6 +297,21 @@ int pkcs7_sig_note_pkey_algo(void *context, size_t hdrlen,
- 		ctx->sinfo->sig->pkey_algo = "ecrdsa";
- 		ctx->sinfo->sig->encoding = "raw";
- 		break;
-+	case OID_id_ml_dsa_44:
-+		ctx->sinfo->sig->pkey_algo = "ml-dsa44";
-+		ctx->sinfo->sig->encoding = "raw";
-+		ctx->sinfo->sig->algo_does_hash = true;
-+		break;
-+	case OID_id_ml_dsa_65:
-+		ctx->sinfo->sig->pkey_algo = "ml-dsa65";
-+		ctx->sinfo->sig->encoding = "raw";
-+		ctx->sinfo->sig->algo_does_hash = true;
-+		break;
-+	case OID_id_ml_dsa_87:
-+		ctx->sinfo->sig->pkey_algo = "ml-dsa87";
-+		ctx->sinfo->sig->encoding = "raw";
-+		ctx->sinfo->sig->algo_does_hash = true;
-+		break;
- 	default:
- 		printk("Unsupported pkey algo: %u\n", ctx->last_oid);
- 		return -ENOPKG;
-diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
-index e5b177c8e842..96e084668d1b 100644
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -142,6 +142,13 @@ software_key_determine_akcipher(const struct public_key *pkey,
- 		if (strcmp(hash_algo, "streebog256") != 0 &&
- 		    strcmp(hash_algo, "streebog512") != 0)
- 			return -EINVAL;
-+	} else if (strcmp(pkey->pkey_algo, "ml-dsa44") == 0 ||
-+		   strcmp(pkey->pkey_algo, "ml-dsa65") == 0 ||
-+		   strcmp(pkey->pkey_algo, "ml-dsa87") == 0) {
-+		if (strcmp(encoding, "raw") != 0)
-+			return -EINVAL;
-+		if (!hash_algo)
-+			return -EINVAL;
- 	} else {
- 		/* Unknown public key algorithm */
- 		return -ENOPKG;
-diff --git a/crypto/asymmetric_keys/x509_cert_parser.c b/crypto/asymmetric_keys/x509_cert_parser.c
-index 8df3fa60a44f..6a2a77a647a5 100644
---- a/crypto/asymmetric_keys/x509_cert_parser.c
-+++ b/crypto/asymmetric_keys/x509_cert_parser.c
-@@ -257,6 +257,15 @@ int x509_note_sig_algo(void *context, size_t hdrlen, unsigned char tag,
- 	case OID_gost2012Signature512:
- 		ctx->cert->sig->hash_algo = "streebog512";
- 		goto ecrdsa;
-+	case OID_id_ml_dsa_44:
-+		ctx->cert->sig->pkey_algo = "ml-dsa44";
-+		goto ml_dsa;
-+	case OID_id_ml_dsa_65:
-+		ctx->cert->sig->pkey_algo = "ml-dsa65";
-+		goto ml_dsa;
-+	case OID_id_ml_dsa_87:
-+		ctx->cert->sig->pkey_algo = "ml-dsa87";
-+		goto ml_dsa;
- 	}
- 
- rsa_pkcs1:
-@@ -274,6 +283,12 @@ int x509_note_sig_algo(void *context, size_t hdrlen, unsigned char tag,
- 	ctx->cert->sig->encoding = "x962";
- 	ctx->sig_algo = ctx->last_oid;
- 	return 0;
-+ml_dsa:
-+	ctx->cert->sig->algo_does_hash = true;
-+	ctx->cert->sig->hash_algo = ctx->cert->sig->pkey_algo;
-+	ctx->cert->sig->encoding = "raw";
-+	ctx->sig_algo = ctx->last_oid;
-+	return 0;
- }
- 
- /*
-@@ -524,6 +539,15 @@ int x509_extract_key_data(void *context, size_t hdrlen,
- 			return -ENOPKG;
- 		}
- 		break;
-+	case OID_id_ml_dsa_44:
-+		ctx->cert->pub->pkey_algo = "ml-dsa44";
-+		break;
-+	case OID_id_ml_dsa_65:
-+		ctx->cert->pub->pkey_algo = "ml-dsa65";
-+		break;
-+	case OID_id_ml_dsa_87:
-+		ctx->cert->pub->pkey_algo = "ml-dsa87";
-+		break;
- 	default:
- 		return -ENOPKG;
- 	}
-diff --git a/include/linux/oid_registry.h b/include/linux/oid_registry.h
-index 6de479ebbe5d..30821a6a4f72 100644
---- a/include/linux/oid_registry.h
-+++ b/include/linux/oid_registry.h
-@@ -145,6 +145,11 @@ enum OID {
- 	OID_id_rsassa_pkcs1_v1_5_with_sha3_384, /* 2.16.840.1.101.3.4.3.15 */
- 	OID_id_rsassa_pkcs1_v1_5_with_sha3_512, /* 2.16.840.1.101.3.4.3.16 */
- 
-+	/* NIST FIPS-204 ML-DSA (Dilithium) */
-+	OID_id_ml_dsa_44,			/* 2.16.840.1.101.3.4.3.17 */
-+	OID_id_ml_dsa_65,			/* 2.16.840.1.101.3.4.3.18 */
-+	OID_id_ml_dsa_87,			/* 2.16.840.1.101.3.4.3.19 */
-+
- 	OID__NR
- };
- 
+Bisecting nightlies, it seemed to happen between:
 
+    rustc 1.91.0-nightly (12eb345e5 2025-09-07)
+    rustc 1.91.0-nightly (9c27f27ea 2025-09-08)
+
+Cheers,
+Miguel
 
