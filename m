@@ -1,79 +1,79 @@
-Return-Path: <linux-modules+bounces-4797-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4799-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19F0AC4EDCA
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 16:52:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0499EC4EDD9
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 16:52:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B02554ECF4B
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 15:50:01 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 10C174EF37E
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 15:50:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E18B936A02D;
-	Tue, 11 Nov 2025 15:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADCCC36B04E;
+	Tue, 11 Nov 2025 15:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="N1FeMUeh"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="aZulMhDE"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32DD369960
-	for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 15:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FFD36999B
+	for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 15:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762876196; cv=none; b=iVb0S7Hk8uWUbjCDZ6GZ1UULlqQIo/hbDPUfh/3JDuOFihxACkFq6MoQUBo84RYENtwYuPrUzdVHX40kMnyDqCKF6lyWgwLRMwTLNFLLgpKDgwZKoJR0Pun8kpCkzVkDlBbHygKhF0KGpTuborHdNhBcKRC4kIpduythskkWFA4=
+	t=1762876197; cv=none; b=CCnEP00rNzVAjbBhZQUlvhY2/DY3qN9XBDybr7Zz9TASVKSpz4L2AuD5FdetwcZgCOwn0WM2xdUaYKg+WQpTL5ACrWtOtUxYJNpROS0YRI/niGSflTC9X0e4ypCLfcMbWqGcmxzETPIiG60l1US9pNhnh5K1imTq2d03LlZa02s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762876196; c=relaxed/simple;
-	bh=qD6zIG+QFIh9H5gMT+JWHMXeNqgfXO8dSPuiOhs9AzU=;
+	s=arc-20240116; t=1762876197; c=relaxed/simple;
+	bh=ArffcqoJndIyYbZ2n+iylx2lu7vSzFeJ4OJe4C6LVPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HU5eu6Bp9VaeBXuRIiwgBBeo+Khdnn7RAmtVV7UO6r0N+oZ8kKNgrRcSNlXOcHOU7eIOsi4x8PV8b3HfH0eM8nUSyCz9awRNQxbM63Yc5LE2pXlgfQRNiiA9jFcNTWRO85RsN/AMxZo0y3/ksegmLeiELjb9UkJkEo0XiOjWEA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=N1FeMUeh; arc=none smtp.client-ip=209.85.221.50
+	 MIME-Version; b=cImWLuGdBgefHBYKSUrWRqQiXavE9XZOr8xbvcjW3C0V6X0+dxrIDWaJgpovboFtjDNLTBRmibiq9ZgAu7gTkQFknfiBfbuA5ObI3o0aP7yEp3VN/ZoxK7aGxqidcTXeuE9WwxpDoGrtSGtPhZGiPCvM7QrRzi8kgUlkrcMc8hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=aZulMhDE; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-429c7869704so3264986f8f.2
-        for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 07:49:54 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-47118259fd8so31047975e9.3
+        for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 07:49:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1762876193; x=1763480993; darn=vger.kernel.org;
+        d=suse.com; s=google; t=1762876194; x=1763480994; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ldB0OPyDE9pZ9lZi6t4J5SC+CGo/82OY1zC0z4qhuPw=;
-        b=N1FeMUeh9AbsTM9znheALQWUQ0YwCaX4LeGGr8D6SzzXCIUYQDpDAhZNqkuJ8sryUN
-         0DFf6jahTH593gBhtp0cr5VKwo7F0deKFMWPn9s4KCzqVUuoiVLzJljuzmWC4KjcpqeT
-         eM/OXo/jfbuYwcrpXbQZVwZLa9wrzpWgwRIZ58tThg+gJcUgYx/2E6l2ndiVtOIx4XUx
-         hH60Y+byANhUcvaOM1QRL20kL3C5x1jW2yNcsTd1KpQRqcT7spbE82kOWcO8PVP4+rTI
-         YYQuh1Sx/HYWU6NgrszHSIq9jy9YLs/V4wxTqkjjnixmTGfTJTAyKZ33c8WY5bIc/GKW
-         3oDw==
+        bh=r30esyx8yD0HScczwGrkXPHaGSEXpXn8hasnGYmqj/c=;
+        b=aZulMhDE3YOhVELKLbkzv831DFFjyrUiCLrLBYfMj7kUw0alDVXbfLpuI7JpDAe5a2
+         xuN69UjJl6GxYHDg9TUyKkJuPphO5TT6zSuk/bKj/u2hgun75gfXZjRtQblxS2BIbBge
+         Mz3vXHMG7bB3jPSNpxoDNjhnbLmkrkwi0TAJ2oTkPhB1RN0Fea4FjagA1clLIjfdhjDp
+         aVP9TosgbHr72fHNLXc+n8Ki5O5WC/XYNxNN8/5fl6+EaErx4cbkRrQmPuX5mYNuB1SK
+         /13CkowaAsq7/1aPN/kBuz+CNDnhrWz5XhTbunGvdD5/syY7+nEGHWnDiB4SEPuIhPiK
+         sguQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762876193; x=1763480993;
+        d=1e100.net; s=20230601; t=1762876194; x=1763480994;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ldB0OPyDE9pZ9lZi6t4J5SC+CGo/82OY1zC0z4qhuPw=;
-        b=f1Os3/URoFxK+fzukhfN6k6nALJd6Grvnw5S/vzu2XwDSNMk1TC64MNd4Au3hkg3Tj
-         OJiYlC+c15+PLs7ClLJqMdDcK8qigDY049ZMgb+jotsh4K15yE7xnhZcyU7RUqHxU5Vj
-         ubcIeHmHJgSa7HhmSxpHhRQarSBzCmYyhOdaQbbHrcLVjLtTJQ4WFEW3s6oeRYn/Bvt5
-         17uuWEN1tEVC/30urDIfiTC3Emo1oCdhGywMDvzA1rDHVcBuEpedGkv+IAZHKOR7xK9w
-         l4N7hp8MaXsPnxY7ZBERVudzIFdDVo7ChiPfi2aXg1qydAtA0BcKBmgafnOG9U3jSsQF
-         xXIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnHnz18wgPHAKun2JESZTbrtIBA1fjZOl58Eg+jS59MJXMw+JHAetm6D6dUWx/1vwy5SRRXsoYgowcPAVW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxoAFfMvXP0bA1LCkwgFRZaz36h/50s8HI2tGhA0gnbTatXeSh
-	gK7CvziHpgdVMBCmWPomOvnjXHp9di3PoQgwdGpGQc5WGEvtSwEGshgafdZlWSHTGmE=
-X-Gm-Gg: ASbGncvUSvR92l5bwTjnKYwJnphbGGSHWOac8oIVzNA3p7rJMjdJGaiIFZ8WrBYZ71W
-	E+z4LEyKETUdodo3wmb4rTMzMpYs2lHv5wsmUmqM/CMAwssIyZAbb4dJR+HdjdHZTF11+76KaGq
-	grKKbOXB7m8oc0Btq+vrfdd4H3Xqg3xmVPlfuxN69Pq0PKDSFiVBWNvkHMSe3y/sb/En7kUgioN
-	o0P3zTG+JD8RgsHIADnPIRLElhpoTLo7eZhbf770P2A/R9kcBFr2AxZHs+ku7RSCoHvhguQHn0p
-	ZU+SqnGr8PSpKd/odBytfUMabjbuwY9IQbvgqwyBBNd8Gneti3+r14IrCpYFjmrW1Uh9nHr+guY
-	wONvyLbeetPyZ0hFipyM5txhqjrt224V3w0iAYcD4Bg34V1DRXk9KwaY9SPH8XSlg3TRPbP+MgW
-	u8BAjbI3fs5KOvUIncHw==
-X-Google-Smtp-Source: AGHT+IEOSm7C5wtpa4ZrHjhS6rbYwvS1yk5B9tIcVm28eW4cAMJObZ0VcTOXc0R/m5W6dUpuHdMeIQ==
-X-Received: by 2002:a5d:5f42:0:b0:429:bca4:6b44 with SMTP id ffacd0b85a97d-42b2dc1f4e9mr11678592f8f.13.1762876193119;
+        bh=r30esyx8yD0HScczwGrkXPHaGSEXpXn8hasnGYmqj/c=;
+        b=b6AXS7XiaanjyiHzkqlT6d7eLLruVpFbmZG7ZHIek3/Z0wM91jGXKdwHAYWOM072ey
+         FuZfHhi5a9s/g2AiXmS7rhKphm+NBB1QKxtOujrt2coV5FQkcKdyqPd+SXqwFU49LFcJ
+         FUxGTrt2YnvLlh9kAVtR3d9LWQe8Msqw7tkXksYqAut9PM7NbFCOeTXS0ds9Qdsak1u5
+         mj416/jOl6ZoR5UnCp1Dx/8S+EY3STYcowepq5z/qbmz+WP3jV326F8VWKaNkYk4l0IO
+         NNoXqJQgmMw4MUdZsaf7xca4kX9reqXz+TrxjFrNBQj54bw5VJbYxpapfV8+yiytH9is
+         sr/A==
+X-Forwarded-Encrypted: i=1; AJvYcCX3YQCWbYEHYA0iVoXcs9YfsezmjN7KWCtCnrDAMKmsSWHsZJwPRWkXfWrsfYPA7UUPAwQA9lEo8ufR/TTf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGDNR0v3ZZ10olNg+qkx120IEGqKLR4UDeb77zjxrmy+F0zMJ2
+	swtp/NmWh0DaF5L1PKjkH+/WdwuSR4m9//b9PHROUMtxbaFFYacwM/UFAu12KW1ytpk=
+X-Gm-Gg: ASbGncvjSLLVAzJlmwwPR9m5oj+isE6tiMLS95iDgdnsjw+DPFPNwZZdaLsYiLncPGH
+	dphNPIwYbdQgJnLNvNUzY90Qg7jNKc2GG1nundmwH9oLazaZH2qQsUCr79N7kXtJw4Vvq1cgRkA
+	Yu1I1E70W91zYSdvJIzaG+67gMc0K5OMQH6VYPLKFwy/3C6c7SuJZhVW7yZEHv7tSGnLEanbGmz
+	JueyKykXJtluCku6ipgBYokproVTfc2wINwSZVmrBt08vEtO8bX5YMX4N3va6F2zRk6aao9vKiY
+	Dp9Bqwostqrz3JKnnscozCf3jtaxAGUCqDFqDlcI/L0YJ/BIbGQ5/i0IUI3br5wz351oYC2uktE
+	z5GDSPDAjzHBHqMuQhccfUvsLcnxzq4DBxPdNcVB22Rev2LSFRFL7u2Hy8CyqvfBqZpn7g+oWw6
+	wC+hlKGtw+anXlSDrWiA==
+X-Google-Smtp-Source: AGHT+IExhQ/+BzedT09U+yGaxQf13zai+5Vmb9vWg/D2+w5V1sfzVsL0jINrbBSLXD9+jVM64JUSgw==
+X-Received: by 2002:a05:600c:35c8:b0:477:7a1a:4b82 with SMTP id 5b1f17b1804b1-4777a1a4d15mr84388275e9.8.1762876193779;
         Tue, 11 Nov 2025 07:49:53 -0800 (PST)
 Received: from zovi.suse.cz (nat2.prg.suse.com. [195.250.132.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42abe62b23csm28269916f8f.10.2025.11.11.07.49.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42abe62b23csm28269916f8f.10.2025.11.11.07.49.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 07:49:52 -0800 (PST)
+        Tue, 11 Nov 2025 07:49:53 -0800 (PST)
 From: Petr Pavlu <petr.pavlu@suse.com>
 To: David Howells <dhowells@redhat.com>,
 	David Woodhouse <dwmw2@infradead.org>,
@@ -85,9 +85,9 @@ To: David Howells <dhowells@redhat.com>,
 Cc: keyrings@vger.kernel.org,
 	linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] module: Remove SHA-1 support for module signing
-Date: Tue, 11 Nov 2025 16:48:31 +0100
-Message-ID: <20251111154923.978181-2-petr.pavlu@suse.com>
+Subject: [PATCH 2/2] sign-file: Remove support for signing with PKCS#7
+Date: Tue, 11 Nov 2025 16:48:32 +0100
+Message-ID: <20251111154923.978181-3-petr.pavlu@suse.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251111154923.978181-1-petr.pavlu@suse.com>
 References: <20251111154923.978181-1-petr.pavlu@suse.com>
@@ -99,53 +99,193 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SHA-1 is considered deprecated and insecure due to vulnerabilities that can
-lead to hash collisions. Most distributions have already been using SHA-2
-for module signing because of this. The default was also changed last year
-from SHA-1 to SHA-512 in commit f3b93547b91a ("module: sign with sha512
-instead of sha1 by default"). This was not reported to cause any issues.
-Therefore, it now seems to be a good time to remove SHA-1 support for
-module signing.
+The PKCS#7 code in sign-file allows for signing only with SHA-1. Since
+SHA-1 support for module signing has been removed, drop PKCS#7 support in
+favor of using only CMS.
 
-Commit 16ab7cb5825f ("crypto: pkcs7 - remove sha1 support") previously
-removed support for reading PKCS#7/CMS signed with SHA-1, along with the
-ability to use SHA-1 for module signing. This change broke iwd and was
-subsequently completely reverted in commit 203a6763ab69 ("Revert "crypto:
-pkcs7 - remove sha1 support""). However, dropping only the support for
-using SHA-1 for module signing is unrelated and can still be done
-separately.
+The use of the PKCS#7 code is selected by the following:
 
-Note that this change only removes support for new modules to be SHA-1
-signed, but already signed modules can still be loaded.
+ #if defined(LIBRESSL_VERSION_NUMBER) || \
+ 	OPENSSL_VERSION_NUMBER < 0x10000000L || \
+ 	defined(OPENSSL_NO_CMS)
+ #define USE_PKCS7
+ #endif
+
+Looking at the individual ifdefs:
+
+* LIBRESSL_VERSION_NUMBER: LibreSSL added the CMS implementation from
+  OpenSSL in 3.1.0, making the ifdef no longer relevant. This version was
+  released on April 8, 2020.
+
+* OPENSSL_VERSION_NUMBER < 0x10000000L: OpenSSL 1.0.0 was released on March
+  29, 2010. Supporting earlier versions should no longer be necessary. The
+  file Documentation/process/changes.rst already states that at least
+  version 1.0.0 is required to build the kernel.
+
+* OPENSSL_NO_CMS: OpenSSL can be configured with "no-cms" to disable the
+  CMS support. In this case, sign-file will no longer be usable. The CMS
+  support is now required.
+
+In practice, since distributions now typically sign modules with SHA-2, for
+which sign-file already required CMS support, removing PKCS#7 shouldn't
+cause any issues.
 
 Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 ---
- kernel/module/Kconfig | 5 -----
- 1 file changed, 5 deletions(-)
+ scripts/sign-file.c | 66 +++------------------------------------------
+ 1 file changed, 3 insertions(+), 63 deletions(-)
 
-diff --git a/kernel/module/Kconfig b/kernel/module/Kconfig
-index 2a1beebf1d37..be74917802ad 100644
---- a/kernel/module/Kconfig
-+++ b/kernel/module/Kconfig
-@@ -299,10 +299,6 @@ choice
- 	  possible to load a signed module containing the algorithm to check
- 	  the signature on that module.
+diff --git a/scripts/sign-file.c b/scripts/sign-file.c
+index 7070245edfc1..16f2bf2e1e3c 100644
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -24,6 +24,7 @@
+ #include <arpa/inet.h>
+ #include <openssl/opensslv.h>
+ #include <openssl/bio.h>
++#include <openssl/cms.h>
+ #include <openssl/evp.h>
+ #include <openssl/pem.h>
+ #include <openssl/err.h>
+@@ -39,29 +40,6 @@
+ #endif
+ #include "ssl-common.h"
  
--config MODULE_SIG_SHA1
--	bool "SHA-1"
--	select CRYPTO_SHA1
+-/*
+- * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
+- * assume that it's not available and its header file is missing and that we
+- * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
+- * the options we have on specifying the X.509 certificate we want.
+- *
+- * Further, older versions of OpenSSL don't support manually adding signers to
+- * the PKCS#7 message so have to accept that we get a certificate included in
+- * the signature message.  Nor do such older versions of OpenSSL support
+- * signing with anything other than SHA1 - so we're stuck with that if such is
+- * the case.
+- */
+-#if defined(LIBRESSL_VERSION_NUMBER) || \
+-	OPENSSL_VERSION_NUMBER < 0x10000000L || \
+-	defined(OPENSSL_NO_CMS)
+-#define USE_PKCS7
+-#endif
+-#ifndef USE_PKCS7
+-#include <openssl/cms.h>
+-#else
+-#include <openssl/pkcs7.h>
+-#endif
 -
- config MODULE_SIG_SHA256
- 	bool "SHA-256"
- 	select CRYPTO_SHA256
-@@ -332,7 +328,6 @@ endchoice
- config MODULE_SIG_HASH
- 	string
- 	depends on MODULE_SIG || IMA_APPRAISE_MODSIG
--	default "sha1" if MODULE_SIG_SHA1
- 	default "sha256" if MODULE_SIG_SHA256
- 	default "sha384" if MODULE_SIG_SHA384
- 	default "sha512" if MODULE_SIG_SHA512
+ struct module_signature {
+ 	uint8_t		algo;		/* Public-key crypto algorithm [0] */
+ 	uint8_t		hash;		/* Digest algorithm [0] */
+@@ -228,15 +206,10 @@ int main(int argc, char **argv)
+ 	bool raw_sig = false;
+ 	unsigned char buf[4096];
+ 	unsigned long module_size, sig_size;
+-	unsigned int use_signed_attrs;
+ 	const EVP_MD *digest_algo;
+ 	EVP_PKEY *private_key;
+-#ifndef USE_PKCS7
+ 	CMS_ContentInfo *cms = NULL;
+ 	unsigned int use_keyid = 0;
+-#else
+-	PKCS7 *pkcs7 = NULL;
+-#endif
+ 	X509 *x509;
+ 	BIO *bd, *bm;
+ 	int opt, n;
+@@ -246,21 +219,13 @@ int main(int argc, char **argv)
+ 
+ 	key_pass = getenv("KBUILD_SIGN_PIN");
+ 
+-#ifndef USE_PKCS7
+-	use_signed_attrs = CMS_NOATTR;
+-#else
+-	use_signed_attrs = PKCS7_NOATTR;
+-#endif
+-
+ 	do {
+ 		opt = getopt(argc, argv, "sdpk");
+ 		switch (opt) {
+ 		case 's': raw_sig = true; break;
+ 		case 'p': save_sig = true; break;
+ 		case 'd': sign_only = true; save_sig = true; break;
+-#ifndef USE_PKCS7
+ 		case 'k': use_keyid = CMS_USE_KEYID; break;
+-#endif
+ 		case -1: break;
+ 		default: format();
+ 		}
+@@ -289,14 +254,6 @@ int main(int argc, char **argv)
+ 		replace_orig = true;
+ 	}
+ 
+-#ifdef USE_PKCS7
+-	if (strcmp(hash_algo, "sha1") != 0) {
+-		fprintf(stderr, "sign-file: %s only supports SHA1 signing\n",
+-			OPENSSL_VERSION_TEXT);
+-		exit(3);
+-	}
+-#endif
+-
+ 	/* Open the module file */
+ 	bm = BIO_new_file(module_name, "rb");
+ 	ERR(!bm, "%s", module_name);
+@@ -314,7 +271,6 @@ int main(int argc, char **argv)
+ 		digest_algo = EVP_get_digestbyname(hash_algo);
+ 		ERR(!digest_algo, "EVP_get_digestbyname");
+ 
+-#ifndef USE_PKCS7
+ 		/* Load the signature message from the digest buffer. */
+ 		cms = CMS_sign(NULL, NULL, NULL, NULL,
+ 			       CMS_NOCERTS | CMS_PARTIAL | CMS_BINARY |
+@@ -323,19 +279,12 @@ int main(int argc, char **argv)
+ 
+ 		ERR(!CMS_add1_signer(cms, x509, private_key, digest_algo,
+ 				     CMS_NOCERTS | CMS_BINARY |
+-				     CMS_NOSMIMECAP | use_keyid |
+-				     use_signed_attrs),
++				     CMS_NOSMIMECAP | CMS_NOATTR |
++				     use_keyid),
+ 		    "CMS_add1_signer");
+ 		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) != 1,
+ 		    "CMS_final");
+ 
+-#else
+-		pkcs7 = PKCS7_sign(x509, private_key, NULL, bm,
+-				   PKCS7_NOCERTS | PKCS7_BINARY |
+-				   PKCS7_DETACHED | use_signed_attrs);
+-		ERR(!pkcs7, "PKCS7_sign");
+-#endif
+-
+ 		if (save_sig) {
+ 			char *sig_file_name;
+ 			BIO *b;
+@@ -344,13 +293,8 @@ int main(int argc, char **argv)
+ 			    "asprintf");
+ 			b = BIO_new_file(sig_file_name, "wb");
+ 			ERR(!b, "%s", sig_file_name);
+-#ifndef USE_PKCS7
+ 			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) != 1,
+ 			    "%s", sig_file_name);
+-#else
+-			ERR(i2d_PKCS7_bio(b, pkcs7) != 1,
+-			    "%s", sig_file_name);
+-#endif
+ 			BIO_free(b);
+ 		}
+ 
+@@ -377,11 +321,7 @@ int main(int argc, char **argv)
+ 	module_size = BIO_number_written(bd);
+ 
+ 	if (!raw_sig) {
+-#ifndef USE_PKCS7
+ 		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) != 1, "%s", dest_name);
+-#else
+-		ERR(i2d_PKCS7_bio(bd, pkcs7) != 1, "%s", dest_name);
+-#endif
+ 	} else {
+ 		BIO *b;
+ 
 -- 
 2.51.1
 
