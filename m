@@ -1,122 +1,129 @@
-Return-Path: <linux-modules+bounces-4796-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4798-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DE44C4EC6A
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 16:27:30 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA111C4EDD3
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 16:52:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D3E9189E073
-	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 15:26:03 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 1FF4F4EDFA8
+	for <lists+linux-modules@lfdr.de>; Tue, 11 Nov 2025 15:50:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9868F355033;
-	Tue, 11 Nov 2025 15:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FF5436B045;
+	Tue, 11 Nov 2025 15:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1wlY9uu"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="HQJ4mWO5"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA820314A90
-	for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 15:25:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C18733DEFB
+	for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 15:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762874725; cv=none; b=Ws86H+yo7XkZ2xIuWAgDjrEzcWsJF7N/OYMRxT7+BwyCcxucE9+ilk6ormuokbmS0ftMCacZGHHqTFEllie4C9T6PhHa/lYseymWeunm6n9ZUC6QRIJsENFlLDoQmf5c+LpxcIpuSOLqLV0DPKVeBvl+N4V9Ug8cmtiqEJitMO4=
+	t=1762876197; cv=none; b=R2R7Nf1SDd3xKsFAxeGBJm1m5SxH3K8v7j1J+CgSvFU3bE0qmSoEUjz7FirpVx0iPGx1g3ixyTyqQDP+O/BKaLNpHyvv+8Z3jS97mv6bnBbs/CW6VQ1T7Th1FaHa+1n+9z0r2kd4BaREvze/eEAebzXhteddiqRedN7Y2xkIxHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762874725; c=relaxed/simple;
-	bh=kH2n8iyTfgAxz6xqhPaYcBszdchDNAlkl6wsHl2bXLA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p/Zb+Lmrwpr7EN2S7Y4w7Se4wIqFdHRuSrVbjq9gUz4eIjfTNObkj1VozW0g1zbVsVBc7Z6+KCkjPVrSvCj2q/J/V8mkkmTTOhk3qNcRndPQLpx+ogwXdvDKvryHnqsGoIKvK/QtxN/VNwTarCzuA026d7j2Kx0c9Ww9TxiFZ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1wlY9uu; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-378d6fa5aebso37797091fa.2
-        for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 07:25:23 -0800 (PST)
+	s=arc-20240116; t=1762876197; c=relaxed/simple;
+	bh=CqEtGAdcdC9fF+g+1J10KIaSPEMvCZFYGfAXTUffalk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=k72nw5ntkrRoBEB/hsKWSrZ0qFt4nfu6NE25O14Vb3//ZJ4kVvQMGPFM5EbZmFgUksEnB1WalhwVpiW9FUQlWmtflElnvUA0P8LHVH7IqQxBA1PKxXPbg51qH1I3leWHD3rbUS/7gI1PxVELZwxtwPCYrTefje3Cb9z6VQ7HIEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=HQJ4mWO5; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4777771ed1aso21056175e9.2
+        for <linux-modules@vger.kernel.org>; Tue, 11 Nov 2025 07:49:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762874722; x=1763479522; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kH2n8iyTfgAxz6xqhPaYcBszdchDNAlkl6wsHl2bXLA=;
-        b=T1wlY9uuIBJOoaom8q+pU3Ew+ovnvnwgbeFT6DNqOzxc17R2wq6OHP1jZN36fZVZFA
-         qmYgyMDj+/2s1sVW7MVBjxMbpOfkCFWRS+kY3xo79G4ZIQtswVLh+9CJNEFyNxsdBz6h
-         IqTZZrgLtMjb2kwbspqmcdMrcCjdoOnZc++p87074QOuGvi44zMiHWjrwo9WBb1AS6zq
-         2g+Tfml17OcZGzLFFbD8Bjbt4eqaRfwwRNLr3JFTjxvWdt+Vzlg2bVKIYY3kpbmNR9v+
-         6EPvWcr7TAApF/xiHk07HMXmH5LBUuHKndKSmXs+4TzhsdrFZ9iHLgWqAkiuakklzPka
-         2ZfQ==
+        d=suse.com; s=google; t=1762876192; x=1763480992; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wBOHrHOppf1AdfPIS3ZyxdiMnLLRYeZxEryWRgXkM8w=;
+        b=HQJ4mWO5KdT3b6efSL/NBYrQceKYWI/EPshSUVWwECZYRWgG8FzzN+f9kdyX2g+jgm
+         rx9YQqw3hoWIo1qMK/24AX4Mdj+bczviBzsjX6Ab25e5ZpD5u6YLOu0JbP4P7kKpedTX
+         cYMD+TOtDTPFbQtIKubJWKaCffKhwNXei+o43rWDPKAh0uXfN0IInzPHUnLmWplAKkxE
+         ou8o9gW8NxmT4oACIesT6yC9tgnf2+4i8JZkS4iXjvydKGofPcL7ZIG6hFH6bkYwQZe0
+         DubRgJVUXzw+H1P99vDR0Cg0nO8ToN7YgE1nKGnCQ68Lnv8hkpvrolq5BHoRhmmGGzb4
+         qI9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762874722; x=1763479522;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kH2n8iyTfgAxz6xqhPaYcBszdchDNAlkl6wsHl2bXLA=;
-        b=sEKkyh2Hy3MfV2ZtILwvscwFbcZez4+DCZAcRwNqLVJa/H5W50kVnZLIDXW1R5yl64
-         hn6EDkh/Ps4gFEUDJs9ITJ11vief2CM0o5jYF55is8FvMSYNjLLlUnVIwBFx8tCT/bbb
-         YlbBTUpjFYEWivYVEhh7D77Wn0WI6hWzJ5gwTs2tSqQ/lvLcIZJCbVlaPYgnRaNmSPex
-         nJ/JtNs85E2YLPx4Ja/lyyh0judV7Tl7ObM0HinjTx585AfKxuNJZeTfTGuwJ+SWWngK
-         wd2azTi1wfX2H48GHMEI/7KcKAMcZiC0YFh+JPq2lIE1rRjXOkub4Ru5zFmmSACv2yES
-         cYiw==
-X-Forwarded-Encrypted: i=1; AJvYcCWpNxkuCsqK99QHECjdmWVMiv6bC0uHVlVcRsC3i7uVhU4r1jj/LfiqqY46RCLQyk8dpP50MIfFdH+lL33B@vger.kernel.org
-X-Gm-Message-State: AOJu0YwK+gWhrQ94iGmA5/FWmlWdxxZhuNrfgH0FfJaoZzpfSK/0O3HW
-	MUbH9OIbndk95MaVu/XPqvgZvWPu5M5+oDltyi8VTqAHDVWHZlQ6fy7Igp8E8e7aRdM66/q8BK7
-	RPsWl86Eml7TQCof92NwRnzGQ39s8DgQ=
-X-Gm-Gg: ASbGncuDe3bwPmvD91Eu1Jg1puFELh0Kj2UZGJx5mpsSJv7LwmooU2/pB8UGK2evmTC
-	R2bqhxZu5f/MW2hbacyrhtQuDzQ/Dx/5k4LAW5PSfLcFhsUsgWETaQkVoHdBr60B7V20r+BkHUc
-	f7/sODmJ6cvDrV1Wd0qO2KZML6HgfyLHJJ8qsxnCOz6C8DHQZLhl3LYTqDC/aCgPb7DWCAlP5Gu
-	2MPIXIO2KG7xfOaLYDoj6ofqP6koh0MPXnget6EVeletD0D/SWeAXR/tEEmajC6mJl0nA2lVg==
-X-Google-Smtp-Source: AGHT+IELN2Wzp2bTqYWDhcQjlFtX9DA00ce12BJNW8cO2c8JdiyexJqlAubB4Ie5Gjviyerq6QZ+GfCfwjPRPrxTi4A=
-X-Received: by 2002:a05:651c:f06:b0:37a:7c41:79e with SMTP id
- 38308e7fff4ca-37a7c410bf5mr32947351fa.13.1762874721655; Tue, 11 Nov 2025
- 07:25:21 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762876192; x=1763480992;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wBOHrHOppf1AdfPIS3ZyxdiMnLLRYeZxEryWRgXkM8w=;
+        b=fvJ/04B8Ut7XYnstmcJbESfanBi9svsbEJnRp+yvb/NVR0RPnsYTArO6BoDOw3OpAn
+         hTv4Z9M9WiYrq2tpfJE9+3YC8yEQzLUoDrYULMma8LxWTol2b1rMfZf+ynOOlouvaUth
+         TBSN3cN7YurPASQayzxPIXlnvmTmqTeN4dWc8QzqTGlo5KYNvBTVbbLLeJOjixLDXn25
+         ZT2zExZY4qYlTb0fo1moDWO9y+eBZNV8o4L/uXm3zy9fCOvVdsa/uOy3X75W+BkEuFqD
+         3MD1FYsZShuWfIPJbmyVucslTH+DElgQsm/6Xbs6sRK5n7l/kgdDuHhxmboZ1VxNZNEI
+         2R5g==
+X-Forwarded-Encrypted: i=1; AJvYcCUHS5kWEmBru0T49+oVYjG2JKr7pKls/KhtYBXRkglRV6909LHQFuLjzH9+7z4ADlWolqmdz7sod3WJMoK6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwenG83qQAnhgTjnCTR4S0T3uPqd0Dd3LqaMECgGjT4eznpQSIU
+	vKkMyUdU/qD2tWicmWNoKglqd6H7bMK5lUzEnFQRp2kL68hhWeR/soS+h4uz/RSlPC8=
+X-Gm-Gg: ASbGncty4sbzzjsF+9N9VHR/6rKWRVeJeSp3oYOGpX5FssWBQyvN4q7xVskjqXRB8up
+	Daqdqr8XPANy8ljbCfJ3sIdHO2SVbGVosaPOrpgtLGlBDs05eE2dL/MtqQjGBMpH8Zgj13jVVNs
+	3flVWHknWznjqGsuUWNSpwYxNdd6FFZLDPYzrn+JtmofSqbI7gzSiu1OyURdYknjkQ1otHZX3HG
+	1xf7DgONBsHDdvGYkcAaGEvQSIEui6GlhhTMJ4htQEBZETC8LY/CMP0J4qlI4sJfb2zakuARZ72
+	IB9FSDq51siKSWSlNfPs5R/rbDpREKP2quFFAAsTkNt43RbBBTACPysQyPemOKOcfB/Kf/T83m/
+	G5pw/CFX+vUmUjC4D7fFLoCwyHi2vWvF4q4KftUV9oOGxC+QDT1NgXRYP0dNrwY3E8WCmKDA/tT
+	VVAEOKu7fik5XahHLRS6VknLe0Hw7dQ2gWxp4M5HE=
+X-Google-Smtp-Source: AGHT+IF3w/+X8esWpOXfnuyljikULLGSD9qW7Bkx3W/HLFcTqZLnglxnZWVL5Dg8R8MNDHTN0J812A==
+X-Received: by 2002:a05:600c:3493:b0:475:f16b:bcbf with SMTP id 5b1f17b1804b1-47773237269mr93820995e9.14.1762876192518;
+        Tue, 11 Nov 2025 07:49:52 -0800 (PST)
+Received: from zovi.suse.cz (nat2.prg.suse.com. [195.250.132.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42abe62b23csm28269916f8f.10.2025.11.11.07.49.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Nov 2025 07:49:52 -0800 (PST)
+From: Petr Pavlu <petr.pavlu@suse.com>
+To: David Howells <dhowells@redhat.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>
+Cc: keyrings@vger.kernel.org,
+	linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] module: Remove SHA-1 support for module signing
+Date: Tue, 11 Nov 2025 16:48:30 +0100
+Message-ID: <20251111154923.978181-1-petr.pavlu@suse.com>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251110131913.1789896-1-ojeda@kernel.org> <CANiq72mjFobjfQEtNvk9aA+757RkLpcfmCCEJAH69ZYsr67GdA@mail.gmail.com>
-In-Reply-To: <CANiq72mjFobjfQEtNvk9aA+757RkLpcfmCCEJAH69ZYsr67GdA@mail.gmail.com>
-Reply-To: sedat.dilek@gmail.com
-From: Sedat Dilek <sedat.dilek@gmail.com>
-Date: Tue, 11 Nov 2025 16:24:45 +0100
-X-Gm-Features: AWmQ_bl70oXfEo-1yQ9VfgUdYtwxWC_v2530llNoS_lks6MxxMHeFjNTi0L0Vkg
-Message-ID: <CA+icZUVcHfLru9SRfhNGToiRmyOY+fLw-ASEvQakZYfU1Kxq4g@mail.gmail.com>
-Subject: Re: [PATCH v2] gendwarfksyms: Skip files with no exports
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, linux-modules@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Haiyue Wang <haiyuewa@163.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 11, 2025 at 2:58=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
-...
->
-> I will send a couple other fixes to Linus this week, so if nobody
-> shouts, I will be picking this one.
->
+SHA-1 is considered deprecated and insecure due to vulnerabilities that can
+lead to hash collisions. Most distributions have already been using SHA-2
+for module signing because of this. The default was also changed last year
+from SHA-1 to SHA-512 in f3b93547b91a ("module: sign with sha512 instead of
+sha1 by default"). This was not reported to cause any issues. Therefore, it
+now seems to be a good time to remove SHA-1 support for module signing.
 
-Hi Miguel, Hi Sami,
+Looking at the configs of several distributions [1], it seems only Android
+still uses SHA-1 for module signing.
 
-I switched over to gendwarfksyms in the very early testing days.
-Faster builds. DWARFv5 fan.
+@Sami, it this correct and is there a specific reason for using SHA-1?
 
-And was using v5 of Sami's patchset against Linux v6.12 as it cleanly appli=
-ed.
+Note: The second patch has a minor conflict with the sign-file update in the
+series "lib/crypto: Add ML-DSA signing" [2].
 
-Last week, I jumped over to Linux v6.17.6 and the next testing will be
-Linux v6.18-rc5+ (upcoming next LTS kernel-version).
+[1] https://oracle.github.io/kconfigs/?config=UTS_RELEASE&config=MODULE_SIG_SHA1&version=be8f5f6abf0b0979be20ee8d9afa2a49a13500b8
+[2] https://lore.kernel.org/linux-crypto/61637.1762509938@warthog.procyon.org.uk/
 
-I will try this patch - might be you will get a Tested-by.
+Petr Pavlu (2):
+  module: Remove SHA-1 support for module signing
+  sign-file: Remove support for signing with PKCS#7
 
-Best regards,
--Sedat-
+ kernel/module/Kconfig |  5 ----
+ scripts/sign-file.c   | 66 ++-----------------------------------------
+ 2 files changed, 3 insertions(+), 68 deletions(-)
+
+
+base-commit: 4427259cc7f7571a157fbc9b5011e1ef6fe0a4a8
+-- 
+2.51.1
+
 
