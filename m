@@ -1,257 +1,142 @@
-Return-Path: <linux-modules+bounces-4905-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-4907-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBA28C738AC
-	for <lists+linux-modules@lfdr.de>; Thu, 20 Nov 2025 11:48:00 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C8D6C73F88
+	for <lists+linux-modules@lfdr.de>; Thu, 20 Nov 2025 13:32:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6DEE84E7DEC
-	for <lists+linux-modules@lfdr.de>; Thu, 20 Nov 2025 10:47:02 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTPS id 234A12C954
+	for <lists+linux-modules@lfdr.de>; Thu, 20 Nov 2025 12:31:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E237A330B07;
-	Thu, 20 Nov 2025 10:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8DAB337101;
+	Thu, 20 Nov 2025 12:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HyuS5jvd"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="fJJi+OBf"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AD5330326
-	for <linux-modules@vger.kernel.org>; Thu, 20 Nov 2025 10:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2433C333727
+	for <linux-modules@vger.kernel.org>; Thu, 20 Nov 2025 12:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763635543; cv=none; b=C08Fx08/++x0UZG99p3IcuaMKSkiqMEbIgZeAaG4S/0+8MmZ9DUxTKhakkP6piX6LKJTYh+8g186tfv9oIWnxlog8IccaL7yJ96VsmrebFNM2p9jSnmXg9CEx6BaxM0V5W9/CP4K0BUSwemCatar/Qj5LPrUUaUWTvLmhBBPoP4=
+	t=1763641867; cv=none; b=FO1pQY82Vn3uHB3Lte6thlFH3+tN1ZOjcyswFYFQL2ZyI7OWb+y3DSdDw+zFS9g2wlLp07dI/goXjVx9PPYOm2Rux3+E5Q7PcvV56JXy3kOWA5nmYY2aLWRL63AuvKH/2h3h1DDWbSnq35zZQNTjyrAccbVFzkTUmlkDCC5ZTWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763635543; c=relaxed/simple;
-	bh=G0jblK+IJlne+fEoSFxvc42mNaO9eL7zru181fO5a/Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWoFf4XfwrfOAL/yNt4+49ADFbXG9JxLTJfuq8Ja5BqmhbDnRdK1bFqEZQuTT55nwO7a13V07XZWh1L7kIW/3cIyvVxGL07IfWCrwWin6Ttzx/1Jmp+bVcfJ2co58uprufY7vSldNbDP0eqchkYiy7mEeJwV6lvEeJrblCFLieM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HyuS5jvd; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1763635539;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=NpvBgHZrvzdFBd1yH1Fy4oCgJ0BEjj+474Jwv8vdQk8=;
-	b=HyuS5jvdSuBWJiQfyd7dOQb6UmYYGiWj10oZ+fgYQhiBGNR1x6xu4nxNnCAOcODN9j8AF1
-	LKh2tmk70bPoYOY4j6Jq4PfEfmir1Me9zxN+2S6+IodoKX7issIxGRr0swNxOK8NpAhP7E
-	cPlQ46x4An7LJfaiz5JQPRnP9/gD448=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-cxwV09nsNR-1YIxm8NFGgQ-1; Thu,
- 20 Nov 2025 05:45:33 -0500
-X-MC-Unique: cxwV09nsNR-1YIxm8NFGgQ-1
-X-Mimecast-MFC-AGG-ID: cxwV09nsNR-1YIxm8NFGgQ_1763635531
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 4981C195607C;
-	Thu, 20 Nov 2025 10:45:31 +0000 (UTC)
-Received: from warthog.procyon.org.com (unknown [10.42.28.5])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 93DB11940E82;
-	Thu, 20 Nov 2025 10:45:27 +0000 (UTC)
-From: David Howells <dhowells@redhat.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: David Howells <dhowells@redhat.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	"Jason A . Donenfeld" <Jason@zx2c4.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Stephan Mueller <smueller@chronox.de>,
-	Lukas Wunner <lukas@wunner.de>,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	linux-crypto@vger.kernel.org,
-	keyrings@vger.kernel.org,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v10 8/8] modsign: Enable ML-DSA module signing
-Date: Thu, 20 Nov 2025 10:44:35 +0000
-Message-ID: <20251120104439.2620205-9-dhowells@redhat.com>
-In-Reply-To: <20251120104439.2620205-1-dhowells@redhat.com>
-References: <20251120104439.2620205-1-dhowells@redhat.com>
+	s=arc-20240116; t=1763641867; c=relaxed/simple;
+	bh=7IwoWSZlfeD5okirxUpGyO7IwlQwYODhU3cln4El7rQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SFYdeI1eRtGuzKApq2UfHOfU+eVGtPOzpPZbobiCIzJbb/5ZicLiwBNXkvFVKovG3IB1ePLqxmIpH0IxMQbZLnYbJgoGfkHWWvyKT4H0cQLWOamTrU8Ul9ikSXixeF7VfyMBUsIGx6TqBHLAlx+OF7x/TaTT++/nhQ4XgQmLY3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=fJJi+OBf; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4775895d69cso3731095e9.0
+        for <linux-modules@vger.kernel.org>; Thu, 20 Nov 2025 04:31:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1763641861; x=1764246661; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jS56hEMd80c4W90b7ePqVGHkDPIjZ5fhyUWu6DxnmCI=;
+        b=fJJi+OBfGFM9GCZnEFoF1MhBSfUq3xlsDysp1Lg3PzWBysuTGBcxIMCrgx+C3dcHVp
+         pT1H6w75IwBK5psjAJSj4lY3QubWMt7y1rgixg59qpVHOQFjlQKCUqyrrtt/ct6t7vLZ
+         Z7PgVJS6omX+ia+KR2yyYDXofwyKgKxdqqBbxAORyeaXhu8BvBlUAVplRxNXDxevhMm4
+         QoLAori+pk0MABy9Ye8mFNYs24dZlIyEnT3VfTkkBGMGQrD7fIWgpn/r87vE+iCwsBYL
+         mm7qzDXU8CWpZUZpDaRr5iEd1Dk0DjykQ4F+E4+v3AbPzISynQUkyulqd+D2O+H/0Wrl
+         IQSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763641861; x=1764246661;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jS56hEMd80c4W90b7ePqVGHkDPIjZ5fhyUWu6DxnmCI=;
+        b=ZqJv7/ImpPBrjbhXuHLcMJYLtCOmsUKDzxj+9+YLTLxsOiovYRbp+UPHh2zEda/7RS
+         npWFBV3M0GJ9l7sORUd8xnNIMEp2XJCJ62qkiYjhhoZ2C2gMwTkH2lUnOmxFEJ2TYyna
+         lbNyIVf+H04/s4dnYKOWDegRuTrgwT6XVfS4Z8VxNOlMcFNdGNFY0MPdnooF4Djq2js5
+         bEjdVdqB7mrL/kQdxajP5FCxXDwyGdgw6TtJHH47xllM5RjZTBJXK7A7Z5w3uaLd9zeR
+         O1FpjFNJ/wAsXczAWzduFv3TF3IyshQ67hNaxp9I1+JOGTD5blaiUdfFVL6Q0Vc6RRtL
+         e6Ow==
+X-Forwarded-Encrypted: i=1; AJvYcCUAp1VVxGBq17TbbFKsK1OWfnQagbW0paFXj8Nh3xbzV7JA+upnMOGRcNVHdBHgUluftrGoqStbFVgmjHAw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6bj/aceXiabD3QQ67y0PFSL+g7ZYA79JU+wClRheqVpJVvEtQ
+	2lsTSHdID+d6IWJ5q3dQzd2CcxxFaAj6dyIv1vzi6runCgWMoABhW+jhsUCoRFzyAeA=
+X-Gm-Gg: ASbGncuLRp1e45KRQcVZiQx9R9FJdbfOHKnfow1MvbbynlpOEaD7GtrDV4EINlt9adW
+	Yz8YSNh5yn8wxTaMxDuf9AyzR0CtipxR4l7RL/HK6rNscXNbiRyFrSJQI/KKIZWOx3/4eMczSl7
+	6Wu5rB+YTFQMgTD2Y2DsKIXj9+0ofFa6V29LGBlebgrtyok13XzBgHlLWlQUzGdkk1hf3Shx5Fe
+	huoWjGAzqL7tBQWbXT9WUiT1XnWvt6e+8QxfJV3om/rYBdjk6aqL8ka+a7lD5USk/v4WMqk+AYi
+	HhOcQ251CBm/Dj3YDFY7ZU1Dvs5V+2KZ14TWkLptjw/4vMtpWFT8sC2cIIFwzxMql8A3eC960F5
+	y93mi5qVu+LRvZ02Wf4Nw+ztXJ2UWdy8g0mlV3QsXllmUQw/DZie7sFN3g05EerfidvGdZZa5SK
+	l1e2M/W711w7/Sw+1nFYbCQz4E7aXsA2/CIIVVFTMo01o9JwGzqXwOrGT2E6y78F+YGRpovsYY0
+	sqGB09wmmu0F54L1YJ2Yh7PG7mPKC07B41uLs9f17Xz3gm1Nd3+hav0vxer6fYFw6a4
+X-Google-Smtp-Source: AGHT+IFwX0UGM0SSqywlXCPNUwgxiVVdpIXKUYy8u1ykfZN73v1I5KjuFyvBESlgJXXjTswqxF6tTw==
+X-Received: by 2002:a05:600c:1f86:b0:477:73e9:dc17 with SMTP id 5b1f17b1804b1-477b8c935d2mr35700965e9.35.1763641861394;
+        Thu, 20 Nov 2025 04:31:01 -0800 (PST)
+Received: from ?IPV6:2a00:1028:838d:271e:8e3b:4aff:fe4c:a100? (dynamic-2a00-1028-838d-271e-8e3b-4aff-fe4c-a100.ipv6.o2.cz. [2a00:1028:838d:271e:8e3b:4aff:fe4c:a100])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477b82cc6b9sm46456965e9.3.2025.11.20.04.31.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Nov 2025 04:31:01 -0800 (PST)
+Message-ID: <d6632fc3-17e2-4d06-abbc-413bb6478db4@suse.com>
+Date: Thu, 20 Nov 2025 13:31:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] module/decompress: Avoid open-coded kvrealloc()
+To: Kees Cook <kees@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>,
+ Sami Tolvanen <samitolvanen@google.com>, Daniel Gomez
+ <da.gomez@samsung.com>, linux-modules@vger.kernel.org,
+ Daniel Gomez <da.gomez@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+References: <20251119225439.work.741-kees@kernel.org>
+Content-Language: en-US
+From: Petr Pavlu <petr.pavlu@suse.com>
+In-Reply-To: <20251119225439.work.741-kees@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Allow ML-DSA module signing to be enabled.
+On 11/19/25 11:54 PM, Kees Cook wrote:
+> Replace open-coded allocate/copy with kvrealloc().
+> 
+> Signed-off-by: Kees Cook <kees@kernel.org>
+> ---
+> Cc: Petr Pavlu <petr.pavlu@suse.com>
+> Cc: Luis Chamberlain <mcgrof@kernel.org>
+> Cc: Sami Tolvanen <samitolvanen@google.com>
+> Cc: Daniel Gomez <da.gomez@samsung.com>
+> Cc: <linux-modules@vger.kernel.org>
+> ---
+>  kernel/module/decompress.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
+> index 474e68f0f063..36f52a232a12 100644
+> --- a/kernel/module/decompress.c
+> +++ b/kernel/module/decompress.c
+> @@ -17,16 +17,16 @@
+>  static int module_extend_max_pages(struct load_info *info, unsigned int extent)
+>  {
+>  	struct page **new_pages;
+> +	unsigned int new_max = info->max_pages + extent;
+>  
+> -	new_pages = kvmalloc_array(info->max_pages + extent,
+> -				   sizeof(info->pages), GFP_KERNEL);
+> +	new_pages = kvrealloc(info->pages,
+> +			      size_mul(new_max, sizeof(*info->pages)),
+> +			      GFP_KERNEL);
 
-Note that openssl's CMS_*() function suite does not, as of openssl-3.5.1,
-support the use of CMS_NOATTR with ML-DSA, so the prohibition against using
-authenticatedAttributes with module signing has to be removed.  The
-selected digest then applies only to the algorithm used to calculate the
-digest stored in the messageDigest attribute.
+Nit: Using the array_size() alias of size_mul() might be clearer in this
+context.
 
-The ML-DSA algorithm uses its own internal choice of digest (SHAKE256)
-without regard to what's specified in the CMS message.  This is, in theory,
-configurable, but there's currently no hook in the crypto_sig API to do
-that, though possibly it could be done by parameterising the name of the
-algorithm, e.g. ("mldsa87(sha512)").
+It looks ok to me in any case.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Eric Biggers <ebiggers@kernel.org>
-cc: Lukas Wunner <lukas@wunner.de>
-cc: Ignat Korchagin <ignat@cloudflare.com>
-cc: Stephan Mueller <smueller@chronox.de>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: keyrings@vger.kernel.org
-cc: linux-crypto@vger.kernel.org
----
- Documentation/admin-guide/module-signing.rst | 15 +++++------
- certs/Kconfig                                | 21 ++++++++++++++++
- certs/Makefile                               |  3 +++
- crypto/asymmetric_keys/pkcs7_verify.c        |  4 ---
- scripts/sign-file.c                          | 26 ++++++++++++++------
- 5 files changed, 50 insertions(+), 19 deletions(-)
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
 
-diff --git a/Documentation/admin-guide/module-signing.rst b/Documentation/admin-guide/module-signing.rst
-index a8667a777490..1a055c0b3356 100644
---- a/Documentation/admin-guide/module-signing.rst
-+++ b/Documentation/admin-guide/module-signing.rst
-@@ -28,10 +28,11 @@ trusted userspace bits.
- 
- This facility uses X.509 ITU-T standard certificates to encode the public keys
- involved.  The signatures are not themselves encoded in any industrial standard
--type.  The built-in facility currently only supports the RSA & NIST P-384 ECDSA
--public key signing standard (though it is pluggable and permits others to be
--used).  The possible hash algorithms that can be used are SHA-2 and SHA-3 of
--sizes 256, 384, and 512 (the algorithm is selected by data in the signature).
-+type.  The built-in facility currently only supports the RSA, NIST P-384 ECDSA
-+and NIST FIPS-204 ML-DSA (Dilithium) public key signing standards (though it is
-+pluggable and permits others to be used).  For RSA and ECDSA, the possible hash
-+algorithms that can be used are SHA-2 and SHA-3 of sizes 256, 384, and 512 (the
-+algorithm is selected by data in the signature); ML-DSA uses SHAKE256.
- 
- 
- ==========================
-@@ -146,9 +147,9 @@ into vmlinux) using parameters in the::
- 
- file (which is also generated if it does not already exist).
- 
--One can select between RSA (``MODULE_SIG_KEY_TYPE_RSA``) and ECDSA
--(``MODULE_SIG_KEY_TYPE_ECDSA``) to generate either RSA 4k or NIST
--P-384 keypair.
-+One can select between RSA (``MODULE_SIG_KEY_TYPE_RSA``), ECDSA
-+(``MODULE_SIG_KEY_TYPE_ECDSA``) and ML-DSA (``MODULE_SIG_KEY_TYPE_MLDSA_*``) to
-+generate an RSA 4k, a NIST P-384 keypair or an ML-DSA 44, 65 or 87 keypair.
- 
- It is strongly recommended that you provide your own x509.genkey file.
- 
-diff --git a/certs/Kconfig b/certs/Kconfig
-index 78307dc25559..94b086684d07 100644
---- a/certs/Kconfig
-+++ b/certs/Kconfig
-@@ -39,6 +39,27 @@ config MODULE_SIG_KEY_TYPE_ECDSA
- 	 Note: Remove all ECDSA signing keys, e.g. certs/signing_key.pem,
- 	 when falling back to building Linux 5.14 and older kernels.
- 
-+config MODULE_SIG_KEY_TYPE_MLDSA_44
-+	bool "ML-DSA (Dilithium) 44"
-+	select CRYPTO_MLDSA
-+	help
-+	  Use an ML-DSA (Dilithium) 44 key (NIST FIPS 204) for module signing
-+	  with a SHAKE256 'hash' of the authenticatedAttributes.
-+
-+config MODULE_SIG_KEY_TYPE_MLDSA_65
-+	bool "ML-DSA (Dilithium) 65"
-+	select CRYPTO_MLDSA
-+	help
-+	  Use an ML-DSA (Dilithium) 65 key (NIST FIPS 204) for module signing
-+	  with a SHAKE256 'hash' of the authenticatedAttributes.
-+
-+config MODULE_SIG_KEY_TYPE_MLDSA_87
-+	bool "ML-DSA (Dilithium) 87"
-+	select CRYPTO_MLDSA
-+	help
-+	  Use an ML-DSA (Dilithium) 87 key (NIST FIPS 204) for module signing
-+	  with a SHAKE256 'hash' of the authenticatedAttributes.
-+
- endchoice
- 
- config SYSTEM_TRUSTED_KEYRING
-diff --git a/certs/Makefile b/certs/Makefile
-index f6fa4d8d75e0..3ee1960f9f4a 100644
---- a/certs/Makefile
-+++ b/certs/Makefile
-@@ -43,6 +43,9 @@ targets += x509_certificate_list
- ifeq ($(CONFIG_MODULE_SIG_KEY),certs/signing_key.pem)
- 
- keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_ECDSA) := -newkey ec -pkeyopt ec_paramgen_curve:secp384r1
-+keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_MLDSA_44) := -newkey ml-dsa-44
-+keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_MLDSA_65) := -newkey ml-dsa-65
-+keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_MLDSA_87) := -newkey ml-dsa-87
- 
- quiet_cmd_gen_key = GENKEY  $@
-       cmd_gen_key = openssl req -new -nodes -utf8 -$(CONFIG_MODULE_SIG_HASH) -days 36500 \
-diff --git a/crypto/asymmetric_keys/pkcs7_verify.c b/crypto/asymmetric_keys/pkcs7_verify.c
-index 0f9f515b784d..f7ea1d41771d 100644
---- a/crypto/asymmetric_keys/pkcs7_verify.c
-+++ b/crypto/asymmetric_keys/pkcs7_verify.c
-@@ -424,10 +424,6 @@ int pkcs7_verify(struct pkcs7_message *pkcs7,
- 			pr_warn("Invalid module sig (not pkcs7-data)\n");
- 			return -EKEYREJECTED;
- 		}
--		if (pkcs7->have_authattrs) {
--			pr_warn("Invalid module sig (has authattrs)\n");
--			return -EKEYREJECTED;
--		}
- 		break;
- 	case VERIFYING_FIRMWARE_SIGNATURE:
- 		if (pkcs7->data_type != OID_data) {
-diff --git a/scripts/sign-file.c b/scripts/sign-file.c
-index 7070245edfc1..b726581075f9 100644
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -315,18 +315,28 @@ int main(int argc, char **argv)
- 		ERR(!digest_algo, "EVP_get_digestbyname");
- 
- #ifndef USE_PKCS7
-+
-+		unsigned int flags =
-+			CMS_NOCERTS |
-+			CMS_PARTIAL |
-+			CMS_BINARY |
-+			CMS_DETACHED |
-+			CMS_STREAM  |
-+			CMS_NOSMIMECAP |
-+			CMS_NO_SIGNING_TIME |
-+			use_keyid;
-+		if (!EVP_PKEY_is_a(private_key, "ML-DSA-44") &&
-+		    !EVP_PKEY_is_a(private_key, "ML-DSA-65") &&
-+		    !EVP_PKEY_is_a(private_key, "ML-DSA-87"))
-+			flags |= use_signed_attrs;
-+
- 		/* Load the signature message from the digest buffer. */
--		cms = CMS_sign(NULL, NULL, NULL, NULL,
--			       CMS_NOCERTS | CMS_PARTIAL | CMS_BINARY |
--			       CMS_DETACHED | CMS_STREAM);
-+		cms = CMS_sign(NULL, NULL, NULL, NULL, flags);
- 		ERR(!cms, "CMS_sign");
- 
--		ERR(!CMS_add1_signer(cms, x509, private_key, digest_algo,
--				     CMS_NOCERTS | CMS_BINARY |
--				     CMS_NOSMIMECAP | use_keyid |
--				     use_signed_attrs),
-+		ERR(!CMS_add1_signer(cms, x509, private_key, digest_algo, flags),
- 		    "CMS_add1_signer");
--		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) != 1,
-+		ERR(CMS_final(cms, bm, NULL, flags) != 1,
- 		    "CMS_final");
- 
- #else
-
+-- 
+Thanks,
+Petr
 
