@@ -1,77 +1,77 @@
-Return-Path: <linux-modules+bounces-5198-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5201-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DC44CDDF50
-	for <lists+linux-modules@lfdr.de>; Thu, 25 Dec 2025 18:09:57 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3AD7CDE0D2
+	for <lists+linux-modules@lfdr.de>; Thu, 25 Dec 2025 20:08:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 33DA2300C376
-	for <lists+linux-modules@lfdr.de>; Thu, 25 Dec 2025 17:09:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF1FA3009431
+	for <lists+linux-modules@lfdr.de>; Thu, 25 Dec 2025 19:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6C9C2798ED;
-	Thu, 25 Dec 2025 17:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13EAE2264B8;
+	Thu, 25 Dec 2025 19:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="icCFm5ez"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hDOLKro4"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2125625C80E
-	for <linux-modules@vger.kernel.org>; Thu, 25 Dec 2025 17:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EBD3A1E6D
+	for <linux-modules@vger.kernel.org>; Thu, 25 Dec 2025 19:08:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766682580; cv=none; b=TUOuU5xs6sqosRudWhL1p02xcgJvreQGaTS4mGKPCKlXzEpDu3RoNOqN4tYs8n25rRKJ3ZbyMPwhRAHDJl4fWbQSqCNTo+u4Gom5vhl2cDGLBNC8zfvSlcJjaTFvxbD6NAYKKsfpTweDX3ozLg3sUfJvtGBj6WjW0izw56NYOXg=
+	t=1766689701; cv=none; b=IqmHwmfrcLu5FcLu0Fim6Nmik0Tc5XcBlVcF9rZsqH6jYyAYqqYiNcr/IpGtR8213aqwokdVc0g9/LhxQvvZafR4MRUSgqySKJLq56QoSr7De0uHNW+mz4l/KZRuwgVjM/6R3Rsa7abq1kHdBoK2McYGnrQ0kAS9hu096DChabE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766682580; c=relaxed/simple;
-	bh=Y9lHrE5F2aj8aas4pRDKLNMxJ8UQSSadDNHEiSkndcQ=;
+	s=arc-20240116; t=1766689701; c=relaxed/simple;
+	bh=Sp3BBI7rqWS/x5u5n95rHXBvTYUWZEdDT2uy0cYwMU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwQrRM/ZazeXmVVTW9W9slkaFv3MPrSN73tX6/EAFiXglOojveCIceoo/YK5iCCqMRu42wT+ZJROJbLpBUutTF8bhI6//xddtvlxV8UhsGiw09beYhughVzST0aaApZJboEQr1qfh4GUA9w3bV6EvFMpeIlQY6aXXtSANMQF/JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=icCFm5ez; arc=none smtp.client-ip=74.125.224.53
+	 MIME-Version; b=H6n/jTQm1QJwvVjqtE4uRQoL3BnRTfQSDAoPAIffqyjqg/4pTdkG+bimbDEQoimj9lcwstYVvRnrZPDWYXCkkNSNNdGTSmRjjDHsaFMzEDQTovlihk1Pf3TEYFXyx+YnziH5VhPrQqz9KibwL3o4eCBxlrljNeRZu+P1fGOMLR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hDOLKro4; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6468f0d5b1cso2338958d50.1
-        for <linux-modules@vger.kernel.org>; Thu, 25 Dec 2025 09:09:37 -0800 (PST)
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4edb6e678ddso99176761cf.2
+        for <linux-modules@vger.kernel.org>; Thu, 25 Dec 2025 11:08:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766682577; x=1767287377; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766689698; x=1767294498; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Dc5Me+mE1rk9t6TSSnoEi9o5UAq5H187I9GSo5hasb4=;
-        b=icCFm5ezjqUJhtLQ3/yCvN9eESfX1JiER7BVXnZeHGpDu/eCBb9e9op0B7+xWUVx43
-         FUBMIOab++qyLGS/Ou3WF5dziCEhImhogCzgvEXQQixCbMQTR+OdE1tiWLMeqZtdEt7b
-         /dtudqsZxcvZta2IYWQDvx+knx4AJerqDWT0Dn1QclH61zZAQutBsmg/Y0ZZzmel6nQb
-         HPllx/XnlBzir/H5OvdiVGRSfPHXIlzgDVBZdyoZ/7awguytpU/OoyC8+IXiop+NiOSR
-         90UZgq7vSrOY5GNruxSqTit0CNiiH6tY3gvdPvALCtL2wGJ2DCd6ihwkEmJ33RmEsD+h
-         qH8w==
+        bh=hauBx7stO8fgVv7cwKU+lRmpmOfl414DpJwGxBenCpM=;
+        b=hDOLKro4qi0veM+aEdrwmznbpyYpMVq6KlFZkCu9yO5p7joAi50/7rWInim6uLZhe/
+         eLcltJV7SPHNa83lfWyFPdmKJ5IeMcH0dnmycQhvkx6lS6zlYrCHiXdeU8j4cm8raVOS
+         7qToj8uf3WykxMjy6PkP0cOVbp9iC0AOAGRkbRuYEjQFsQPLWC9I10WPRJ8b8Y7sA7Gh
+         TFj+Z1Ke9DnJqq18y2PHeTL+kxhsi4BbbelKy/ezVM2hmlQexrp/YBpmgeConeUWhid6
+         /jFiAw/EKf7uVZjAf0TZio5DE4wDQLIUJ4sVPd15lALgSyy1cdWp9crb0jaIZRG7GXNF
+         dblw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766682577; x=1767287377;
+        d=1e100.net; s=20230601; t=1766689698; x=1767294498;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Dc5Me+mE1rk9t6TSSnoEi9o5UAq5H187I9GSo5hasb4=;
-        b=qLA9szWNujyWlous3IZMj4MQrLbCeAo4A/hhI4E5/Okmv+bUBxaaCNK8wgZfHYmmIX
-         ZRFy2vON8s/1iq6W1pxx9a2uO+qS5z1gUYOcEHRWF+tbvgN2uINnXVkSvSxToDVeeime
-         glFc0SK8K2uMa50nBgGiE0wtrk6QClp5ucT8YsJeFv7VDSHYSIw6SwBqCkL9j2idA9W+
-         2Xr5CQ/vwtTrJvxLkT9TqANjUej5TC4HGiYBsdjhhlfRUhMFkNwjwAgnqaJrUko5qadg
-         4d3CQ1eiWF1UHB8k2wVacNuWgurhjGK6vqlBM+RIVN7IYrsOWzi8ZWGVq/PbF6/88qNu
-         ROIg==
-X-Forwarded-Encrypted: i=1; AJvYcCU4u9qj9cZHD1J7RSaZ1423eP/VZuaVVN1SFryZj0Th64WMj02A7+GNXxGwasrHJ72CvUWIMkl7yYHPQslE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4kYGHLNhl1pdmGl1kXZsC09ycVbHxG06B2rZwImHPuBZRMZFa
-	wVPzXljMmOj//+nuehCaIuvjn5J3g2W6D//2r6vxw+nn5YYcpvlLmzX/
-X-Gm-Gg: AY/fxX4mt+plLR7Tz5gGs+Bfd1DSTIGmVM6qPGE9snL+Ee/TbFCnz4gIOUlnJUFk3Hx
-	dp6Z0ltpI/nCVWpQm/JiQ/WgcdwlntV+ZsbfJKOtqO3O9gBJbNGChzF/Tv4M3IBarO66C3+BUnz
-	mA9bIk1Mxu70j+WqCD3ZiG/qIhR+liS913G8aOGJcK2RLNUzqlETTFZVFkHGONRyaQm3tRT80in
-	ML7CRqYa8jHu5FMZ0L5lE7UGHfXpUEvT6xv0owRWKHO04iS7AqyPQ7vPhkOc3y0s4EBSqjReku6
-	+ZqbU+OLeBDt5o7bVtRbDvMKqw6j6od88lxu5sMaC5PKOoNa1aLbYp9hbxpnpGWty/VgtkR24LG
-	1dim3B7CMNjr7z5Jnwe00G8wVgS6ot4ZYoqBa3zwqNe+41b2Emo7syHYBcc3iaA+asNfCmdLIla
-	WFNviuLcU=
-X-Google-Smtp-Source: AGHT+IF3pn2lAHgaG+6TAPCfe6GjTjYcrsSqlU3VOVIzxXfAGamdgIbuGhSoSIuBjHiFa2I0R1eJBQ==
-X-Received: by 2002:a05:690e:1502:b0:644:60d9:866b with SMTP id 956f58d0204a3-6466a9265a2mr13857881d50.92.1766682577038;
+        bh=hauBx7stO8fgVv7cwKU+lRmpmOfl414DpJwGxBenCpM=;
+        b=uJbVGGUzwMsVgTX9wMYRIto/HAUStHKC27SfhyHkW77lrMbXEdMy2sSwC1b18x/Cvn
+         2RMQamRg+gFjH4+1Ksr7KnuH6pLtwbDGoT+A+7RMcuWqbDXgtS8HpcXGDvsaA9euhuuX
+         25S88EDCgilrDdyjHz18Q23p8TZE7hYjMbS+CemT9cz0lTUeOaWvlfDTrzqsCIgwSIR5
+         Mw/WT7/gLcWGpsNfIBnrtKn6mGaKFLw/+DIVc0/yGkpdH8nbbJuwKzxcJpuKsRqHLVQ9
+         DIYou4sNK+FR7oiqaKcNXdX/qVuCVCXValLCD8diy7mghCioPXjJ9JBp08bt44x/fYN0
+         W25Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWpWjlRTaXHNZGl7M8g3SYvodgUs/oTz4+qcMAOMMQyBi3xqLWhuQVtdFEE9+wRbSVyqNxohabH1yij9DK/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yys32gy14TjHIRZ481Sq3gApPCDd1VR2iEz0mmOQv5GaFTn5jKG
+	lUVRY6M1J7b+Z3uAfCImEw0M7baAsPPS/MUiSWq2tqk3BqdHkHTka6UfXkp3kg==
+X-Gm-Gg: AY/fxX4LeXlm81b9RWh2QPbnh/LpXqNoSqqUxAGHgQLtgsem8sZd0U5DkqFj0SqCzcV
+	G/UotB0i04HjIG1Su/ezaxuFqJaiFOoy8dmg2oAHh/wroKhFB6YXfrEVKCpZzyOyLpzy5qkmurG
+	bliuiia3uHTTZWcyw0odcYlaxqb19ciBtj45iBeczssTvOTyL4FRVsvwabMruhUdrWjUS4TjuvB
+	e+MY0JikYvKtZHbLAnfhUBRcT/W+m3ftbTkaFglHYxXlcjl+bfP1BVVYBN9QCyebhHdjk5/d4V2
+	oqgUAmJgYjZfZ1EAm0O04e7KSlWnyx4M71OSdL+GBJvQQPzu0X4478K28U/I9MOUylfjAI2khLe
+	RHM6145NWKoBm/YC0Oba6J+qdOGCnxVxh2ox7Hrgnug3BIsLMg4hiXT3IrUKFmPEHjWwbAnr3zj
+	DI2NngrhA=
+X-Google-Smtp-Source: AGHT+IFOC5KnXE7Y/86OXEfn0VfROKTdlo6cIy7sSNHG4HuRQ93qgtI5LmuQjuxLc/KbIiLosqGOQg==
+X-Received: by 2002:a53:8592:0:b0:63f:ad6d:cbd5 with SMTP id 956f58d0204a3-6466a900e02mr12636421d50.60.1766682577930;
         Thu, 25 Dec 2025 09:09:37 -0800 (PST)
 Received: from localhost ([2601:346:0:79bd:5a70:118b:3656:4527])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6466a92186bsm9734975d50.12.2025.12.25.09.09.36
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6466a8bd6ffsm9803141d50.9.2025.12.25.09.09.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Dec 2025 09:09:36 -0800 (PST)
+        Thu, 25 Dec 2025 09:09:37 -0800 (PST)
 From: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
 To: Steven Rostedt <rostedt@goodmis.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
@@ -98,9 +98,9 @@ To: Steven Rostedt <rostedt@goodmis.org>,
 	linux-modules@vger.kernel.org,
 	linux-trace-kernel@vger.kernel.org
 Cc: "Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-Subject: [PATCH v4 4/7] kernel.h: include linux/instruction_pointer.h explicitly
-Date: Thu, 25 Dec 2025 12:09:26 -0500
-Message-ID: <20251225170930.1151781-5-yury.norov@gmail.com>
+Subject: [PATCH v4 5/7] tracing: Remove size parameter in __trace_puts()
+Date: Thu, 25 Dec 2025 12:09:27 -0500
+Message-ID: <20251225170930.1151781-6-yury.norov@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251225170930.1151781-1-yury.norov@gmail.com>
 References: <20251225170930.1151781-1-yury.norov@gmail.com>
@@ -112,39 +112,86 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In preparation for decoupling linux/instruction_pointer.h and
-linux/kernel.h, include instruction_pointer.h explicitly where needed.
+From: Steven Rostedt <rostedt@goodmis.org>
 
+The __trace_puts() function takes a string pointer and the size of the
+string itself. All users currently simply pass in the strlen() of the
+string it is also passing in. There's no reason to pass in the size.
+Instead have the __trace_puts() function do the strlen() within the
+function itself.
+
+This fixes a header recursion issue where using strlen() in the macro
+calling __trace_puts() requires adding #include <linux/string.h> in order
+to use strlen(). Removing the use of strlen() from the header fixes the
+recursion issue.
+
+Link: https://lore.kernel.org/all/aUN8Hm377C5A0ILX@yury/
+
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 ---
- arch/s390/include/asm/processor.h | 1 +
- include/linux/ww_mutex.h          | 1 +
- 2 files changed, 2 insertions(+)
+ include/linux/kernel.h | 4 ++--
+ kernel/trace/trace.c   | 7 +++----
+ kernel/trace/trace.h   | 2 +-
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/arch/s390/include/asm/processor.h b/arch/s390/include/asm/processor.h
-index 3affba95845b..cc187afa07b3 100644
---- a/arch/s390/include/asm/processor.h
-+++ b/arch/s390/include/asm/processor.h
-@@ -31,6 +31,7 @@
- #include <linux/cpumask.h>
- #include <linux/linkage.h>
- #include <linux/irqflags.h>
-+#include <linux/instruction_pointer.h>
- #include <linux/bitops.h>
- #include <asm/fpu-types.h>
- #include <asm/cpu.h>
-diff --git a/include/linux/ww_mutex.h b/include/linux/ww_mutex.h
-index 45ff6f7a872b..9b30fa2ec508 100644
---- a/include/linux/ww_mutex.h
-+++ b/include/linux/ww_mutex.h
-@@ -17,6 +17,7 @@
- #ifndef __LINUX_WW_MUTEX_H
- #define __LINUX_WW_MUTEX_H
+diff --git a/include/linux/kernel.h b/include/linux/kernel.h
+index 5b879bfea948..4ee48fb10dec 100644
+--- a/include/linux/kernel.h
++++ b/include/linux/kernel.h
+@@ -329,10 +329,10 @@ int __trace_printk(unsigned long ip, const char *fmt, ...);
+ 	if (__builtin_constant_p(str))					\
+ 		__trace_bputs(_THIS_IP_, trace_printk_fmt);		\
+ 	else								\
+-		__trace_puts(_THIS_IP_, str, strlen(str));		\
++		__trace_puts(_THIS_IP_, str);				\
+ })
+ extern int __trace_bputs(unsigned long ip, const char *str);
+-extern int __trace_puts(unsigned long ip, const char *str, int size);
++extern int __trace_puts(unsigned long ip, const char *str);
  
-+#include <linux/instruction_pointer.h>
- #include <linux/mutex.h>
- #include <linux/rtmutex.h>
+ extern void trace_dump_stack(int skip);
  
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 6f2148df14d9..57f24e2cd19c 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1178,11 +1178,10 @@ EXPORT_SYMBOL_GPL(__trace_array_puts);
+  * __trace_puts - write a constant string into the trace buffer.
+  * @ip:	   The address of the caller
+  * @str:   The constant string to write
+- * @size:  The size of the string.
+  */
+-int __trace_puts(unsigned long ip, const char *str, int size)
++int __trace_puts(unsigned long ip, const char *str)
+ {
+-	return __trace_array_puts(printk_trace, ip, str, size);
++	return __trace_array_puts(printk_trace, ip, str, strlen(str));
+ }
+ EXPORT_SYMBOL_GPL(__trace_puts);
+ 
+@@ -1201,7 +1200,7 @@ int __trace_bputs(unsigned long ip, const char *str)
+ 	int size = sizeof(struct bputs_entry);
+ 
+ 	if (!printk_binsafe(tr))
+-		return __trace_puts(ip, str, strlen(str));
++		return __trace_puts(ip, str);
+ 
+ 	if (!(tr->trace_flags & TRACE_ITER(PRINTK)))
+ 		return 0;
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index b6d42fe06115..de4e6713b84e 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -2116,7 +2116,7 @@ extern void tracing_log_err(struct trace_array *tr,
+  * about performance). The internal_trace_puts() is for such
+  * a purpose.
+  */
+-#define internal_trace_puts(str) __trace_puts(_THIS_IP_, str, strlen(str))
++#define internal_trace_puts(str) __trace_puts(_THIS_IP_, str)
+ 
+ #undef FTRACE_ENTRY
+ #define FTRACE_ENTRY(call, struct_name, id, tstruct, print)	\
 -- 
 2.43.0
 
