@@ -1,355 +1,539 @@
-Return-Path: <linux-modules+bounces-5298-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5300-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4A1CCFE474
-	for <lists+linux-modules@lfdr.de>; Wed, 07 Jan 2026 15:26:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7AEBCFEF55
+	for <lists+linux-modules@lfdr.de>; Wed, 07 Jan 2026 17:54:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3C570300428E
-	for <lists+linux-modules@lfdr.de>; Wed,  7 Jan 2026 14:26:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 49DFD3470F92
+	for <lists+linux-modules@lfdr.de>; Wed,  7 Jan 2026 16:44:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12D0B3451BD;
-	Wed,  7 Jan 2026 14:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CCFE37D1C0;
+	Wed,  7 Jan 2026 16:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b="J6KL3eXy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTYoc3MR"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2283446C4
-	for <linux-modules@vger.kernel.org>; Wed,  7 Jan 2026 14:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6F339B488;
+	Wed,  7 Jan 2026 16:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767795855; cv=none; b=tpEJVZjLWZy72dCBgyMwI8EGDFK1DKVlpdtFNAn5rH1UTF1wUlSCL2oDeQoCcWNgzbr0zjZYwe+4/bXtJZF5hODOPl3AyWQOJzMFk1XZocyRTap8LbT20T/aNo3LmGW9DIrwLDZ+ZJlR/HY/8gdwdmhNk1lNKI4zYvTe7LOTClA=
+	t=1767803420; cv=none; b=BP9AodwF1GeIx5l17qYpTUatMBBzqmoFRmTTBvoxpB5imXwUVbj+PqId9yC02gSzbcjb+34DIZ3uYAYnMfCo2rad13NTFjKzOSxyrOgGXJtcB4PKBjoTkQwd+LRTI2LOv6F1LTJy6Ifq2PYSBdb10PqHJMLcpZZzpIjgbW3PkBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767795855; c=relaxed/simple;
-	bh=1NyDTV+QeKS+GoljArocQbp81Y7Q+EJ7UIi07NAHbi8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=apUKcxXEHMk0xpIUEz30RywdoBmxV1dmCMNEA1JltDPLWlERj5qFMScf/6F9ykqof+/zZinTuSW3yWFV1kj4hE54VI31SHSWQh8Yrq+KrUB2nL5ybsCYUEhH58YQshCOKL5jdg3gYV/V/+eyYOHmIPw8re6TQj00GFOh+HvGvJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com; spf=fail smtp.mailfrom=cloudflare.com; dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b=J6KL3eXy; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=cloudflare.com
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59583505988so1318201e87.1
-        for <linux-modules@vger.kernel.org>; Wed, 07 Jan 2026 06:24:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudflare.com; s=google09082023; t=1767795851; x=1768400651; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nuwWbehwvV7avh9lROjzqp+ZoFWxp7GeiaNyFlNZXIc=;
-        b=J6KL3eXyxhWVq0notlBBSywsHua2pZ1GYRSA4RH4pU8VKeUN9ANnfisgHF5uFw6AAN
-         lDt7lnmVjyRzsugcio0h6/CkMKee7hOHNGNmh0Y94io7W1YQ5l082J2RiPjBqL8RLy8w
-         3XmKpDLZsZMMmz24HwEu2gY0MCaTDA8AnQeoJCAjmBEu/efDWl6BRfmFowgPpGWao3XD
-         gO0xLnpJ4GZz50XOEVfs95CL5qC7d2KPIIDiXo4i9Z5mVNxdcWNhk05wfVH/H5xGVLWJ
-         rdVJe1ePw3sye2MVQHKXu7sSZ25H6kmnNq8DryYJ1eELUX5MSSO7NrLB0WNeqT+/j80Z
-         WsUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767795851; x=1768400651;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nuwWbehwvV7avh9lROjzqp+ZoFWxp7GeiaNyFlNZXIc=;
-        b=I7VJUkL9qcOOaxq6/ForaP+OMQEEAhkhTGAM5SVK9gccCW+3KueAtdFUyg1I+uFj5O
-         K8JJWDtDeUkU+ql976o1EjoPVc2LO22o22jHMUd00iw8iaCySVDN0PzhbW1uo1B5DdG9
-         Eh3AhLTW+2y1KRWpYkHzM8vVghVo4CzfMY4IbrkNNX298ESProgDj83lOF3J695Uvl3C
-         S1wXHK+LZ3sdP1p7S3e2GMoO5osZJx9ySoXz+aW5u49iBFSkuXVLWTBbsQDZbrmOfLeb
-         /OdHajcMD+4PhUE1NbIxouR/Ig+SUgh0w/ynzwTAI0g8p6QS/jqRVHXgnOK+UcUmZyuX
-         2J8A==
-X-Forwarded-Encrypted: i=1; AJvYcCWsFmlYqIhkA3PWlx2amy0TcN0XGXJMA6mtBIu77AlviNcdL7Ws6NyUQj+dEv4z+hRY15tj220SON1Y4v2Y@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwmdAIw6Za/URjNywyh2TAjBhxACDZ0kEbIDeVrLTGmWWc+kyI
-	19zEVVk5RgO6EY4oe5P+rWgHPj0sgJ5J+X28iJkbgN+8uVDCRQEAZHo7qvgm6qDYxzV6Vxbb3Hb
-	sGDMdThKZpFBP/uylGH50DGhw/FdumkbVDb1s1rwOyg==
-X-Gm-Gg: AY/fxX66N2qAYnBPELFKld77/t1VR4FJuNwW8Z56kImgHsc2MrTXYb27B0Ns1FvEIiJ
-	3SrC4w3oRvgTX9QwTAhRzL0dI8lqZul7NjurPg4fuI4aCkDDWs/iwEM8z858kqnyPi0hHkOiYle
-	ctvd+1Ct+/4f3kOAXkgnXbkPN46UnhU6edX+YZyLWbEdJKLnJHuAqfC7y6k9NHBRRL0O1mm0H1F
-	z54J19Z6g9MYv9EdnJLU3gNA7GQfT4BMK9GYOgd7ebla9X3kPklMlMFNrdqYZptka/+jNQPXxid
-	9ILPTpK2p7gTYw==
-X-Google-Smtp-Source: AGHT+IHdSPcZIvSn6a8aPJJ8FK2xjEqy8Ke28u5UZ+8XEpc0l5rOwf+iWQZ0EBNd9iJyMo+KwuhLZJOhbTPAbKfw94I=
-X-Received: by 2002:a05:6512:3ba7:b0:595:9195:338f with SMTP id
- 2adb3069b0e04-59b6eb6b29dmr885391e87.23.1767795850606; Wed, 07 Jan 2026
- 06:24:10 -0800 (PST)
+	s=arc-20240116; t=1767803420; c=relaxed/simple;
+	bh=g1xdWybaHzatWpQm2xyOQnEhqq5D9ySHbjOF55t+a0s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=RB4V1bdTZJDaYUfrn4TgQj4aWNZewc5KKry6RiBuonrDKMIvRDNhEh7IDwxp80cnNmEoB36Jbl+yKllDDA7JGO2OBkeeG7rxT1/PZ1GqAF3G4kaWfCdbpbEPwNnlkXUZ+CNjIUGQxqyPvNV1nAOatpxBTmqt+fN6pLjXzcz5/i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTYoc3MR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE7AC4CEF1;
+	Wed,  7 Jan 2026 16:30:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767803418;
+	bh=g1xdWybaHzatWpQm2xyOQnEhqq5D9ySHbjOF55t+a0s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To:From;
+	b=XTYoc3MRPEQZ9P6CYqxDhwUWgklKacTmua9Dem1TT72+kp0jsaZ1Odf9YNYrChTH9
+	 vvFrnH1rnQ5lm/okjWjYtYHMCOkq5dvnE1nHeZVuQX26hKmhltzLg2xN8Xnx/qneEw
+	 Bc6lay3HRJYcTkfE5jOcRchG6E/Hf2mRnIWnLNcZl7idaoCUm3pOPJhZZQZoDTS3bi
+	 MGu98b4gTNNbF5nGlKQ1aZLrV4VGW16nautruOdkQmOQxg37bYCuzq5fBHmL0MAbCw
+	 2uo79v3Wwnc+ZfhJ27lfdH/YT1sTAI7C9F8nFIu6DCZrJ/1d5T4Kkf05TQtnR2gKcJ
+	 a8+NvVZqrh2Sw==
+From: Gary Guo <gary@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Rae Moar <raemoar63@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Tamir Duberstein <tamird@gmail.com>,
+	Igor Korotin <igor.korotin.linux@gmail.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: rust-for-linux@vger.kernel.org,
+	Guilherme Giacomo Simoes <trintaeoitogc@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com,
+	linux-modules@vger.kernel.org
+Subject: [PATCH v2 02/11] rust: macros: use `quote!` from vendored crate
+Date: Wed,  7 Jan 2026 16:15:41 +0000
+Message-ID: <20260107161729.3855851-3-gary@kernel.org>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260107161729.3855851-1-gary@kernel.org>
+References: <20260107161729.3855851-1-gary@kernel.org>
+Reply-To: Gary Guo <gary@garyguo.net>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260105152145.1801972-1-dhowells@redhat.com> <20260105152145.1801972-6-dhowells@redhat.com>
-In-Reply-To: <20260105152145.1801972-6-dhowells@redhat.com>
-From: Ignat Korchagin <ignat@cloudflare.com>
-Date: Wed, 7 Jan 2026 14:23:58 +0000
-X-Gm-Features: AQt7F2oANTpmBIEId1fXP6-7B2OlGJuWFeUPHu3yiPwPtiGF-_xCSvXRgOafBRg
-Message-ID: <CALrw=nGjpmPh6YNPJf-=0P5=RVs+zWz5cza4xrm-AKK3VDkOng@mail.gmail.com>
-Subject: Re: [PATCH v11 5/8] crypto: Add supplementary info param to
- asymmetric key signature verification
-To: David Howells <dhowells@redhat.com>
-Cc: Lukas Wunner <lukas@wunner.de>, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, Eric Biggers <ebiggers@kernel.org>, 
-	Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
-	Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	"Jason A . Donenfeld" <Jason@zx2c4.com>, Ard Biesheuvel <ardb@kernel.org>, Stephan Mueller <smueller@chronox.de>, 
-	linux-crypto@vger.kernel.org, keyrings@vger.kernel.org, 
-	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	"David S. Miller" <davem@davemloft.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 5, 2026 at 3:22=E2=80=AFPM David Howells <dhowells@redhat.com> =
-wrote:
->
-> Add a supplementary information parameter to the asymmetric key signature
-> verification API, in particular crypto_sig_verify() and sig_alg::verify.
-> This takes the form of a printable string containing of key=3Dval element=
-s.
->
-> This is needed as some algorithms require additional metadata
-> (e.g. RSASSA-PSS) and this extra metadata is included in the X.509
-> certificates and PKCS#7 messages.  Furthermore, keyctl(KEYCTL_PKEY_VERIFY=
-)
-> already allows for this to be passed to the kernel, as do the _SIGN,
-> _ENCRYPT and _DECRYPT keyctls.
->
-> Signed-off-by: David Howells <dhowells@redhat.com>
-> cc: Herbert Xu <herbert@gondor.apana.org.au>
-> cc: "David S. Miller" <davem@davemloft.net>
-> cc: Lukas Wunner <lukas@wunner.de>
-> cc: Ignat Korchagin <ignat@cloudflare.com>
-> cc: keyrings@vger.kernel.org
-> cc: linux-crypto@vger.kernel.org
-> ---
->  crypto/asymmetric_keys/asymmetric_type.c | 1 +
->  crypto/asymmetric_keys/public_key.c      | 2 +-
->  crypto/asymmetric_keys/signature.c       | 1 +
->  crypto/ecdsa-p1363.c                     | 5 +++--
->  crypto/ecdsa-x962.c                      | 5 +++--
->  crypto/ecdsa.c                           | 3 ++-
->  crypto/ecrdsa.c                          | 3 ++-
->  crypto/mldsa.c                           | 3 ++-
->  crypto/rsassa-pkcs1.c                    | 3 ++-
->  crypto/sig.c                             | 3 ++-
->  include/crypto/public_key.h              | 1 +
->  include/crypto/sig.h                     | 9 ++++++---
->  12 files changed, 26 insertions(+), 13 deletions(-)
->
-> diff --git a/crypto/asymmetric_keys/asymmetric_type.c b/crypto/asymmetric=
-_keys/asymmetric_type.c
-> index 348966ea2175..dad4f0edfa25 100644
-> --- a/crypto/asymmetric_keys/asymmetric_type.c
-> +++ b/crypto/asymmetric_keys/asymmetric_type.c
-> @@ -596,6 +596,7 @@ static int asymmetric_key_verify_signature(struct ker=
-nel_pkey_params *params,
->                 .digest_size    =3D params->in_len,
->                 .encoding       =3D params->encoding,
->                 .hash_algo      =3D params->hash_algo,
-> +               .info           =3D params->info,
->                 .digest         =3D (void *)in,
->                 .s              =3D (void *)in2,
->         };
-> diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys=
-/public_key.c
-> index ed6b4b5ae4ef..61dc4f626620 100644
-> --- a/crypto/asymmetric_keys/public_key.c
-> +++ b/crypto/asymmetric_keys/public_key.c
-> @@ -433,7 +433,7 @@ int public_key_verify_signature(const struct public_k=
-ey *pkey,
->                 goto error_free_key;
->
->         ret =3D crypto_sig_verify(tfm, sig->s, sig->s_size,
-> -                               sig->digest, sig->digest_size);
-> +                               sig->digest, sig->digest_size, sig->info)=
-;
->
->  error_free_key:
->         kfree_sensitive(key);
-> diff --git a/crypto/asymmetric_keys/signature.c b/crypto/asymmetric_keys/=
-signature.c
-> index 041d04b5c953..26c0c0112ac4 100644
-> --- a/crypto/asymmetric_keys/signature.c
-> +++ b/crypto/asymmetric_keys/signature.c
-> @@ -29,6 +29,7 @@ void public_key_signature_free(struct public_key_signat=
-ure *sig)
->                         kfree(sig->auth_ids[i]);
->                 kfree(sig->s);
->                 kfree(sig->digest);
-> +               kfree(sig->info);
->                 kfree(sig);
->         }
->  }
-> diff --git a/crypto/ecdsa-p1363.c b/crypto/ecdsa-p1363.c
-> index e0c55c64711c..fa987dba1213 100644
-> --- a/crypto/ecdsa-p1363.c
-> +++ b/crypto/ecdsa-p1363.c
-> @@ -18,7 +18,8 @@ struct ecdsa_p1363_ctx {
->
->  static int ecdsa_p1363_verify(struct crypto_sig *tfm,
->                               const void *src, unsigned int slen,
-> -                             const void *digest, unsigned int dlen)
-> +                             const void *digest, unsigned int dlen,
-> +                             const char *info)
->  {
->         struct ecdsa_p1363_ctx *ctx =3D crypto_sig_ctx(tfm);
->         unsigned int keylen =3D DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx-=
->child),
-> @@ -32,7 +33,7 @@ static int ecdsa_p1363_verify(struct crypto_sig *tfm,
->         ecc_digits_from_bytes(src, keylen, sig.r, ndigits);
->         ecc_digits_from_bytes(src + keylen, keylen, sig.s, ndigits);
->
-> -       return crypto_sig_verify(ctx->child, &sig, sizeof(sig), digest, d=
-len);
-> +       return crypto_sig_verify(ctx->child, &sig, sizeof(sig), digest, d=
-len, info);
->  }
->
->  static unsigned int ecdsa_p1363_key_size(struct crypto_sig *tfm)
-> diff --git a/crypto/ecdsa-x962.c b/crypto/ecdsa-x962.c
-> index ee71594d10a0..5d7f1078989c 100644
-> --- a/crypto/ecdsa-x962.c
-> +++ b/crypto/ecdsa-x962.c
-> @@ -75,7 +75,8 @@ int ecdsa_get_signature_s(void *context, size_t hdrlen,=
- unsigned char tag,
->
->  static int ecdsa_x962_verify(struct crypto_sig *tfm,
->                              const void *src, unsigned int slen,
-> -                            const void *digest, unsigned int dlen)
-> +                            const void *digest, unsigned int dlen,
-> +                            const char *info)
->  {
->         struct ecdsa_x962_ctx *ctx =3D crypto_sig_ctx(tfm);
->         struct ecdsa_x962_signature_ctx sig_ctx;
-> @@ -89,7 +90,7 @@ static int ecdsa_x962_verify(struct crypto_sig *tfm,
->                 return err;
->
->         return crypto_sig_verify(ctx->child, &sig_ctx.sig, sizeof(sig_ctx=
-.sig),
-> -                                digest, dlen);
-> +                                digest, dlen, info);
->  }
->
->  static unsigned int ecdsa_x962_key_size(struct crypto_sig *tfm)
-> diff --git a/crypto/ecdsa.c b/crypto/ecdsa.c
-> index ce8e4364842f..144fd6b9168b 100644
-> --- a/crypto/ecdsa.c
-> +++ b/crypto/ecdsa.c
-> @@ -65,7 +65,8 @@ static int _ecdsa_verify(struct ecc_ctx *ctx, const u64=
- *hash, const u64 *r, con
->   */
->  static int ecdsa_verify(struct crypto_sig *tfm,
->                         const void *src, unsigned int slen,
-> -                       const void *digest, unsigned int dlen)
-> +                       const void *digest, unsigned int dlen,
-> +                       const char *info)
->  {
->         struct ecc_ctx *ctx =3D crypto_sig_ctx(tfm);
->         size_t bufsize =3D ctx->curve->g.ndigits * sizeof(u64);
-> diff --git a/crypto/ecrdsa.c b/crypto/ecrdsa.c
-> index 2c0602f0cd40..59f2d5bb3be4 100644
-> --- a/crypto/ecrdsa.c
-> +++ b/crypto/ecrdsa.c
-> @@ -69,7 +69,8 @@ static const struct ecc_curve *get_curve_by_oid(enum OI=
-D oid)
->
->  static int ecrdsa_verify(struct crypto_sig *tfm,
->                          const void *src, unsigned int slen,
-> -                        const void *digest, unsigned int dlen)
-> +                        const void *digest, unsigned int dlen,
-> +                        const char *info)
->  {
->         struct ecrdsa_ctx *ctx =3D crypto_sig_ctx(tfm);
->         unsigned int ndigits =3D dlen / sizeof(u64);
-> diff --git a/crypto/mldsa.c b/crypto/mldsa.c
-> index 2146c774b5ca..ba071d030ab0 100644
-> --- a/crypto/mldsa.c
-> +++ b/crypto/mldsa.c
-> @@ -25,7 +25,8 @@ static int crypto_mldsa_sign(struct crypto_sig *tfm,
->
->  static int crypto_mldsa_verify(struct crypto_sig *tfm,
->                                const void *sig, unsigned int sig_len,
-> -                              const void *msg, unsigned int msg_len)
-> +                              const void *msg, unsigned int msg_len,
-> +                              const char *info)
->  {
->         const struct crypto_mldsa_ctx *ctx =3D crypto_sig_ctx(tfm);
->
-> diff --git a/crypto/rsassa-pkcs1.c b/crypto/rsassa-pkcs1.c
-> index 94fa5e9600e7..6283050e609a 100644
-> --- a/crypto/rsassa-pkcs1.c
-> +++ b/crypto/rsassa-pkcs1.c
-> @@ -215,7 +215,8 @@ static int rsassa_pkcs1_sign(struct crypto_sig *tfm,
->
->  static int rsassa_pkcs1_verify(struct crypto_sig *tfm,
->                                const void *src, unsigned int slen,
-> -                              const void *digest, unsigned int dlen)
-> +                              const void *digest, unsigned int dlen,
-> +                              const char *info)
->  {
->         struct sig_instance *inst =3D sig_alg_instance(tfm);
->         struct rsassa_pkcs1_inst_ctx *ictx =3D sig_instance_ctx(inst);
-> diff --git a/crypto/sig.c b/crypto/sig.c
-> index beba745b6405..c56fea3a53ae 100644
-> --- a/crypto/sig.c
-> +++ b/crypto/sig.c
-> @@ -92,7 +92,8 @@ static int sig_default_sign(struct crypto_sig *tfm,
->
->  static int sig_default_verify(struct crypto_sig *tfm,
->                               const void *src, unsigned int slen,
-> -                             const void *dst, unsigned int dlen)
-> +                             const void *dst, unsigned int dlen,
-> +                             const char *info)
->  {
->         return -ENOSYS;
->  }
-> diff --git a/include/crypto/public_key.h b/include/crypto/public_key.h
-> index e4ec8003a3a4..1e9a1e4e9916 100644
-> --- a/include/crypto/public_key.h
-> +++ b/include/crypto/public_key.h
-> @@ -47,6 +47,7 @@ struct public_key_signature {
->         u32 s_size;             /* Number of bytes in signature */
->         u32 digest_size;        /* Number of bytes in digest */
->         bool algo_does_hash;    /* Public key algo does its own hashing *=
-/
-> +       char *info;             /* Supplementary parameters */
->         const char *pkey_algo;
->         const char *hash_algo;
->         const char *encoding;
-> diff --git a/include/crypto/sig.h b/include/crypto/sig.h
-> index fa6dafafab3f..885fa6487780 100644
-> --- a/include/crypto/sig.h
-> +++ b/include/crypto/sig.h
-> @@ -56,7 +56,8 @@ struct sig_alg {
->                     void *dst, unsigned int dlen);
->         int (*verify)(struct crypto_sig *tfm,
->                       const void *src, unsigned int slen,
-> -                     const void *digest, unsigned int dlen);
-> +                     const void *digest, unsigned int dlen,
-> +                     const char *info);
->         int (*set_pub_key)(struct crypto_sig *tfm,
->                            const void *key, unsigned int keylen);
->         int (*set_priv_key)(struct crypto_sig *tfm,
-> @@ -209,16 +210,18 @@ static inline int crypto_sig_sign(struct crypto_sig=
- *tfm,
->   * @slen:      source length
->   * @digest:    digest
->   * @dlen:      digest length
-> + * @info:      Additional parameters as a set of k=3Dv
->   *
->   * Return: zero on verification success; error code in case of error.
->   */
->  static inline int crypto_sig_verify(struct crypto_sig *tfm,
->                                     const void *src, unsigned int slen,
-> -                                   const void *digest, unsigned int dlen=
-)
-> +                                   const void *digest, unsigned int dlen=
-,
-> +                                   const char *info)
->  {
->         struct sig_alg *alg =3D crypto_sig_alg(tfm);
->
-> -       return alg->verify(tfm, src, slen, digest, dlen);
-> +       return alg->verify(tfm, src, slen, digest, dlen, info);
->  }
->
->  /**
->
+From: Gary Guo <gary@garyguo.net>
 
-Reviewed-by: Ignat Korchagin <ignat@cloudflare.com>
+With `quote` crate now vendored in the kernel, we can remove our custom
+`quote!` macro implementation and just rely on that crate instead.
+
+The `quote` crate uses types from the `proc-macro2` library so we also
+update to use that, and perform conversion in the top-level lib.rs.
+
+Clippy complains about unnecessary `.to_string()` as `proc-macro2`
+provides additional `PartialEq` impl, so they are removed.
+
+Reviewed-by: Tamir Duberstein <tamird@gmail.com>
+Reviewed-by: Benno Lossin <lossin@kernel.org>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+---
+ rust/macros/concat_idents.rs |   2 +-
+ rust/macros/export.rs        |   4 +-
+ rust/macros/fmt.rs           |   4 +-
+ rust/macros/helpers.rs       |   4 +-
+ rust/macros/kunit.rs         |   5 +-
+ rust/macros/lib.rs           |  21 ++--
+ rust/macros/module.rs        |   6 +-
+ rust/macros/paste.rs         |   2 +-
+ rust/macros/quote.rs         | 182 -----------------------------------
+ rust/macros/vtable.rs        |   7 +-
+ 10 files changed, 32 insertions(+), 205 deletions(-)
+ delete mode 100644 rust/macros/quote.rs
+
+diff --git a/rust/macros/concat_idents.rs b/rust/macros/concat_idents.rs
+index 7e4b450f3a507..12cb231c3d715 100644
+--- a/rust/macros/concat_idents.rs
++++ b/rust/macros/concat_idents.rs
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-use proc_macro::{token_stream, Ident, TokenStream, TokenTree};
++use proc_macro2::{token_stream, Ident, TokenStream, TokenTree};
+ 
+ use crate::helpers::expect_punct;
+ 
+diff --git a/rust/macros/export.rs b/rust/macros/export.rs
+index a08f6337d5c8d..92d9b30971929 100644
+--- a/rust/macros/export.rs
++++ b/rust/macros/export.rs
+@@ -1,7 +1,9 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
++use proc_macro2::TokenStream;
++use quote::quote;
++
+ use crate::helpers::function_name;
+-use proc_macro::TokenStream;
+ 
+ /// Please see [`crate::export`] for documentation.
+ pub(crate) fn export(_attr: TokenStream, ts: TokenStream) -> TokenStream {
+diff --git a/rust/macros/fmt.rs b/rust/macros/fmt.rs
+index 2f4b9f6e22110..19f709262552b 100644
+--- a/rust/macros/fmt.rs
++++ b/rust/macros/fmt.rs
+@@ -1,8 +1,10 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-use proc_macro::{Ident, TokenStream, TokenTree};
+ use std::collections::BTreeSet;
+ 
++use proc_macro2::{Ident, TokenStream, TokenTree};
++use quote::quote_spanned;
++
+ /// Please see [`crate::fmt`] for documentation.
+ pub(crate) fn fmt(input: TokenStream) -> TokenStream {
+     let mut input = input.into_iter();
+diff --git a/rust/macros/helpers.rs b/rust/macros/helpers.rs
+index 365d7eb499c08..13fafaba12261 100644
+--- a/rust/macros/helpers.rs
++++ b/rust/macros/helpers.rs
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-use proc_macro::{token_stream, Group, Ident, TokenStream, TokenTree};
++use proc_macro2::{token_stream, Group, Ident, TokenStream, TokenTree};
+ 
+ pub(crate) fn try_ident(it: &mut token_stream::IntoIter) -> Option<String> {
+     if let Some(TokenTree::Ident(ident)) = it.next() {
+@@ -86,7 +86,7 @@ pub(crate) fn function_name(input: TokenStream) -> Option<Ident> {
+     let mut input = input.into_iter();
+     while let Some(token) = input.next() {
+         match token {
+-            TokenTree::Ident(i) if i.to_string() == "fn" => {
++            TokenTree::Ident(i) if i == "fn" => {
+                 if let Some(TokenTree::Ident(i)) = input.next() {
+                     return Some(i);
+                 }
+diff --git a/rust/macros/kunit.rs b/rust/macros/kunit.rs
+index b395bb0536959..5cd6aa5eef07d 100644
+--- a/rust/macros/kunit.rs
++++ b/rust/macros/kunit.rs
+@@ -4,10 +4,11 @@
+ //!
+ //! Copyright (c) 2023 José Expósito <jose.exposito89@gmail.com>
+ 
+-use proc_macro::{Delimiter, Group, TokenStream, TokenTree};
+ use std::collections::HashMap;
+ use std::fmt::Write;
+ 
++use proc_macro2::{Delimiter, Group, TokenStream, TokenTree};
++
+ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
+     let attr = attr.to_string();
+ 
+@@ -59,7 +60,7 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
+                 }
+                 _ => (),
+             },
+-            TokenTree::Ident(i) if i.to_string() == "fn" && attributes.contains_key("test") => {
++            TokenTree::Ident(i) if i == "fn" && attributes.contains_key("test") => {
+                 if let Some(TokenTree::Ident(test_name)) = body_it.next() {
+                     tests.push((test_name, attributes.remove("cfg").unwrap_or_default()))
+                 }
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index b38002151871a..945982c21f703 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -11,8 +11,6 @@
+ // to avoid depending on the full `proc_macro_span` on Rust >= 1.88.0.
+ #![cfg_attr(not(CONFIG_RUSTC_HAS_SPAN_FILE), feature(proc_macro_span))]
+ 
+-#[macro_use]
+-mod quote;
+ mod concat_idents;
+ mod export;
+ mod fmt;
+@@ -132,7 +130,7 @@
+ ///     the kernel module.
+ #[proc_macro]
+ pub fn module(ts: TokenStream) -> TokenStream {
+-    module::module(ts)
++    module::module(ts.into()).into()
+ }
+ 
+ /// Declares or implements a vtable trait.
+@@ -207,7 +205,7 @@ pub fn module(ts: TokenStream) -> TokenStream {
+ /// [`kernel::error::VTABLE_DEFAULT_ERROR`]: ../kernel/error/constant.VTABLE_DEFAULT_ERROR.html
+ #[proc_macro_attribute]
+ pub fn vtable(attr: TokenStream, ts: TokenStream) -> TokenStream {
+-    vtable::vtable(attr, ts)
++    vtable::vtable(attr.into(), ts.into()).into()
+ }
+ 
+ /// Export a function so that C code can call it via a header file.
+@@ -230,7 +228,7 @@ pub fn vtable(attr: TokenStream, ts: TokenStream) -> TokenStream {
+ /// automatically exported with `EXPORT_SYMBOL_GPL`.
+ #[proc_macro_attribute]
+ pub fn export(attr: TokenStream, ts: TokenStream) -> TokenStream {
+-    export::export(attr, ts)
++    export::export(attr.into(), ts.into()).into()
+ }
+ 
+ /// Like [`core::format_args!`], but automatically wraps arguments in [`kernel::fmt::Adapter`].
+@@ -248,7 +246,7 @@ pub fn export(attr: TokenStream, ts: TokenStream) -> TokenStream {
+ /// [`pr_info!`]: ../kernel/macro.pr_info.html
+ #[proc_macro]
+ pub fn fmt(input: TokenStream) -> TokenStream {
+-    fmt::fmt(input)
++    fmt::fmt(input.into()).into()
+ }
+ 
+ /// Concatenate two identifiers.
+@@ -306,7 +304,7 @@ pub fn fmt(input: TokenStream) -> TokenStream {
+ /// ```
+ #[proc_macro]
+ pub fn concat_idents(ts: TokenStream) -> TokenStream {
+-    concat_idents::concat_idents(ts)
++    concat_idents::concat_idents(ts.into()).into()
+ }
+ 
+ /// Paste identifiers together.
+@@ -444,9 +442,12 @@ pub fn concat_idents(ts: TokenStream) -> TokenStream {
+ /// [`paste`]: https://docs.rs/paste/
+ #[proc_macro]
+ pub fn paste(input: TokenStream) -> TokenStream {
+-    let mut tokens = input.into_iter().collect();
++    let mut tokens = proc_macro2::TokenStream::from(input).into_iter().collect();
+     paste::expand(&mut tokens);
+-    tokens.into_iter().collect()
++    tokens
++        .into_iter()
++        .collect::<proc_macro2::TokenStream>()
++        .into()
+ }
+ 
+ /// Registers a KUnit test suite and its test cases using a user-space like syntax.
+@@ -473,5 +474,5 @@ pub fn paste(input: TokenStream) -> TokenStream {
+ /// ```
+ #[proc_macro_attribute]
+ pub fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
+-    kunit::kunit_tests(attr, ts)
++    kunit::kunit_tests(attr.into(), ts.into()).into()
+ }
+diff --git a/rust/macros/module.rs b/rust/macros/module.rs
+index 80cb9b16f5aaf..b855a2b586e18 100644
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -1,9 +1,11 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-use crate::helpers::*;
+-use proc_macro::{token_stream, Delimiter, Literal, TokenStream, TokenTree};
+ use std::fmt::Write;
+ 
++use proc_macro2::{token_stream, Delimiter, Literal, TokenStream, TokenTree};
++
++use crate::helpers::*;
++
+ fn expect_string_array(it: &mut token_stream::IntoIter) -> Vec<String> {
+     let group = expect_group(it);
+     assert_eq!(group.delimiter(), Delimiter::Bracket);
+diff --git a/rust/macros/paste.rs b/rust/macros/paste.rs
+index cce712d19855b..2181e312a7d32 100644
+--- a/rust/macros/paste.rs
++++ b/rust/macros/paste.rs
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-use proc_macro::{Delimiter, Group, Ident, Spacing, Span, TokenTree};
++use proc_macro2::{Delimiter, Group, Ident, Spacing, Span, TokenTree};
+ 
+ fn concat_helper(tokens: &[TokenTree]) -> Vec<(String, Span)> {
+     let mut tokens = tokens.iter();
+diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+deleted file mode 100644
+index ddfc21577539c..0000000000000
+--- a/rust/macros/quote.rs
++++ /dev/null
+@@ -1,182 +0,0 @@
+-// SPDX-License-Identifier: Apache-2.0 OR MIT
+-
+-use proc_macro::{TokenStream, TokenTree};
+-
+-pub(crate) trait ToTokens {
+-    fn to_tokens(&self, tokens: &mut TokenStream);
+-}
+-
+-impl<T: ToTokens> ToTokens for Option<T> {
+-    fn to_tokens(&self, tokens: &mut TokenStream) {
+-        if let Some(v) = self {
+-            v.to_tokens(tokens);
+-        }
+-    }
+-}
+-
+-impl ToTokens for proc_macro::Group {
+-    fn to_tokens(&self, tokens: &mut TokenStream) {
+-        tokens.extend([TokenTree::from(self.clone())]);
+-    }
+-}
+-
+-impl ToTokens for proc_macro::Ident {
+-    fn to_tokens(&self, tokens: &mut TokenStream) {
+-        tokens.extend([TokenTree::from(self.clone())]);
+-    }
+-}
+-
+-impl ToTokens for TokenTree {
+-    fn to_tokens(&self, tokens: &mut TokenStream) {
+-        tokens.extend([self.clone()]);
+-    }
+-}
+-
+-impl ToTokens for TokenStream {
+-    fn to_tokens(&self, tokens: &mut TokenStream) {
+-        tokens.extend(self.clone());
+-    }
+-}
+-
+-/// Converts tokens into [`proc_macro::TokenStream`] and performs variable interpolations with
+-/// the given span.
+-///
+-/// This is a similar to the
+-/// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_spanned.html) macro from the
+-/// `quote` crate but provides only just enough functionality needed by the current `macros` crate.
+-macro_rules! quote_spanned {
+-    ($span:expr => $($tt:tt)*) => {{
+-        let mut tokens = ::proc_macro::TokenStream::new();
+-        {
+-            #[allow(unused_variables)]
+-            let span = $span;
+-            quote_spanned!(@proc tokens span $($tt)*);
+-        }
+-        tokens
+-    }};
+-    (@proc $v:ident $span:ident) => {};
+-    (@proc $v:ident $span:ident #$id:ident $($tt:tt)*) => {
+-        $crate::quote::ToTokens::to_tokens(&$id, &mut $v);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident #(#$id:ident)* $($tt:tt)*) => {
+-        for token in $id {
+-            $crate::quote::ToTokens::to_tokens(&token, &mut $v);
+-        }
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident ( $($inner:tt)* ) $($tt:tt)*) => {
+-        #[allow(unused_mut)]
+-        let mut tokens = ::proc_macro::TokenStream::new();
+-        quote_spanned!(@proc tokens $span $($inner)*);
+-        $v.extend([::proc_macro::TokenTree::Group(::proc_macro::Group::new(
+-            ::proc_macro::Delimiter::Parenthesis,
+-            tokens,
+-        ))]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident [ $($inner:tt)* ] $($tt:tt)*) => {
+-        let mut tokens = ::proc_macro::TokenStream::new();
+-        quote_spanned!(@proc tokens $span $($inner)*);
+-        $v.extend([::proc_macro::TokenTree::Group(::proc_macro::Group::new(
+-            ::proc_macro::Delimiter::Bracket,
+-            tokens,
+-        ))]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident { $($inner:tt)* } $($tt:tt)*) => {
+-        let mut tokens = ::proc_macro::TokenStream::new();
+-        quote_spanned!(@proc tokens $span $($inner)*);
+-        $v.extend([::proc_macro::TokenTree::Group(::proc_macro::Group::new(
+-            ::proc_macro::Delimiter::Brace,
+-            tokens,
+-        ))]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident :: $($tt:tt)*) => {
+-        $v.extend([::proc_macro::Spacing::Joint, ::proc_macro::Spacing::Alone].map(|spacing| {
+-            ::proc_macro::TokenTree::Punct(::proc_macro::Punct::new(':', spacing))
+-        }));
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident : $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new(':', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident , $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new(',', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident @ $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new('@', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident ! $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new('!', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident ; $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new(';', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident + $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new('+', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident = $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new('=', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident # $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new('#', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident & $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Punct(
+-            ::proc_macro::Punct::new('&', ::proc_macro::Spacing::Alone),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident _ $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Ident(
+-            ::proc_macro::Ident::new("_", $span),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-    (@proc $v:ident $span:ident $id:ident $($tt:tt)*) => {
+-        $v.extend([::proc_macro::TokenTree::Ident(
+-            ::proc_macro::Ident::new(stringify!($id), $span),
+-        )]);
+-        quote_spanned!(@proc $v $span $($tt)*);
+-    };
+-}
+-
+-/// Converts tokens into [`proc_macro::TokenStream`] and performs variable interpolations with
+-/// mixed site span ([`Span::mixed_site()`]).
+-///
+-/// This is a similar to the [`quote!`](https://docs.rs/quote/latest/quote/macro.quote.html) macro
+-/// from the `quote` crate but provides only just enough functionality needed by the current
+-/// `macros` crate.
+-///
+-/// [`Span::mixed_site()`]: https://doc.rust-lang.org/proc_macro/struct.Span.html#method.mixed_site
+-macro_rules! quote {
+-    ($($tt:tt)*) => {
+-        quote_spanned!(::proc_macro::Span::mixed_site() => $($tt)*)
+-    }
+-}
+diff --git a/rust/macros/vtable.rs b/rust/macros/vtable.rs
+index ee06044fcd4f3..a67d1cc81a2d3 100644
+--- a/rust/macros/vtable.rs
++++ b/rust/macros/vtable.rs
+@@ -1,9 +1,10 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+-use proc_macro::{Delimiter, Group, TokenStream, TokenTree};
+ use std::collections::HashSet;
+ use std::fmt::Write;
+ 
++use proc_macro2::{Delimiter, Group, TokenStream, TokenTree};
++
+ pub(crate) fn vtable(_attr: TokenStream, ts: TokenStream) -> TokenStream {
+     let mut tokens: Vec<_> = ts.into_iter().collect();
+ 
+@@ -31,7 +32,7 @@ pub(crate) fn vtable(_attr: TokenStream, ts: TokenStream) -> TokenStream {
+     let mut consts = HashSet::new();
+     while let Some(token) = body_it.next() {
+         match token {
+-            TokenTree::Ident(ident) if ident.to_string() == "fn" => {
++            TokenTree::Ident(ident) if ident == "fn" => {
+                 let fn_name = match body_it.next() {
+                     Some(TokenTree::Ident(ident)) => ident.to_string(),
+                     // Possibly we've encountered a fn pointer type instead.
+@@ -39,7 +40,7 @@ pub(crate) fn vtable(_attr: TokenStream, ts: TokenStream) -> TokenStream {
+                 };
+                 functions.push(fn_name);
+             }
+-            TokenTree::Ident(ident) if ident.to_string() == "const" => {
++            TokenTree::Ident(ident) if ident == "const" => {
+                 let const_name = match body_it.next() {
+                     Some(TokenTree::Ident(ident)) => ident.to_string(),
+                     // Possibly we've encountered an inline const block instead.
+-- 
+2.51.2
+
 
