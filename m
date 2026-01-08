@@ -1,120 +1,183 @@
-Return-Path: <linux-modules+bounces-5321-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5317-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7EB6D0397F
-	for <lists+linux-modules@lfdr.de>; Thu, 08 Jan 2026 15:57:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1596BD04375
+	for <lists+linux-modules@lfdr.de>; Thu, 08 Jan 2026 17:12:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0A72D30B6B73
-	for <lists+linux-modules@lfdr.de>; Thu,  8 Jan 2026 14:26:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 26F853043F75
+	for <lists+linux-modules@lfdr.de>; Thu,  8 Jan 2026 15:56:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BAA749252E;
-	Thu,  8 Jan 2026 14:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D07D6461C3F;
+	Thu,  8 Jan 2026 11:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cpeA1Jns"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YO1FLDaO"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FD148AE31
-	for <linux-modules@vger.kernel.org>; Thu,  8 Jan 2026 14:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C7D44E037;
+	Thu,  8 Jan 2026 11:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767881421; cv=none; b=OjlICjf1qswMhK8MdwMxGVEr7UGwiWiJo/MMkfLt2vK3ZmTXaGVrvWbkM4VgMrmGm6ov5Mf07105McuoDKB69sgE4jGnKP2xk9LoubWb8tC0VAjbs4R5/6fysaP9xZ0a/8mbYkfm41f6g3XW/that5IqMDThPVrc/ugIgy/HPQc=
+	t=1767873318; cv=none; b=M2wX5lj4eUZYvGcEyP4KHk2x0nySn865NdR88X60HHO19TfHFZ9C5htqqUy+/bhefH/KRNLpVNGUnz369v1qcpC8M/+jei/uKK5zfTuKyzlkgqM3kzYSxOUpooERm/rnqxHzzfukT7oDPmhYlKQdPUu7bT8xxAXcvpxguViEGcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767881421; c=relaxed/simple;
-	bh=j3o37ljvU8WW3JLmg4pFonRiNxJi7xTRwgos4PfkORA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FOSts2gdJy1BKyq4h4VRQfV0g7aGnM+vZu67dkT4L/XBAH2/C4ewwnLqBfJsE1jIYcynk1s2BTLzqVpDMQAUdDP0J2vjiqFpuZBVp7USJXxh5YY+0z9Y7QzZB2VSL5JU1qvzXHIVov3eTbRrLx4eOBwZx/i0RAGy1m4pM9+4zqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cpeA1Jns; arc=none smtp.client-ip=74.125.82.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-12055b489e0so255786c88.3
-        for <linux-modules@vger.kernel.org>; Thu, 08 Jan 2026 06:10:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767881419; x=1768486219; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f7jDvUFCjfFtmadOVjljTYdbYZqDf8COd2PlPO/Cyo0=;
-        b=cpeA1JnsKQUknZFaVdON2sr7SjXjkEBc7nMnIArN5iF1m/flAOnokYI68BAfjrDe2Y
-         6ngLp1c92vrcFBrWycvdpYDEA2DYQqHuRg7CY2BUdrb0lcDkRt0Ac9CLJZgdkR0kjlN8
-         +Ww6zafbb9eVrvuMUmWN6Cd/liR0cGMoQlbE6ZlnG4SQLoDIgL1x/oF7XJINpZccoNfR
-         RJgWlBaUVTcHiGmjQWvfLtaNNZTx5pySrf6UB/XowLYxeVbmTr+Dpuf35piJ0Gikvgk8
-         EtUWd09e7jFlEp9UaMZJ5O+f1zjvfZrqZAjBf0ru85glge9ESAVOtsy3yAucgIxnFL/4
-         WTHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767881419; x=1768486219;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=f7jDvUFCjfFtmadOVjljTYdbYZqDf8COd2PlPO/Cyo0=;
-        b=FJksrEjSPsR8VNuUVBbZ3T1Wk8hQlnu+Y3nNZZswxhoetyxogSjNQ9YKwsrqYj1PWM
-         YPifR4jyHrZlSZrrlhqgkqwcjiKjfi/09NrWKA399Gm7sU8ZoaQAbnKkAch56uIRqVEG
-         kJEcyZj0BFzRU1jcWivLyEcrjvnlbSkvWej4zEC+7hzhUflfBr92D9/UNs4IAAmp5AX0
-         qXO78aUYjyGQuGgrG9XuZ4XI36ZBwPldrKGIRGgOHc5HdXGvRe1AQeZcGF9iw02vwoie
-         qZzzSux54GzFeaaclquGF60F2FT1u7AXch7H2gNSiSjzqljJmrm4svsUCMyqE1cdLIqX
-         wSdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUF9JtbPl1nP4c/If4el3eaRbhLjenr6vuVNTX30wlvigLOIJkei/EtPccH3fFDyslMin0U3xsDN4dbvDCh@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0jdmcs31ixde3NOg3NbNQxgoUQElk+/Ivd9afKEOQ1fuawHNV
-	bwvnp37RjWa3IOsbbMqomJltNcqmhza3fIkdZOBPkYNHrkzRD4oN5Ikvq5+BMNQ7T0BNVHrIFS3
-	UoffQW4LuFsStUGOm9EfS4AkK8fC8/rg=
-X-Gm-Gg: AY/fxX4SIqFGQ0YfgOsFfqtI6bPbDeVhnYBriMBYt1XmMxVhYg5AsquGALdIPTazpDK
-	o8zjxZe9WcDVbxgZJWe4xTXdDH7rL0vne9I2SPqi3BwHDlDDJqxQh/Nd1BMlT49rZSFqGp9JlDj
-	RBjwWiB0wNxxMYeS3rKJo9QEXkZM+Uz1T0xXn60s7hMrErilceFZl+U8iSntqfq/tUOiMB5AMNO
-	Mwh3Be0YoSFi7p6FwVsdeKwpSpmbamDzi/cT0bXEPK6qphftL6H3xiCApqKzrOrBuYOU1vs/xlB
-	Clx4x8PzMDQON2TCkQ8ea3g8wEX93ts1TcKHJebtlz9dMRqA5DOW4YgZpRlluAh7E/qg6dnwFzp
-	MR+6U9xXTSyHL
-X-Google-Smtp-Source: AGHT+IHNeMjlzueJHkJLbN74lNQFyQb0gOywPBPdlNCJT8fAFTRMjn3wgKYlbOnJAnxGIEInLPyC5bkUa1Vxsxwj5dc=
-X-Received: by 2002:a05:7300:dd0c:b0:2ae:598e:abea with SMTP id
- 5a478bee46e88-2b17d30fd2fmr1936203eec.5.1767881419200; Thu, 08 Jan 2026
- 06:10:19 -0800 (PST)
+	s=arc-20240116; t=1767873318; c=relaxed/simple;
+	bh=z382ACtlBmY2CwY2em31mfcaAQGcR3eXb0toDDOrjT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=On9bTViQEgCOjnwU7qHyemQ+nVGqEcltxWsLYuK2e8PvzaYZkTo7IpdOck+TYsZm3ipANSfbmUNAc1nvhpy5T2vllMXwCqV75jzxPlFBXGwPPjl1xvue92+awleLUer8pau6vp4x0E4dwI1Zw43WTQGn0Y0zN1YJOIZYhZ/aSio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YO1FLDaO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5382C116C6;
+	Thu,  8 Jan 2026 11:55:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767873317;
+	bh=z382ACtlBmY2CwY2em31mfcaAQGcR3eXb0toDDOrjT0=;
+	h=Date:Reply-To:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=YO1FLDaOrpGpFDT1/kPBU/A82GB8FX+OmJQfSzwSwIdF6yfUWpgKM3exfzezC3OO1
+	 eJyG5uYjgAl7JxGENXD5YTB1Tkiw7eJGr2LCazWv0fa/5jJdncq97XQkqNM8JF4oDB
+	 EJslAsQaIJPsCByka+SgnloKHtnYx/H1+ETXiXcx90JP0AQpPzJAO5rS3Ultan+Se0
+	 8dFsBoqdY7jN8XavmB9de0e1G+12oH33aRI4nxAdE63cCiTD0dhZmQ5iAlSlsXW5nl
+	 sfY7MP9+V5Wle+TB1QmLX5VRdfGCbamHwZ3Pilw5Pwq/wdJcZv1JetEs8vdyvBv4sc
+	 n2Ftvx5RpYoxA==
+Message-ID: <3bb8cbf5-9f9e-4f50-a6de-b9b79e097c20@kernel.org>
+Date: Thu, 8 Jan 2026 12:55:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260108-documents_gendwarfksyms-v1-1-52b1f9c38c70@gmail.com>
-In-Reply-To: <20260108-documents_gendwarfksyms-v1-1-52b1f9c38c70@gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 8 Jan 2026 15:10:06 +0100
-X-Gm-Features: AQt7F2q2cgHdJNNgrL6_JC_APYg1zxqroIvS3FffCSeaIG9gIAOBm2Oruoyww_Y
-Message-ID: <CANiq72k7_Vys-UxF=34eouu=CquaTXcb=jMiTwVb8mhP=SGEYw@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/kbuild: Document gendwarfksyms build dependencies
-To: linjh22s@gmail.com
-Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	Sami Tolvanen <samitolvanen@google.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Petr Pavlu <petr.pavlu@suse.com>, linux-kbuild@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-modules@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: Daniel Gomez <da.gomez@kernel.org>
+Subject: Re: [PATCH] software node: replace -EEXIST with -EBUSY
+To: Lucas De Marchi <demarchi@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Daniel Scally <djrscally@gmail.com>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>,
+ Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>,
+ Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>,
+ linux-acpi@vger.kernel.org, linux-modules@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Daniel Gomez <da.gomez@samsung.com>
+References: <20251220-dev-module-init-eexists-linux-acpi-v1-1-af59b1a0e217@samsung.com>
+ <2025122203-purely-huntsman-7987@gregkh>
+ <7ff92075-df6a-45d8-9014-647ae45797ff@kernel.org>
+ <2025122212-fiction-setback-ede5@gregkh>
+ <4zatcu4izel7yijmkinxy6wq6owktwsyxkazb5ufc4vua54ojx@3vq4dgtydgia>
+Content-Language: en-US
+From: Daniel Gomez <da.gomez@kernel.org>
+Organization: kernel.org
+In-Reply-To: <4zatcu4izel7yijmkinxy6wq6owktwsyxkazb5ufc4vua54ojx@3vq4dgtydgia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 8, 2026 at 9:45=E2=80=AFAM Jihan LIN via B4 Relay
-<devnull+linjh22s.gmail.com@kernel.org> wrote:
->
-> Fixes: f28568841ae0 ("tools: Add gendwarfksyms")
 
-Not sure if this is meant to be a fix or not; but if it is, then Cc:
-stable should be considered since that commit is in an LTS and a
-Stable kernel.
 
-> +Dependencies
-> +-----
+On 06/01/2026 15.24, Lucas De Marchi wrote:
+> On Mon, Dec 22, 2025 at 12:56:38PM +0100, Greg Kroah-Hartman wrote:
+>> On Mon, Dec 22, 2025 at 09:48:54AM +0100, Daniel Gomez wrote:
+>>> On 22/12/2025 09.19, Greg Kroah-Hartman wrote:
+>>> > On Sat, Dec 20, 2025 at 04:55:00AM +0100, Daniel Gomez wrote:
+>>> >> From: Daniel Gomez <da.gomez@samsung.com>
+>>> >>
+>>> >> The -EEXIST error code is reserved by the module loading infrastructure
+>>> >> to indicate that a module is already loaded. When a module's init
+>>> >> function returns -EEXIST, userspace tools like kmod interpret this as
+>>> >> "module already loaded" and treat the operation as successful, returning
+>>> >> 0 to the user even though the module initialization actually failed.
+>>> >>
+>>> >> This follows the precedent set by commit 54416fd76770 ("netfilter:
+>>> >> conntrack: helper: Replace -EEXIST by -EBUSY") which fixed the same
+>>> >> issue in nf_conntrack_helper_register().
+>>> >>
+>>> >> Affected modules:
+>>> >>   * meraki_mx100 pcengines_apuv2
+>>> >>
+>>> >> Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+>>> >> ---
+>>> >> The error code -EEXIST is reserved by the kernel module loader to
+>>> >> indicate that a module with the same name is already loaded. When a
+>>> >> module's init function returns -EEXIST, kmod interprets this as "module
+>>> >> already loaded" and reports success instead of failure [1].
+>>> >>
+>>> >> The kernel module loader will include a safety net that provides -EEXIST
+>>> >> to -EBUSY with a warning [2], and a documentation patch has been sent to
+>>> >> prevent future occurrences [3].
+>>> >>
+>>> >> These affected code paths were identified using a static analysis tool
+>>> >> [4] that traces -EEXIST returns to module_init(). The tool was developed
+>>> >> with AI assistance and all findings were manually validated.
+>>> >>
+>>> >> Link: https://lore.kernel.org/all/aKEVQhJpRdiZSliu@orbyte.nwl.cc/ [1]
+>>> >> Link: https://lore.kernel.org/all/20251013-module-warn-ret-v1-0-ab65b41af01f@intel.com/ [2]
+>>> >> Link: https://lore.kernel.org/all/20251218-dev-module-init-eexists-modules-docs-v1-0-361569aa782a@samsung.com/ [3]
+>>> >> Link: https://gitlab.com/-/snippets/4913469 [4]
+>>> >> ---
+>>> >>  drivers/base/swnode.c | 2 +-
+>>> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>> >>
+>>> >> diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+>>> >> index 16a8301c25d6..083593d99a18 100644
+>>> >> --- a/drivers/base/swnode.c
+>>> >> +++ b/drivers/base/swnode.c
+>>> >> @@ -919,7 +919,7 @@ int software_node_register(const struct software_node *node)
+>>> >>      struct swnode *parent = software_node_to_swnode(node->parent);
+>>> >>
+>>> >>      if (software_node_to_swnode(node))
+>>> >> -        return -EEXIST;
+>>> >> +        return -EBUSY;
+>>> >
+>>> > While I understand the want for the module loader to be returning
+>>> > -EBUSY, that doesn't really make sense down here in this layer of the
+>>> > kernel.
+>>> >
+>>> > So why doesn't the module loader turn -EEXIST return values into -EBUSY
+>>> > if it wishes to pass that value on to userspace?  Otherwise you are
+>>>
+>>> Indeed, we are planning to do that as well with "[PATCH 0/2] module: Tweak
+>>> return and warning":
+>>>
+>>> https://lore.kernel.org/all/20251013-module-warn-ret-v1-0-ab65b41af01f@intel.com/#t
+>>>
+>>> However, we don't consider that as the right fix.
+>>>
+>>> > going to be constantly playing "whack-a-mole" here and have really
+>>> > set things up so that NO api can ever return EEXIST as an error value in
+>>> > the future.
+>>>
+>>> 100%.
+>>>
+>>> For that reason, on top of the series from Lucas, we are documenting this to
+>>> make it clear:
+>>>
+>>> https://lore.kernel.org/linux-modules/20251218-dev-module-init-eexists-modules-docs-v1-0-361569aa782a@samsung.com/T/#m2ed6fbffb3f78b9bff53840f6492a198c389cb50
+>>
+>> Wait, no, that's not what I mean at all :)
+>>
+>>> And sending patches where we see modules need fixing. I have already sent 6 out
+>>> of 20-ish series (that include a total of 40+ fixes):
+>>>
+>>> https://lore.kernel.org/all/20251220-dev-module-init-eexists-linux-scsi-v1-0-5379db749d54@samsung.com
+>>> https://lore.kernel.org/all/20251219-dev-module-init-eexists-netfilter-v1-1-efd3f62412dc@samsung.com
+>>> https://lore.kernel.org/all/20251220-dev-module-init-eexists-bpf-v1-1-7f186663dbe7@samsung.com
+>>> https://lore.kernel.org/all/20251220-dev-module-init-eexists-keyring-v1-1-a2f23248c300@samsung.com
+>>> https://lore.kernel.org/all/20251220-dev-module-init-eexists-dm-devel-v1-1-90ed00444ea0@samsung.com
+>>
+>> Please no, let us keep using -EEXIST in the kernel source, and if your
+>> usage is going to map this to userspace somehow, do the translation
+>> there, in the module code, as your original patch above said.
+>>
+>> Otherwise, again, this is never going to work, let the subsystems use
+>> this error code how ever they feel they need to.
+> 
+> Ok. When I added the warning I was more following what the other error
+> handling was doing for positive values. Happy to change that to simply
+> map the error code before returning from do_init_module().
+> 
+> Daniel, do you want me to resend that with the warning removed?
 
-Shouldn't this be the full length?
-
-> +    sudo pacman --needed -S zlib libelf
-
-I think these are supposed to be a tab (at least this file uses that)..
-
-Also, Cc'ing linux-modules@vger.kernel.org as per the "GENDWARFKSYMS"
-entry in `MAINTAINERS`.
-
-I hope that helps!
-
-Cheers,
-Miguel
+Yes please, I think we should do that and explain the agreement in this thread
+in the commit message so others can understand the why.
 
