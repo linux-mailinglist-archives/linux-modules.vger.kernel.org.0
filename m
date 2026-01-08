@@ -1,887 +1,275 @@
-Return-Path: <linux-modules+bounces-5309-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5311-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12A06CFFD9F
-	for <lists+linux-modules@lfdr.de>; Wed, 07 Jan 2026 20:51:54 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B815DD00FE8
+	for <lists+linux-modules@lfdr.de>; Thu, 08 Jan 2026 05:47:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 27B0D3324CC6
-	for <lists+linux-modules@lfdr.de>; Wed,  7 Jan 2026 19:15:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 77DCE3014D8D
+	for <lists+linux-modules@lfdr.de>; Thu,  8 Jan 2026 04:47:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07E90318EF9;
-	Wed,  7 Jan 2026 17:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B04B2C0F7F;
+	Thu,  8 Jan 2026 04:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nLRgNami"
+	dkim=pass (2048-bit key) header.d=nslick.com header.i=@nslick.com header.b="Aqia+ilK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oxEnw26M"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9D934AAF4
-	for <linux-modules@vger.kernel.org>; Wed,  7 Jan 2026 17:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E078F5B;
+	Thu,  8 Jan 2026 04:47:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767806436; cv=none; b=WJvKLtrDwNr3VCkCwRrnCIyMV9KbVo734wdLdJDP7SDNxP82PeilfDpwMIP9iPXGDXgCMr7vLrsk8CSSRpNfm/mVd92VKJZWbQdnHAgdHLtYTabvMnnA4fBBcD57QB6WS6etQY4lg78YSleYFzvk33ekDHdRhom6vQ5Hb1KqKCc=
+	t=1767847676; cv=none; b=DtDXZ3XZoO0DfHHjxzeCoOLMF/680IpbfYMg0kKD1KpPJYf9uDyIzcd9WMB9zpghMHLGxy3vVMW9MakxlumGWSr40bBrY3vLH7Ab3fdK2dUKlxkYmVmRtQtPY9N/Y9XWZXvW68uOKG9zib1La0uRIisDBb2g7V+zsWZYz7+CLlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767806436; c=relaxed/simple;
-	bh=QL9jcMj+ETrVXAiXeeOJhQrxHBRfeRM02oQZagOTvAI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j9dWKHBI8/633Y6H0+ErtXqLIIAsIDRGzzEc4ByHv0aaH+ylccItHSESRveQEzT02WRV1YojxKn5bTNDGt/3Els9ulqeSXDtMfnYg9QFSjEvgVydmo+08SZ0APckbzEwwao71ABOvibEUJPebwxr10TBUXO/IUll0KrzxuzyYT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nLRgNami; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-650854c473fso2126256a12.1
-        for <linux-modules@vger.kernel.org>; Wed, 07 Jan 2026 09:20:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767806404; x=1768411204; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rd08SHTTj7f1dJuOaAtBbUFL/jwvZKz65J+rP5gH78c=;
-        b=nLRgNamicRzc0ptHpKQdGPk2Po+nYQFc3c9fGYaJUPOKZVkQmfd/WQarCiDpJHPDPT
-         dznRaRkAyW2L7tWmwdnrKQGaICP1jSydwabSZWORPVjDv0rNJ4h8bpaMhiKlh+VcrsQX
-         fqlRKHExe9hVupO8lVb0YuO8jk2giJl7xXOamrgJwINJ+PhxR7R1dn4jE1T6xBzDOKOc
-         Q6usOEwJ9HRieJdxOpYM63NRVsvlev8uG3jhAQofp0my7y8qDjnB9/gvjiN1nen/eLcF
-         fwP+ynXm57uAbpSbiF60dinwODVEF0Wy3QPUEkVDjMUTbC02gx1mvsXULA4LVIonEIy7
-         oh4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767806404; x=1768411204;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rd08SHTTj7f1dJuOaAtBbUFL/jwvZKz65J+rP5gH78c=;
-        b=Kv1S/O0qMvmNeGTVpyPIQxWWvtuhZWFnicRRJjOP2KeQmesLy0i4c3vKY8L9fWGc6+
-         lkjiCSDqyn//3xE0zXW2NV9/IchxBFu7PdvQYv0xC9vG7ND8xUwDA/wK4O50xfmijlnp
-         JQk6Ls+lteGin4KojjBjUZ6OqaWuV34sKWR3XLnPcZJn8gWdbR9Ef5u0Qspj5MlEM9Sy
-         p1wCylgWUK3EqOtDBDohrnNJDpPOSqnTzsiT/M3ttXoNIqbyqewUEb1BUFvBmDGma+Ke
-         UFWsOMCrG4B9nd6bnyBRS9ThY1bMo+U3LmGzywy0EiY7V3zRqtAfcuGgvCBks31V9v1j
-         z7Fg==
-X-Forwarded-Encrypted: i=1; AJvYcCWo1FX2untGij79rLlXJdhTqHuBDy5s/MDHvDaiRfD8i81AhPHgDbrfAkfNs3+SZfbc10mxDpvcx3ERgnMD@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWmTnxaZhHy8Y3B6IiR4BmPFaI8zWwfr1aaboensbncHUkJpcO
-	C/yssrbMz802poKesr4Cm1gIG5lXJnWTJ5ayuZ8r9IuA38XywFgTx28z15Zx/gMIRA++22wMEor
-	Pu/i7X5CVoV1L1D/Id9/2ORer+Iu3sTc=
-X-Gm-Gg: AY/fxX7PLL/AeUNG2QmnVRelBNQ0J83fEFExTTHF/i3KSSMf5MOZniMTBFJtLvEtj3+
-	xPTjutGOsrnyeKCVVcjRl6Nnt164LaxrY9/MFOaMa/04h6wxvKM0TVSqmwzKcWXW6z3s57BCbib
-	YLDvJpFFH0STarFR4q6zM8UJqZMIF6R6OUfFqE8VEkzzIfYeg9+8Sbrz/9CdIZZqCSNNibwTPY+
-	SvZpvyfK82TL/1OZyU/aq+o+/JWaMdzebsB001D6/XuXPjbz7C0EiAFroS1XqyndDrjA48YP99y
-	MQJW7NilmU5gRUMRx5JLBj3h/4r11UEfroIb7STO7NsoLsipsxqhzHdVZ0p+UHlA2IJJ4pRXCXJ
-	HX+WWfQ==
-X-Google-Smtp-Source: AGHT+IHYEVDPE/m6s2S849lqeZ3TCTfWOFcfmFKb0ttg3h8Y3qFfF2S7aaIm2tydbi37qEKP7f6i1hILTVQp/piFLZA=
-X-Received: by 2002:a05:6402:27c6:b0:64b:5d42:52f4 with SMTP id
- 4fb4d7f45d1cf-65097c2b227mr3154355a12.15.1767806403508; Wed, 07 Jan 2026
- 09:20:03 -0800 (PST)
+	s=arc-20240116; t=1767847676; c=relaxed/simple;
+	bh=IpQ/kXxg+3ay3LFN7kednsxoShZVAU2hu7rUQMRBWq0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=h12fmHTW3CTXeoeLYYk5YlpZ136D51HXkMbJKHiWw95vnLL7IRpGw8TlVVRbYjk+NTG/ACmkpQ/yk4155B2CgJbOIOFdmnaxSjQfayZgipy3+/A5BEXhkd55PnEbdts7rlMgT5C0mgcm8puM6KmQ/YXDCwphZdQxVQpvOKDht2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opensource.nslick.com; spf=none smtp.mailfrom=opensource.nslick.com; dkim=pass (2048-bit key) header.d=nslick.com header.i=@nslick.com header.b=Aqia+ilK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oxEnw26M; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opensource.nslick.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=opensource.nslick.com
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6DBD61400042;
+	Wed,  7 Jan 2026 23:47:53 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 07 Jan 2026 23:47:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nslick.com; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm3; t=1767847673; x=1767934073; bh=g1eB+j4dfwoyO90edPApB
+	yptJu5iZbYYciRgccD50wY=; b=Aqia+ilKbvrxKkni+QevJkFDQbGO/ZnhURjJy
+	oyumSsqKqPT4Rwr3tXSytbWhrqyg3Q7he8sp7L0fKRbP5GaOoWxYwa1+dDR0+yaJ
+	LMFgjIM81/x/4NQoihskbqJX3V6EM+PzLqRj3d6D3dLAjSqAU6f5x2kpxC+CS5yU
+	UUURnrF+M3N+o1O4PDF1FPHTbyqyJmq9ellTha4rAJC5aVom8SmrKKNorWMWnKoz
+	DTrh6xd6LjypB43e6Iz3XJYW4OH2ERH4sMXBx69g57Wr3DE01FyP7NNE6pvyY6X9
+	SLFdSTI4QlsuLrUErgpmL6FF9RspFb1KBwgsqak8G1F9Jd+cQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767847673; x=1767934073; bh=g1eB+j4dfwoyO90edPApByptJu5iZbYYciR
+	gccD50wY=; b=oxEnw26MRhGlDS36OJ4sKLrcICijcGjZaNZMPxDArIlj0SlfOjJ
+	j3gpovqe2NupIKHZR0qkNMd2f2/HlwCSvSbbjYAWIUWgCDdzvhp2qiX/fLliJ4RJ
+	hF78uA5a8BHGdWRmVJg53EozeaFk6hIJmuyGUrNLnCmJx+a+p4pqde/asvAl+ddh
+	hWABlXE8eHOqY5gWMql4KKo11diFJ658O07tgcRYSjlLZt5+vKllzQALvWJ/Q9hL
+	cuMJi99n6PDsp7O1Ngf0gQVak8JsyyEF1P9v7/yCgOSlslxvmHLkvXPtc+17mFK8
+	UTjIALvrfIctvCIfNP9AB2lLMV2VNwMdDcQ==
+X-ME-Sender: <xms:-DZfaZibQWG4ajXq8d4XRo_g0Qqx9oGVUFk6GLeKRGLNqMxOuvONmw>
+    <xme:-DZfaZfhIppc0p3ZSkKlojoymVTa0Ykugg8U9PbRXLlNLt9O-8M4NkUZRQOLdUR8H
+    U5lxjrXYEHWp6FWEVtYAMGIR9uIKvXRWYnXxLhs2-mzzNsgpoBTWhU>
+X-ME-Received: <xmr:-DZfaXzdrDC-GsjncwmkuPBYezztAJ8ypMToUenlDqLyi2x_37X77I5_U3X7Z8dtkDJhzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdehtdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomheppfhitghhohhlrghs
+    ucfuihgvlhhitghkihcuoehlihhnuhigsehophgvnhhsohhurhgtvgdrnhhslhhitghkrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeduieeuffeguddvuefhteetueeuffevgeekueei
+    tedvkeffkeelteefhfehveffvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehlihhnuhigsehophgvnhhsohhurhgtvgdrnhhslhhitghkrdgt
+    ohhmpdhnsggprhgtphhtthhopedvgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epmhgtghhrohhfsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghtrhdrphgrvhhl
+    uhesshhushgvrdgtohhmpdhrtghpthhtohepuggrrdhgohhmvgiisehkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehsrghmihhtohhlvhgrnhgvnhesghhoohhglhgvrdgtohhmpdhr
+    tghpthhtoheprghtohhmlhhinhesrghtohhmlhhinhdrtghomhdprhgtphhtthhopehmrg
+    gvnhhnihgthhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvthgvrhiisehinhhf
+    rhgruggvrggurdhorhhgpdhrtghpthhtoheptghorhgsvghtsehlfihnrdhnvghtpdhrtg
+    hpthhtoheprhguuhhnlhgrphesihhnfhhrrgguvggrugdrohhrgh
+X-ME-Proxy: <xmx:-DZfabbkiRdiiz7r5iQGtpOa5DFhz--zJB_Wix0tW6-vdj3hGv-0cg>
+    <xmx:-DZfadIxRL1WPcUDhgLGYB39wuDZq3V02K4ZsDJeu8ZgSzchryXU_A>
+    <xmx:-DZfaa19wHehxSN5c493wMYHWNtEYQTWUf8YjuXZSAWBtGsn11z02g>
+    <xmx:-DZfaZKhWcy5l_uuvGOL7qTDEUmNzUnK8BXFAvPwYKyKCU1KzPo0Vg>
+    <xmx:-TZfaaSEUDamlh4c06CSu4xSJypw8lFIx9MS3OJHhYQhsYOyXcADECyn>
+Feedback-ID: i78f146c6:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 Jan 2026 23:47:52 -0500 (EST)
+From: Nicholas Sielicki <linux@opensource.nslick.com>
+To: Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Matthias Maennich <maennich@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Nicholas Sielicki <linux@opensource.nslick.com>
+Subject: [PATCH 1/2] module: expose imported namespaces via sysfs
+Date: Wed,  7 Jan 2026 22:47:09 -0600
+Message-ID: <20260108044710.33036-1-linux@opensource.nslick.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260107161729.3855851-1-gary@kernel.org> <20260107161729.3855851-6-gary@kernel.org>
-In-Reply-To: <20260107161729.3855851-6-gary@kernel.org>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 7 Jan 2026 12:19:26 -0500
-X-Gm-Features: AQt7F2qrupF0mJmGQ4cfot4Pmw5wtk6lPIaVw4MP0MDMjGBSkJSiRc0NWIyeOQg
-Message-ID: <CAJ-ks9nzn3wgZMaQFXFHBOEf-Fuhr61Tp7Knvu0CWOWYgOEqDw@mail.gmail.com>
-Subject: Re: [PATCH v2 05/11] rust: macros: use `quote!` for `module!` macro
-To: Gary Guo <gary@garyguo.net>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
-	Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	Aaron Tomlin <atomlin@atomlin.com>, rust-for-linux@vger.kernel.org, 
-	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 7, 2026 at 11:59=E2=80=AFAM Gary Guo <gary@kernel.org> wrote:
->
-> From: Gary Guo <gary@garyguo.net>
->
-> This has no behavioural change, but is good for maintainability. With
-> `quote!`, we're no longer using string templates, so we don't need to
-> quote " and {} inside the template anymore. Further more, editors can
-> now highlight the code template.
->
-> This also improves the robustness as it eliminates the need for string
-> quoting and escaping.
->
-> Co-developed-by: Benno Lossin <lossin@kernel.org>
-> Signed-off-by: Benno Lossin <lossin@kernel.org>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
+Currently, the only way for userspace to determine which symbol
+namespaces a module imports is to locate the .ko file on disk (which may
+not match the loaded module), then either parsing the binary manually
+and handling any potential compression, or shelling-out to modinfo.
 
-Are there significant changes here? You didn't pick up my tag.
+This is painful in cases where userspace wants to distinguish between
+module variants that share the same name but import different
+namespaces. For example, the nvidia-uvm module exists in both open and
+closed source variants; the open source version imports the DMA_BUF
+namespace while the closed source version does not, and networking
+middleware may want to initialize itself differently depending on that.
 
-> ---
->  rust/macros/module.rs | 558 ++++++++++++++++++++++--------------------
->  1 file changed, 295 insertions(+), 263 deletions(-)
->
-> diff --git a/rust/macros/module.rs b/rust/macros/module.rs
-> index 6ad7b411ccde4..ba345d672839e 100644
-> --- a/rust/macros/module.rs
-> +++ b/rust/macros/module.rs
-> @@ -1,12 +1,15 @@
->  // SPDX-License-Identifier: GPL-2.0
->
-> -use std::fmt::Write;
-> +use std::ffi::CString;
->
->  use proc_macro2::{
->      Literal,
->      TokenStream, //
->  };
-> -use quote::ToTokens;
-> +use quote::{
-> +    format_ident,
-> +    quote, //
-> +};
->  use syn::{
->      braced,
->      bracketed,
-> @@ -15,11 +18,13 @@
->          Parse,
->          ParseStream, //
->      },
-> +    parse_quote,
->      punctuated::Punctuated,
->      Error,
->      Expr,
->      Ident,
->      LitStr,
-> +    Path,
->      Result,
->      Token, //
->  };
-> @@ -29,8 +34,8 @@
->  struct ModInfoBuilder<'a> {
->      module: &'a str,
->      counter: usize,
-> -    buffer: String,
-> -    param_buffer: String,
-> +    ts: TokenStream,
-> +    param_ts: TokenStream,
->  }
->
->  impl<'a> ModInfoBuilder<'a> {
-> @@ -38,8 +43,8 @@ fn new(module: &'a str) -> Self {
->          ModInfoBuilder {
->              module,
->              counter: 0,
-> -            buffer: String::new(),
-> -            param_buffer: String::new(),
-> +            ts: TokenStream::new(),
-> +            param_ts: TokenStream::new(),
->          }
->      }
->
-> @@ -56,33 +61,32 @@ fn emit_base(&mut self, field: &str, content: &str, b=
-uiltin: bool, param: bool)
->              // Loadable modules' modinfo strings go as-is.
->              format!("{field}=3D{content}\0")
->          };
-> -
-> -        let buffer =3D if param {
-> -            &mut self.param_buffer
-> +        let length =3D string.len();
-> +        let string =3D Literal::byte_string(string.as_bytes());
-> +        let cfg =3D if builtin {
-> +            quote!(#[cfg(not(MODULE))])
->          } else {
-> -            &mut self.buffer
-> +            quote!(#[cfg(MODULE)])
->          };
->
-> -        write!(
-> -            buffer,
-> -            "
-> -                {cfg}
-> -                #[doc(hidden)]
-> -                #[cfg_attr(not(target_os =3D \"macos\"), link_section =
-=3D \".modinfo\")]
-> -                #[used(compiler)]
-> -                pub static __{module}_{counter}: [u8; {length}] =3D *{st=
-ring};
-> -            ",
-> -            cfg =3D if builtin {
-> -                "#[cfg(not(MODULE))]"
-> -            } else {
-> -                "#[cfg(MODULE)]"
-> -            },
-> +        let counter =3D format_ident!(
-> +            "__{module}_{counter}",
->              module =3D self.module.to_uppercase(),
-> -            counter =3D self.counter,
-> -            length =3D string.len(),
-> -            string =3D Literal::byte_string(string.as_bytes()),
-> -        )
-> -        .unwrap();
-> +            counter =3D self.counter
-> +        );
-> +        let item =3D quote! {
-> +            #cfg
-> +            #[doc(hidden)]
-> +            #[cfg_attr(not(target_os =3D "macos"), link_section =3D ".mo=
-dinfo")]
-> +            #[used(compiler)]
-> +            pub static #counter: [u8; #length] =3D *#string;
-> +        };
-> +
-> +        if param {
-> +            self.param_ts.extend(item);
-> +        } else {
-> +            self.ts.extend(item);
-> +        }
->
->          self.counter +=3D 1;
->      }
-> @@ -115,77 +119,86 @@ fn emit_params(&mut self, info: &ModuleInfo) {
->          };
->
->          for param in params {
-> -            let param_name =3D param.name.to_string();
-> -            let param_type =3D param.ptype.to_string();
-> -            let param_default =3D param.default.to_token_stream().to_str=
-ing();
-> +            let param_name_str =3D param.name.to_string();
-> +            let param_type_str =3D param.ptype.to_string();
+Add /sys/module/*/import_ns to expose imported namespaces for loaded
+modules. The file contains one namespace per line and only exists for
+modules that import at least one namespace.
 
-This renaming is unfortunately; these variables were just introduced
-in the previous patch.
+Signed-off-by: Nicholas Sielicki <linux@opensource.nslick.com>
+---
+ Documentation/ABI/testing/sysfs-module |  9 ++++
+ include/linux/module.h                 |  1 +
+ kernel/module/main.c                   | 62 +++++++++++++++++++++++++-
+ 3 files changed, 71 insertions(+), 1 deletion(-)
 
->
-> -            let ops =3D param_ops_path(&param_type);
-> +            let ops =3D param_ops_path(&param_type_str);
->
->              // Note: The spelling of these fields is dictated by the use=
-r space
->              // tool `modinfo`.
-> -            self.emit_param("parmtype", &param_name, &param_type);
-> -            self.emit_param("parm", &param_name, &param.description.valu=
-e());
-> -
-> -            write!(
-> -                self.param_buffer,
-> -                "
-> -                pub(crate) static {param_name}:
-> -                    ::kernel::module_param::ModuleParamAccess<{param_typ=
-e}> =3D
-> -                        ::kernel::module_param::ModuleParamAccess::new({=
-param_default});
-> -
-> -                const _: () =3D {{
-> -                    #[link_section =3D \"__param\"]
-> -                    #[used]
-> -                    static __{module_name}_{param_name}_struct:
-> +            self.emit_param("parmtype", &param_name_str, &param_type_str=
-);
-> +            self.emit_param("parm", &param_name_str, &param.description.=
-value());
-> +
-> +            let static_name =3D format_ident!("__{}_{}_struct", self.mod=
-ule, param.name);
-> +            let param_name_cstr =3D Literal::c_string(
-> +                &CString::new(param_name_str).expect("name contains NUL-=
-terminator"),
-> +            );
-> +            let param_name_cstr_with_module =3D Literal::c_string(
-> +                &CString::new(format!("{}.{}", self.module, param.name))
-> +                    .expect("name contains NUL-terminator"),
-> +            );
-> +
-> +            let param_name =3D &param.name;
-> +            let param_type =3D &param.ptype;
-> +            let param_default =3D &param.default;
-> +
-> +            self.param_ts.extend(quote!{
-> +                #[allow(non_upper_case_globals)]
-> +                pub(crate) static #param_name:
-> +                    ::kernel::module_param::ModuleParamAccess<#param_typ=
-e> =3D
-> +                        ::kernel::module_param::ModuleParamAccess::new(#=
-param_default);
-> +
-> +                const _: () =3D {
-> +                    #[allow(non_upper_case_globals)]
-> +                    #[link_section =3D "__param"]
-> +                    #[used(compiler)]
-> +                    static #static_name:
->                          ::kernel::module_param::KernelParam =3D
->                          ::kernel::module_param::KernelParam::new(
-> -                            ::kernel::bindings::kernel_param {{
-> -                                name: if ::core::cfg!(MODULE) {{
-> -                                    ::kernel::c_str!(\"{param_name}\").t=
-o_bytes_with_nul()
-> -                                }} else {{
-> -                                    ::kernel::c_str!(\"{module_name}.{pa=
-ram_name}\")
-> -                                        .to_bytes_with_nul()
-> -                                }}.as_ptr(),
-> +                            ::kernel::bindings::kernel_param {
-> +                                name: kernel::str::as_char_ptr_in_const_=
-context(
-> +                                    if ::core::cfg!(MODULE) {
-> +                                        #param_name_cstr
-> +                                    } else {
-> +                                        #param_name_cstr_with_module
-> +                                    }
-> +                                ),
->                                  // SAFETY: `__this_module` is constructe=
-d by the kernel at load
->                                  // time and will not be freed until the =
-module is unloaded.
->                                  #[cfg(MODULE)]
-> -                                mod_: unsafe {{
-> +                                mod_: unsafe {
->                                      core::ptr::from_ref(&::kernel::bindi=
-ngs::__this_module)
->                                          .cast_mut()
-> -                                }},
-> +                                },
->                                  #[cfg(not(MODULE))]
->                                  mod_: ::core::ptr::null_mut(),
-> -                                ops: core::ptr::from_ref(&{ops}),
-> +                                ops: core::ptr::from_ref(&#ops),
->                                  perm: 0, // Will not appear in sysfs
->                                  level: -1,
->                                  flags: 0,
-> -                                __bindgen_anon_1: ::kernel::bindings::ke=
-rnel_param__bindgen_ty_1 {{
-> -                                    arg: {param_name}.as_void_ptr()
-> -                                }},
-> -                            }}
-> +                                __bindgen_anon_1: ::kernel::bindings::ke=
-rnel_param__bindgen_ty_1 {
-> +                                    arg: #param_name.as_void_ptr()
-> +                                },
-> +                            }
->                          );
-> -                }};
-> -                ",
-> -                module_name =3D info.name.value(),
-> -                ops =3D ops,
-> -            )
-> -            .unwrap();
-> +                };
-> +            });
->          }
->      }
->  }
->
-> -fn param_ops_path(param_type: &str) -> &'static str {
-> +fn param_ops_path(param_type: &str) -> Path {
->      match param_type {
-> -        "i8" =3D> "::kernel::module_param::PARAM_OPS_I8",
-> -        "u8" =3D> "::kernel::module_param::PARAM_OPS_U8",
-> -        "i16" =3D> "::kernel::module_param::PARAM_OPS_I16",
-> -        "u16" =3D> "::kernel::module_param::PARAM_OPS_U16",
-> -        "i32" =3D> "::kernel::module_param::PARAM_OPS_I32",
-> -        "u32" =3D> "::kernel::module_param::PARAM_OPS_U32",
-> -        "i64" =3D> "::kernel::module_param::PARAM_OPS_I64",
-> -        "u64" =3D> "::kernel::module_param::PARAM_OPS_U64",
-> -        "isize" =3D> "::kernel::module_param::PARAM_OPS_ISIZE",
-> -        "usize" =3D> "::kernel::module_param::PARAM_OPS_USIZE",
-> +        "i8" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_I8),
-> +        "u8" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_U8),
-> +        "i16" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_I16),
-> +        "u16" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_U16),
-> +        "i32" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_I32),
-> +        "u32" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_U32),
-> +        "i64" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_I64),
-> +        "u64" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_U64),
-> +        "isize" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_ISIZ=
-E),
-> +        "usize" =3D> parse_quote!(::kernel::module_param::PARAM_OPS_USIZ=
-E),
->          t =3D> panic!("Unsupported parameter type {}", t),
->      }
->  }
-> @@ -424,29 +437,41 @@ fn parse(input: ParseStream<'_>) -> Result<Self> {
->  }
->
->  pub(crate) fn module(info: ModuleInfo) -> Result<TokenStream> {
-> +    let ModuleInfo {
-> +        type_,
-> +        license,
-> +        name,
-> +        authors,
-> +        description,
-> +        alias,
-> +        firmware,
-> +        imports_ns,
-> +        params: _,
-> +    } =3D &info;
-> +
->      // Rust does not allow hyphens in identifiers, use underscore instea=
-d.
-> -    let ident =3D info.name.value().replace('-', "_");
-> +    let ident =3D name.value().replace('-', "_");
->      let mut modinfo =3D ModInfoBuilder::new(ident.as_ref());
-> -    if let Some(authors) =3D &info.authors {
-> +    if let Some(authors) =3D authors {
->          for author in authors {
->              modinfo.emit("author", &author.value());
->          }
->      }
-> -    if let Some(description) =3D &info.description {
-> +    if let Some(description) =3D description {
->          modinfo.emit("description", &description.value());
->      }
-> -    modinfo.emit("license", &info.license.value());
-> -    if let Some(aliases) =3D &info.alias {
-> +    modinfo.emit("license", &license.value());
-> +    if let Some(aliases) =3D alias {
->          for alias in aliases {
->              modinfo.emit("alias", &alias.value());
->          }
->      }
-> -    if let Some(firmware) =3D &info.firmware {
-> +    if let Some(firmware) =3D firmware {
->          for fw in firmware {
->              modinfo.emit("firmware", &fw.value());
->          }
->      }
-> -    if let Some(imports) =3D &info.imports_ns {
-> +    if let Some(imports) =3D imports_ns {
->          for ns in imports {
->              modinfo.emit("import_ns", &ns.value());
->          }
-> @@ -459,182 +484,189 @@ pub(crate) fn module(info: ModuleInfo) -> Result<=
-TokenStream> {
->
->      modinfo.emit_params(&info);
->
-> -    Ok(format!(
-> -        "
-> -            /// The module name.
-> -            ///
-> -            /// Used by the printing macros, e.g. [`info!`].
-> -            const __LOG_PREFIX: &[u8] =3D b\"{name}\\0\";
-> -
-> -            // SAFETY: `__this_module` is constructed by the kernel at l=
-oad time and will not be
-> -            // freed until the module is unloaded.
-> -            #[cfg(MODULE)]
-> -            static THIS_MODULE: ::kernel::ThisModule =3D unsafe {{
-> -                extern \"C\" {{
-> -                    static __this_module: ::kernel::types::Opaque<::kern=
-el::bindings::module>;
-> -                }}
-> -
-> -                ::kernel::ThisModule::from_ptr(__this_module.get())
-> -            }};
-> -            #[cfg(not(MODULE))]
-> -            static THIS_MODULE: ::kernel::ThisModule =3D unsafe {{
-> -                ::kernel::ThisModule::from_ptr(::core::ptr::null_mut())
-> -            }};
-> -
-> -            /// The `LocalModule` type is the type of the module created=
- by `module!`,
-> -            /// `module_pci_driver!`, `module_platform_driver!`, etc.
-> -            type LocalModule =3D {type_};
-> -
-> -            impl ::kernel::ModuleMetadata for {type_} {{
-> -                const NAME: &'static ::kernel::str::CStr =3D c\"{name}\"=
-;
-> -            }}
-> -
-> -            // Double nested modules, since then nobody can access the p=
-ublic items inside.
-> -            mod __module_init {{
-> -                mod __module_init {{
-> -                    use super::super::{type_};
-> -                    use pin_init::PinInit;
-> -
-> -                    /// The \"Rust loadable module\" mark.
-> -                    //
-> -                    // This may be best done another way later on, e.g. =
-as a new modinfo
-> -                    // key or a new section. For the moment, keep it sim=
-ple.
-> -                    #[cfg(MODULE)]
-> -                    #[doc(hidden)]
-> -                    #[used(compiler)]
-> -                    static __IS_RUST_MODULE: () =3D ();
-> -
-> -                    static mut __MOD: ::core::mem::MaybeUninit<{type_}> =
-=3D
-> -                        ::core::mem::MaybeUninit::uninit();
-> -
-> -                    // Loadable modules need to export the `{{init,clean=
-up}}_module` identifiers.
-> -                    /// # Safety
-> -                    ///
-> -                    /// This function must not be called after module in=
-itialization, because it may be
-> -                    /// freed after that completes.
-> -                    #[cfg(MODULE)]
-> -                    #[doc(hidden)]
-> -                    #[no_mangle]
-> -                    #[link_section =3D \".init.text\"]
-> -                    pub unsafe extern \"C\" fn init_module() -> ::kernel=
-::ffi::c_int {{
-> -                        // SAFETY: This function is inaccessible to the =
-outside due to the double
-> -                        // module wrapping it. It is called exactly once=
- by the C side via its
-> -                        // unique name.
-> -                        unsafe {{ __init() }}
-> -                    }}
-> -
-> -                    #[cfg(MODULE)]
-> -                    #[doc(hidden)]
-> -                    #[used(compiler)]
-> -                    #[link_section =3D \".init.data\"]
-> -                    static __UNIQUE_ID___addressable_init_module: unsafe=
- extern \"C\" fn() -> i32 =3D init_module;
-> -
-> -                    #[cfg(MODULE)]
-> -                    #[doc(hidden)]
-> -                    #[no_mangle]
-> -                    #[link_section =3D \".exit.text\"]
-> -                    pub extern \"C\" fn cleanup_module() {{
-> -                        // SAFETY:
-> -                        // - This function is inaccessible to the outsid=
-e due to the double
-> -                        //   module wrapping it. It is called exactly on=
-ce by the C side via its
-> -                        //   unique name,
-> -                        // - furthermore it is only called after `init_m=
-odule` has returned `0`
-> -                        //   (which delegates to `__init`).
-> -                        unsafe {{ __exit() }}
-> -                    }}
-> -
-> -                    #[cfg(MODULE)]
-> -                    #[doc(hidden)]
-> -                    #[used(compiler)]
-> -                    #[link_section =3D \".exit.data\"]
-> -                    static __UNIQUE_ID___addressable_cleanup_module: ext=
-ern \"C\" fn() =3D cleanup_module;
-> -
-> -                    // Built-in modules are initialized through an initc=
-all pointer
-> -                    // and the identifiers need to be unique.
-> -                    #[cfg(not(MODULE))]
-> -                    #[cfg(not(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS))]
-> -                    #[doc(hidden)]
-> -                    #[link_section =3D \"{initcall_section}\"]
-> -                    #[used(compiler)]
-> -                    pub static __{ident}_initcall: extern \"C\" fn() ->
-> -                        ::kernel::ffi::c_int =3D __{ident}_init;
-> -
-> -                    #[cfg(not(MODULE))]
-> -                    #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
-> -                    ::core::arch::global_asm!(
-> -                        r#\".section \"{initcall_section}\", \"a\"
-> -                        __{ident}_initcall:
-> -                            .long   __{ident}_init - .
-> -                            .previous
-> -                        \"#
-> -                    );
-> -
-> -                    #[cfg(not(MODULE))]
-> -                    #[doc(hidden)]
-> -                    #[no_mangle]
-> -                    pub extern \"C\" fn __{ident}_init() -> ::kernel::ff=
-i::c_int {{
-> -                        // SAFETY: This function is inaccessible to the =
-outside due to the double
-> -                        // module wrapping it. It is called exactly once=
- by the C side via its
-> -                        // placement above in the initcall section.
-> -                        unsafe {{ __init() }}
-> -                    }}
-> -
-> -                    #[cfg(not(MODULE))]
-> -                    #[doc(hidden)]
-> -                    #[no_mangle]
-> -                    pub extern \"C\" fn __{ident}_exit() {{
-> -                        // SAFETY:
-> -                        // - This function is inaccessible to the outsid=
-e due to the double
-> -                        //   module wrapping it. It is called exactly on=
-ce by the C side via its
-> -                        //   unique name,
-> -                        // - furthermore it is only called after `__{ide=
-nt}_init` has
-> -                        //   returned `0` (which delegates to `__init`).
-> -                        unsafe {{ __exit() }}
-> -                    }}
-> -
-> -                    /// # Safety
-> -                    ///
-> -                    /// This function must only be called once.
-> -                    unsafe fn __init() -> ::kernel::ffi::c_int {{
-> -                        let initer =3D
-> -                            <{type_} as ::kernel::InPlaceModule>::init(&=
-super::super::THIS_MODULE);
-> -                        // SAFETY: No data race, since `__MOD` can only =
-be accessed by this module
-> -                        // and there only `__init` and `__exit` access i=
-t. These functions are only
-> -                        // called once and `__exit` cannot be called bef=
-ore or during `__init`.
-> -                        match unsafe {{ initer.__pinned_init(__MOD.as_mu=
-t_ptr()) }} {{
-> -                            Ok(m) =3D> 0,
-> -                            Err(e) =3D> e.to_errno(),
-> -                        }}
-> -                    }}
-> -
-> -                    /// # Safety
-> -                    ///
-> -                    /// This function must
-> -                    /// - only be called once,
-> -                    /// - be called after `__init` has been called and r=
-eturned `0`.
-> -                    unsafe fn __exit() {{
-> -                        // SAFETY: No data race, since `__MOD` can only =
-be accessed by this module
-> -                        // and there only `__init` and `__exit` access i=
-t. These functions are only
-> -                        // called once and `__init` was already called.
-> -                        unsafe {{
-> -                            // Invokes `drop()` on `__MOD`, which should=
- be used for cleanup.
-> -                            __MOD.assume_init_drop();
-> -                        }}
-> -                    }}
-> -                    {modinfo}
-> -                }}
-> -            }}
-> -            mod module_parameters {{
-> -                {params}
-> -            }}
-> -        ",
-> -        type_ =3D info.type_,
-> -        name =3D info.name.value(),
-> -        ident =3D ident,
-> -        modinfo =3D modinfo.buffer,
-> -        params =3D modinfo.param_buffer,
-> -        initcall_section =3D ".initcall6.init"
-> -    )
-> -    .parse()
-> -    .expect("Error parsing formatted string into token stream."))
-> +    let modinfo_ts =3D modinfo.ts;
-> +    let params_ts =3D modinfo.param_ts;
-> +
-> +    let ident_init =3D format_ident!("__{ident}_init");
-> +    let ident_exit =3D format_ident!("__{ident}_exit");
-> +    let ident_initcall =3D format_ident!("__{ident}_initcall");
-> +    let initcall_section =3D ".initcall6.init";
-> +
-> +    let global_asm =3D format!(
-> +        r#".section "{initcall_section}", "a"
-> +        __{ident}_initcall:
-> +            .long   __{ident}_init - .
-> +            .previous
-> +        "#
-> +    );
-> +
-> +    let name_cstr =3D
-> +        Literal::c_string(&CString::new(name.value()).expect("name conta=
-ins NUL-terminator"));
-> +
-> +    Ok(quote! {
-> +        /// The module name.
-> +        ///
-> +        /// Used by the printing macros, e.g. [`info!`].
-> +        const __LOG_PREFIX: &[u8] =3D #name_cstr.to_bytes_with_nul();
-> +
-> +        // SAFETY: `__this_module` is constructed by the kernel at load =
-time and will not be
-> +        // freed until the module is unloaded.
-> +        #[cfg(MODULE)]
-> +        static THIS_MODULE: ::kernel::ThisModule =3D unsafe {
-> +            extern "C" {
-> +                static __this_module: ::kernel::types::Opaque<::kernel::=
-bindings::module>;
-> +            };
-> +
-> +            ::kernel::ThisModule::from_ptr(__this_module.get())
-> +        };
-> +
-> +        #[cfg(not(MODULE))]
-> +        static THIS_MODULE: ::kernel::ThisModule =3D unsafe {
-> +            ::kernel::ThisModule::from_ptr(::core::ptr::null_mut())
-> +        };
-> +
-> +        /// The `LocalModule` type is the type of the module created by =
-`module!`,
-> +        /// `module_pci_driver!`, `module_platform_driver!`, etc.
-> +        type LocalModule =3D #type_;
-> +
-> +        impl ::kernel::ModuleMetadata for #type_ {
-> +            const NAME: &'static ::kernel::str::CStr =3D #name_cstr;
-> +        }
-> +
-> +        // Double nested modules, since then nobody can access the publi=
-c items inside.
-> +        mod __module_init {
-> +            mod __module_init {
-> +                use super::super::#type_;
-> +                use pin_init::PinInit;
-> +
-> +                /// The "Rust loadable module" mark.
-> +                //
-> +                // This may be best done another way later on, e.g. as a=
- new modinfo
-> +                // key or a new section. For the moment, keep it simple.
-> +                #[cfg(MODULE)]
-> +                #[doc(hidden)]
-> +                #[used(compiler)]
-> +                static __IS_RUST_MODULE: () =3D ();
-> +
-> +                static mut __MOD: ::core::mem::MaybeUninit<#type_> =3D
-> +                    ::core::mem::MaybeUninit::uninit();
-> +
-> +                // Loadable modules need to export the `{init,cleanup}_m=
-odule` identifiers.
-> +                /// # Safety
-> +                ///
-> +                /// This function must not be called after module initia=
-lization, because it may be
-> +                /// freed after that completes.
-> +                #[cfg(MODULE)]
-> +                #[doc(hidden)]
-> +                #[no_mangle]
-> +                #[link_section =3D ".init.text"]
-> +                pub unsafe extern "C" fn init_module() -> ::kernel::ffi:=
-:c_int {
-> +                    // SAFETY: This function is inaccessible to the outs=
-ide due to the double
-> +                    // module wrapping it. It is called exactly once by =
-the C side via its
-> +                    // unique name.
-> +                    unsafe { __init() }
-> +                }
-> +
-> +                #[cfg(MODULE)]
-> +                #[doc(hidden)]
-> +                #[used(compiler)]
-> +                #[link_section =3D ".init.data"]
-> +                static __UNIQUE_ID___addressable_init_module: unsafe ext=
-ern "C" fn() -> i32 =3D
-> +                    init_module;
-> +
-> +                #[cfg(MODULE)]
-> +                #[doc(hidden)]
-> +                #[no_mangle]
-> +                #[link_section =3D ".exit.text"]
-> +                pub extern "C" fn cleanup_module() {
-> +                    // SAFETY:
-> +                    // - This function is inaccessible to the outside du=
-e to the double
-> +                    //   module wrapping it. It is called exactly once b=
-y the C side via its
-> +                    //   unique name,
-> +                    // - furthermore it is only called after `init_modul=
-e` has returned `0`
-> +                    //   (which delegates to `__init`).
-> +                    unsafe { __exit() }
-> +                }
-> +
-> +                #[cfg(MODULE)]
-> +                #[doc(hidden)]
-> +                #[used(compiler)]
-> +                #[link_section =3D ".exit.data"]
-> +                static __UNIQUE_ID___addressable_cleanup_module: extern =
-"C" fn() =3D cleanup_module;
-> +
-> +                // Built-in modules are initialized through an initcall =
-pointer
-> +                // and the identifiers need to be unique.
-> +                #[cfg(not(MODULE))]
-> +                #[cfg(not(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS))]
-> +                #[doc(hidden)]
-> +                #[link_section =3D #initcall_section]
-> +                #[used(compiler)]
-> +                pub static #ident_initcall: extern "C" fn() ->
-> +                    ::kernel::ffi::c_int =3D #ident_initcall;
-> +
-> +                #[cfg(not(MODULE))]
-> +                #[cfg(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS)]
-> +                ::core::arch::global_asm!(#global_asm);
-> +
-> +                #[cfg(not(MODULE))]
-> +                #[doc(hidden)]
-> +                #[no_mangle]
-> +                pub extern "C" fn #ident_init() -> ::kernel::ffi::c_int =
-{
-> +                    // SAFETY: This function is inaccessible to the outs=
-ide due to the double
-> +                    // module wrapping it. It is called exactly once by =
-the C side via its
-> +                    // placement above in the initcall section.
-> +                    unsafe { __init() }
-> +                }
-> +
-> +                #[cfg(not(MODULE))]
-> +                #[doc(hidden)]
-> +                #[no_mangle]
-> +                pub extern "C" fn #ident_exit() {
-> +                    // SAFETY:
-> +                    // - This function is inaccessible to the outside du=
-e to the double
-> +                    //   module wrapping it. It is called exactly once b=
-y the C side via its
-> +                    //   unique name,
-> +                    // - furthermore it is only called after `#ident_ini=
-t` has
-> +                    //   returned `0` (which delegates to `__init`).
-> +                    unsafe { __exit() }
-> +                }
-> +
-> +                /// # Safety
-> +                ///
-> +                /// This function must only be called once.
-> +                unsafe fn __init() -> ::kernel::ffi::c_int {
-> +                    let initer =3D
-> +                        <#type_ as ::kernel::InPlaceModule>::init(&super=
-::super::THIS_MODULE);
-> +                    // SAFETY: No data race, since `__MOD` can only be a=
-ccessed by this module
-> +                    // and there only `__init` and `__exit` access it. T=
-hese functions are only
-> +                    // called once and `__exit` cannot be called before =
-or during `__init`.
-> +                    match unsafe { initer.__pinned_init(__MOD.as_mut_ptr=
-()) } {
-> +                        Ok(m) =3D> 0,
-> +                        Err(e) =3D> e.to_errno(),
-> +                    }
-> +                }
-> +
-> +                /// # Safety
-> +                ///
-> +                /// This function must
-> +                /// - only be called once,
-> +                /// - be called after `__init` has been called and retur=
-ned `0`.
-> +                unsafe fn __exit() {
-> +                    // SAFETY: No data race, since `__MOD` can only be a=
-ccessed by this module
-> +                    // and there only `__init` and `__exit` access it. T=
-hese functions are only
-> +                    // called once and `__init` was already called.
-> +                    unsafe {
-> +                        // Invokes `drop()` on `__MOD`, which should be =
-used for cleanup.
-> +                        __MOD.assume_init_drop();
-> +                    }
-> +                }
-> +
-> +                #modinfo_ts
-> +            }
-> +        }
-> +
-> +        mod module_parameters {
-> +            #params_ts
-> +        }
-> +    })
->  }
-> --
-> 2.51.2
->
->
+diff --git a/Documentation/ABI/testing/sysfs-module b/Documentation/ABI/testing/sysfs-module
+index 6bc9af6229f0..d8e2a33fd514 100644
+--- a/Documentation/ABI/testing/sysfs-module
++++ b/Documentation/ABI/testing/sysfs-module
+@@ -48,6 +48,15 @@ Contact:	Kay Sievers <kay.sievers@vrfy.org>
+ Description:	Show the initialization state(live, coming, going) of
+ 		the module.
+ 
++What:		/sys/module/*/import_ns
++Date:		January 2026
++KernelVersion:	6.20
++Contact:	linux-modules@vger.kernel.org
++Description:	List of symbol namespaces imported by this module via
++		MODULE_IMPORT_NS(). Each namespace appears on a separate line.
++		This file only exists for modules that import at least one
++		namespace.
++
+ What:		/sys/module/*/taint
+ Date:		Jan 2012
+ KernelVersion:	3.3
+diff --git a/include/linux/module.h b/include/linux/module.h
+index d80c3ea57472..f1bcca03f90b 100644
+--- a/include/linux/module.h
++++ b/include/linux/module.h
+@@ -419,6 +419,7 @@ struct module {
+ 	struct module_attribute *modinfo_attrs;
+ 	const char *version;
+ 	const char *srcversion;
++	const char *imported_namespaces;
+ 	struct kobject *holders_dir;
+ 
+ 	/* Exported symbols */
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 710ee30b3bea..6c41934f1135 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -607,6 +607,23 @@ static const struct module_attribute modinfo_##field = {              \
+ MODINFO_ATTR(version);
+ MODINFO_ATTR(srcversion);
+ 
++static ssize_t show_modinfo_import_ns(const struct module_attribute *mattr,
++				      struct module_kobject *mk, char *buffer)
++{
++	return sysfs_emit(buffer, "%s\n", mk->mod->imported_namespaces);
++}
++
++static int modinfo_import_ns_exists(struct module *mod)
++{
++	return mod->imported_namespaces != NULL;
++}
++
++static const struct module_attribute modinfo_import_ns = {
++	.attr = { .name = "import_ns", .mode = 0444 },
++	.show = show_modinfo_import_ns,
++	.test = modinfo_import_ns_exists,
++};
++
+ static struct {
+ 	char name[MODULE_NAME_LEN];
+ 	char taints[MODULE_FLAGS_BUF_SIZE];
+@@ -1058,6 +1075,7 @@ const struct module_attribute *const modinfo_attrs[] = {
+ 	&module_uevent,
+ 	&modinfo_version,
+ 	&modinfo_srcversion,
++	&modinfo_import_ns,
+ 	&modinfo_initstate,
+ 	&modinfo_coresize,
+ #ifdef CONFIG_ARCH_WANTS_MODULES_DATA_IN_VMALLOC
+@@ -1753,11 +1771,48 @@ static void module_license_taint_check(struct module *mod, const char *license)
+ 	}
+ }
+ 
++static int copy_modinfo_import_ns(struct module *mod, struct load_info *info)
++{
++	char *ns;
++	size_t len, total_len = 0;
++	char *buf, *p;
++
++	for_each_modinfo_entry(ns, info, "import_ns")
++		total_len += strlen(ns) + 1;
++
++	if (!total_len) {
++		mod->imported_namespaces = NULL;
++		return 0;
++	}
++
++	buf = kmalloc(total_len, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++
++	p = buf;
++	for_each_modinfo_entry(ns, info, "import_ns") {
++		len = strlen(ns);
++		memcpy(p, ns, len);
++		p += len;
++		*p++ = '\n';
++	}
++	/* Replace trailing newline with null terminator. */
++	*(p - 1) = '\0';
++
++	mod->imported_namespaces = buf;
++	return 0;
++}
++
++static void free_modinfo_import_ns(struct module *mod)
++{
++	kfree(mod->imported_namespaces);
++}
++
+ static int setup_modinfo(struct module *mod, struct load_info *info)
+ {
+ 	const struct module_attribute *attr;
+ 	char *imported_namespace;
+-	int i;
++	int i, err;
+ 
+ 	for (i = 0; (attr = modinfo_attrs[i]); i++) {
+ 		if (attr->setup)
+@@ -1776,6 +1831,10 @@ static int setup_modinfo(struct module *mod, struct load_info *info)
+ 		}
+ 	}
+ 
++	err = copy_modinfo_import_ns(mod, info);
++	if (err)
++		return err;
++
+ 	return 0;
+ }
+ 
+@@ -1788,6 +1847,7 @@ static void free_modinfo(struct module *mod)
+ 		if (attr->free)
+ 			attr->free(mod);
+ 	}
++	free_modinfo_import_ns(mod);
+ }
+ 
+ bool __weak module_init_section(const char *name)
+-- 
+2.52.0
+
 
