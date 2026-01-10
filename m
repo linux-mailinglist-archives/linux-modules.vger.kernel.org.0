@@ -1,81 +1,80 @@
-Return-Path: <linux-modules+bounces-5329-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5331-lists+linux-modules=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-modules@lfdr.de
 Delivered-To: lists+linux-modules@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95B90D0D818
-	for <lists+linux-modules@lfdr.de>; Sat, 10 Jan 2026 16:10:47 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6415D0D83F
+	for <lists+linux-modules@lfdr.de>; Sat, 10 Jan 2026 16:12:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C3E9130158FD
-	for <lists+linux-modules@lfdr.de>; Sat, 10 Jan 2026 15:09:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2B9003053291
+	for <lists+linux-modules@lfdr.de>; Sat, 10 Jan 2026 15:09:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2FB0346FD1;
-	Sat, 10 Jan 2026 15:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 021F5347BDB;
+	Sat, 10 Jan 2026 15:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNkkbRo6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKMMlPNv"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470C5346FBE
-	for <linux-modules@vger.kernel.org>; Sat, 10 Jan 2026 15:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37B13491D0
+	for <linux-modules@vger.kernel.org>; Sat, 10 Jan 2026 15:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768057761; cv=none; b=kyArsCbQEtddWl0pA3kahazeseZ6lb30qJ4o09kv6BCSD0/at5ZeXg7ROUEb1MFstDs3MkLFmo8ksB8mrlcDYGVnxrl5NRQDLWaB9KIGM+XmSdHNLwBreCpI2tNhZiaD4MWPeu7f8JUMAHfgaSwilPF8KkuqdhQI0jVSBOwZf9E=
+	t=1768057771; cv=none; b=sNZcqOlDZoBPfnkX6s7jGz7JBgHo22fPiP+RXuS3TA6EQ6sMdiHkWjDlsMSVZSgJxtm4gaFDomvslxWjUksssx7t0mH/H1OqOJe0Nt2BnOKtA0GL1wc6MlRN1sDsBF7WRCfMAxEgypUyd8a4jon+8D/s/RxNBt712S2TW+VGbhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768057761; c=relaxed/simple;
-	bh=pObMsqQ3xkzVkZ3cfdHVrZzRa8fls1Dett+yl59GTWk=;
+	s=arc-20240116; t=1768057771; c=relaxed/simple;
+	bh=1FB+uT1pALfUGFef4CiqxjN0XjuunSUgAxAx5cQ/hwo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=i7XN7oIoW1BX3BGqc16x4r7bDY0Y8ZHzIAWqBkR+F2l3+myVtlMJTRvDqrwzY/EsyF2/acL5VwGrzDfjlriOjTlBR0XTPp8zAYyAGHPuqxEWpsjJrtxNpFfsgvjINGOPuuzcNB9koAv224OV80bNLCeDmfCBxJ9WM2EIu8eDmCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNkkbRo6; arc=none smtp.client-ip=209.85.167.42
+	 In-Reply-To:To:Cc; b=SySiChZBWP2smP4wfQWtZ5rLOel40iUt8szVBXCM2UOWaOjuSuJ3TGrfnYq2rv3D9+k1ILwT3lpofC1tCHvIjwY/ifQtYUmwx717ttI/O5EFmxXKxl+AbGjmlTHsfocmbjbhf2VkIXtRWOVUF7wdm+0n/eqRO99BG2g8r9KwOkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CKMMlPNv; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-59b7bb3b913so2876928e87.1
-        for <linux-modules@vger.kernel.org>; Sat, 10 Jan 2026 07:09:20 -0800 (PST)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-59b72a1e2f0so4690571e87.0
+        for <linux-modules@vger.kernel.org>; Sat, 10 Jan 2026 07:09:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768057758; x=1768662558; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1768057762; x=1768662562; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=POe8fbaXk5saKFPceg6wmKUDp4vPexwP90O+JTHpGXU=;
-        b=NNkkbRo6aZbyc06RlLk1lH6ZXqkmowM+l54L2ZcMX1EWCqGBDSx/t1ut8jyp4lLRYe
-         ZzCPCSWbF/6nHNtqketNdBc2Rs4p7n2NxODS9mhEDRzCdo1MGhtrdqPwD8DbgL6uNHEp
-         +JzoXSp0L3AE/dwcjuAhG1QNca7EFz+yoKTogTRFxzd/Z0EO6xaKOdwtlWqLfGlbCMpW
-         UUCObZsH7+dk9tGaTqseR95BAjGbUHC91fGzO9zB+oZDtqWirktvirSpXpWfjTmF2INb
-         9xrWxT/xIyI+hdRoz5Bj4Ty9XT5xytQNk0sMK2V87pfWGaAh6ZSnaZLe9NdgOtsBNEUc
-         YHuA==
+        bh=Vqf7LCg+sg6Hx5J5qs/p3xtmlckbxwDqMrE5j+qRjSY=;
+        b=CKMMlPNvXpMm1GvHDNAatxWV55AUHOZ/PGrn124XPDPrWuSgUdhRqbmUHGlZ82BJht
+         nDTSTcpsiNo844EQgZ3vRE3LIbgC2L/2tCwAtw57a3RBAnCAc2tBunEZLSzTXwO5hQkt
+         Z6vfxBO1KrdwOGWMk6hMWGHp8ITA2UxQYbDFMEIXcT7HorZ26Y+U1wUNBI6rCV+MhRN7
+         6Qm5OtL+PKlAL5O0Rg5NGEdDiGmuEuq1/VCWt+EHHMOm/h44SEkzvDM36OYNJFCPt0e8
+         6umbr6gRTqplzwwdwSbSJP1AGItO/gbdTOcIr0y3MJztwvAHEDHcJhdPsODc4nqFxxog
+         6WVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768057758; x=1768662558;
+        d=1e100.net; s=20230601; t=1768057762; x=1768662562;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=POe8fbaXk5saKFPceg6wmKUDp4vPexwP90O+JTHpGXU=;
-        b=qTAsWCureYhxmKg5liYz2GIf68d4DtQzwT9EBwE/bd0z+tAR7ajnv1uCcKr0VNZrJN
-         B1Frrsy81Hk32lMDdu/I1HQEj95TngjLpxWdnZiEbJBXDpJ+rILmrNIu8/H0X6qae3qY
-         tFXn+pExh2kX2r8g/eOu0/f8xAXFUAaUw+G0n8v/LRXtFekNH3FBOsH3m6gTZVTiTB4h
-         gNcJ7vjO/EsqtNIJgF0chDHrY/YTShwcYb5794pCRsiOL+khZbwbST9Y0LkHuv8fRh9N
-         iQhuwddwTX6CBOdAm05+TopPlt0PO5n56etxeqSJNnHjZ7bLXjSgBskMvecK9uFhtXdr
-         4r6A==
-X-Forwarded-Encrypted: i=1; AJvYcCUTr/Ul6eDnl+gf0BbJozvH2ReoeSKHMTVE2w+r5926iz0+skA+JjrbSZM22K64ULkQtW4Y1501nFRdMm04@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzho6dqs0/IkhBo8YAefvCfriXXD2fonbiobCDYr3+J96oMYhQf
-	pOevAl7FDlRLPR6rGuISLAwFttPMay0/tLMoX58IK6bdKcOcnGu3paie
-X-Gm-Gg: AY/fxX7SPg1/NFP6TE7005a5hNyYW9ItsEKsFJ0m+eS5yVOGJpgeFObO1hxsw755mEf
-	OYabOR8+nYqQHNeR579MNULtt6mOc6og+T8+X9qQYy2ZbdqQGFSjT/Dy0T3Egz2L3RmJEKkAbQm
-	QRlGLyJkrleAGv0SJT74GlKgU2Fd7ZZ3fLFsCE2N3KEw0liJeO73tfNdZjKr8nVYMY+4UQEa+Kj
-	p7cvy4J+tVmsDKLjyY3PmBGzvOyzNbToQHK5qZygdecDUC5dZCbOOuxiecncYkWK1fsqoL8TSoh
-	ah5DRiQBxpWImkTe683E5gZpja3Qq7CZxKsNQ67TjK/hk7Gb/ssxQ0E918dKV9/h1g/QXamBY3L
-	/LMWshWVQi9l5VKDdS/fo0d+7//xhEY2GZlSlvMamkdBywvw304RUDLi4C0ppY8CYUl1Ni1rXwH
-	I5MouEVSSaOX3opiBUt5jJC57kAsg0iselcaKLx1oNb3vHsqUmuu6t/AEYk0073vM0SrVNn7SV
-X-Google-Smtp-Source: AGHT+IFNLBJQ01WunUBd430d8tTEifFvMoI0XyeN6DoOTINO7+ijuLgcerNFWqW0B99vr+losLUPpw==
-X-Received: by 2002:a05:6512:2117:b0:59b:7319:1178 with SMTP id 2adb3069b0e04-59b7319121bmr2477799e87.18.1768057758332;
-        Sat, 10 Jan 2026 07:09:18 -0800 (PST)
+        bh=Vqf7LCg+sg6Hx5J5qs/p3xtmlckbxwDqMrE5j+qRjSY=;
+        b=QNKXnrVABJg9HM6ClIKxdq2U7fvZahHvIeTlMOST3CpkKCWOD0QX+vUvDqhszPVvCF
+         lB7duZsKIe6GVQwWhIRXUM9Q3uyAssY2t0Ymn0umtCuI9LiDiUE2e+Q7d+tiPd9UOlMp
+         HqxifVY2l8I1bJinZL7NtLZCk+5PNA04/Uz8CNai2c3/CEjywLEz/mg0UwwJi3bIVUEB
+         c03kSiJAykB7A1mzHZXVMgFxcEqgDFvnXaD9RBaDXZmmWufTBZ4m/U8XBTJk8bMzVTj/
+         TItf8J80EMJHSYyP7J0wNe+z7BsMEZSYJsmoj3oso/uEBiVf/Gh/JJFElkGa9OiNJzrF
+         9DcA==
+X-Forwarded-Encrypted: i=1; AJvYcCVJuqiNHdEg/iGsv8dQ+qMkvWttuecTo4G8geZhq1PkBnJ57OqUssI2NzfZkguLnPpytgxcVTaLh23qTDJ5@vger.kernel.org
+X-Gm-Message-State: AOJu0YylGkRvAFx5f0QahW+kkE9BFhrmEjbGrYTpzXoRcoeg4BBbkfoV
+	zxVRkPsZzno/oDKBDEVhC1uP+H0l7jbRPulPb0EvEIXGqEfc87bn+8ebH94IGlwk
+X-Gm-Gg: AY/fxX5eKhizwgQCTGXK0KzwBpkpZ5sS6FnpRkOjHKwFckmLqE++VE1339LN6rrYijA
+	y6WXGXFBxman9IfcYZs8s7mMyMIndwY2ujW3KFCivJft+PR0ezYdUooA7YvtoPbKZtfLKMqhqFr
+	NTsnybH0F7X1d1S7KKYGqjU0S4y+ZWrZ1hYjNrcYgOnbXITIFD7ln6oOuL5pICe1M9pxjOLKeYA
+	cX2ekYGiZ8laceb4E5R/8gldlvBmjweISGCnEeiLJJoiPos3LVAM80nuJBRRzLwIFXNLMcmb+3y
+	E1O5ch8hJbfXGgOm2CtyFDxHv1Zt+BKIk3rMsa7yp1bEZQ3DhpcdyDQWoOwzb9W9J6FHE8povXN
+	Tj0csist5uougYSel+EzuyE1nI/otqYaeT3EkELlwlAnh2aF8LLXgAAmT5klV9JladsP3FlGnXz
+	q2GRSRzdsRNkGT1bKxFWgowVLDYjPNw9EHJvTb87WX5Zw0a9ANWHfaYxbzx43rou07toe5ZUIS
+X-Google-Smtp-Source: AGHT+IHEE1TGipeoD2/6eyBBIsojGiNqm7JwcbPiYjVFBwHDR5nwSai8es4nGi6I/fgjxe+bGdX/zQ==
+X-Received: by 2002:a05:6512:b01:b0:59b:8483:8d97 with SMTP id 2adb3069b0e04-59b84838e5amr1204577e87.13.1768057761899;
+        Sat, 10 Jan 2026 07:09:21 -0800 (PST)
 Received: from LT-5CG5341NQ4.nordic.imtech.com (37-33-148-7.bb.dnainternet.fi. [37.33.148.7])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b75543a64sm2137059e87.49.2026.01.10.07.09.16
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59b75543a64sm2137059e87.49.2026.01.10.07.09.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jan 2026 07:09:17 -0800 (PST)
+        Sat, 10 Jan 2026 07:09:21 -0800 (PST)
 From: Kari Argillander <kari.argillander@gmail.com>
-Date: Sat, 10 Jan 2026 17:08:03 +0200
-Subject: [PATCH RFC v3 05/15] rust: drm: fix missing owner in
- file_operations
+Date: Sat, 10 Jan 2026 17:08:04 +0200
+Subject: [PATCH RFC v3 06/15] rust: configfs: use new THIS_MODULE
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260110-this_module_fix-v3-5-97a3d9c14e8b@gmail.com>
+Message-Id: <20260110-this_module_fix-v3-6-97a3d9c14e8b@gmail.com>
 References: <20260110-this_module_fix-v3-0-97a3d9c14e8b@gmail.com>
 In-Reply-To: <20260110-this_module_fix-v3-0-97a3d9c14e8b@gmail.com>
 To: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -100,130 +99,138 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
  Kari Argillander <kari.argillander@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768057742; l=4166;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768057742; l=5277;
  i=kari.argillander@gmail.com; s=20251219; h=from:subject:message-id;
- bh=pObMsqQ3xkzVkZ3cfdHVrZzRa8fls1Dett+yl59GTWk=;
- b=7zLe5lryXy/9T6T96fAXZ7YJeKt8qHxw069TB58wLHh6FQK1Lc+lOPi4kQLZ71zfyr/Y1nIP9
- SPGhEma2/P/CfpNojS+bq8ykYv3iAGUyS47NiSESO5YlCZu6vHqAVfF
+ bh=1FB+uT1pALfUGFef4CiqxjN0XjuunSUgAxAx5cQ/hwo=;
+ b=KTu6JmsvpKxaB1JzW8EXhr264WUGMX9sqMRbv98Urte4QvFUB+KimYWM6CyVbNCSLfejIngg3
+ 769ilDyNnBwDbNGyi+QKw7almLRAojJtFeFDvsqYuTex4HO29lmm4rN
 X-Developer-Key: i=kari.argillander@gmail.com; a=ed25519;
  pk=RwSxyhTpE3z4sywdDbIkC3q33ZQLNyhYWxT44iTY6r4=
 
-Fix missing .owner field in file_operations. This has been previosly
-left out because Rust feature `const_refs_to_static` has not been
-enabled. Now that it is we can make define owner even in const context.
-
-This should probably fix use-after-free problems in situations where
-file is opened and module driver is unloaded during that.
+We have new THIS_MODULE and ThisModule is now trait. Pass THIS_MODULE as
+generic type parameter which is current convention.
 
 Signed-off-by: Kari Argillander <kari.argillander@gmail.com>
 ---
- drivers/gpu/drm/nova/driver.rs | 2 ++
- drivers/gpu/drm/tyr/driver.rs  | 2 ++
- rust/kernel/drm/device.rs      | 2 +-
- rust/kernel/drm/driver.rs      | 4 ++++
- rust/kernel/drm/gem/mod.rs     | 5 +++--
- 5 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/block/rnull/configfs.rs |  2 +-
+ rust/kernel/configfs.rs         | 46 +++++++++++++++++++++--------------------
+ 2 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/nova/driver.rs b/drivers/gpu/drm/nova/driver.rs
-index b1af0a099551..7ce505802716 100644
---- a/drivers/gpu/drm/nova/driver.rs
-+++ b/drivers/gpu/drm/nova/driver.rs
-@@ -14,6 +14,7 @@
+diff --git a/drivers/block/rnull/configfs.rs b/drivers/block/rnull/configfs.rs
+index 2f5a7da03af5..7223ee7c3032 100644
+--- a/drivers/block/rnull/configfs.rs
++++ b/drivers/block/rnull/configfs.rs
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
  
- use crate::file::File;
- use crate::gem::NovaObject;
-+use crate::THIS_MODULE;
+-use super::{NullBlkDevice, THIS_MODULE};
++use super::NullBlkDevice;
+ use kernel::{
+     block::mq::gen_disk::{GenDisk, GenDiskBuilder},
+     c_str,
+diff --git a/rust/kernel/configfs.rs b/rust/kernel/configfs.rs
+index fe80439ab21f..908cb98d404f 100644
+--- a/rust/kernel/configfs.rs
++++ b/rust/kernel/configfs.rs
+@@ -110,16 +110,21 @@
+ //! [C documentation]: srctree/Documentation/filesystems/configfs.rst
+ //! [`rust_configfs.rs`]: srctree/samples/rust/rust_configfs.rs
  
- pub(crate) struct NovaDriver {
-     #[expect(unused)]
-@@ -65,6 +66,7 @@ fn probe(adev: &auxiliary::Device<Core>, _info: &Self::IdInfo) -> impl PinInit<S
- 
- #[vtable]
- impl drm::Driver for NovaDriver {
-+    type ThisModule = THIS_MODULE;
-     type Data = NovaData;
-     type File = File;
-     type Object = gem::Object<NovaObject>;
-diff --git a/drivers/gpu/drm/tyr/driver.rs b/drivers/gpu/drm/tyr/driver.rs
-index f0da58932702..11932d3f03ff 100644
---- a/drivers/gpu/drm/tyr/driver.rs
-+++ b/drivers/gpu/drm/tyr/driver.rs
-@@ -25,6 +25,7 @@
- use crate::gpu;
- use crate::gpu::GpuInfo;
- use crate::regs;
-+use crate::THIS_MODULE;
- 
- pub(crate) type IoMem = kernel::io::mem::IoMem<SZ_2M>;
- 
-@@ -179,6 +180,7 @@ fn drop(self: Pin<&mut Self>) {
- 
- #[vtable]
- impl drm::Driver for TyrDriver {
-+    type ThisModule = THIS_MODULE;
-     type Data = TyrData;
-     type File = File;
-     type Object = drm::gem::Object<TyrObject>;
-diff --git a/rust/kernel/drm/device.rs b/rust/kernel/drm/device.rs
-index 3ce8f62a0056..a740c87933d0 100644
---- a/rust/kernel/drm/device.rs
-+++ b/rust/kernel/drm/device.rs
-@@ -92,7 +92,7 @@ impl<T: drm::Driver> Device<T> {
-         fops: &Self::GEM_FOPS,
-     };
- 
--    const GEM_FOPS: bindings::file_operations = drm::gem::create_fops();
-+    const GEM_FOPS: bindings::file_operations = drm::gem::create_fops::<T::ThisModule>();
- 
-     /// Create a new `drm::Device` for a `drm::Driver`.
-     pub fn new(dev: &device::Device, data: impl PinInit<T::Data, Error>) -> Result<ARef<Self>> {
-diff --git a/rust/kernel/drm/driver.rs b/rust/kernel/drm/driver.rs
-index f30ee4c6245c..a157db2ea02b 100644
---- a/rust/kernel/drm/driver.rs
-+++ b/rust/kernel/drm/driver.rs
-@@ -9,6 +9,7 @@
-     error::{to_result, Result},
-     prelude::*,
-     sync::aref::ARef,
+-use crate::alloc::flags;
+-use crate::container_of;
+-use crate::page::PAGE_SIZE;
+-use crate::prelude::*;
+-use crate::str::CString;
+-use crate::sync::Arc;
+-use crate::sync::ArcBorrow;
+-use crate::types::Opaque;
+-use core::cell::UnsafeCell;
+-use core::marker::PhantomData;
++use crate::{
++    alloc::flags,
++    container_of,
++    page::PAGE_SIZE,
++    prelude::*,
++    str::CString,
++    sync::Arc,
++    sync::ArcBorrow,
 +    this_module::ThisModule,
- };
- use macros::vtable;
++    types::Opaque, //
++};
++use core::{
++    cell::UnsafeCell,
++    marker::PhantomData, //
++};
  
-@@ -99,6 +100,9 @@ pub trait AllocImpl: super::private::Sealed + drm::gem::IntoGEMObject {
- /// drm_driver` to be registered in the DRM subsystem.
- #[vtable]
- pub trait Driver {
-+    /// Module ownership for this device, provided via `THIS_MODULE`.
-+    type ThisModule: ThisModule;
-+
-     /// Context data associated with the DRM driver
-     type Data: Sync + Send;
+ /// A configfs subsystem.
+ ///
+@@ -744,8 +749,7 @@ macro_rules! impl_item_type {
+     ($tpe:ty) => {
+         impl<Data> ItemType<$tpe, Data> {
+             #[doc(hidden)]
+-            pub const fn new_with_child_ctor<const N: usize, Child>(
+-                owner: &'static ThisModule,
++            pub const fn new_with_child_ctor<const N: usize, Child, TM: ThisModule>(
+                 attributes: &'static AttributeList<N, Data>,
+             ) -> Self
+             where
+@@ -754,7 +758,7 @@ pub const fn new_with_child_ctor<const N: usize, Child>(
+             {
+                 Self {
+                     item_type: Opaque::new(bindings::config_item_type {
+-                        ct_owner: owner.as_ptr(),
++                        ct_owner: TM::OWNER.as_ptr(),
+                         ct_group_ops: GroupOperationsVTable::<Data, Child>::vtable_ptr().cast_mut(),
+                         ct_item_ops: ItemOperationsVTable::<$tpe, Data>::vtable_ptr().cast_mut(),
+                         ct_attrs: core::ptr::from_ref(attributes).cast_mut().cast(),
+@@ -765,13 +769,12 @@ pub const fn new_with_child_ctor<const N: usize, Child>(
+             }
  
-diff --git a/rust/kernel/drm/gem/mod.rs b/rust/kernel/drm/gem/mod.rs
-index d49a9ba02635..705afea65ff6 100644
---- a/rust/kernel/drm/gem/mod.rs
-+++ b/rust/kernel/drm/gem/mod.rs
-@@ -11,6 +11,7 @@
-     error::{to_result, Result},
-     prelude::*,
-     sync::aref::{ARef, AlwaysRefCounted},
-+    this_module::ThisModule,
-     types::Opaque,
- };
- use core::{ops::Deref, ptr::NonNull};
-@@ -292,10 +293,10 @@ impl<T: DriverObject> AllocImpl for Object<T> {
-     };
- }
+             #[doc(hidden)]
+-            pub const fn new<const N: usize>(
+-                owner: &'static ThisModule,
++            pub const fn new<const N: usize, TM: ThisModule>(
+                 attributes: &'static AttributeList<N, Data>,
+             ) -> Self {
+                 Self {
+                     item_type: Opaque::new(bindings::config_item_type {
+-                        ct_owner: owner.as_ptr(),
++                        ct_owner: TM::OWNER.as_ptr(),
+                         ct_group_ops: core::ptr::null_mut(),
+                         ct_item_ops: ItemOperationsVTable::<$tpe, Data>::vtable_ptr().cast_mut(),
+                         ct_attrs: core::ptr::from_ref(attributes).cast_mut().cast(),
+@@ -875,8 +878,7 @@ fn as_ptr(&self) -> *const bindings::config_item_type {
+ ///         = kernel::configfs::ItemType::<
+ ///                 configfs::Subsystem<Configuration>,
+ ///                 Configuration
+-///                 >::new_with_child_ctor::<N,Child>(
+-///             THIS_MODULE.as_ref(),
++///                 >::new_with_child_ctor::<N, Child, crate::THIS_MODULE>(
+ ///             &CONFIGURATION_ATTRS
+ ///         );
+ ///
+@@ -1019,8 +1021,8 @@ macro_rules! configfs_attrs {
+                     const [<$no_child:upper>]: bool = true;
  
--pub(super) const fn create_fops() -> bindings::file_operations {
-+pub(super) const fn create_fops<TM: ThisModule>() -> bindings::file_operations {
-     let mut fops: bindings::file_operations = pin_init::zeroed();
+                     static [< $data:upper _TPE >] : $crate::configfs::ItemType<$container, $data>  =
+-                        $crate::configfs::ItemType::<$container, $data>::new::<N>(
+-                            THIS_MODULE.as_ref(), &[<$ data:upper _ATTRS >]
++                        $crate::configfs::ItemType::<$container, $data>::new::<N, crate::THIS_MODULE>(
++                            &[<$ data:upper _ATTRS >]
+                         );
+                 )?
  
--    fops.owner = core::ptr::null_mut();
-+    fops.owner = TM::OWNER.as_ptr();
-     fops.open = Some(bindings::drm_open);
-     fops.release = Some(bindings::drm_release);
-     fops.unlocked_ioctl = Some(bindings::drm_ioctl);
+@@ -1028,8 +1030,8 @@ macro_rules! configfs_attrs {
+                     static [< $data:upper _TPE >]:
+                         $crate::configfs::ItemType<$container, $data>  =
+                             $crate::configfs::ItemType::<$container, $data>::
+-                            new_with_child_ctor::<N, $child>(
+-                                THIS_MODULE.as_ref(), &[<$ data:upper _ATTRS >]
++                            new_with_child_ctor::<N, $child, crate::THIS_MODULE>(
++                                &[<$ data:upper _ATTRS >]
+                             );
+                 )?
+ 
 
 -- 
 2.43.0
