@@ -1,67 +1,67 @@
-Return-Path: <linux-modules+bounces-5422-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5424-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4NknFDXFb2mgMQAAu9opvQ
-	(envelope-from <linux-modules+bounces-5422-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 19:11:01 +0100
+	id +AsrEnnIb2mgMQAAu9opvQ
+	(envelope-from <linux-modules+bounces-5424-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 19:24:57 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3F614928E
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 19:11:00 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D75549687
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 19:24:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E07E49A1E3B
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 15:05:34 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5E8539A2AB3
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 15:06:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB7034657E1;
-	Tue, 20 Jan 2026 14:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24105466B45;
+	Tue, 20 Jan 2026 14:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TaWiTmB8"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HaI1jLsK"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DD344D6A7
-	for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 14:51:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB751466B42
+	for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 14:51:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768920708; cv=none; b=NO7Us1DM08bzYwrydyG2Y0S8/WQwDpG65cGMlvRR5scyz+rz0B0wl2awyWYxsF/T6MqM6kCL2u41TtjxT5eQXk56dkS59PA0Fs36657qwyDRwu3a2F4Jy1IjNLsnPALrhN/OW94bqggFkCgxkwElcT9UR+XQi8y/PcfNcjT2fck=
+	t=1768920719; cv=none; b=ozf6knWG5h1FaFDlQxJWHd+MbY8CI+mpA7V3MKrEjp4bcnjf+TRvAq7xJTe6ulSXoQ2Nxwaxmyw9mDUBIlRaio9143+B21TUMI98OINP3jH71jE5icTZ3sUsVyKbMZa1NFIxD4riuLhLxwdcAPNYsTcA2ukXzGInhNgDoTUmCu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768920708; c=relaxed/simple;
-	bh=YylhoP6IJY35PuqvuKayPKjWUAwRiqx3b9zzCyG5wd4=;
+	s=arc-20240116; t=1768920719; c=relaxed/simple;
+	bh=l5B5XLzbsfFTaxzX0dHnbD7fr5ekGi6SuQf8QMEELeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAkkcxiVEiVVlqK+7St8SlKsN5jbglrdCF1nJNQJPkx/eF4KIZSwnfoPIKD81NSrtooQ5Y6RsSr++jwjUgk8/7gLa3OMFF9g3UiCVz+TSiKO/SNJsHrNy6/rKvi6bPcEXLY7s/9v0sFViVjPeuLfguL/i5Ws92gTpvAfEP88sqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TaWiTmB8; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version; b=EvM/W0+hc5CZYc6F8njPba/UVRKU9OoCr742cMfeCv0Yr2Wzp1MYpD3Dvgtz4sZFyjKDiyf0TiEONqWyx6a4PfswsJlkagBoSX5peKqmSfahqtkNQf8lVOTbPuHQCKA45/3LKzd+rJfnKl4cMgvGxhK8xoqoeixUQE64L6kRGJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HaI1jLsK; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1768920705;
+	s=mimecast20190719; t=1768920716;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cq95vFxe+E/azapPIGqLH7kDJ2ZslBJUYrt2YlEskHU=;
-	b=TaWiTmB84QEuRfO+Yq2/Unce6/HjrhJ5mX04lSWrsZEB3njoWU5BiRmgJiHE+FxKXjaC40
-	UjWR+K4VzjqYpk7JPf6Ly3KflhGdVGMOj/dfD20nLUudoep5UTXeDC/BPrGrRBO4PZBit4
-	RPS3Y8Pe1BFwGd0H7fDC5V7sbmMZ32g=
+	bh=w5kRbmbCRMpuLvRmoToM6WAq0ad9EQrAV27rLHNTYMw=;
+	b=HaI1jLsKKWHhusC4Y5sLnj0Hi+fHUzts0VTR10M3JItcXObo687xKAhOg21ZYEtNquvqpz
+	X8cdgJ1keTUVmEwkDtbS9opssjlraHq+eKWkIGy8OqbwHfpBcMex1zG28lTmnzX/2iKwL1
+	swylWCp32fyOCqeWo4FOfapReS/3ax4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-I43Aq6shNlmjrw0UIYVT1Q-1; Tue,
- 20 Jan 2026 09:51:41 -0500
-X-MC-Unique: I43Aq6shNlmjrw0UIYVT1Q-1
-X-Mimecast-MFC-AGG-ID: I43Aq6shNlmjrw0UIYVT1Q_1768920699
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-OrNJ5aAfPfW7e--BniafgQ-1; Tue,
+ 20 Jan 2026 09:51:52 -0500
+X-MC-Unique: OrNJ5aAfPfW7e--BniafgQ-1
+X-Mimecast-MFC-AGG-ID: OrNJ5aAfPfW7e--BniafgQ_1768920710
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id B02A0180044D;
-	Tue, 20 Jan 2026 14:51:38 +0000 (UTC)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 31219180044D;
+	Tue, 20 Jan 2026 14:51:50 +0000 (UTC)
 Received: from warthog.procyon.org.uk.com (unknown [10.42.28.2])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id EB80430002D2;
-	Tue, 20 Jan 2026 14:51:34 +0000 (UTC)
+	by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 9725618008FF;
+	Tue, 20 Jan 2026 14:51:45 +0000 (UTC)
 From: David Howells <dhowells@redhat.com>
 To: Lukas Wunner <lukas@wunner.de>,
 	Ignat Korchagin <ignat@cloudflare.com>
@@ -79,10 +79,12 @@ Cc: David Howells <dhowells@redhat.com>,
 	linux-crypto@vger.kernel.org,
 	keyrings@vger.kernel.org,
 	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v13 05/12] modsign: Enable ML-DSA module signing
-Date: Tue, 20 Jan 2026 14:50:51 +0000
-Message-ID: <20260120145103.1176337-6-dhowells@redhat.com>
+	linux-kernel@vger.kernel.org,
+	Tadeusz Struk <tadeusz.struk@intel.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH v13 07/12] crypto: Add RSASSA-PSS support
+Date: Tue, 20 Jan 2026 14:50:53 +0000
+Message-ID: <20260120145103.1176337-8-dhowells@redhat.com>
 In-Reply-To: <20260120145103.1176337-1-dhowells@redhat.com>
 References: <20260120145103.1176337-1-dhowells@redhat.com>
 Precedence: bulk
@@ -92,7 +94,7 @@ List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 X-Spamd-Result: default: False [-0.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
@@ -102,12 +104,12 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	DMARC_POLICY_ALLOW(0.00)[redhat.com,quarantine];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-5422-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-5424-lists,linux-modules=lfdr.de];
 	DKIM_TRACE(0.00)[redhat.com:+];
 	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -118,185 +120,514 @@ X-Spamd-Result: default: False [-0.46 / 15.00];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	TAGGED_RCPT(0.00)[linux-modules];
 	RCVD_COUNT_FIVE(0.00)[6];
-	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,wunner.de:email,apana.org.au:email,chronox.de:email,cloudflare.com:email]
-X-Rspamd-Queue-Id: B3F614928E
+	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[wunner.de:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,apana.org.au:email,davemloft.net:email,intel.com:email,cloudflare.com:email,rfc-editor.org:url]
+X-Rspamd-Queue-Id: 9D75549687
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Allow ML-DSA module signing to be enabled.
+Add support for RSASSA-PSS [RFC8017 sec 8.1] signature verification support
+to the RSA driver in crypto/.  Note that signing support is not provided.
 
-Note that openssl's CMS_*() function suite does not, as of openssl-3.5.1,
-support the use of CMS_NOATTR with ML-DSA, so the prohibition against using
-authenticatedAttributes with module signing has to be removed.  The
-selected digest then applies only to the algorithm used to calculate the
-digest stored in the messageDigest attribute.
+The verification function requires an info string formatted as a
+space-separated list of key=value pairs.  The following parameters need to
+be provided:
 
-The ML-DSA algorithm uses its own internal choice of digest (SHAKE256)
-without regard to what's specified in the CMS message.  This is, in theory,
-configurable, but there's currently no hook in the crypto_sig API to do
-that, though possibly it could be done by parameterising the name of the
-algorithm, e.g. ("mldsa87(sha512)").
+ (1) sighash=<algo>
+
+     The hash algorithm to be used to digest the data.
+
+ (2) pss_mask=<type>,...
+
+     The mask generation function (MGF) and its parameters.
+
+ (3) pss_salt=<len>
+
+     The length of the salt used.
+
+The only MGF currently supported is "mgf1".  This takes an additional
+parameter indicating the mask-generating hash (which need not be the same
+as the data hash).  E.g.:
+
+     "sighash=sha256 pss_mask=mgf1,sha256 pss_salt=32"
 
 Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Eric Biggers <ebiggers@kernel.org>
+cc: Tadeusz Struk <tadeusz.struk@intel.com>
+cc: Herbert Xu <herbert@gondor.apana.org.au>
+cc: David S. Miller <davem@davemloft.net>
 cc: Lukas Wunner <lukas@wunner.de>
 cc: Ignat Korchagin <ignat@cloudflare.com>
-cc: Stephan Mueller <smueller@chronox.de>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
 cc: keyrings@vger.kernel.org
 cc: linux-crypto@vger.kernel.org
 ---
- Documentation/admin-guide/module-signing.rst | 16 +++++----
- certs/Kconfig                                | 21 ++++++++++++
- certs/Makefile                               |  3 ++
- crypto/asymmetric_keys/pkcs7_verify.c        |  4 ---
- scripts/sign-file.c                          | 34 +++++++++++++++-----
- 5 files changed, 59 insertions(+), 19 deletions(-)
+ crypto/Makefile               |   1 +
+ crypto/rsa.c                  |   8 +
+ crypto/rsassa-pss.c           | 383 ++++++++++++++++++++++++++++++++++
+ include/crypto/hash.h         |   3 +
+ include/crypto/internal/rsa.h |   2 +
+ 5 files changed, 397 insertions(+)
+ create mode 100644 crypto/rsassa-pss.c
 
-diff --git a/Documentation/admin-guide/module-signing.rst b/Documentation/admin-guide/module-signing.rst
-index a8667a777490..7f2f127dc76f 100644
---- a/Documentation/admin-guide/module-signing.rst
-+++ b/Documentation/admin-guide/module-signing.rst
-@@ -28,10 +28,12 @@ trusted userspace bits.
+diff --git a/crypto/Makefile b/crypto/Makefile
+index 267d5403045b..5c91440d1751 100644
+--- a/crypto/Makefile
++++ b/crypto/Makefile
+@@ -50,6 +50,7 @@ rsa_generic-y += rsa.o
+ rsa_generic-y += rsa_helper.o
+ rsa_generic-y += rsa-pkcs1pad.o
+ rsa_generic-y += rsassa-pkcs1.o
++rsa_generic-y += rsassa-pss.o
+ obj-$(CONFIG_CRYPTO_RSA) += rsa_generic.o
  
- This facility uses X.509 ITU-T standard certificates to encode the public keys
- involved.  The signatures are not themselves encoded in any industrial standard
--type.  The built-in facility currently only supports the RSA & NIST P-384 ECDSA
--public key signing standard (though it is pluggable and permits others to be
--used).  The possible hash algorithms that can be used are SHA-2 and SHA-3 of
--sizes 256, 384, and 512 (the algorithm is selected by data in the signature).
-+type.  The built-in facility currently only supports the RSA, NIST P-384 ECDSA
-+and NIST FIPS-204 ML-DSA public key signing standards (though it is pluggable
-+and permits others to be used).  For RSA and ECDSA, the possible hash
-+algorithms that can be used are SHA-2 and SHA-3 of sizes 256, 384, and 512 (the
-+algorithm is selected by data in the signature); ML-DSA does its own hashing,
-+but is allowed to be used with a SHA512 hash for signed attributes.
+ $(obj)/ecdsasignature.asn1.o: $(obj)/ecdsasignature.asn1.c $(obj)/ecdsasignature.asn1.h
+diff --git a/crypto/rsa.c b/crypto/rsa.c
+index 6c7734083c98..189a09d54c16 100644
+--- a/crypto/rsa.c
++++ b/crypto/rsa.c
+@@ -10,6 +10,7 @@
+ #include <linux/mpi.h>
+ #include <crypto/internal/rsa.h>
+ #include <crypto/internal/akcipher.h>
++#include <crypto/internal/sig.h>
+ #include <crypto/akcipher.h>
+ #include <crypto/algapi.h>
  
+@@ -414,8 +415,14 @@ static int __init rsa_init(void)
+ 	if (err)
+ 		goto err_unregister_rsa_pkcs1pad;
  
- ==========================
-@@ -146,9 +148,9 @@ into vmlinux) using parameters in the::
- 
- file (which is also generated if it does not already exist).
- 
--One can select between RSA (``MODULE_SIG_KEY_TYPE_RSA``) and ECDSA
--(``MODULE_SIG_KEY_TYPE_ECDSA``) to generate either RSA 4k or NIST
--P-384 keypair.
-+One can select between RSA (``MODULE_SIG_KEY_TYPE_RSA``), ECDSA
-+(``MODULE_SIG_KEY_TYPE_ECDSA``) and ML-DSA (``MODULE_SIG_KEY_TYPE_MLDSA_*``) to
-+generate an RSA 4k, a NIST P-384 keypair or an ML-DSA 44, 65 or 87 keypair.
- 
- It is strongly recommended that you provide your own x509.genkey file.
- 
-diff --git a/certs/Kconfig b/certs/Kconfig
-index 78307dc25559..67a5786423b5 100644
---- a/certs/Kconfig
-+++ b/certs/Kconfig
-@@ -39,6 +39,27 @@ config MODULE_SIG_KEY_TYPE_ECDSA
- 	 Note: Remove all ECDSA signing keys, e.g. certs/signing_key.pem,
- 	 when falling back to building Linux 5.14 and older kernels.
- 
-+config MODULE_SIG_KEY_TYPE_MLDSA_44
-+	bool "ML-DSA-44"
-+	select CRYPTO_MLDSA
-+	help
-+	  Use an ML-DSA-44 key (NIST FIPS 204) for module signing
-+	  with a SHAKE256 'hash' of the authenticatedAttributes.
++	err = crypto_register_sig(&rsassa_pss_alg);
++	if (err)
++		goto err_rsassa_pss;
 +
-+config MODULE_SIG_KEY_TYPE_MLDSA_65
-+	bool "ML-DSA-65"
-+	select CRYPTO_MLDSA
-+	help
-+	  Use an ML-DSA-65 key (NIST FIPS 204) for module signing
-+	  with a SHAKE256 'hash' of the authenticatedAttributes.
-+
-+config MODULE_SIG_KEY_TYPE_MLDSA_87
-+	bool "ML-DSA-87"
-+	select CRYPTO_MLDSA
-+	help
-+	  Use an ML-DSA-87 key (NIST FIPS 204) for module signing
-+	  with a SHAKE256 'hash' of the authenticatedAttributes.
-+
- endchoice
+ 	return 0;
  
- config SYSTEM_TRUSTED_KEYRING
-diff --git a/certs/Makefile b/certs/Makefile
-index f6fa4d8d75e0..3ee1960f9f4a 100644
---- a/certs/Makefile
-+++ b/certs/Makefile
-@@ -43,6 +43,9 @@ targets += x509_certificate_list
- ifeq ($(CONFIG_MODULE_SIG_KEY),certs/signing_key.pem)
++err_rsassa_pss:
++	crypto_unregister_template(&rsassa_pkcs1_tmpl);
+ err_unregister_rsa_pkcs1pad:
+ 	crypto_unregister_template(&rsa_pkcs1pad_tmpl);
+ err_unregister_rsa:
+@@ -425,6 +432,7 @@ static int __init rsa_init(void)
  
- keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_ECDSA) := -newkey ec -pkeyopt ec_paramgen_curve:secp384r1
-+keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_MLDSA_44) := -newkey ml-dsa-44
-+keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_MLDSA_65) := -newkey ml-dsa-65
-+keytype-$(CONFIG_MODULE_SIG_KEY_TYPE_MLDSA_87) := -newkey ml-dsa-87
- 
- quiet_cmd_gen_key = GENKEY  $@
-       cmd_gen_key = openssl req -new -nodes -utf8 -$(CONFIG_MODULE_SIG_HASH) -days 36500 \
-diff --git a/crypto/asymmetric_keys/pkcs7_verify.c b/crypto/asymmetric_keys/pkcs7_verify.c
-index 46eee9811023..3896e24423f9 100644
---- a/crypto/asymmetric_keys/pkcs7_verify.c
-+++ b/crypto/asymmetric_keys/pkcs7_verify.c
-@@ -442,10 +442,6 @@ int pkcs7_verify(struct pkcs7_message *pkcs7,
- 			pr_warn("Invalid module sig (not pkcs7-data)\n");
- 			return -EKEYREJECTED;
- 		}
--		if (pkcs7->have_authattrs) {
--			pr_warn("Invalid module sig (has authattrs)\n");
--			return -EKEYREJECTED;
--		}
- 		break;
- 	case VERIFYING_FIRMWARE_SIGNATURE:
- 		if (pkcs7->data_type != OID_data) {
-diff --git a/scripts/sign-file.c b/scripts/sign-file.c
-index 7070245edfc1..547b97097230 100644
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -315,18 +315,36 @@ int main(int argc, char **argv)
- 		ERR(!digest_algo, "EVP_get_digestbyname");
- 
- #ifndef USE_PKCS7
+ static void __exit rsa_exit(void)
+ {
++	crypto_unregister_sig(&rsassa_pss_alg);
+ 	crypto_unregister_template(&rsassa_pkcs1_tmpl);
+ 	crypto_unregister_template(&rsa_pkcs1pad_tmpl);
+ 	crypto_unregister_akcipher(&rsa);
+diff --git a/crypto/rsassa-pss.c b/crypto/rsassa-pss.c
+new file mode 100644
+index 000000000000..4cc2b6fa9274
+--- /dev/null
++++ b/crypto/rsassa-pss.c
+@@ -0,0 +1,383 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * RSA Signature Scheme combined with EMSA-PSS encoding (RFC 8017 sec 8.2)
++ *
++ * https://www.rfc-editor.org/rfc/rfc8017#section-8.1
++ *
++ * Copyright (c) 2025 Red Hat
++ */
 +
-+		unsigned int flags =
-+			CMS_NOCERTS |
-+			CMS_PARTIAL |
-+			CMS_BINARY |
-+			CMS_DETACHED |
-+			CMS_STREAM  |
-+			CMS_NOSMIMECAP |
-+			CMS_NO_SIGNING_TIME |
-+			use_keyid;
++#define pr_fmt(fmt) "RSAPSS: "fmt
++#include <linux/ctype.h>
++#include <linux/module.h>
++#include <linux/oid_registry.h>
++#include <linux/parser.h>
++#include <linux/scatterlist.h>
++#include <crypto/akcipher.h>
++#include <crypto/algapi.h>
++#include <crypto/hash.h>
++#include <crypto/sig.h>
++#include <crypto/internal/akcipher.h>
++#include <crypto/internal/rsa.h>
++#include <crypto/internal/sig.h>
 +
-+		if ((EVP_PKEY_is_a(private_key, "ML-DSA-44") ||
-+		     EVP_PKEY_is_a(private_key, "ML-DSA-65") ||
-+		     EVP_PKEY_is_a(private_key, "ML-DSA-87")) &&
-+		    OPENSSL_VERSION_MAJOR < 4) {
-+			 /* ML-DSA + CMS_NOATTR is not supported in openssl-3.5
-+			  * and before.
-+			  */
-+			use_signed_attrs = 0;
++struct rsassa_pss_ctx {
++	struct crypto_akcipher *rsa;
++	unsigned int	key_size;
++	unsigned int	salt_len;
++	char		*pss_hash;
++	char		*mgf1_hash;
++};
++
++enum {
++	rsassa_pss_verify_hash_algo,
++	rsassa_pss_verify_pss_mask,
++	rsassa_pss_verify_pss_salt,
++};
++
++static const match_table_t rsassa_pss_verify_params = {
++	{ rsassa_pss_verify_hash_algo,	"sighash=%s" },
++	{ rsassa_pss_verify_pss_mask,	"pss_mask=%s" },
++	{ rsassa_pss_verify_pss_salt,	"pss_salt=%u" },
++	{}
++};
++
++/*
++ * Parse the signature parameters out of the info string.
++ */
++static int rsassa_pss_vinfo_parse(struct rsassa_pss_ctx *ctx,
++				  char *info)
++{
++	substring_t args[MAX_OPT_ARGS];
++	char *p;
++
++	ctx->pss_hash = NULL;
++	ctx->mgf1_hash = NULL;
++	ctx->salt_len = 0;
++
++	while ((p = strsep(&info, " \t"))) {
++		if (*p == '\0' || *p == ' ' || *p == '\t')
++			continue;
++
++		switch (match_token(p, rsassa_pss_verify_params, args)) {
++		case rsassa_pss_verify_hash_algo:
++			*args[0].to = 0;
++			ctx->pss_hash = args[0].from;
++			break;
++		case rsassa_pss_verify_pss_mask:
++			if (memcmp(args[0].from, "mgf1", 4) != 0)
++				return -ENOPKG;
++			if (args[0].from[4] != ',')
++				return -EINVAL;
++			args[0].from += 5;
++			if (args[0].from >= args[0].to)
++				return -EINVAL;
++			*args[0].to = 0;
++			ctx->mgf1_hash = args[0].from;
++			break;
++		case rsassa_pss_verify_pss_salt:
++			if (match_uint(&args[0], &ctx->salt_len) < 0)
++				return -EINVAL;
++			break;
++		default:
++			pr_debug("Unknown info param\n");
++			return -EINVAL; /* Ignoring it might be better. */
 +		}
++	}
 +
-+		flags |= use_signed_attrs;
++	if (!ctx->pss_hash ||
++	    !ctx->mgf1_hash)
++		return -EINVAL;
++	return 0;
++}
 +
- 		/* Load the signature message from the digest buffer. */
--		cms = CMS_sign(NULL, NULL, NULL, NULL,
--			       CMS_NOCERTS | CMS_PARTIAL | CMS_BINARY |
--			       CMS_DETACHED | CMS_STREAM);
-+		cms = CMS_sign(NULL, NULL, NULL, NULL, flags);
- 		ERR(!cms, "CMS_sign");
++/*
++ * Perform mask = MGF1(mgfSeed, masklen) - RFC8017 appendix B.2.1.
++ */
++static int MGF1(struct rsassa_pss_ctx *ctx,
++		const u8 *mgfSeed, unsigned int mgfSeed_len,
++		u8 *mask, unsigned int maskLen)
++{
++	unsigned int counter, count_to, hLen, T_len;
++	__be32 *C;
++	int err;
++	u8 *T, *t, *to_hash;
++
++	struct crypto_shash *hash_tfm __free(crypto_free_shash) =
++		crypto_alloc_shash(ctx->mgf1_hash, 0, 0);
++	if (IS_ERR(hash_tfm))
++		return PTR_ERR(hash_tfm);
++
++	hLen = crypto_shash_digestsize(hash_tfm);
++	count_to = DIV_ROUND_UP(maskLen, hLen);
++	T_len = hLen * count_to;
++
++	struct shash_desc *Hash __free(kfree) =
++		kmalloc(roundup(sizeof(struct shash_desc) +
++				crypto_shash_descsize(hash_tfm), 64) +
++			roundup(T_len, 64) + /* T */
++			roundup(mgfSeed_len + 4, 64), /* mgfSeed||C */
++			GFP_KERNEL);
++	if (!Hash)
++		return -ENOMEM;
++
++	Hash->tfm = hash_tfm;
++
++	/* 2: Let T be the empty octet string. */
++	T = (void *)Hash +
++		roundup(sizeof(struct shash_desc) +
++			crypto_shash_descsize(hash_tfm), 64);
++
++	/* 3: Generate the mask. */
++	to_hash = T + roundup(T_len, 64);
++	memcpy(to_hash, mgfSeed, mgfSeed_len);
++	C = (__be32 *)(to_hash + mgfSeed_len);
++
++	t = T;
++	for (counter = 0; counter < count_to; counter++) {
++		/* 3A: C = I2OSP(counter, 4). */
++		put_unaligned_be32(counter, C);
++
++		/* 3B: T = T || Hash(mgfSeed || C). */
++		err = crypto_shash_digest(Hash, to_hash, mgfSeed_len + 4, t);
++		if (err < 0)
++			return err;
++
++		t += hLen;
++	}
++
++	/* 4: Output T to mask */
++	memcpy(mask, T, maskLen);
++	return 0;
++}
++
++/*
++ * Perform EMSA-PSS-VERIFY(M, EM, emBits) - RFC8017 sec 9.1.2.
++ */
++static int emsa_pss_verify(struct rsassa_pss_ctx *ctx,
++			   const u8 *M, unsigned int M_len,
++			   const u8 *EM, unsigned int emLen)
++{
++	unsigned int emBits, hLen, sLen, DB_len;
++	const u8 *maskedDB, *H;
++	u8 *mHash, *dbMask, *DB, *salt, *Mprime, *Hprime;
++	int err, i;
++
++	emBits = 8 - fls(EM[0]);
++	emBits = emLen * 8 - emBits;
++
++	struct crypto_shash *hash_tfm __free(crypto_free_shash) =
++		crypto_alloc_shash(ctx->pss_hash, 0, 0);
++	if (IS_ERR(hash_tfm))
++		return PTR_ERR(hash_tfm);
++
++	hLen = crypto_shash_digestsize(hash_tfm);
++	sLen = ctx->salt_len;
++
++	if (sLen > 65536 ||
++	    emBits < 8 * (hLen + sLen) + 9)
++		return -EBADMSG;
++
++	DB_len = emLen - hLen - 1;
++
++	struct shash_desc *Hash __free(kfree) =
++		kmalloc(roundup(sizeof(struct shash_desc) +
++				crypto_shash_descsize(hash_tfm), 64) +
++			roundup(hLen, 64) + /* mHash */
++			roundup(DB_len, 64) + /* DB and dbMask */
++			roundup(8 + hLen + sLen, 64) + /* M' */
++			roundup(hLen, 64), /* H' */
++			GFP_KERNEL);
++	if (!Hash)
++		return -ENOMEM;
++
++	Hash->tfm = hash_tfm;
++
++	mHash = (void *)Hash +
++		roundup(sizeof(struct shash_desc) +
++			crypto_shash_descsize(hash_tfm), 64);
++	DB = dbMask = mHash + roundup(hLen, 64);
++	Mprime = dbMask + roundup(DB_len, 64);
++	Hprime = Mprime + roundup(8 + hLen + sLen, 64);
++
++	/* 1. Check len M against hash input limitation. */
++	/* The standard says ~2EiB for SHA1, so I think we can ignore this. */
++
++	/* 2. mHash = Hash(M).
++	 * In theory, we would do:
++	 *	err = crypto_shash_digest(Hash, M, M_len, mHash);
++	 * but the caller is assumed to already have done that for us.
++	 */
++	if (M_len != hLen)
++		return -EINVAL;
++	memcpy(mHash, M, hLen);
++
++	/* 3. Check emLen against hLen + sLen + 2. */
++	if (emLen < hLen + sLen + 2)
++		return -EBADMSG;
++
++	/* 4. Validate EM. */
++	if (EM[emLen - 1] != 0xbc)
++		return -EKEYREJECTED;
++
++	/* 5. Pick maskedDB and H. */
++	maskedDB = EM;
++	H = EM + DB_len;
++
++	/* 6. Check leftmost 8emLen-emBits bits of maskedDB are 0. */
++	/* Can only find emBits by counting the zeros on the Left. */
++
++	/* 7. Let dbMask = MGF(H, emLen - hLen - 1). */
++	err = MGF1(ctx, H, hLen, dbMask, DB_len);
++	if (err < 0)
++		return err;
++
++	/* 8. Let DB = maskedDB XOR dbMask. */
++	for (i = 0; i < DB_len; i++)
++		DB[i] = maskedDB[i] ^ dbMask[i];
++
++	/* 9. Set leftmost bits in DB to zero. */
++	int z = 8 * emLen - emBits;
++
++	if (z > 0) {
++		if (z >= 8) {
++			DB[0] = 0;
++		} else {
++			z = 8 - z;
++			DB[0] &= (1 << z) - 1;
++		}
++	}
++
++	/* 10. Check the left part of DB is {0,0,...,1}. */
++	for (i = 0; i < emLen - hLen - sLen - 2; i++)
++		if (DB[i] != 0)
++			return -EKEYREJECTED;
++	if (DB[i] != 0x01)
++		return -EKEYREJECTED;
++
++	/* 11. Let salt be the last sLen octets of DB. */
++	salt = DB + DB_len - sLen;
++
++	/* 12. Let M' be 00 00 00 00 00 00 00 00 || mHash || salt. */
++	memset(Mprime, 0, 8);
++	memcpy(Mprime + 8, mHash, hLen);
++	memcpy(Mprime + 8 + hLen, salt, sLen);
++
++	/* 13. Let H' = Hash(M'). */
++	err = crypto_shash_digest(Hash, Mprime, 8 + hLen + sLen, Hprime);
++	if (err < 0)
++		return err;
++
++	/* 14. Check H = H'. */
++	if (memcmp(H, Hprime, hLen) != 0)
++		return -EKEYREJECTED;
++	return 0;
++}
++
++/*
++ * Perform RSASSA-PSS-VERIFY((n,e),M,S) - RFC8017 sec 8.1.2.
++ */
++static int rsassa_pss_verify(struct crypto_sig *tfm,
++			     const void *src, unsigned int slen,
++			     const void *digest, unsigned int dlen,
++			     const char *info)
++{
++	struct rsassa_pss_ctx *ctx = crypto_sig_ctx(tfm);
++	struct crypto_wait cwait;
++	struct scatterlist sg;
++	unsigned int rsa_reqsize = crypto_akcipher_reqsize(ctx->rsa);
++	u8 *EM;
++	int err;
++
++	if (!info)
++		return -EINVAL;
++
++	char *str __free(kfree) = kstrdup(info, GFP_KERNEL);
++	if (!str)
++		return -ENOMEM;
++
++	err = rsassa_pss_vinfo_parse(ctx, str);
++	if (err < 0)
++		return err;
++
++	/* RFC8017 sec 8.1.2 step 1 - length checking */
++	if (!ctx->key_size || slen != ctx->key_size)
++		return -EINVAL;
++
++	/* RFC8017 sec 8.1.2 step 2 - RSA verification */
++	struct akcipher_request *rsa_req __free(kfree) =
++		kmalloc(sizeof(*rsa_req) + rsa_reqsize + ctx->key_size,
++			GFP_KERNEL);
++	if (!rsa_req)
++		return -ENOMEM;
++
++	EM = (u8 *)(rsa_req + 1) + rsa_reqsize;
++	memcpy(EM, src, slen);
++
++	crypto_init_wait(&cwait);
++	sg_init_one(&sg, EM, slen);
++	akcipher_request_set_tfm(rsa_req, ctx->rsa);
++	akcipher_request_set_crypt(rsa_req, &sg, &sg, slen, slen);
++	akcipher_request_set_callback(rsa_req, CRYPTO_TFM_REQ_MAY_SLEEP,
++				      crypto_req_done, &cwait);
++
++	err = crypto_akcipher_encrypt(rsa_req);
++	err = crypto_wait_req(err, &cwait);
++	if (err)
++		return err;
++
++	/* RFC 8017 sec 8.1.2 step 3 - EMSA-PSS(M, EM, modbits-1) */
++	return emsa_pss_verify(ctx, digest, dlen, EM, slen);
++}
++
++static unsigned int rsassa_pss_key_size(struct crypto_sig *tfm)
++{
++	struct rsassa_pss_ctx *ctx = crypto_sig_ctx(tfm);
++
++	return ctx->key_size * BITS_PER_BYTE;
++}
++
++static int rsassa_pss_set_pub_key(struct crypto_sig *tfm,
++				    const void *key, unsigned int keylen)
++{
++	struct rsassa_pss_ctx *ctx = crypto_sig_ctx(tfm);
++
++	return rsa_set_key(ctx->rsa, &ctx->key_size, RSA_PUB, key, keylen);
++}
++
++static int rsassa_pss_init_tfm(struct crypto_sig *tfm)
++{
++	struct crypto_akcipher *rsa;
++	struct rsassa_pss_ctx *ctx = crypto_sig_ctx(tfm);
++
++	rsa = crypto_alloc_akcipher("rsa", 0, 0);
++	if (IS_ERR(rsa))
++		return PTR_ERR(rsa);
++
++	ctx->rsa = rsa;
++	return 0;
++}
++
++static void rsassa_pss_exit_tfm(struct crypto_sig *tfm)
++{
++	struct rsassa_pss_ctx *ctx = crypto_sig_ctx(tfm);
++
++	crypto_free_akcipher(ctx->rsa);
++}
++
++struct sig_alg rsassa_pss_alg = {
++	.verify		= rsassa_pss_verify,
++	.set_pub_key	= rsassa_pss_set_pub_key,
++	.key_size	= rsassa_pss_key_size,
++	.init		= rsassa_pss_init_tfm,
++	.exit		= rsassa_pss_exit_tfm,
++	.base = {
++		.cra_name	 = "rsassa-pss",
++		.cra_driver_name = "rsassa-pss-generic",
++		.cra_priority	 = 100,
++		.cra_module	 = THIS_MODULE,
++		.cra_ctxsize	 = sizeof(struct rsassa_pss_ctx),
++	},
++};
++
++MODULE_ALIAS_CRYPTO("rsassa-pss");
+diff --git a/include/crypto/hash.h b/include/crypto/hash.h
+index 586700332c73..49b1ea5cf78d 100644
+--- a/include/crypto/hash.h
++++ b/include/crypto/hash.h
+@@ -779,6 +779,9 @@ static inline void crypto_free_shash(struct crypto_shash *tfm)
+ 	crypto_destroy_tfm(tfm, crypto_shash_tfm(tfm));
+ }
  
--		ERR(!CMS_add1_signer(cms, x509, private_key, digest_algo,
--				     CMS_NOCERTS | CMS_BINARY |
--				     CMS_NOSMIMECAP | use_keyid |
--				     use_signed_attrs),
-+		ERR(!CMS_add1_signer(cms, x509, private_key, digest_algo, flags),
- 		    "CMS_add1_signer");
--		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) != 1,
-+		ERR(CMS_final(cms, bm, NULL, flags) != 1,
- 		    "CMS_final");
++DEFINE_FREE(crypto_free_shash, struct crypto_shash*,
++	    if (!IS_ERR_OR_NULL(_T)) { crypto_free_shash(_T); });
++
+ static inline const char *crypto_shash_alg_name(struct crypto_shash *tfm)
+ {
+ 	return crypto_tfm_alg_name(crypto_shash_tfm(tfm));
+diff --git a/include/crypto/internal/rsa.h b/include/crypto/internal/rsa.h
+index 071a1951b992..d7f38a273949 100644
+--- a/include/crypto/internal/rsa.h
++++ b/include/crypto/internal/rsa.h
+@@ -83,4 +83,6 @@ static inline int rsa_set_key(struct crypto_akcipher *child,
  
- #else
+ extern struct crypto_template rsa_pkcs1pad_tmpl;
+ extern struct crypto_template rsassa_pkcs1_tmpl;
++extern struct sig_alg rsassa_pss_alg;
++
+ #endif
 
 
