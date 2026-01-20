@@ -1,74 +1,73 @@
-Return-Path: <linux-modules+bounces-5431-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5438-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +KtEOmTYb2kKSwAAu9opvQ
-	(envelope-from <linux-modules+bounces-5431-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 20:32:52 +0100
+	id +EiDE0Dpb2lhUQAAu9opvQ
+	(envelope-from <linux-modules+bounces-5438-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 21:44:48 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D20A4A7A6
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 20:32:52 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 216B24BAC9
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 21:44:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3661296D242
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 16:25:23 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 6DAE154C3B9
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 18:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D857045BD4F;
-	Tue, 20 Jan 2026 16:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3975429813;
+	Tue, 20 Jan 2026 18:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="CPQL1rBU"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PNkSTrba"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506544534B8
-	for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 16:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000A93BFE40
+	for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 18:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768925473; cv=none; b=BWzD9hQvllAF9RSEQhC/Dyj3KgiO7WCVu+fVmvh8OaNWHtdWPJL17sljDe8hNkQVN7eDNZmwGsr+A1b8Wclon/1LyzvHG2ZJA0eb9UgglERqYXdsjP1Du2o1RrGFuTsuTkMG7g4/QQXmKO/7g6sj1tXC/WyR47+jR9Ru4myEguA=
+	t=1768935296; cv=none; b=mNKDfzTbjrBpr2jue3LL5A5OIMB41hLFJupl2WG6+bLl3ZFKL0vqGVDknpfnDN1kqrk6uStuS3KVju9WfLsqdxboF3oU/8HjFxe6JZGXuU7VbkBt1RYTxmSr+gmzxni1qwO3lwMDmcM5r46lrHKCN5UK9h4cEGzFq4JFaW/6Q+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768925473; c=relaxed/simple;
-	bh=tWPMM5C6dDxijHPBafjYC1SjTJ0g6oQdXgKfFFqdrfE=;
+	s=arc-20240116; t=1768935296; c=relaxed/simple;
+	bh=UmDmllkKFjkCiOZtqgSm9+YSpt4oICA2ToQGkwAkWHI=;
 	h=From:In-Reply-To:References:To:Cc:Subject:MIME-Version:
-	 Content-Type:Date:Message-ID; b=su4tzUEQzXCgOu4hdlsb72uBzz3Lv4OWRGTtyokamjtdt833/NHXM9aVH26lldhDKxVFm3FfjZ6hREON9KGj6ALihKkId+K4u0RaJwjfBWV7qPpp2rK8Bv4YWJMYwMF6RSGs0C+dhGH/LR2vZhnkJ0lMytbg+sNI174boq6kRBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=CPQL1rBU; arc=none smtp.client-ip=170.10.129.124
+	 Content-Type:Date:Message-ID; b=HAKZxEz63jHmatJ2onkZ+DRvka8RS3kWPjcmW7+Ikb06s+m0hCiUtcJVkCdJbZ/VQ8rJeazRLtZElEMFNViFvmUNGCqYKUqm6JErrxQNnl5+1C0uMKg7BRPxhJks6xxDTBpPLONcs+PI+wdzIUxGRmQd9oBj1MT6EkNKhZV8C3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PNkSTrba; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1768925471;
+	s=mimecast20190719; t=1768935293;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=MRtTF5ndQZQPQCXaLyEtKnLXPyyjrq8Fu6UawbLrHgM=;
-	b=CPQL1rBUyopq+ffKaGyKO2Qw5lxLo4F1eaqHzGAmUdzKIQQ/0mFAN//QxI6taP1u9k28xY
-	uulmPnOxLjyLWAsjtPt8Sx1/KjaDAOXYvP70T0ra9CvNNcgUwlHXmXNMvYKKLfiGFzBYuv
-	yyIQjXXfq+wWnX3C+HJIVsRguXV5NeM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+	bh=ZGEbMO58pWFpo586Yx2mM/qYqmSSnya9dTWcBb/G2Ng=;
+	b=PNkSTrbaKHKmI/wQSKkbRxijrO96qsukqAnK6oJRA/4Jrd+PyFnMZy6pBDNTcyZA9C/lVW
+	TFi8s8EuYKDbBY66rYdmKiH36mZAit2KgAat3ZV5P6hQtycRLHsnEPpgpA3WZNzdTx7Vlf
+	S3a7cxcw51xEn6kdbi/O10gqpAm63Tk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-1tkB6R5EMxK6yB4fnXnMgg-1; Tue,
- 20 Jan 2026 11:11:05 -0500
-X-MC-Unique: 1tkB6R5EMxK6yB4fnXnMgg-1
-X-Mimecast-MFC-AGG-ID: 1tkB6R5EMxK6yB4fnXnMgg_1768925463
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-4rEg7r9ENG2dVlr-Ds-sMA-1; Tue,
+ 20 Jan 2026 13:54:52 -0500
+X-MC-Unique: 4rEg7r9ENG2dVlr-Ds-sMA-1
+X-Mimecast-MFC-AGG-ID: 4rEg7r9ENG2dVlr-Ds-sMA_1768935290
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 5C9A1195609F;
-	Tue, 20 Jan 2026 16:11:03 +0000 (UTC)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id D31C21800371;
+	Tue, 20 Jan 2026 18:54:49 +0000 (UTC)
 Received: from warthog.procyon.org.uk (unknown [10.42.28.2])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 7E16C3000218;
-	Tue, 20 Jan 2026 16:10:59 +0000 (UTC)
+	by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 6540D1800285;
+	Tue, 20 Jan 2026 18:54:45 +0000 (UTC)
 Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
 	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
 	Kingdom.
 	Registered in England and Wales under Company Registration No. 3798903
 From: David Howells <dhowells@redhat.com>
-In-Reply-To: <CALrw=nH8zOXiyiCGkx1A533ijM=pyVebbhYCFpUyvP0bnjrXzA@mail.gmail.com>
-References: <CALrw=nH8zOXiyiCGkx1A533ijM=pyVebbhYCFpUyvP0bnjrXzA@mail.gmail.com> <20260115215100.312611-1-dhowells@redhat.com> <20260115215100.312611-3-dhowells@redhat.com>
+In-Reply-To: <CALrw=nGSr7F-NJri+UFgBVz5J+KFAS6OXa9EFvYo-qitX9R2bg@mail.gmail.com>
+References: <CALrw=nGSr7F-NJri+UFgBVz5J+KFAS6OXa9EFvYo-qitX9R2bg@mail.gmail.com> <20260120145103.1176337-1-dhowells@redhat.com> <20260120145103.1176337-12-dhowells@redhat.com>
 To: Ignat Korchagin <ignat@cloudflare.com>
 Cc: dhowells@redhat.com, Lukas Wunner <lukas@wunner.de>,
     Jarkko Sakkinen <jarkko@kernel.org>,
@@ -82,7 +81,7 @@ Cc: dhowells@redhat.com, Lukas Wunner <lukas@wunner.de>,
     Stephan Mueller <smueller@chronox.de>, linux-crypto@vger.kernel.org,
     keyrings@vger.kernel.org, linux-modules@vger.kernel.org,
     linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 02/10] pkcs7: Allow the signing algo to calculate the digest itself
+Subject: Re: [PATCH v13 11/12] x509, pkcs7: Limit crypto combinations that may be used for module signing
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -90,11 +89,10 @@ List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-ID: <1189034.1768925458.1@warthog.procyon.org.uk>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 20 Jan 2026 16:10:58 +0000
-Message-ID: <1189035.1768925458@warthog.procyon.org.uk>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-ID: <1343167.1768935284.1@warthog.procyon.org.uk>
+Date: Tue, 20 Jan 2026 18:54:44 +0000
+Message-ID: <1343168.1768935284@warthog.procyon.org.uk>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 X-Spamd-Result: default: False [-1.96 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
@@ -103,7 +101,7 @@ X-Spamd-Result: default: False [-1.96 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	DMARC_POLICY_ALLOW(0.00)[redhat.com,quarantine];
-	TAGGED_FROM(0.00)[bounces-5431-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-5438-lists,linux-modules=lfdr.de];
 	DKIM_TRACE(0.00)[redhat.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	HAS_ORG_HEADER(0.00)[];
@@ -112,7 +110,7 @@ X-Spamd-Result: default: False [-1.96 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
 	FROM_NEQ_ENVFROM(0.00)[dhowells@redhat.com,linux-modules@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -120,26 +118,18 @@ X-Spamd-Result: default: False [-1.96 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[6];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	TAGGED_RCPT(0.00)[linux-modules];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[cloudflare.com:email,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,warthog.procyon.org.uk:mid]
-X-Rspamd-Queue-Id: 8D20A4A7A6
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,cloudflare.com:email]
+X-Rspamd-Queue-Id: 216B24BAC9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 Ignat Korchagin <ignat@cloudflare.com> wrote:
 
-> > +                       sig->digest =3D kmalloc(umax(sinfo->authattrs_=
-len, sig->digest_size),
-> > +                                             GFP_KERNEL);
-> =
+> > +       { "rsa",                "emsa-pss",     "sha512" },
+> 
+> Don't we want to allow sha256 for emsa-pss?
 
-> I'm still bothered by this "reallocation". You mentioned we need to do
-> some parsing for attributes, but it seems by the time this function is
-> called we have all the data to do something like
-> kmalloc(sig->algo_does_hash ? umax(sinfo->authattrs_len,
-> sig->digest_size) : sig->digest_size, GFP_KERNEL) during the initial
-> allocation. Or am I missing something?
-
-Actually, you're right, we do have that info at this point
+We do.  I already added that for v14.
 
 David
 
