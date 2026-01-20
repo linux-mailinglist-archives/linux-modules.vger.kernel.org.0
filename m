@@ -1,274 +1,210 @@
-Return-Path: <linux-modules+bounces-5437-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5412-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YHyUG/XPb2mgMQAAu9opvQ
-	(envelope-from <linux-modules+bounces-5437-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 19:56:53 +0100
+	id uBM+LaYgcGlRVwAAu9opvQ
+	(envelope-from <linux-modules+bounces-5412-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Wed, 21 Jan 2026 01:41:10 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4D5949E1D
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 19:56:52 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 501DF4E9D0
+	for <lists+linux-modules@lfdr.de>; Wed, 21 Jan 2026 01:41:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0BC85A83E6E
-	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 18:31:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 51B55669FA9
+	for <lists+linux-modules@lfdr.de>; Tue, 20 Jan 2026 12:19:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADF74364E88;
-	Tue, 20 Jan 2026 18:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 965284219F0;
+	Tue, 20 Jan 2026 12:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b="VgVvSZc0"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="boq31eZl"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADF733B97F
-	for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 18:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768933878; cv=pass; b=jHHa+2GtYSk938ZoL8ecBvW1sM1FNsuWvhLqqoL3VkvMNJgj3GBeT3+TUReA0olH3sOg72wxcRj3EudaW1fHt4K97UrXaH18DWRTcsC0XY5BD7sfEaQYloFvqnBfJEhhoaXvwlOsmgP371rPv2lHpfUrEZxbiiikzh1FIDvWfJ0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768933878; c=relaxed/simple;
-	bh=5aDLW+mihRDd+VHWYR5OgufqUvUAlNEFwdP2RjlGovs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TsDAA48eEAsBTUREVG3To1LvcF/Rn/5EGMBRFhVJtf4XBZho98e8xr3zbYjblL6fzq6LqP2qbF6s3OLOHzNB5AaNSGLWy0WSmGvQjn8hm8ENqUk0UD63c6UFQpR7SnGOJAhVwY/ySQby5UpWbhhMXsZ2wnndS3OQ2/iYU9DdtQM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com; spf=pass smtp.mailfrom=cloudflare.com; dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.b=VgVvSZc0; arc=pass smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cloudflare.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloudflare.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-59b77f2e43aso157901e87.1
-        for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 10:31:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768933874; cv=none;
-        d=google.com; s=arc-20240605;
-        b=XFBSV9bGNroBcmSqaQ4dgxMTFF3yoRnX7NJbSCkxZjvfhP1z/jtMCnYSDaL6fzoCLW
-         +omdExe+w7VM8FFJ2UFN1PbylUOApJ3V0NmYER9E/qjcg5EEGLVRzu2CfNXw/ewZ0ZDV
-         /3YjmUQGMr2LWW9evXascUp8aMGtz6Z76Ugp2MKesljAHIcFDYu6ZWTDE91Xp6612UMr
-         lBTjHfgkqd8RFXlcrxR6Da2jRMeqk3fNNGIW1W+SKy1mIeRxspX4XcWlqfXIYTHB51NI
-         H38wtfsxKXeJNo3m6IIpItf5tuaLiQaiTtkYEPdKwyNDCtgRzaSHlwWHhkikxQ12xEER
-         GV4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8tcAcp7uWuIjCj2SaccYzTy4fHKVPeO3zwjJJlV2b3I=;
-        fh=1l0UFa2m47XFZJZU9X62rQqFjXtybSEm2xTfiDsExXE=;
-        b=flHaSBOxkTClPTwSePt0ynu4uA6X0WEbcYoP1/o4zHaNyBHF7iGDnGVtnM9qD9Aiow
-         V5bJ3t/BOoxtLM46mhC5TSfk1gQM51DO9k98ISeoowM57nfuij5e8vHATcrLxAmYL3zm
-         AfkZhSBGWIZJLEcdN4MePJbqaT5K3hvndX+dpTVu8gYPR8gwNTnbQ7EKJGxHknWD5qCA
-         uESqIveK7gYJkvfQboIARNBELgDgvLK/Ys9ypcPF/8j3KkqB1a/VHXMG9DlLsSc9GjfG
-         5QI7edPZgy2USGHzvATT9hqW6WbCGR+5REEN1wpuivkI4lkqiCOsPij6fMCZOwxH53we
-         /jhg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F5340F8C7
+	for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 12:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768911473; cv=none; b=WB6LQAeEhZigJECJGdlvei69auCMDM79nzhfv7R3+TsMVwFOA9UPdBVCNvPLPeQSlWZqMwhb9vnIeLf43jz9vQBJtoO+FiMgOiifF4FMsAM5jwtmg2ZapEcc70cHNGRzglg0KWIqr5QDLCaB9E4+5kSAvnNHyxhQJTeRF4cKHUM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768911473; c=relaxed/simple;
+	bh=iIuzik8f3PuL5IiD05JYvutWRTw3mpzpbRggsiY4kB4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QQRygGD/xxguULNEVmzTO0+si1ctyv31elVadX5HBSm5Cx1ixq11VApVBEfNjLVzkn7UVNoXgRllByJo9eVMTedx/MOB4popDG3fH844L5xqzu/r8Gk5XTeqd1iMorCTkLWEkqiSZmejggWCf9AxJgtHSZjseLQP0d53VOcwhzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=boq31eZl; arc=none smtp.client-ip=209.85.221.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-43596062728so115827f8f.1
+        for <linux-modules@vger.kernel.org>; Tue, 20 Jan 2026 04:17:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudflare.com; s=google09082023; t=1768933874; x=1769538674; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8tcAcp7uWuIjCj2SaccYzTy4fHKVPeO3zwjJJlV2b3I=;
-        b=VgVvSZc0FA9yVqTMeBkFcuMee8+jql/WBmKjN/WM+DgrzA9BtUy5gryv8ATjmG1ayW
-         etp6RHV78kaBPPUuL2HqjoOYVWIrg88To7tqa8gJmomxI9dMQ3qZBxWDhcGCfGe3AT5h
-         l4+qCU4j4rKBM786tSqUFfJ/mJatVcZV5+pY5AaL/YErmBmYhbsuhculkbPT1Gk10hUR
-         Gg496OKMN/SGBr4GMiygPfkLriSfy+2Fk85veLCOuc98m7cPNkT2wOTUba0Ku6o7hwLz
-         1ZNwQXW++IEoVWrO8Gxcv/6AT6tev77G5WuhgshjB6Gg5TJNqX8/tG/lQJxh5rAN1NFH
-         KGfg==
+        d=suse.com; s=google; t=1768911469; x=1769516269; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iJRswF5rrqok4Sjk5jUvdiR7sS5VwezMU3Ml3c2KzVk=;
+        b=boq31eZl0sUGywf9IH6qctlquE+MboocMi5kXOESrth2/RLFNyNekK9Yz2p1Dm4t9q
+         pzPu50oo+ZQND3pYlw9dqv/dzBtad2jjkOxqOgH5zj9JdQbt4TzZMQ1CL+5Y93Ptb+la
+         e68NZCwT7H95F6HnUMCIbzjTX4lYBvMufaKkpt95DH3x2a+wlmkPFq6H58XsYpvNyLRD
+         0iudwmABr3Nnsdhy0fiTlKZQETK2XdxsXMpqi5nnrsk1w6Ug3pY8EG8Pk3MwB9OS2Aud
+         +3stOyreBUDzcd7CQMyvNzeCsvA6aeAxsLN5gZFf3huV2+gCBGtMMGAOJy97nuT6HP2Z
+         +toQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768933874; x=1769538674;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8tcAcp7uWuIjCj2SaccYzTy4fHKVPeO3zwjJJlV2b3I=;
-        b=i+fr36cB+rKFDHwf3fa5+W+oHKqgeKtFOYFaE4CrJNjvXN9PTH2X1zG4/MFvh2CwPn
-         Z+Fhd3Sr6KrqrQfxpFESCnssocxToZOxp1u5rRJcBV3/1J6nfaQJa6kRlsn8LWw4mdaM
-         nNJdpLTSV+BUxaEa0YCYYza2eMUu5ybctq7QFqBrE5vm8if+wfLmW8ubwuLu3v43aXvp
-         wZNBU67E41YYsZpqMtdg7+MlpnaO6rUBiuxseZ2TBmzsfCaCNU2hV37+wYxpFCpWSYtQ
-         3xpHeJ9u4DhtNGvWWrrnCgbb2csWawF8QZ2JHfzUE4wp8eqtR5ANoLnBA3vQTBFx88cv
-         x7Yg==
-X-Forwarded-Encrypted: i=1; AJvYcCVz+aDS0DST2eYalNlA8pHWjiVA/L6ZmTsgpC7zTj0Rdggo5BrcyK5H9fq0Ki9NfcnGDxzpdrN/1PU9krS7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxN3hK7mFxsLXwT0CW6vuOEBkRQc1wNT9Lo8Ax9XEU1fSwL8cLS
-	JzjTK7bRnFbhNjmSBll+8SstHpalTy2yKTLe3BXuOwBJ5Xi1z/YMQy5OmlWzupQYMc4I4j825/r
-	KWvmHuT1ZyqHEzt6ef/8zLWOxwvkWc7MLefw1uSMkKQ==
-X-Gm-Gg: AZuq6aL04vaikmQzs/AOvSJNyHG9ODaJ+YxVt5eoGvoqiWomKQ2P2lJnexz0M9sAU3W
-	FFGGinKgHGUTOyvNAnEyDJ30wVWsNscdFO3pmXadfS3rdrP0zyxxBC8N64LdJx+bVCZgJ+vwcA7
-	TSpMTNj/QuhSd5MpA6/3iu1P3xbURVQFZjslh/PWlqaK5R2GJpLCbcYzSJzx3Q6fws8awDjmj2w
-	4JjHI3gVj2LB4UlSEBP4ULiLNezLa0gMKb+uE3yADIbU8sR1q7YhgZO1I2bxfGsGJJYZ8zzV5Fb
-	NJhoFpO/m6s=
-X-Received: by 2002:a05:6512:12c8:b0:59b:6f90:bb9b with SMTP id
- 2adb3069b0e04-59ba7194a04mr7131150e87.19.1768933874345; Tue, 20 Jan 2026
- 10:31:14 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768911469; x=1769516269;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iJRswF5rrqok4Sjk5jUvdiR7sS5VwezMU3Ml3c2KzVk=;
+        b=HGaH6zN2sghXoioiB2lMa2+tU+7CRlSlTT5zFCT23xC7FwTxUPuXCQ63K94hqLcoP6
+         OVjhY4+OW12c6utbX8pA+36LTA789JFUCN0p4vB/NuUK28S/ALvkSBqBy9VSevmBAGqR
+         aWLynUGXsHgXLC5bfU/rkGI2vqzO9n7ae8HGHTUzsTclVXlB7YhYJ6f4G78iMLFO/Gc1
+         /eesra3dTg/baNyCyoJ94s6dTe+Ni0k/uf17Sk4ldAP87LMbqFUI7fdhxJlGZ9bag0e2
+         3Qf85/jHeSAI0Jf2I1jZYUKlYUi/FUCvcgNU8YzbFoiLHei7Itb9ebvGGdVLSPcaIunK
+         raUw==
+X-Forwarded-Encrypted: i=1; AJvYcCXusidyh9P2IMLkfXb8PNnr95l96/5iQPJlCwyK3dXFNLRfbJW48GYbSK4BK0ptuVnpDkmUuFZjQFEDxqgZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmjydmU5yKaocfwo1Qf/Ksk2cuKixgEoXNZ6+w3NEFd3/HLbeu
+	y9meFPczl6liKUoyHQYTPkIn62bAkTjIbcCewe/sheQKrRR6pwf/6lTqDZSxTr6694A=
+X-Gm-Gg: AZuq6aIjwFp+TC1RoXp8JkoNvE1zx95HSKKOL9IZeEnD/Sj++XSivmsnficxUfqqibD
+	ZAjkTf8q139fN/YtgXd2uO96Hbyldaa3SrBlJf8lxisZ38+EXHI6aehiCBwBH2AaB6IVmWfrvfd
+	xoXWvzmbr0o1zii6ntZQtRL3nKAUyywSUtM02xMaWMIKF2JXvDE16yiYK3PWF/Xr4sCS//zmT/4
+	EudAIaSGijq/DJJNdN3U9zNT4vHfJhzljy/Zz75psOXMzaM54i2W0JkpSCeqmI3nlgP9HveioD2
+	2xotg6z/dLIjr0JPOrSkM4RcGiDVyw/AwFoWbj/RaaTJhINUnfIrt5ocy3Wh0YKinfOmyQQxM4c
+	E9XD2nRzsQf8Kj3qJkrFiXdURhssDAtinrsoIwj+ioBGyn9ILVxSLyA9x4+VhaaIczBmlu0omg+
+	1/3Z0WrEFABqAjyFjneMTeabiGQDPv5NlMg3lnZsw6
+X-Received: by 2002:a05:6000:2387:b0:42f:b555:5275 with SMTP id ffacd0b85a97d-43569548aa2mr19948618f8f.10.1768911469374;
+        Tue, 20 Jan 2026 04:17:49 -0800 (PST)
+Received: from [10.0.1.22] (109-81-1-107.rct.o2.cz. [109.81.1.107])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4356997e6dasm29657069f8f.32.2026.01.20.04.17.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Jan 2026 04:17:49 -0800 (PST)
+Message-ID: <4d379736-9b6a-4e40-ad67-53ee7498759c@suse.com>
+Date: Tue, 20 Jan 2026 13:17:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260120145103.1176337-1-dhowells@redhat.com> <20260120145103.1176337-12-dhowells@redhat.com>
-In-Reply-To: <20260120145103.1176337-12-dhowells@redhat.com>
-From: Ignat Korchagin <ignat@cloudflare.com>
-Date: Tue, 20 Jan 2026 18:31:02 +0000
-X-Gm-Features: AZwV_QgHfD8HrBxrEOZbsSwT8PQCZski9dDNQ5llHPcq36JCOcYwlSptleCn6M0
-Message-ID: <CALrw=nGSr7F-NJri+UFgBVz5J+KFAS6OXa9EFvYo-qitX9R2bg@mail.gmail.com>
-Subject: Re: [PATCH v13 11/12] x509, pkcs7: Limit crypto combinations that may
- be used for module signing
-To: David Howells <dhowells@redhat.com>
-Cc: Lukas Wunner <lukas@wunner.de>, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, Eric Biggers <ebiggers@kernel.org>, 
-	Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
-	Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
-	"Jason A . Donenfeld" <Jason@zx2c4.com>, Ard Biesheuvel <ardb@kernel.org>, Stephan Mueller <smueller@chronox.de>, 
-	linux-crypto@vger.kernel.org, keyrings@vger.kernel.org, 
-	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-8.96 / 15.00];
-	WHITELIST_DMARC(-7.00)[cloudflare.com:D:+];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] Documentation/kbuild: Document gendwarfksyms build
+ dependencies
+To: linjh22s@gmail.com
+Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>,
+ Jonathan Corbet <corbet@lwn.net>, Miguel Ojeda <ojeda@kernel.org>,
+ Boqun Feng <boqun.feng@gmail.com>, Sami Tolvanen <samitolvanen@google.com>,
+ Masahiro Yamada <masahiroy@kernel.org>, linux-modules@vger.kernel.org,
+ linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260114-documents_gendwarfksyms-v2-0-297c98bd62c6@gmail.com>
+ <20260114-documents_gendwarfksyms-v2-1-297c98bd62c6@gmail.com>
+Content-Language: en-US
+From: Petr Pavlu <petr.pavlu@suse.com>
+In-Reply-To: <20260114-documents_gendwarfksyms-v2-1-297c98bd62c6@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.46 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
-	R_DKIM_ALLOW(-0.20)[cloudflare.com:s=google09082023];
+	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-5437-lists,linux-modules=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[cloudflare.com,reject];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_CC(0.00)[kernel.org,lwn.net,gmail.com,google.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[cloudflare.com:+];
+	FREEMAIL_TO(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-5412-lists,linux-modules=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[suse.com,quarantine];
+	DKIM_TRACE(0.00)[suse.com:+];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ignat@cloudflare.com,linux-modules@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
-	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-modules];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[cloudflare.com:email,cloudflare.com:dkim,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,mail.gmail.com:mid,apana.org.au:email,wunner.de:email,chronox.de:email]
-X-Rspamd-Queue-Id: B4D5949E1D
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,suse.com:email,suse.com:dkim,suse.com:mid]
+X-Rspamd-Queue-Id: 501DF4E9D0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi David,
-
-On Tue, Jan 20, 2026 at 2:52=E2=80=AFPM David Howells <dhowells@redhat.com>=
- wrote:
->
-> Limit the set of crypto combinations that may be used for module signing =
-as
-> no indication of hash algorithm used for signing is added to the hash of
-> the data, so in theory a data blob hashed with a different algorithm can =
-be
-> substituted provided it has the same hash output.
->
-> This also rejects the use of less secure algorithms.
->
-> Signed-off-by: David Howells <dhowells@redhat.com>
-> cc: Lukas Wunner <lukas@wunner.de>
-> cc: Ignat Korchagin <ignat@cloudflare.com>
-> cc: Stephan Mueller <smueller@chronox.de>
-> cc: Eric Biggers <ebiggers@kernel.org>
-> cc: Herbert Xu <herbert@gondor.apana.org.au>
-> cc: keyrings@vger.kernel.org
-> cc: linux-crypto@vger.kernel.org
+On 1/14/26 12:47 PM, Jihan LIN via B4 Relay wrote:
+> From: Jihan LIN <linjh22s@gmail.com>
+> 
+> Although dependencies for gendwarfksyms were recently added to the
+> packaging rules [1-2], the corresponding documentation was missing.
+> 
+> Document the required build dependencies for gendwarfksyms, and
+> include a few examples for installing these dependencies on some
+> distributions.
+> 
+> [1] commit 657f96cb7c06 ("kbuild: deb-pkg: Add libdw-dev:native to
+> Build-Depends-Arch")
+> [2] commit 5bd6bdd0f76e ("kbuild: rpm-pkg: Add (elfutils-devel or
+> libdw-devel) to BuildRequires")
+> Signed-off-by: Jihan LIN <linjh22s@gmail.com>
 > ---
->  crypto/asymmetric_keys/public_key.c | 55 +++++++++++++++++++++++++++--
->  1 file changed, 53 insertions(+), 2 deletions(-)
->
-> diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys=
-/public_key.c
-> index 13a5616becaa..90b98e1a952d 100644
-> --- a/crypto/asymmetric_keys/public_key.c
-> +++ b/crypto/asymmetric_keys/public_key.c
-> @@ -24,6 +24,52 @@ MODULE_DESCRIPTION("In-software asymmetric public-key =
-subtype");
->  MODULE_AUTHOR("Red Hat, Inc.");
->  MODULE_LICENSE("GPL");
->
-> +struct public_key_restriction {
-> +       const char      *pkey_algo;     /* Signing algorithm (e.g. "rsa")=
- */
-> +       const char      *pkey_enc;      /* Signature encoding (e.g. "pkcs=
-1") */
-> +       const char      *hash_algo;     /* Content hash algorithm (e.g. "=
-sha256") */
-> +};
+>  Documentation/kbuild/gendwarfksyms.rst | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> diff --git a/Documentation/kbuild/gendwarfksyms.rst b/Documentation/kbuild/gendwarfksyms.rst
+> index ed366250a54eac3a72c2f529da94a9e803704ae4..0e153d13b052da6edcf65950739730c123cd49db 100644
+> --- a/Documentation/kbuild/gendwarfksyms.rst
+> +++ b/Documentation/kbuild/gendwarfksyms.rst
+> @@ -14,6 +14,29 @@ selected, **gendwarfksyms** is used instead to calculate symbol versions
+>  from the DWARF debugging information, which contains the necessary
+>  details about the final module ABI.
+>  
+> +Dependencies
+> +------------
 > +
-> +static const struct public_key_restriction public_key_restrictions[] =3D=
- {
-> +       /* algo                 encoding        hash */
-> +       { "rsa",                "pkcs1",        "sha256" },
-> +       { "rsa",                "pkcs1",        "sha384" },
-> +       { "rsa",                "pkcs1",        "sha512" },
-> +       { "rsa",                "emsa-pss",     "sha512" },
+> +libelf, libdw and zlib are dependencies of gendwarfksyms.
+> +
+> +Here are a few examples for installing these dependencies:
+> +
+> +* Arch Linux and derivatives::
+> +
+> +	sudo pacman --needed -S zlib libelf
+> +
+> +* Debian, Ubuntu, and derivatives::
+> +
+> +	sudo apt install libelf-dev libdw-dev zlib1g-dev
+> +
+> +* Fedora and derivatives::
+> +
+> +	sudo dnf install elfutils-libelf-devel elfutils-devel zlib-devel
+> +
+> +* openSUSE and derivatives::
+> +
+> +	sudo zypper install libelf-devel libdw-devel zlib-devel
+> +
 
-Don't we want to allow sha256 for emsa-pss?
+Nit: I suggest slightly adjusting the text to something like:
 
-> +       { "ecdsa",              "x962",         "sha256" },
-> +       { "ecdsa",              "x962",         "sha384" },
-> +       { "ecdsa",              "x962",         "sha512" },
-> +       { "ecrdsa",             "raw",          "sha256" },
-> +       { "ecrdsa",             "raw",          "sha384" },
-> +       { "ecrdsa",             "raw",          "sha512" },
-> +       { "mldsa44",            "raw",          "sha512" },
-> +       { "mldsa65",            "raw",          "sha512" },
-> +       { "mldsa87",            "raw",          "sha512" },
-> +       /* ML-DSA may also do its own hashing over the entire message. */
-> +       { "mldsa44",            "raw",          "-" },
-> +       { "mldsa65",            "raw",          "-" },
-> +       { "mldsa87",            "raw",          "-" },
-> +};
-> +
-> +/*
-> + * Determine if a particular key/hash combination is allowed.
-> + */
-> +static int is_public_key_sig_allowed(const struct public_key_signature *=
-sig)
-> +{
-> +       for (int i =3D 0; i < ARRAY_SIZE(public_key_restrictions); i++) {
-> +               if (strcmp(public_key_restrictions[i].pkey_algo, sig->pke=
-y_algo) !=3D 0)
-> +                       continue;
-> +               if (strcmp(public_key_restrictions[i].pkey_enc, sig->enco=
-ding) !=3D 0)
-> +                       continue;
-> +               if (strcmp(public_key_restrictions[i].hash_algo, sig->has=
-h_algo) !=3D 0)
-> +                       continue;
-> +               return 0;
-> +       }
-> +       pr_warn_once("Public key signature combo (%s,%s,%s) rejected\n",
-> +                    sig->pkey_algo, sig->encoding, sig->hash_algo);
-> +       return -EKEYREJECTED;
-> +}
-> +
->  /*
->   * Provide a part of a description of the key for /proc/keys.
->   */
-> @@ -391,12 +437,17 @@ int public_key_verify_signature(const struct public=
-_key *pkey,
->         bool issig;
->         int ret;
->
-> -       pr_devel("=3D=3D>%s()\n", __func__);
-> -
->         BUG_ON(!pkey);
->         BUG_ON(!sig);
->         BUG_ON(!sig->s);
->
-> +       ret =3D is_public_key_sig_allowed(sig);
-> +       if (ret < 0)
-> +               return ret;
-> +
-> +       pr_devel("=3D=3D>%s(%s,%s,%s)\n",
-> +                __func__, sig->pkey_algo, sig->encoding, sig->hash_algo)=
-;
-> +
->         /*
->          * If the signature specifies a public key algorithm, it *must* m=
-atch
->          * the key's actual public key algorithm.
->
+"""
+Gendwarfksyms depends on the libelf, libdw, and zlib libraries.
 
-Ignat
+Here are a few examples of how to install these dependencies:
+"""
+
+.. and swap the items on the pacman line to 'libelf zlib' so the order
+is always libelf, libdw, zlib.
+
+Looks ok to me nonetheless, the list is consistent with similar examples
+in Documentation/admin-guide/verify-bugs-and-bisect-regressions.rst.
+
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+
+-- 
+Thanks,
+Petr
 
