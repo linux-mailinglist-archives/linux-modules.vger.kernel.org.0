@@ -1,150 +1,135 @@
-Return-Path: <linux-modules+bounces-5477-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5478-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mNhzIChOc2lDugAAu9opvQ
-	(envelope-from <linux-modules+bounces-5477-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 11:32:08 +0100
+	id kp1NBv5Xc2n3uwAAu9opvQ
+	(envelope-from <linux-modules+bounces-5478-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 12:14:06 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAECB745E7
-	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 11:32:07 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03C1A74DED
+	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 12:14:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B938E300CE63
-	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 10:32:02 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 67E293008305
+	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 11:14:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4276327FD40;
-	Fri, 23 Jan 2026 10:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05BFB346A0F;
+	Fri, 23 Jan 2026 11:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cy0Bfe6S"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RLoAXgL5"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF9C1E1E16;
-	Fri, 23 Jan 2026 10:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B653502B5
+	for <linux-modules@vger.kernel.org>; Fri, 23 Jan 2026 11:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769164321; cv=none; b=mQmSPN+oRTO79nQzXCgqlK/CisgtsX+OPdz67H0x9WOvg4StNsiVHTo5BpY7SJkm+Oemm/Dtv++GMG+rwWwLmn628fqHIITcrQWO8rG9mYIGEGaLEOgPgTXGXF1ka46Xo9zT5BL3yLH5C9Iq+H1PYuw8n8nFVPnLDM69wCxkgHc=
+	t=1769166844; cv=none; b=kC4bAD1GFqjDwDbWKkkPFcMR+BUF9vxKxj7Gx2gnkm7qxXDLQlwxeNHf/ZjPQIqOCcrCLpJ8Mklm2gKpkFij7GM0pb935LaCwWkOdWMyLn3XBguzoqH4SHI3Wb50loassk4CzywJQqK/xPZ5vgfm3dD8qo9B3AJSLePvhXtbDts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769164321; c=relaxed/simple;
-	bh=sHjQ9HOARqWETgrMbOs1PxCzAPQOpCGuR4PBTFPGDNo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ri2huPBPEjoUZ5ehyvf1OvL44nxs+u9+uJmGes7J+RjaxBgYhIhkFkK6eqAzYugXcJlZkvyDkoUIoDAdGpNATcCE74tXvhosiXDjf56KgTqyZpUmHV1uZBsdF1hUFyvmImu6VzNxGYi2GRPEZ5iOzF4y+A0qa8Pb7ujg5zqVlZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cy0Bfe6S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8F1C4CEF1;
-	Fri, 23 Jan 2026 10:31:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769164320;
-	bh=sHjQ9HOARqWETgrMbOs1PxCzAPQOpCGuR4PBTFPGDNo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Cy0Bfe6SNHsO+mgp65s3o4EkcUu2+m8ycDpoVcZlKMUUJABpbYuOVtfmcajmgBT1R
-	 IPPf6b7rCpCqQTzIIWRU0Qx5ZHLgnxQTamYqtaKUJAJOijDIrb68/jQLpxSLMAgO+h
-	 ZzORXg3t4wXVjy55VPCD0xuiCdHOXvsJ+X5tMZXNO5Pu/Udcc8c1Kh4jQGep+VeXYC
-	 sdrlDz1UwcyqEDCEoyovODonProYX3VaqsjnmbYHHh2vT5ESS0sV/idgJr7v3ZLCbH
-	 1xMWR+zBoYB6u2Lge47jpZSQ/3vDqf1oI4nHNyJD9oL14iZhgrnYGSJhLFFcX1WQpH
-	 jlzyTd/4ihhBg==
-Date: Fri, 23 Jan 2026 11:31:57 +0100
-From: Daniel Gomez <da.gomez@kernel.org>
-To: Jim Cromie <jim.cromie@gmail.com>
-Cc: Petr Pavlu <petr.pavlu@suse.com>, Luis Chamberlain <mcgrof@kernel.org>, 
-	Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
-	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] module: speed modprobe by adding name_crc to
- struct module
-Message-ID: <aXNNpCl2lKb9YXJN@macos>
-References: <20260122234621.3403276-1-jim.cromie@gmail.com>
- <198d1ca0-031f-459c-89bd-6d438a84fcb9@suse.com>
+	s=arc-20240116; t=1769166844; c=relaxed/simple;
+	bh=Uctvhaao4TwZFvZs8nG3yHG4j63vmM1NOm8Qll9foJY=;
+	h=From:In-Reply-To:References:Cc:Subject:MIME-Version:Content-Type:
+	 Date:Message-ID; b=g9vmdgA//AIjptqOhQmVgHwQ4WCZfMwuBDLH3HZvGXqOawYrkH1+CAclAgKZQknejtf2+t7nObuZD1Al2b1NktvhoW6OpwQMruio6HoXqaQvj79bB7C4fWHL/EoUFmUa61+XufincHFPNOropWZ6j4sCzirwpeRIMS4dLKrH468=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RLoAXgL5; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1769166835;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=u+zpIB6rSPmIkhyyL0wrbSSRBgkyqQ8ePd4cJB2UVC0=;
+	b=RLoAXgL57RCHKcqCtp9gNTFZJl/PcgIeiyAiR/52rlIyCKz27fRiXWHdvvnaKAicqjCaka
+	Y6AWKpvdcVyHDhAyTJz+1HzCxuDu63IObgCgm/74ZOB97okvCw2Kgv78tti6hL5jKmTY2z
+	In/+UGtvepBwC2MmwrVh+Pl7nMrSPY4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-KvdH0h4hO1uAyeziSG2IdA-1; Fri,
+ 23 Jan 2026 06:13:50 -0500
+X-MC-Unique: KvdH0h4hO1uAyeziSG2IdA-1
+X-Mimecast-MFC-AGG-ID: KvdH0h4hO1uAyeziSG2IdA_1769166827
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 20DC418002C7;
+	Fri, 23 Jan 2026 11:13:47 +0000 (UTC)
+Received: from warthog.procyon.org.uk (unknown [10.42.28.2])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id BA48830002D1;
+	Fri, 23 Jan 2026 11:13:42 +0000 (UTC)
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+	Kingdom.
+	Registered in England and Wales under Company Registration No. 3798903
+From: David Howells <dhowells@redhat.com>
+In-Reply-To: <20260121223609.1650735-1-dhowells@redhat.com>
+References: <20260121223609.1650735-1-dhowells@redhat.com>
+Cc: dhowells@redhat.com, Lukas Wunner <lukas@wunner.de>,
+    Ignat Korchagin <ignat@cloudflare.com>,
+    Jarkko Sakkinen <jarkko@kernel.org>,
+    Herbert Xu <herbert@gondor.apana.org.au>,
+    Eric Biggers <ebiggers@kernel.org>,
+    Luis Chamberlain <mcgrof@kernel.org>,
+    Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>,
+    Sami Tolvanen <samitolvanen@google.com>,
+    "Jason A . Donenfeld" <Jason@zx2c4.com>,
+    Ard Biesheuvel <ardb@kernel.org>,
+    Stephan Mueller <smueller@chronox.de>, linux-crypto@vger.kernel.org,
+    keyrings@vger.kernel.org, linux-modules@vger.kernel.org,
+    linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v14 0/5] x509, pkcs7, crypto: Add ML-DSA and RSASSA-PSS signing
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <198d1ca0-031f-459c-89bd-6d438a84fcb9@suse.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <1753971.1769166821.1@warthog.procyon.org.uk>
+Date: Fri, 23 Jan 2026 11:13:41 +0000
+Message-ID: <1753972.1769166821@warthog.procyon.org.uk>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MISSING_TO(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-5477-lists,linux-modules=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-5478-lists,linux-modules=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
+	HAS_ORG_HEADER(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[redhat.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[da.gomez@kernel.org,linux-modules@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dhowells@redhat.com,linux-modules@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	TAGGED_RCPT(0.00)[linux-modules];
+	NEURAL_HAM(-0.00)[-0.999];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,atomlin.com:email]
-X-Rspamd-Queue-Id: AAECB745E7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[warthog.procyon.org.uk:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 03C1A74DED
 X-Rspamd-Action: no action
 
-On 2026-01-23 10:36, Petr Pavlu wrote:
-> On 1/23/26 12:46 AM, Jim Cromie wrote:
-> > "modprobe foo" currently does strcmp on the name, this can be improved.
-> > 
-> > So this commit:
-> > 
-> > 1. adds name_crc to struct module
-> > 2. modpost.c computes the value and
-> > 3. outputs it for "modinfo foo" to see/use.
-> > 
-> > 4. adds hotpath to find_module_all()
-> >    this uses name_crc to do quick "name-check"
-> >    falls back to strcmp only to guard against collisions.
-> > 
-> > This should significantly reduce modprobe workload, and shorten module
-> > load-time.
-> > 
-> > Since it alters struct module, its binary incompatible. This means:
-> > 
-> > 1. RFC for its wide "blast radius".
-> > 2. suitable for major version bump *only*
-> > 
-> > 3. it opens door for further struct module reorg, to:
-> >    a. segregate fields by "temperature"
-> >    b. pack out paholes.
-> >    c. improve cache locality (by reordering coldest on bottom)
-> >       name should be cold now.
-> >       bikeshedding is appropriate here.
-> > 
-> > NB: this isn't a substitute for CONFIG_MODULE_SIG.
-> > It reimplements crc_le(), doesn't reuse kernel's version.
-> > 
-> > CC: Luis Chamberlain <mcgrof@kernel.org>
-> > CC: Petr Pavlu <petr.pavlu@suse.com>
-> > CC: Daniel Gomez <da.gomez@kernel.org>
-> > CC: Sami Tolvanen <samitolvanen@google.com>
-> > CC: Aaron Tomlin <atomlin@atomlin.com>
-> > CC: linux-modules@vger.kernel.org
-> > 
-> > Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
-> > 
-> >  '#' will be ignored, and an empty message aborts the commit.
-> 
-> This patch looks as if it were generated by AI. If so, please avoid
-> sending such changes. Otherwise, the commit description should explain
+David Howells <dhowells@redhat.com> wrote:
 
-FYI, this is a process already documented. You can check out what maintainers
-expect from contributions and possible guidelines:
+> Subject: [PATCH v14 0/5] x509, pkcs7, crypto: Add ML-DSA and RSASSA-PSS
+>  signing
 
-https://lore.kernel.org/all/20260119200418.89541-1-dave.hansen@linux.intel.com/
+I forgot to edit the cover to reflect I dropped RSASSA-PSS support from the
+patchset for now.
+
+David
+
 
