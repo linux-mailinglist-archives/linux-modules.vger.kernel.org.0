@@ -1,187 +1,163 @@
-Return-Path: <linux-modules+bounces-5473-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5475-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kBcYE0xBc2mWtwAAu9opvQ
-	(envelope-from <linux-modules+bounces-5473-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 10:37:16 +0100
+	id yH4VK2VNc2lDugAAu9opvQ
+	(envelope-from <linux-modules+bounces-5475-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 11:28:53 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 340287375B
-	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 10:37:15 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66E717452C
+	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 11:28:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 981B83007B2F
-	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 09:36:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BBF3F3017050
+	for <lists+linux-modules@lfdr.de>; Fri, 23 Jan 2026 10:28:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DC7E372B54;
-	Fri, 23 Jan 2026 09:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DAC237646E;
+	Fri, 23 Jan 2026 10:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="d7Tzg02M"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="DfgiVAmQ"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E32D34DCD2
-	for <linux-modules@vger.kernel.org>; Fri, 23 Jan 2026 09:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C342C0F79
+	for <linux-modules@vger.kernel.org>; Fri, 23 Jan 2026 10:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769160991; cv=none; b=TOlrDYZayGitFwJCXVqvzLlOgqPsgphAKzoYzz8/TjioKUALhNYud+DSjrgSp0pZ06F4m1a3R6bC9gTI+yMFV9wrdhBv4OXcJ6dzwGIJRkmCT3uwsbgKabLcU+8XugKvI3NxIGvGtNfCw2I958jQRHnnpHpM50S/dZAo3vJEaNA=
+	t=1769164126; cv=none; b=Nvm2o5FRPbh5emfARiFfch0/xveiTPph0UQLp/nsBrSaAR8kbIB9i5OMUpCEdlyWExOcbhbytpBz18o/FpIwrGKKtkJtCzYzn9wiWCEQE8lDFQirmgzr1CcYYOfzerz6zpN6WXNAFblsXom15Vu0ZxeEJ4Me//R2RRLeHi/+nYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769160991; c=relaxed/simple;
-	bh=UHCtzZUwNmJVex/PidjG1QhsgZr3sHuco2k9/TFidh4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gNSQ7a9aQYLy4ejyAs6TLRl+UsfgsBM+QNCwF/8yFHt8n0V7xAaX+VuLYMEsj47oXqxxXKwcGvZkeUi0GREY7M+UvKJsanO/bUuYhQlp7y9J/aQ4qJI1fxIMjBkiuixWpqfhBUZdLXjk+CVvW89B/LVxWeUmcimdFJbii0/tTGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=d7Tzg02M; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1769164126; c=relaxed/simple;
+	bh=vZ1mu8tSLKnZvZCLHWhAzIgA8g1lboSmvVDlNeb88nU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fqsfRAUZJvK0OJzGbkz1xNMyZWPfs4IVL6DqZEYwP5jwNl2Wo7uoWadrxFo9S9nsAiwLkML9y1eu+nvoUYs0FJVocBQ8/6Z58YsvS+cp4F4riUk7WnFepodnVSzv0TKHYhc/rR60THkQKGEF267A4D8lr8Fm5VCxUYMlfJ1xD/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=DfgiVAmQ; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4801c731d0aso15295755e9.1
-        for <linux-modules@vger.kernel.org>; Fri, 23 Jan 2026 01:36:24 -0800 (PST)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47ee937ecf2so17469055e9.0
+        for <linux-modules@vger.kernel.org>; Fri, 23 Jan 2026 02:28:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1769160981; x=1769765781; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ml193Cxw+2y2CyhUl9eY/flN/zutVC5TnFaQhjrJlN4=;
-        b=d7Tzg02M22dfWu8JPYQY/z9qZRSZdRQaQ2Duc6QTYQ/IumvpC4DyB7alcAanyqOXCx
-         9OLd8E33DmgQyREZ3zDxq7O9oxNSJ6S4FfudiZ4zWh71h97dV8mYA+LWBf7quEnx8O1U
-         ORikHgVJ4LEjLuvAZNfcwcKbNvQi0uZs8v0oBLCaNLo+r7hpxiov2MbuO3ABwszn84Im
-         KvFIbLMF1Z2dSKocCzeT1iBCRvLlYK7iAtEP2n3rpBuAvaTmKArLs+LY7qIFAf+L9zE1
-         qoFRd123269oyJO0KqtAOb/Xlkbny+XuyiyhZSHQx6aF7/8JJOwr2iCYZrTSOq7ZqDdo
-         +QcQ==
+        d=suse.com; s=google; t=1769164122; x=1769768922; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tCADJuO9Wbmf06FkgoP6KGJu7f/7b8t88gQaAJJ56KY=;
+        b=DfgiVAmQminUUCfEvpsFyzML3DK4bjplmr4NhZ8cIxAeFR9WAU8/m7k0qQtOhSjgfu
+         HFwWmAwUMiLVaqfmVHWm7YDMlglJNKy6bh1yfM9Vx2VBSsLp2mqkyck6zBvMPgql07Pg
+         eD0r+rXREcIbhPUd6JfRy/OMFd+0ReUuYgKa9ALSx3WUEnjJM2dkTYgYQfF9rpA8XI/Y
+         KVLb2jqRtfmF0V5rWvpHi5F7Atax6T6SqzsOuHPDrsRdfoEs9r+5XZcFGyCkcevm18M5
+         REFMeHji11/pRGuVm032f/Av/q0dFoCLuFhE74YxasPt5mYcfhjBJx9vnrTNR6CtPRzH
+         81Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769160981; x=1769765781;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ml193Cxw+2y2CyhUl9eY/flN/zutVC5TnFaQhjrJlN4=;
-        b=ejI0qIrCOhRR63MpdpXF7a9jKg34lX8GLVuNsSWE4BqZS90UPOOD4TL9cL4bIANsNJ
-         ZM9NCofvtxX7BPg5g3dltGnFFX7aeMBbcv7i+cIA8qQfqlDHgHxxt3JvYAuUfDiotGvW
-         kCqkj3lpfp2V/9vaCai4yO8O87jkLAAxxfn8jSi2R6uqNdrDEmIuluq6zyEpOZPBgLIV
-         tyiVDtJxTRZyKVlu0HQTct1RDEtd8oQ0wrCwYn7rmPZrMCqJekc5SpyxyFViyw5zw1S0
-         e5zYunWEXlsMOkd3BKSdn94/56xUiZAhqOsGwX1jLmX09njKkcNiW6VJz6l0+PpWXs/d
-         4gVw==
-X-Forwarded-Encrypted: i=1; AJvYcCWaP1XszxRbY7nSorkIT4qHn8v1JxnO+ubwtReQadVrthAiHunRkWcDgPm3g9fnFNLNIBjOBVHqauNtzxZB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxDxDZfSR7JkQMSGd6XPzRxc4AqCVGPj0vAq6/+XUYy/isNblc
-	Ivi+1r624hs7MgE1qbdWQ2XKbQkPJt5hBLJMVG9AxOhviK10Pz488CycFdcGkuK1DZo=
-X-Gm-Gg: AZuq6aJoGjYrcdXVr92DzrhfwV3HHRAuGoIG3/CgQDdfvR67728yDPJ2VIdE828MhxR
-	WzHiT4R5VSDN+dGVI4rKyZjoQWe9RBBvHd5otbjhjh7/QSWrGuy54uCir8OyXf0mxkE1a/l6HHf
-	6zLTDuV7yx9P3Xz4MHuUf2EWeNM5CPKV3K08RPxbYj1aOsV2KncPASpLYj9nuXU1fXO+a/7f0MP
-	ag8lvO8HfR0iP6FkO9xpXarkOpi1nYTYlOgbeqJ+hS5QhK1erAYDBt/1vaVMqRJWnqj1FdryAJ5
-	nsX2qQmrYhqAkWQU+Q0DtNKV5UW5DfIlbQHUTPyBdAaroPIyNsGfU7Fvtoj8erwBuYghAl7lCw1
-	POhG9ipggJkEg1PiUQyoAoag5cwA2XVQr2X+XO7aeEdV4Y1B2pgV7BguwmMA5DecCG+ihx2AniI
-	+U9hI7lMso13ZuhwNugh11ymsHR80CNZF0yrKgs2q/
-X-Received: by 2002:a05:600c:6095:b0:480:4d39:84b3 with SMTP id 5b1f17b1804b1-480511e4ec0mr12497115e9.6.1769160981070;
-        Fri, 23 Jan 2026 01:36:21 -0800 (PST)
-Received: from [10.0.1.22] (109-81-1-107.rct.o2.cz. [109.81.1.107])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1f7b4d8sm5009841f8f.38.2026.01.23.01.36.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jan 2026 01:36:20 -0800 (PST)
-Message-ID: <198d1ca0-031f-459c-89bd-6d438a84fcb9@suse.com>
-Date: Fri, 23 Jan 2026 10:36:20 +0100
+        d=1e100.net; s=20230601; t=1769164122; x=1769768922;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tCADJuO9Wbmf06FkgoP6KGJu7f/7b8t88gQaAJJ56KY=;
+        b=Sg+4wriwMx6BpNRo71MFn6rOQAeZ+02y9hYEJiXiAR/qdkaD7gggzLKuc99emQjQzM
+         BFR+Ts5ZSSz1GI1s5b3o/fPXsmqkIRVHHapB8wbEmdVlgi2yD5gQTBfjGvA+KWSvVJMa
+         WlHCTnk/feV/HMnyuyKag+bRduLy0tBhQRVRW+niMMAAI7/X/XPMQKz/JTCaMLnItIB6
+         gaoIxWe/ijo9MARsvs6zlmxn65pZCuzLx7SdSvMLjO1XtD0WnUlKSNNh/bCnJzUzRvIG
+         uiUfYGBeNt2qsYOUlX6IWoZVvsMssPB4UkR9FM29lfeNVr7jTq4PtTvQeYF8Oq1mQUdY
+         53kA==
+X-Forwarded-Encrypted: i=1; AJvYcCUuvEtu0JVWtm6BoiBlgiuuTyitdY6+V4o945obqmxD3KpKYXYv8sP8n3b9DurAGD9xtvTZe0xLvnRQEsmK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdxItK/G3I0WxkwQKjwqxluuWrOwCRrrn91Cgl6WoSIkLlGhqK
+	gvxb0FDl3Hpy9sH5eYbSKc1RiDxGXROPXxHNSCdDIkJdnIhQN3SCPjya3uaNqhyyFY0=
+X-Gm-Gg: AZuq6aIR6tCqLFGlmoojyEIvOEZFbbSGvi84xkeF4OtMEGUVEgl7Nen0omkhvHyljvF
+	+xi2nj87dQjI2KUnMCRGrJFei68YdwmkM78vWEiaiUqEvfi1YWZUB2LKuld8cdgNLoP0FhqEZcR
+	am0m2R8A2wz/eHQPPzam+eMLywMf0FPdXYIOZFQgGqi9XUverVwZQhVVARzb10YgYa/7HHj0mE+
+	uK+lBxVHo0S0BZGsr75rFjNNQhi4DHPYzkGoTKkdt7oeCyMFuL17z7+cFuJPnkE7y049yFu+rDT
+	9fjDxwhp5rvzxXzEXX/yH6IrAzBHEBOdTVDIFuT5rV7zBolInOiizSmCnkz0DsfVVYxVPE60ZJC
+	YtwCHUOpO2U1A8fZaUUnFjTSRht34IXuATfwlTNDt3M4/s9VB0DRB5XFwbW/UbgBehYpprdiCnV
+	yHxGDBKODsEPcMJlq5s3HU80wh6HICspfH2JlmOdCUDQ==
+X-Received: by 2002:a05:600c:6994:b0:477:9890:9ab8 with SMTP id 5b1f17b1804b1-4804d2b1704mr36414875e9.3.1769164122581;
+        Fri, 23 Jan 2026 02:28:42 -0800 (PST)
+Received: from zovi.suse.cz (109-81-1-107.rct.o2.cz. [109.81.1.107])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-480470474cbsm128920065e9.8.2026.01.23.02.28.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 02:28:42 -0800 (PST)
+From: Petr Pavlu <petr.pavlu@suse.com>
+To: Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Petr Mladek <pmladek@suse.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	live-patching@vger.kernel.org,
+	linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/2] Improve handling of the __klp_{objects,funcs} sections in modules
+Date: Fri, 23 Jan 2026 11:26:55 +0100
+Message-ID: <20260123102825.3521961-1-petr.pavlu@suse.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/1] module: speed modprobe by adding name_crc to
- struct module
-To: Jim Cromie <jim.cromie@gmail.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>,
- linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260122234621.3403276-1-jim.cromie@gmail.com>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <20260122234621.3403276-1-jim.cromie@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-5473-lists,linux-modules=lfdr.de];
-	DKIM_TRACE(0.00)[suse.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-5475-lists,linux-modules=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,atomlin.com:email]
-X-Rspamd-Queue-Id: 340287375B
+	NEURAL_HAM(-0.00)[-0.999];
+	DKIM_TRACE(0.00)[suse.com:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:mid,suse.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 66E717452C
 X-Rspamd-Action: no action
 
-On 1/23/26 12:46 AM, Jim Cromie wrote:
-> "modprobe foo" currently does strcmp on the name, this can be improved.
-> 
-> So this commit:
-> 
-> 1. adds name_crc to struct module
-> 2. modpost.c computes the value and
-> 3. outputs it for "modinfo foo" to see/use.
-> 
-> 4. adds hotpath to find_module_all()
->    this uses name_crc to do quick "name-check"
->    falls back to strcmp only to guard against collisions.
-> 
-> This should significantly reduce modprobe workload, and shorten module
-> load-time.
-> 
-> Since it alters struct module, its binary incompatible. This means:
-> 
-> 1. RFC for its wide "blast radius".
-> 2. suitable for major version bump *only*
-> 
-> 3. it opens door for further struct module reorg, to:
->    a. segregate fields by "temperature"
->    b. pack out paholes.
->    c. improve cache locality (by reordering coldest on bottom)
->       name should be cold now.
->       bikeshedding is appropriate here.
-> 
-> NB: this isn't a substitute for CONFIG_MODULE_SIG.
-> It reimplements crc_le(), doesn't reuse kernel's version.
-> 
-> CC: Luis Chamberlain <mcgrof@kernel.org>
-> CC: Petr Pavlu <petr.pavlu@suse.com>
-> CC: Daniel Gomez <da.gomez@kernel.org>
-> CC: Sami Tolvanen <samitolvanen@google.com>
-> CC: Aaron Tomlin <atomlin@atomlin.com>
-> CC: linux-modules@vger.kernel.org
-> 
-> Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
-> 
->  '#' will be ignored, and an empty message aborts the commit.
+Changes since v2 [1]:
+- Generalize the helper function that locates __klp_objects in a module
+  to allow it to find any data in other sections as well.
 
-This patch looks as if it were generated by AI. If so, please avoid
-sending such changes. Otherwise, the commit description should explain
-the affected workload. This should be backed up by actual measurements,
-showing how the change improves the situation.
+Changes since v1 [2]:
+- Generalize the helper function that locates __klp_objects in a module
+  to allow it to find objects in other sections as well.
 
-Implementation-wise, I don't think this is the right approach. If
-searching by a module name is a hot operation, a hash table can be added
-to speed it up.
+[1] https://lore.kernel.org/linux-modules/20260121082842.3050453-1-petr.pavlu@suse.com/
+[2] https://lore.kernel.org/linux-modules/20260114123056.2045816-1-petr.pavlu@suse.com/
 
+Petr Pavlu (2):
+  livepatch: Fix having __klp_objects relics in non-livepatch modules
+  livepatch: Free klp_{object,func}_ext data after initialization
+
+ include/linux/livepatch.h           |  3 +++
+ kernel/livepatch/core.c             | 19 +++++++++++++++++++
+ scripts/livepatch/init.c            | 20 +++++++++-----------
+ scripts/module.lds.S                |  9 ++-------
+ tools/objtool/check.c               |  2 +-
+ tools/objtool/include/objtool/klp.h | 10 +++++-----
+ tools/objtool/klp-diff.c            |  2 +-
+ 7 files changed, 40 insertions(+), 25 deletions(-)
+
+
+base-commit: 0f61b1860cc3f52aef9036d7235ed1f017632193
 -- 
-Cheers,
-Petr
+2.52.0
+
 
