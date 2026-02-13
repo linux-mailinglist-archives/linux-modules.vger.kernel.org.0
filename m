@@ -1,170 +1,171 @@
-Return-Path: <linux-modules+bounces-5753-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5754-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aGaaDx9Sj2kMQQEAu9opvQ
-	(envelope-from <linux-modules+bounces-5753-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Feb 2026 17:32:31 +0100
+	id 9YByIkJjj2n6QgEAu9opvQ
+	(envelope-from <linux-modules+bounces-5754-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Feb 2026 18:45:38 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94E8B1381DD
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Feb 2026 17:32:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D74F1138B8A
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Feb 2026 18:45:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D865431538F7
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Feb 2026 16:28:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6F74B3039EC2
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Feb 2026 17:45:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D84235D5EB;
-	Fri, 13 Feb 2026 16:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E48391D432D;
+	Fri, 13 Feb 2026 17:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tnAfJqwb"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jwznsusH"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7434A3B1;
-	Fri, 13 Feb 2026 16:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771000135; cv=none; b=GaVPD6fY+/euqxDHrT04SRfYfdOybaMWo6q2pkuwX2BfwWcfnu09PPrkRKoK20GW4Zttw/09/ATaMZcT9br+x9e5CMinMqlPhQ82tlKEbdh0GDfpaevcwb/GJjY39JXZ/6dFf6EXYvPeIt0kAEOVVh1u3SCWvaViDtZH+eH0vDE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771000135; c=relaxed/simple;
-	bh=txooWceUc4IH1CCw2Zwld9wgVyinOXUfcVoh1tlsLqA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hkJhDK1/tyugMVlSaGVQbtgPRNmIyVzNfEmmzaOF2WDohUbRa7+e7nICqFkFIwm6fWy5S1PoVeC5QGL+qIm9sj4xph1Y6fJ4JTn9JltJzvihn9Ascddr/vl1s4Vl23hXoi8UruJRW6VmISeTIaKqPXk5LtcwC+3bMJGy0Q2/7Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tnAfJqwb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D41EC19421;
-	Fri, 13 Feb 2026 16:28:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771000132;
-	bh=txooWceUc4IH1CCw2Zwld9wgVyinOXUfcVoh1tlsLqA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tnAfJqwbkmKw7gDXPh1Nbm7QahdLn7rV6pXn/pHm46q7r1RjBBUQONBA5KLzMYfZH
-	 2jA/qPHa0qfOBQ7V4QrSD3gSV4W1Bk6rT0CRODMCGQghK96uXrRmM6MDqM0lHKowuH
-	 b/0Wo0PAU1N4sSsmOIFX/FbhYMqef4Afzo8g4X0q4bRflWoKS0SdwRMzpnSpVqb4kD
-	 mIXWk9HP9jjfKXnFgSCM/Z9QUBIRjnFFyTTanryFtF8gWbSGSk0+bWN6FFknzTzvAE
-	 D1+Fc/7ZUWiWnWb1sWaQOs1c+ChZJWFlcI4XgKndaJq0z5vCKN5gxOvRHmbVFiiUuu
-	 l+9gxOPf2VYLw==
-Date: Fri, 13 Feb 2026 16:32:13 +0100
-From: Nicolas Schier <nsc@kernel.org>
-To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
-Cc: Nathan Chancellor <nathan@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Naveen N Rao <naveen@kernel.org>, Mimi Zohar <zohar@linux.ibm.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Nicolas Bouchinet <nicolas.bouchinet@oss.cyber.gouv.fr>,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Fabian =?iso-8859-1?Q?Gr=FCnbichler?= <f.gruenbichler@proxmox.com>,
-	Arnout Engelen <arnout@bzzt.net>,
-	Mattia Rizzolo <mattia@mapreri.org>, kpcyrd <kpcyrd@archlinux.org>,
-	Christian Heusel <christian@heusel.eu>,
-	=?iso-8859-1?Q?C=E2ju?= Mihai-Drosi <mcaju95@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org, linux-modules@vger.kernel.org,
-	linux-security-module@vger.kernel.org, linux-doc@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-integrity@vger.kernel.org
-Subject: Re: [PATCH v4 14/17] lockdown: Make the relationship to MODULE_SIG a
- dependency
-Message-ID: <aY9D_eufdoLGQvSk@derry.ads.avm.de>
-Mail-Followup-To: Nicolas Schier <nsc@kernel.org>,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>, Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Naveen N Rao <naveen@kernel.org>, Mimi Zohar <zohar@linux.ibm.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Nicolas Bouchinet <nicolas.bouchinet@oss.cyber.gouv.fr>,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Fabian =?iso-8859-1?Q?Gr=FCnbichler?= <f.gruenbichler@proxmox.com>,
-	Arnout Engelen <arnout@bzzt.net>,
-	Mattia Rizzolo <mattia@mapreri.org>, kpcyrd <kpcyrd@archlinux.org>,
-	Christian Heusel <christian@heusel.eu>,
-	=?iso-8859-1?Q?C=E2ju?= Mihai-Drosi <mcaju95@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org, linux-modules@vger.kernel.org,
-	linux-security-module@vger.kernel.org, linux-doc@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-integrity@vger.kernel.org
-References: <20260113-module-hashes-v4-0-0b932db9b56b@weissschuh.net>
- <20260113-module-hashes-v4-14-0b932db9b56b@weissschuh.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835828287E
+	for <linux-modules@vger.kernel.org>; Fri, 13 Feb 2026 17:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771004735; cv=pass; b=abMCaigSoXrch7XsqFHkSX4S1UzfLTy4Y71N84T5N0Src7aXViG0ENCyOdNWKt1Ce8YYnx3VjctL5bYzDVii4u7rnl9LAZvS28Rm78Xl4sVdF6u+WIIRdHucL+Y1Wyg1nNO2lOmHwwvv2Oxqf9dF4I4EbdpW7a/j0WyAinf8RXM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771004735; c=relaxed/simple;
+	bh=ayFrK7Uyy/TSNgQmuVFUc3Igof5CZZ1gX6lTzzVj8Mk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WeXon1z/Wg6azLC6ynFCoh9BLkz1ay2CIUvwWGFKBtdWutBHsE9DBqAGHKXSSRKWmAKJFaIwfOGnZYXnjFtFVqtDZ/rbxU3I2ze6Y7EbviRu7GofBc0q0TXtxctDIYDYhtlsa/gbLnmPQbfKPC9HDg61m1RAKlkz32MCbKMVpLY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jwznsusH; arc=pass smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-65a3a1740e7so262a12.0
+        for <linux-modules@vger.kernel.org>; Fri, 13 Feb 2026 09:45:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771004733; cv=none;
+        d=google.com; s=arc-20240605;
+        b=aRBhljmH/6B8XhMoScsx+LhdKts0W6X4KViEX2mQGnxtpIGbh7CBVuEmemSglJ111Y
+         wvFnnDf3c4QPStHKIYGx2alXFYzbpnjkaN2u6vpVmjxmVasgd9iCgWxxoVrCGXJauOVG
+         QOjhflk4p61gSwYFERy2+cRATHkpJFoNuQAu2mRyg3St61rz8liG302BBzInYoG+s5aG
+         IEY4q8j/bVCeuLjvKxVy+nZv3hgxZhD9uO5zjiaLvD1mMJxU3ifhlHgacF6VWw1qE3Fh
+         C1M/1J6z9+qvIDjTPxY3dbGy5qqasmikH0B6Qj6h52g/b3sRPusHntqdIpYTKjV9LiJV
+         kEhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ayFrK7Uyy/TSNgQmuVFUc3Igof5CZZ1gX6lTzzVj8Mk=;
+        fh=ygAXh0cXs+Kf+yxR9/vXs2hTjW3pPww3nDlJnIw+jIE=;
+        b=GTM/btDan9uvFKyW8vr6Ljydkzb3CunaRDdOaC6+YXSsjmIDClllBMWTYVNbcV3m57
+         X+i7+Bwnpmkk+g3xBudL18I//imksBVzZdXKFkCjxlH/BSvtDhONayaa6r+bwcEaLnYI
+         koCtKKYn5onblspBMrzOhFON8F9RsNXBsL8xQPJrd4GPWHpBIoGHjnVSmlg8K4g+pjlf
+         k0treRdYyvCW4Jl0ImPdPQ4sJ2kcSZzydIMlwtFCANCJFPLZipEq8988qPLvYz+SwXcY
+         SKypM8Qj7bfdlimEFUUda7+IfpJmSSmYN7YDirBw6eHyUT5GjbRC/yKlTmBcq/3CrgvA
+         FrKA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1771004733; x=1771609533; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ayFrK7Uyy/TSNgQmuVFUc3Igof5CZZ1gX6lTzzVj8Mk=;
+        b=jwznsusHcAbfkezvgBKotCsRXvHJpYKHz/5qGmb9xmChAJpK0z/1pHuOswcLyqtFse
+         YMgLAr6t6730LOa5eSpZ+2Q6XYREdggpDeddSluqwmKHoBY/eHOlxvOgxC7j66agCscL
+         4FTgJDJggv1gRE4CxTSfEcPecUJ2aHN3nq9vTizOJc37LxLOY6DhGxfUkncPtIxHpPsE
+         CGONYr6zajhKNHazIvSy2KlBavd9Y9GDrb9Dik37C+Zpy7aYiXjUseHGlY6Gbk39Sk6D
+         Jo6Z9JQPuC4GeyHR5DkB75/32q+sb4UGXX2GSowQoFSefd4Avi+KCFauQPuYVXtKLhtL
+         enAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771004733; x=1771609533;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ayFrK7Uyy/TSNgQmuVFUc3Igof5CZZ1gX6lTzzVj8Mk=;
+        b=v5KkY74GP+5D/TXi9LyvPfhZfF920Do+Yg1gOuXtKNt99fT1KBW3Kmh/nrjqwbAKm5
+         N3gwhOUBRIa+jeTozEKV7HZ5ivA2Yy/XbPNEfM61zXXSZjHcwMPiS7IID0KGQrNNRT36
+         csVRpe/XK4ZHSOHW++JUJF7RpLSZafqUCJ2L9xtDrnKy5IanmcAwwya1rVPvsFcqXtGj
+         jDYl68n7Ni+p1xn4dqSZmK8pXIE525jWb0CTuDED2P5xFiaH8eVzQ1P5+sxwqfRqxnyJ
+         36u679pgH+C0Yar/oCna3Kvh/Od18MYtVw2l9tN7d75YrVNmHRnEPyg1KEmnilgR1P/e
+         y+xg==
+X-Forwarded-Encrypted: i=1; AJvYcCUBgs31Lgtxtz8QKqQHR4NPP1Pl7apmbV5Z77TqNmyZj9YLmXqWzaxhoDrB84fNAk5C6XTIzP6VwoHICe16@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywy3/3wd8E7IguFqo160PCeWmOiprL3l4moS9r6pWW3FNQFyvLZ
+	AN3JLuwM19n2QOYAQgu4zSOgSd07FYvqL+dACfxFG7LJ3Sh6D7IkC0hq/GVpcraaxAL1ckOPpOd
+	69L4WU7NFx0hshaCK4zb+b33aqTITgKH2ctTfeoLv
+X-Gm-Gg: AZuq6aLu0eCimOs88t/IKZ8e1jAEAtwrkg4KMHkMd/EGlyXylLtivzumiNfV9Ibzk0G
+	T0BEWn5BIY1aoHYThCKJY44J8IJgKEUar2CO6d1eMY3DZYcLdLf86Sdo3pnchfBfP38aLQezNft
+	YnDBjz/UsPYgB+5BSe+6KDKVPEiCIuWsGvSF+kep5y9R4+rAvd8e7i/xz9A4j6I7v24C/CShSay
+	LDqLc3NarZ1rxFouBIpt1IImdWTlqjbvwk1hocOeVWSSkgkXAFLi502x96P0UssDfzuiH9l4iZY
+	YgGx
+X-Received: by 2002:aa7:d0cb:0:b0:65a:3032:5f99 with SMTP id
+ 4fb4d7f45d1cf-65bb07bf853mr33729a12.14.1771004732430; Fri, 13 Feb 2026
+ 09:45:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260113-module-hashes-v4-14-0b932db9b56b@weissschuh.net>
+References: <20260108044710.33036-1-linux@opensource.nslick.com>
+In-Reply-To: <20260108044710.33036-1-linux@opensource.nslick.com>
+From: Sami Tolvanen <samitolvanen@google.com>
+Date: Fri, 13 Feb 2026 09:44:56 -0800
+X-Gm-Features: AZwV_QhmtBeCGmaI1RJu4D-yf_6VgXyRAHldLsr2GyEAgPsejOdx8L4v1NNyTxM
+Message-ID: <CABCJKudKtrVCUcKRFCHfAyCCA43=gni0iB4mdL5b+176Ky2UPA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] module: expose imported namespaces via sysfs
+To: linux@opensource.nslick.com
+Cc: Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+	Daniel Gomez <da.gomez@kernel.org>, Aaron Tomlin <atomlin@atomlin.com>, 
+	Matthias Maennich <maennich@google.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Jonathan Corbet <corbet@lwn.net>, Randy Dunlap <rdunlap@infradead.org>, linux-modules@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[google.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-5753-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-5754-lists,linux-modules=lfdr.de];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[39];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,arndb.de,suse.com,google.com,samsung.com,paul-moore.com,namei.org,hallyn.com,lwn.net,linux.ibm.com,ellerman.id.au,gmail.com,huawei.com,oracle.com,atomlin.com,oss.cyber.gouv.fr,proxmox.com,bzzt.net,mapreri.org,archlinux.org,heusel.eu,linutronix.de,vger.kernel.org,lists.ozlabs.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nsc@kernel.org,linux-modules@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-modules];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,derry.ads.avm.de:mid,weissschuh.net:email]
-X-Rspamd-Queue-Id: 94E8B1381DD
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[samitolvanen@google.com,linux-modules@vger.kernel.org];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-modules];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[google.com:+]
+X-Rspamd-Queue-Id: D74F1138B8A
 X-Rspamd-Action: no action
 
-On Tue, Jan 13, 2026 at 01:28:58PM +0100, Thomas Weiﬂschuh wrote:
-> The new hash-based module integrity checking will also be able to
-> satisfy the requirements of lockdown.
-> Such an alternative is not representable with "select", so use
-> "depends on" instead.
-> 
-> Signed-off-by: Thomas Weiﬂschuh <linux@weissschuh.net>
-> ---
->  security/lockdown/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Nicholas,
 
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
+On Wed, Jan 7, 2026 at 8:47=E2=80=AFPM Nicholas Sielicki
+<linux@opensource.nslick.com> wrote:
+>
+> Currently, the only way for userspace to determine which symbol
+> namespaces a module imports is to locate the .ko file on disk (which may
+> not match the loaded module), then either parsing the binary manually
+> and handling any potential compression, or shelling-out to modinfo.
+>
+> This is painful in cases where userspace wants to distinguish between
+> module variants that share the same name but import different
+> namespaces. For example, the nvidia-uvm module exists in both open and
+> closed source variants; the open source version imports the DMA_BUF
+> namespace while the closed source version does not, and networking
+> middleware may want to initialize itself differently depending on that.
+>
+> Add /sys/module/*/import_ns to expose imported namespaces for loaded
+> modules. The file contains one namespace per line and only exists for
+> modules that import at least one namespace.
+
+The patches look reasonable to me, but I do wonder if examining
+imported namespaces is the best way to distinguish between module
+variants. Is looking at /sys/module/*/taint not sufficient for your
+use case?
+
+Sami
 
