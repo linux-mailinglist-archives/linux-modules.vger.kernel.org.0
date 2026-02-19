@@ -1,361 +1,206 @@
-Return-Path: <linux-modules+bounces-5758-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5759-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QIVHGxfWlWlLVQIAu9opvQ
-	(envelope-from <linux-modules+bounces-5758-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Wed, 18 Feb 2026 16:09:11 +0100
+	id QLEzKwwul2kcvgIAu9opvQ
+	(envelope-from <linux-modules+bounces-5759-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 19 Feb 2026 16:36:44 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16DE41574AE
-	for <lists+linux-modules@lfdr.de>; Wed, 18 Feb 2026 16:09:11 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A19616039C
+	for <lists+linux-modules@lfdr.de>; Thu, 19 Feb 2026 16:36:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C48DC301BDD8
-	for <lists+linux-modules@lfdr.de>; Wed, 18 Feb 2026 15:08:48 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 15E513013472
+	for <lists+linux-modules@lfdr.de>; Thu, 19 Feb 2026 15:36:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99A2341060;
-	Wed, 18 Feb 2026 15:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29735347FEE;
+	Thu, 19 Feb 2026 15:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="gldyKQL6";
-	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="gldyKQL6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X9Y8eQbd"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683B730B517
-	for <linux-modules@vger.kernel.org>; Wed, 18 Feb 2026 15:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10C4199920;
+	Thu, 19 Feb 2026 15:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771427318; cv=none; b=YoJvENcRBhAkq5f+hvjlGYLHJ45f0S9RiFJpzCbUPVGdHXGMKLdNiIwKU8xjMUAZ8NS7Nl6IupOEqDH+EiQmxPFvfHJw7Csa0d1YtICi2u7RLyb4AJRqADG4QtrAAl2UNQqcyylHS6Oepq6o1+zAmgCSDDqUSNLbhhkVkGJPIG4=
+	t=1771515393; cv=none; b=R8VgNODAZE0cUyAK5+fppQdmUvKtGDmMWbt+K+sYmCn/SKEAl6C63O3p5rajmvvHf4VTsvEaMT8AHKg7/XJn4YZ+rJzhM6Xfkwixk5lZitcnifATnoZEe5xAKvIz5Ki7qi3wdW9BtYKYRxvb2Xxp6KYFHIaxTZS7nzkRANO4X9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771427318; c=relaxed/simple;
-	bh=2fr/OCZ8cFVBHcDNDyV5zLQo4aqIHZtJeIp6unn02Vg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hbBwYZnIWHT8cIJIs7nrsay03V78WRh6FiVLZiJ+kluxRF/Dj/+Wk/m/k3sgTfI6xgRvNbwHvlhoaEo/ZKN85wes/TpjidTCNrReRlMwIi3lrZTo9XBRRv12xBA28fwNBvJdP5zSVn3j7Or6lL6XyI+eNi3JPlvwWmB+1mJ8C1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=gldyKQL6; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=gldyKQL6; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 3EAF23E6DD;
-	Wed, 18 Feb 2026 15:08:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-	t=1771427308; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5lyt323+HbZYpoX64Rl3vcxfunKzUx7dWbFHruMcR5o=;
-	b=gldyKQL6ACDQdncmwMAad+Z99WShbTJgDNbsPhcbC0DQiA3KedeIyVic93hD8vv78dtV5k
-	mpXWOEOKQDyHkeA1GRi52v9RwnG2zVxhkBv7o7JMU+8dwRIwmS7XltK2XFgm+L7TqcdAoi
-	1nUoIbVbEo1ghf+4y8+Ad7p6+tMf3RI=
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-	t=1771427308; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5lyt323+HbZYpoX64Rl3vcxfunKzUx7dWbFHruMcR5o=;
-	b=gldyKQL6ACDQdncmwMAad+Z99WShbTJgDNbsPhcbC0DQiA3KedeIyVic93hD8vv78dtV5k
-	mpXWOEOKQDyHkeA1GRi52v9RwnG2zVxhkBv7o7JMU+8dwRIwmS7XltK2XFgm+L7TqcdAoi
-	1nUoIbVbEo1ghf+4y8+Ad7p6+tMf3RI=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8B3DA3EA65;
-	Wed, 18 Feb 2026 15:08:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 4AnNIevVlWkRRwAAD6G6ig
-	(envelope-from <petr.pavlu@suse.com>); Wed, 18 Feb 2026 15:08:27 +0000
-Message-ID: <7765df86-b08a-4f70-900d-4b4d85c07d49@suse.com>
-Date: Wed, 18 Feb 2026 16:08:19 +0100
+	s=arc-20240116; t=1771515393; c=relaxed/simple;
+	bh=xvGScHjuinZ0ATzJQB4XWDn+7FfGiPuiuds790maVJM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i7sWn0jm99MR6P+3O/mWsftjTZwxoTw0GUmasEgn2q0BAfoR1us1GepskVekNBO4fI+I6gm8+7g6ZKRhrwtndNTcYaEhw5aIbNQC0qIkucgSwuqKBi5jEMAkbIgTlCxLqKeMwuoP0snYrQ+eK7DtluI3Da4z15eL7e4+At+mWWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X9Y8eQbd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1105BC4CEF7;
+	Thu, 19 Feb 2026 15:36:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771515392;
+	bh=xvGScHjuinZ0ATzJQB4XWDn+7FfGiPuiuds790maVJM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X9Y8eQbdJ27k5PgYNvucYbCou7PyhGWqSaSw5zQ9BMp5TfRnUEdlq6LpQNPShYF5f
+	 5+FQ33fjy0j5phsKwCSp4c7vnv/kHZcBDSSjYmZlxE1Rtj1KPTdsrqJGBOt45xASBq
+	 44TBES2c3aRoJck462y43Jn27YvOo7ETxGA06SfCErH9+rqHx3PFjCIsihwiliYBCg
+	 veM9FYkRpCNI2Sz3gH5imjY0d+gVJfxUt6b95uJIf9Q9ucaEOWthJTA5KvIjlhbXNZ
+	 UhYdrRsiVZ56wQU95sEc+CesXOgk3pKmiLRxYkB6wDl85KBhED/TFJPanXaK4uOKHr
+	 DM1nWzuo7fGxA==
+Date: Thu, 19 Feb 2026 15:27:56 +0100
+From: Nicolas Schier <nsc@kernel.org>
+To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
+Cc: Petr Pavlu <petr.pavlu@suse.com>, Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>, Luis Chamberlain <mcgrof@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Naveen N Rao <naveen@kernel.org>, Mimi Zohar <zohar@linux.ibm.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
+	Eric Snowberg <eric.snowberg@oracle.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Nicolas Bouchinet <nicolas.bouchinet@oss.cyber.gouv.fr>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Fabian =?iso-8859-1?Q?Gr=FCnbichler?= <f.gruenbichler@proxmox.com>,
+	Arnout Engelen <arnout@bzzt.net>,
+	Mattia Rizzolo <mattia@mapreri.org>, kpcyrd <kpcyrd@archlinux.org>,
+	Christian Heusel <christian@heusel.eu>,
+	=?iso-8859-1?Q?C=E2ju?= Mihai-Drosi <mcaju95@gmail.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arch@vger.kernel.org, linux-modules@vger.kernel.org,
+	linux-security-module@vger.kernel.org, linux-doc@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-integrity@vger.kernel.org
+Subject: Re: [PATCH v4 15/17] module: Introduce hash-based integrity checking
+Message-ID: <aZcd7PpetL8J6CM4@derry.ads.avm.de>
+References: <20260113-module-hashes-v4-0-0b932db9b56b@weissschuh.net>
+ <20260113-module-hashes-v4-15-0b932db9b56b@weissschuh.net>
+ <db1ed045-d7b6-49dc-b111-9fea7c30f8ab@suse.com>
+ <28cf8d51-7530-41d5-a47b-cad5ecabd269@t-8ch.de>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 34/42] dept: add module support for struct
- dept_event_site and dept_event_site_dep
-To: Byungchul Park <byungchul@sk.com>
-Cc: kernel_team@skhynix.com, torvalds@linux-foundation.org,
- damien.lemoal@opensource.wdc.com, linux-ide@vger.kernel.org,
- adilger.kernel@dilger.ca, linux-ext4@vger.kernel.org, mingo@redhat.com,
- peterz@infradead.org, will@kernel.org, tglx@linutronix.de,
- rostedt@goodmis.org, joel@joelfernandes.org, sashal@kernel.org,
- daniel.vetter@ffwll.ch, duyuyang@gmail.com, johannes.berg@intel.com,
- tj@kernel.org, tytso@mit.edu, willy@infradead.org, david@fromorbit.com,
- amir73il@gmail.com, gregkh@linuxfoundation.org, kernel-team@lge.com,
- linux-mm@kvack.org, akpm@linux-foundation.org, mhocko@kernel.org,
- minchan@kernel.org, hannes@cmpxchg.org, vdavydov.dev@gmail.com,
- sj@kernel.org, jglisse@redhat.com, dennis@kernel.org, cl@linux.com,
- penberg@kernel.org, rientjes@google.com, vbabka@suse.cz, ngupta@vflare.org,
- linux-block@vger.kernel.org, josef@toxicpanda.com,
- linux-fsdevel@vger.kernel.org, jack@suse.cz, jlayton@kernel.org,
- dan.j.williams@intel.com, hch@infradead.org, djwong@kernel.org,
- dri-devel@lists.freedesktop.org, rodrigosiqueiramelo@gmail.com,
- melissa.srw@gmail.com, hamohammed.sa@gmail.com, harry.yoo@oracle.com,
- chris.p.wilson@intel.com, gwan-gyeong.mun@intel.com,
- max.byungchul.park@gmail.com, boqun.feng@gmail.com, longman@redhat.com,
- yunseong.kim@ericsson.com, ysk@kzalloc.com, yeoreum.yun@arm.com,
- netdev@vger.kernel.org, matthew.brost@intel.com, her0gyugyu@gmail.com,
- corbet@lwn.net, catalin.marinas@arm.com, bp@alien8.de, x86@kernel.org,
- hpa@zytor.com, luto@kernel.org, sumit.semwal@linaro.org,
- gustavo@padovan.org, christian.koenig@amd.com, andi.shyti@kernel.org,
- arnd@arndb.de, lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com,
- rppt@kernel.org, surenb@google.com, mcgrof@kernel.org, da.gomez@kernel.org,
- samitolvanen@google.com, paulmck@kernel.org, frederic@kernel.org,
- neeraj.upadhyay@kernel.org, joelagnelf@nvidia.com, josh@joshtriplett.org,
- urezki@gmail.com, mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com,
- qiang.zhang@linux.dev, juri.lelli@redhat.com, vincent.guittot@linaro.org,
- dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
- vschneid@redhat.com, chuck.lever@oracle.com, neil@brown.name,
- okorniev@redhat.com, Dai.Ngo@oracle.com, tom@talpey.com, trondmy@kernel.org,
- anna@kernel.org, kees@kernel.org, bigeasy@linutronix.de,
- clrkwllms@kernel.org, mark.rutland@arm.com, ada.coupriediaz@arm.com,
- kristina.martsenko@arm.com, wangkefeng.wang@huawei.com, broonie@kernel.org,
- kevin.brodsky@arm.com, dwmw@amazon.co.uk, shakeel.butt@linux.dev,
- ast@kernel.org, ziy@nvidia.com, yuzhao@google.com,
- baolin.wang@linux.alibaba.com, usamaarif642@gmail.com,
- joel.granados@kernel.org, richard.weiyang@gmail.com,
- geert+renesas@glider.be, tim.c.chen@linux.intel.com, linux@treblig.org,
- alexander.shishkin@linux.intel.com, lillian@star-ark.net,
- chenhuacai@kernel.org, francesco@valla.it, guoweikang.kernel@gmail.com,
- link@vivo.com, jpoimboe@kernel.org, masahiroy@kernel.org,
- brauner@kernel.org, thomas.weissschuh@linutronix.de, oleg@redhat.com,
- mjguzik@gmail.com, andrii@kernel.org, wangfushuai@baidu.com,
- linux-doc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
- linux-i2c@vger.kernel.org, linux-arch@vger.kernel.org,
- linux-modules@vger.kernel.org, rcu@vger.kernel.org,
- linux-nfs@vger.kernel.org, linux-rt-devel@lists.linux.dev,
- 2407018371@qq.com, dakr@kernel.org, miguel.ojeda.sandonis@gmail.com,
- neilb@ownmail.net, bagasdotme@gmail.com, wsa+renesas@sang-engineering.com,
- dave.hansen@intel.com, geert@linux-m68k.org, ojeda@kernel.org,
- alex.gaynor@gmail.com, gary@garyguo.net, bjorn3_gh@protonmail.com,
- lossin@kernel.org, a.hindborg@kernel.org, aliceryhl@google.com,
- tmgross@umich.edu, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251205071855.72743-1-byungchul@sk.com>
- <20251205071855.72743-35-byungchul@sk.com>
- <7afb6666-43b6-4d17-b875-e585c7a5ac99@suse.com>
- <20260213055006.GA55430@system.software.com>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <20260213055006.GA55430@system.software.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Flag: NO
-X-Spam-Score: -0.80
-X-Spam-Level: 
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <28cf8d51-7530-41d5-a47b-cad5ecabd269@t-8ch.de>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[skhynix.com,linux-foundation.org,opensource.wdc.com,vger.kernel.org,dilger.ca,redhat.com,infradead.org,kernel.org,linutronix.de,goodmis.org,joelfernandes.org,ffwll.ch,gmail.com,intel.com,mit.edu,fromorbit.com,linuxfoundation.org,lge.com,kvack.org,cmpxchg.org,linux.com,google.com,suse.cz,vflare.org,toxicpanda.com,lists.freedesktop.org,oracle.com,ericsson.com,kzalloc.com,arm.com,lwn.net,alien8.de,zytor.com,linaro.org,padovan.org,amd.com,arndb.de,nvidia.com,joshtriplett.org,efficios.com,linux.dev,suse.de,brown.name,talpey.com,huawei.com,amazon.co.uk,linux.alibaba.com,glider.be,linux.intel.com,treblig.org,star-ark.net,valla.it,vivo.com,baidu.com,lists.infradead.org,lists.linaro.org,lists.linux.dev,qq.com,ownmail.net,sang-engineering.com,linux-m68k.org,garyguo.net,protonmail.com,umich.edu];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-5759-lists,linux-modules=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[suse.com:+];
-	TAGGED_FROM(0.00)[bounces-5758-lists,linux-modules=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[suse.com,kernel.org,arndb.de,google.com,samsung.com,paul-moore.com,namei.org,hallyn.com,lwn.net,linux.ibm.com,ellerman.id.au,gmail.com,huawei.com,oracle.com,atomlin.com,oss.cyber.gouv.fr,proxmox.com,bzzt.net,mapreri.org,archlinux.org,heusel.eu,linutronix.de,vger.kernel.org,lists.ozlabs.org];
+	RCPT_COUNT_TWELVE(0.00)[39];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCPT_COUNT_GT_50(0.00)[165];
-	TAGGED_RCPT(0.00)[linux-modules,renesas];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[nsc@kernel.org,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-modules];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:mid,suse.com:dkim,sk.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 16DE41574AE
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gnu.org:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4A19616039C
 X-Rspamd-Action: no action
 
-On 2/13/26 6:50 AM, Byungchul Park wrote:
-> On Wed, Jan 07, 2026 at 01:19:00PM +0100, Petr Pavlu wrote:
->> On 12/5/25 8:18 AM, Byungchul Park wrote:
->>> struct dept_event_site and struct dept_event_site_dep have been
->>> introduced to track dependencies between multi event sites for a single
->>> wait, that will be loaded to data segment.  Plus, a custom section,
->>> '.dept.event_sites', also has been introduced to keep pointers to the
->>> objects to make sure all the event sites defined exist in code.
->>>
->>> dept should work with the section and segment of module.  Add the
->>> support to handle the section and segment properly whenever modules are
->>> loaded and unloaded.
->>>
->>> Signed-off-by: Byungchul Park <byungchul@sk.com>
->>
->> Below are a few comments from the module loader perspective.
+On Tue, Feb 03, 2026 at 01:55:05PM +0100, Thomas Weißschuh wrote:
+> On 2026-01-30 18:06:20+0100, Petr Pavlu wrote:
+> > On 1/13/26 1:28 PM, Thomas Weißschuh wrote:
+> > > Normally the .ko module files depend on a fully built vmlinux to be
+> > > available for modpost validation and BTF generation. With
+> > > CONFIG_MODULE_HASHES, vmlinux now depends on the modules
+> > > to build a merkle tree. This introduces a dependency cycle which is
+> > > impossible to satisfy. Work around this by building the modules during
+> > > link-vmlinux.sh, after vmlinux is complete enough for modpost and BTF
+> > > but before the final module hashes are
+> > 
+> > I wonder if this dependency cycle could be resolved by utilizing the
+> > split into vmlinux.unstripped and vmlinux that occurred last year.
+> > 
+> > The idea is to create the following ordering: vmlinux.unstripped ->
+> > modules -> vmlinux, and to patch in .module_hashes only when building
+> > the final vmlinux.
+> > 
+> > This would require the following:
+> > * Split scripts/Makefile.vmlinux into two Makefiles, one that builds the
+> >   current vmlinux.unstripped and the second one that builds the final
+> >   vmlinux from it.
+> > * Modify the top Makefile to recognize vmlinux.unstripped and update the
+> >   BTF generation rule 'modules: vmlinux' to
+> >   'modules: vmlinux.unstripped'.
+> > * Add the 'vmlinux: modules' ordering in the top Makefile for
+> >   CONFIG_MODULE_HASHES=y.
+> > * Remove the patching of vmlinux.unstripped in scripts/link-vmlinux.sh
+> >   and instead move it into scripts/Makefile.vmlinux when running objcopy
+> >   to produce the final vmlinux.
+> > 
+> > I think this approach has two main advantages:
+> > * CONFIG_MODULE_HASHES can be made orthogonal to
+> >   CONFIG_DEBUG_INFO_BTF_MODULES.
+> > * All dependencies are expressed at the Makefile level instead of having
+> >   scripts/link-vmlinux.sh invoke 'make -f Makefile modules'.
+> > 
+> > Below is a rough prototype that applies on top of this series. It is a
+> > bit verbose due to the splitting of part of scripts/Makefile.vmlinux
+> > into scripts/Makefile.vmlinux_unstripped.
 > 
-> Sorry about the late reply.  I've been going through some major life
-> changes lately. :(
+> That looks like a feasible alternative. Before adopting it, I'd like to
+> hear the preference of the kbuild folks.
 > 
-> Thank you sooooo~ much for your helpful feedback.  I will leave my
-> opinion below.
+> > diff --git a/Makefile b/Makefile
+> > index 841772a5a260..19a3beb82fa7 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -1259,7 +1259,7 @@ vmlinux_o: vmlinux.a $(KBUILD_VMLINUX_LIBS)
+> >  vmlinux.o modules.builtin.modinfo modules.builtin: vmlinux_o
+> >  	@:
+> >  
+> > -PHONY += vmlinux
+> > +PHONY += vmlinux.unstripped vmlinux
+> >  # LDFLAGS_vmlinux in the top Makefile defines linker flags for the top vmlinux,
+> >  # not for decompressors. LDFLAGS_vmlinux in arch/*/boot/compressed/Makefile is
+> >  # unrelated; the decompressors just happen to have the same base name,
+> > @@ -1270,9 +1270,11 @@ PHONY += vmlinux
+> >  #   https://savannah.gnu.org/bugs/?61463
+> >  # For Make > 4.4, the following simple code will work:
+> >  #  vmlinux: private export LDFLAGS_vmlinux := $(LDFLAGS_vmlinux)
+> > -vmlinux: private _LDFLAGS_vmlinux := $(LDFLAGS_vmlinux)
+> > -vmlinux: export LDFLAGS_vmlinux = $(_LDFLAGS_vmlinux)
+> > -vmlinux: vmlinux.o $(KBUILD_LDS) modpost
+> > +vmlinux.unstripped: private _LDFLAGS_vmlinux := $(LDFLAGS_vmlinux)
+> > +vmlinux.unstripped: export LDFLAGS_vmlinux = $(_LDFLAGS_vmlinux)
+> > +vmlinux.unstripped: vmlinux.o $(KBUILD_LDS) modpost
+> > +	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.vmlinux_unstripped
+> > +vmlinux: vmlinux.unstripped
+> >  	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.vmlinux
 > 
-[...]
->>> diff --git a/kernel/dependency/dept.c b/kernel/dependency/dept.c
->>> index b14400c4f83b..07d883579269 100644
->>> --- a/kernel/dependency/dept.c
->>> +++ b/kernel/dependency/dept.c
->>> @@ -984,6 +984,9 @@ static void bfs(void *root, struct bfs_ops *ops, void *in, void **out)
->>>   * event sites.
->>>   */
->>>
->>> +static LIST_HEAD(dept_event_sites);
->>> +static LIST_HEAD(dept_event_site_deps);
->>> +
->>>  /*
->>>   * Print all events in the circle.
->>>   */
->>> @@ -2043,6 +2046,33 @@ static void del_dep_rcu(struct rcu_head *rh)
->>>       preempt_enable();
->>>  }
->>>
->>> +/*
->>> + * NOTE: Must be called with dept_lock held.
->>> + */
->>> +static void disconnect_event_site_dep(struct dept_event_site_dep *esd)
->>> +{
->>> +     list_del_rcu(&esd->dep_node);
->>> +     list_del_rcu(&esd->dep_rev_node);
->>> +}
->>> +
->>> +/*
->>> + * NOTE: Must be called with dept_lock held.
->>> + */
->>> +static void disconnect_event_site(struct dept_event_site *es)
->>> +{
->>> +     struct dept_event_site_dep *esd, *next_esd;
->>> +
->>> +     list_for_each_entry_safe(esd, next_esd, &es->dep_head, dep_node) {
->>> +             list_del_rcu(&esd->dep_node);
->>> +             list_del_rcu(&esd->dep_rev_node);
->>> +     }
->>> +
->>> +     list_for_each_entry_safe(esd, next_esd, &es->dep_rev_head, dep_rev_node) {
->>> +             list_del_rcu(&esd->dep_node);
->>> +             list_del_rcu(&esd->dep_rev_node);
->>> +     }
->>> +}
->>> +
->>>  /*
->>>   * NOTE: Must be called with dept_lock held.
->>>   */
->>> @@ -2384,6 +2414,8 @@ void dept_free_range(void *start, unsigned int sz)
->>>  {
->>>       struct dept_task *dt = dept_task();
->>>       struct dept_class *c, *n;
->>> +     struct dept_event_site_dep *esd, *next_esd;
->>> +     struct dept_event_site *es, *next_es;
->>>       unsigned long flags;
->>>
->>>       if (unlikely(!dept_working()))
->>> @@ -2405,6 +2437,24 @@ void dept_free_range(void *start, unsigned int sz)
->>>       while (unlikely(!dept_lock()))
->>>               cpu_relax();
->>>
->>> +     list_for_each_entry_safe(esd, next_esd, &dept_event_site_deps, all_node) {
->>> +             if (!within((void *)esd, start, sz))
->>> +                     continue;
->>> +
->>> +             disconnect_event_site_dep(esd);
->>> +             list_del(&esd->all_node);
->>> +     }
->>> +
->>> +     list_for_each_entry_safe(es, next_es, &dept_event_sites, all_node) {
->>> +             if (!within((void *)es, start, sz) &&
->>> +                 !within(es->name, start, sz) &&
->>> +                 !within(es->func_name, start, sz))
->>> +                     continue;
->>> +
->>> +             disconnect_event_site(es);
->>> +             list_del(&es->all_node);
->>> +     }
->>> +
->>>       list_for_each_entry_safe(c, n, &dept_classes, all_node) {
->>>               if (!within((void *)c->key, start, sz) &&
->>>                   !within(c->name, start, sz))
->>> @@ -3337,6 +3387,7 @@ void __dept_recover_event(struct dept_event_site_dep *esd,
->>>
->>>       list_add(&esd->dep_node, &es->dep_head);
->>>       list_add(&esd->dep_rev_node, &rs->dep_rev_head);
->>> +     list_add(&esd->all_node, &dept_event_site_deps);
->>>       check_recover_dl_bfs(esd);
->>>  unlock:
->>>       dept_unlock();
->>> @@ -3347,6 +3398,23 @@ EXPORT_SYMBOL_GPL(__dept_recover_event);
->>>
->>>  #define B2KB(B) ((B) / 1024)
->>>
->>> +void dept_mark_event_site_used(void *start, void *end)
->>
->> Nit: I suggest that dept_mark_event_site_used() take pointers to
->> dept_event_site_init, which would catch the type mismatch with
+> Maybe we could keep them together in a single Makefile,
+> and instead have different targets in it.
 > 
-> IMO, this is the easiest way to get all the pointers from start to the
-> end, or I can't get the number of the pointers.  It's similar to the
-> initcalls section for device drivers.
 
-This was a minor suggestion.. The idea is to simply change the function
-signature to:
+yes, I think so, too.  I like the Petr's alternative.
 
-void dept_mark_event_site_used(struct dept_event_site_init **start,
-			       struct dept_event_site_init **end))
-
-This way, the compiler can provide proper type checking to ensure that
-correct pointers are passed to dept_mark_event_site_used(). It would
-catch the type mismatch with module::dept_event_sites.
-
-> 
->> module::dept_event_sites.
->>
->>> +{
->>> +     struct dept_event_site_init **evtinitpp;
->>> +
->>> +     for (evtinitpp = (struct dept_event_site_init **)start;
->>> +          evtinitpp < (struct dept_event_site_init **)end;
->>> +          evtinitpp++) {
->>> +             (*evtinitpp)->evt_site->used = true;
->>> +             (*evtinitpp)->evt_site->func_name = (*evtinitpp)->func_name;
->>> +             list_add(&(*evtinitpp)->evt_site->all_node, &dept_event_sites);
->>> +
->>> +             pr_info("dept_event_site %s@%s is initialized.\n",
->>> +                             (*evtinitpp)->evt_site->name,
->>> +                             (*evtinitpp)->evt_site->func_name);
->>> +     }
->>> +}
->>> +
->>>  extern char __dept_event_sites_start[], __dept_event_sites_end[];
->>
->> Related to the above, __dept_event_sites_start and
->> __dept_event_sites_end can already be properly typed here.
-> 
-> How can I get the number of the pointers?
-
-Similarly here, changing the code to:
-
-extern struct dept_event_site_init *__dept_event_sites_start[], *__dept_event_sites_end[];
-
-It is the same for the initcalls you mentioned. The declarations of
-their start/end symbols are also already properly typed as
-initcall_entry_t[] in include/linux/init.h.
-
--- 
-Thanks,
-Petr
+Kind regards,
+Nicolas
 
