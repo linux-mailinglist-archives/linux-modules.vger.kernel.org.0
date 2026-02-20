@@ -1,60 +1,58 @@
-Return-Path: <linux-modules+bounces-5770-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5771-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8O1jDhOEmGnKJQMAu9opvQ
-	(envelope-from <linux-modules+bounces-5770-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 16:56:03 +0100
+	id yH1/CBWEmGnKJQMAu9opvQ
+	(envelope-from <linux-modules+bounces-5771-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 16:56:05 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56F91169194
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 16:56:02 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE1AC16919B
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 16:56:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 611BE30197C0
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 15:55:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C5F5030217DD
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 15:56:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E269C34E746;
-	Fri, 20 Feb 2026 15:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E66E34EEF2;
+	Fri, 20 Feb 2026 15:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UTD9dr3J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TAkpODJd"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8082C11CD;
-	Fri, 20 Feb 2026 15:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AA5337102;
+	Fri, 20 Feb 2026 15:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771602939; cv=none; b=neGN3SPQLVIao5hB5K2iSaJVLSvZ/TjyoRdcRgGijwrOfxa3VzOLtf8ioNT9/Wes9qY4B0D6pjvM6rYdwhJ3T7kcyMbG5HAdWmtSK/P4Gn5UM7hxgbGeZrjKuWQ+7ZwsCwCN9hR2cerg8M89XonASeCnyFCTGVWRj8ylcTn+ZmQ=
+	t=1771602960; cv=none; b=LdkW4XeqAJ+qMHU+OgfkOL260PfFEtSde7E13VaPrS2k1VezDS4cOsf8nhDXcXRTX6qpMfzMUjJeGMuVRk7Q2Ye21JJwaKEYk/imSRncauS81qRKm//KiB1r5iYXQPQHaOrmgg0/+TWdO9sPNzLQ1HwdiXpaT3gF1LBEpYlHl2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771602939; c=relaxed/simple;
-	bh=MHaaBqN3QNfORxoaQztv7SZ1/NkeQQGNuNly21tYCyU=;
+	s=arc-20240116; t=1771602960; c=relaxed/simple;
+	bh=tbaFXMmdsdtWNfsu8k99wrOzw2etnoXuDjcaveO84To=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nQkE5N4szLnfoLEsZO9B3QM+hKLTQnK2c7eVg0nQxiu7Grqf5ustQNm5X70enHxsaQPLaHsYcyPJHdxARDVSSIQwYSNnTmGDfs2a5+LPbfid6Qf2Aimq4muxs79Sh+iLHoae4haTlQAArLGYVwoFR4tuglyR9qTvLmjGC3JvvdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UTD9dr3J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAB9C116C6;
-	Fri, 20 Feb 2026 15:55:38 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=MzPPBKOrZ5QJ0TNMn9P9rWQOamfY3uzhLCZLMq5ypDKsS4tFaN99J9dhqh2LezOZG3pd+/Dh+AAmwelfLxQbnHnJqpwsyPDmbeFnsTHL1vHfWwYq/9faVMvdSBN/NgF2dg3GlXIiLx3ZAQJVNP0UlLsxfE+tIw+ziJLXRUi28eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TAkpODJd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC08FC116D0;
+	Fri, 20 Feb 2026 15:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771602939;
-	bh=MHaaBqN3QNfORxoaQztv7SZ1/NkeQQGNuNly21tYCyU=;
+	s=k20201202; t=1771602959;
+	bh=tbaFXMmdsdtWNfsu8k99wrOzw2etnoXuDjcaveO84To=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UTD9dr3J+18ttQtijbS2bE/dt/GKdjHpehjI+UljAuYtug7IaXw1pgq5LwpMCtqjI
-	 rtB7/VQ/TIOzwBKW2h3CaxFAqzQAqhQqjY6pao6OUp8Vd44EdmMvygJCk5vSNWlVCd
-	 ZCSx7dOScYdPqapRtGO5vOmkeWpWcWaLCB5G1QhzemCVjyjFdg13kLXPMrAFkxDnJw
-	 T7iIq83NTPyQ0pXg9EfKLNskRWQKGOUbPxtNMUy7YQh+dr5sRAItIlZlZm4y0RMojF
-	 hAVC0tatcERu8W4WCootn+AJ/0r9ftB2iDqXNjyg5TOP7aaD1mYjS9NzuDArqDzmPK
-	 la14Q0kbKtklw==
-Date: Fri, 20 Feb 2026 16:55:36 +0100
+	b=TAkpODJdaeTa37Xxtjwu+nAFruAj+QJ/Cq4NUb5qeNFfOIQwlfqZxix0bOH/Hw05/
+	 1+1S3mhoTUPfusN73dAQwXCX16UDh3A8rd2vSYusFK4bvJdGJ5Q2FflHzKVZ3Hlaon
+	 5pkR/Bi/fAx7fHfMDnR8zR0fkMQqtG3sjW2JvBQ9Glj1h1nkWIPE3VqhLKLAnnUuJV
+	 b+i7vtpowJKFGnoa57dtoHSqOeW+nUQfa0wRAcBVvXbvWUmlOwp2Hn/Cy0PinLN59C
+	 Tb/oeGHrKqtYirN9JabCyPn472Nl5GXJLByq5yCy9xVz7k1M3IrJNY6q47MCxTaj7j
+	 YPAwjWhaaYqrQ==
+Date: Fri, 20 Feb 2026 16:55:54 +0100
 From: Daniel Gomez <da.gomez@kernel.org>
 To: Petr Pavlu <petr.pavlu@suse.com>
 Cc: Luis Chamberlain <mcgrof@kernel.org>, 
 	Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Waiman Long <longman@redhat.com>, Song Liu <song@kernel.org>, 
 	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] module: Remove duplicate freeing of lockdep classes
-Message-ID: <aZhfB7BdtNIJbFwd@macos>
-References: <20260107122329.1324707-1-petr.pavlu@suse.com>
+Subject: Re: [PATCH] module: Fix the modversions and signing submenus
+Message-ID: <aZhQTaJaRQQfcfyH@macos>
+References: <20260205143720.423026-1-petr.pavlu@suse.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -63,58 +61,81 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260107122329.1324707-1-petr.pavlu@suse.com>
+In-Reply-To: <20260205143720.423026-1-petr.pavlu@suse.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-5770-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,google.com,atomlin.com,infradead.org,redhat.com,gmail.com,vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-5771-lists,linux-modules=lfdr.de];
 	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[da.gomez@kernel.org,linux-modules@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-modules];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[samsung.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,suse.com:email]
-X-Rspamd-Queue-Id: 56F91169194
+	RCPT_COUNT_FIVE(0.00)[6];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,samsung.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BE1AC16919B
 X-Rspamd-Action: no action
 
-On 2026-01-07 13:22, Petr Pavlu wrote:
-> In the error path of load_module(), under the free_module label, the
-> code calls lockdep_free_key_range() to release lock classes associated
-> with the MOD_DATA, MOD_RODATA and MOD_RO_AFTER_INIT module regions, and
-> subsequently invokes module_deallocate().
+On 2026-02-05 15:37, Petr Pavlu wrote:
+> The module Kconfig file contains a set of options related to "Module
+> versioning support" (depends on MODVERSIONS) and "Module signature
+> verification" (depends on MODULE_SIG). The Kconfig tool automatically
+> creates submenus when an entry for a symbol is followed by consecutive
+> items that all depend on the symbol. However, this functionality doesn't
+> work for the mentioned module options. The MODVERSIONS options are
+> interleaved with ASM_MODVERSIONS, which has no 'depends on MODVERSIONS' but
+> instead uses 'default HAVE_ASM_MODVERSIONS && MODVERSIONS'. Similarly, the
+> MODULE_SIG options are interleaved by a comment warning not to forget
+> signing modules with scripts/sign-file, which uses the condition 'depends
+> on MODULE_SIG_FORCE && !MODULE_SIG_ALL'.
 > 
-> Since commit ac3b43283923 ("module: replace module_layout with
-> module_memory"), the module_deallocate() function calls free_mod_mem(),
-> which releases the lock classes as well and considers all module
-> regions.
+> The result is that the options are confusingly shown when using
+> a menuconfig tool, as follows:
 > 
-> Attempting to free these classes twice is unnecessary. Remove the
-> redundant code in load_module().
-
-I'd even say module_deallocate() handles MOD_DATA properly (deferring
-it to the last one) while the first loop was not taking that into
-consideration.
-
+>  [*]   Module versioning support
+>          Module versioning implementation (genksyms (from source code))  --->
+>  [ ]   Extended Module Versioning Support
+>  [*]   Basic Module Versioning Support
+>  [*]   Source checksum for all modules
+>  [*]   Module signature verification
+>  [ ]     Require modules to be validly signed
+>  [ ]     Automatically sign all modules
+>        Hash algorithm to sign modules (SHA-256)  --->
+> 
+> Fix the issue by using if/endif to group related options together in
+> kernel/module/Kconfig, similarly to how the MODULE_DEBUG options are
+> already grouped. Note that the signing-related options depend on
+> 'MODULE_SIG || IMA_APPRAISE_MODSIG', with the exception of
+> MODULE_SIG_FORCE, which is valid only for MODULE_SIG and is therefore kept
+> separately. For consistency, do the same for the MODULE_COMPRESS entries.
+> The options are then properly placed into submenus, as follows:
+> 
+>  [*]   Module versioning support
+>          Module versioning implementation (genksyms (from source code))  --->
+>  [ ]     Extended Module Versioning Support
+>  [*]     Basic Module Versioning Support
+>  [*]   Source checksum for all modules
+>  [*]   Module signature verification
+>  [ ]     Require modules to be validly signed
+>  [ ]     Automatically sign all modules
+>          Hash algorithm to sign modules (SHA-256)  --->
 > 
 > Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 
