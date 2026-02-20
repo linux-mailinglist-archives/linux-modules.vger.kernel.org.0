@@ -1,160 +1,147 @@
-Return-Path: <linux-modules+bounces-5768-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5769-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AIQvMwcdmGnp/wIAu9opvQ
-	(envelope-from <linux-modules+bounces-5768-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 09:36:23 +0100
+	id KDGLIPqDmGnKJQMAu9opvQ
+	(envelope-from <linux-modules+bounces-5769-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 16:55:38 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27200165B65
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 09:36:23 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB8D2169160
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 16:55:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 968313050D4C
-	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 08:31:09 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 884323018E00
+	for <lists+linux-modules@lfdr.de>; Fri, 20 Feb 2026 15:55:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB773311C06;
-	Fri, 20 Feb 2026 08:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEE4734E760;
+	Fri, 20 Feb 2026 15:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J7t9Efk+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMtq6coy"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE7330DEB8;
-	Fri, 20 Feb 2026 08:31:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895F12C11CD;
+	Fri, 20 Feb 2026 15:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771576268; cv=none; b=mftRUYtiWdr9JsDvDf6XQhb/jiilM53PAMZQrMznLiuC7aBMQUhf9iN+oX23jPEulkP3AnJgAm3NIyQ6LVit4WYgMUotWuuNQ2Buq7rXZsYczucFcrcqzwij7iZ/XSO0nj8bRwhZZw4pwrrYNCeiXZMzODSnU5+OWefBQPJIwos=
+	t=1771602913; cv=none; b=qPb8eF0FVTd64zjLM1hWiRfGUTv5y5ME6IQGezWgxdLtECqljV/LxJcyLugxr6Se+A8nIoXKytOvdiT/cguJZJXOPNCGs488+XYfSzfgZFGCOGHk8vEnIBArfGBtJsEk+t7Qt1gd4nKV3vUeBYTbTHfNUSVQzG7fuKiBoh0Y7/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771576268; c=relaxed/simple;
-	bh=5OxdbjN6P6byrb9BD3oHX2fy3Q6b9HNNwDCo773CwxI=;
+	s=arc-20240116; t=1771602913; c=relaxed/simple;
+	bh=sf7HrBnxjfkYlmWPVKhmzFIrsPNVYpWlY71R+iCD/MI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fzuA4sTVQSw7qPtki/4e2zZG6MFNmr5HpurQ5FrMUdmZHTuZSeQfeAIG8vic2GVV1RdZRMMzT8SXX3AsCIrtnL511VVovDrNDu4pYKF4CMTqu56dooqrgFO3hYr6rz6rRcdbGa9EURb17IbIygVGjbbH5xoF/LujtOStWkAj0gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J7t9Efk+; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771576266; x=1803112266;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=5OxdbjN6P6byrb9BD3oHX2fy3Q6b9HNNwDCo773CwxI=;
-  b=J7t9Efk+dzKYDiyJL4Z464pXl42pT1hPyqt1IMzMgHb+YPkao8KKilsr
-   zENpxfppiHpSThHVPeHFKbikD2kPWPWR5SZFTa1ty/2sJCfAJD43DtAOq
-   dw51EJlazsr9ziH+RtQwseYQYbnnwa0sKl7xn5IOZEmGsHPn8fYiA8kJq
-   4OPiri+OD6vHajhWpYeU9RcUbKMflXX2tlZmDvjB54OYH0957jnIYl9Rc
-   CUl10OOgUZ7pKy6TB3U9haXbp7eP4an8P9H/J8/tGzXBd/UCd4GZ+MpNd
-   vxZUU+k4klquhN21Ho82cmAUhR27gxf92xPqAmwMu31CTgw1lEJ1HVrnn
-   w==;
-X-CSE-ConnectionGUID: P+IlD2sBQziAKYfH/ukA1g==
-X-CSE-MsgGUID: cz+VbwMwTQKIdHJWqXmIkg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11706"; a="72730607"
-X-IronPort-AV: E=Sophos;i="6.21,301,1763452800"; 
-   d="scan'208";a="72730607"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2026 00:31:05 -0800
-X-CSE-ConnectionGUID: iquXS/LDQAO7lebzXsRNoQ==
-X-CSE-MsgGUID: 03rqr4P4QH2dWRLdFNEYdA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,301,1763452800"; 
-   d="scan'208";a="219300287"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.25])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2026 00:31:01 -0800
-Date: Fri, 20 Feb 2026 10:30:59 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Chris Li <sparse@chrisli.org>
-Cc: Daniel Gomez <da.gomez@kernel.org>, Al Viro <viro@zeniv.linux.org.uk>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	linux-sparse@vger.kernel.org, Aaron Tomlin <atomlin@atomlin.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-modules@vger.kernel.org, "Luck, Tony" <tony.luck@intel.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>
-Subject: Re: [PATCH] builtin: mark __builtin_strlen() as integer constant
- expression
-Message-ID: <aZgbw40qk2zIRpbE@smile.fi.intel.com>
-References: <20260219-fix-builtin-strlen-v1-1-3ec3efc0cda7@samsung.com>
- <CABCJKuf8jh_yxQcR1=uMeuWOueXyoM5=L-QpTuBenRi_MZK_Gg@mail.gmail.com>
- <aZdAxZR-c8PY_uEL@macos>
- <CACePvbU9Dh-caC59+L7wicZF+3sMjc4NC0HEkp9cVa7qqdydow@mail.gmail.com>
- <aZdighmTJN-JaijL@smile.fi.intel.com>
- <CACePvbWpC7o-Du=pr4Cfn-pM_XcOM1v+6cHb5mqaaEvzsvMX=Q@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=U0XLavjl9C2s3d22VIcK2Kn0peW+Gz3PEZltv2kDuSTx4bhUUricqLvAUOxjSEfVlb8l0smrTL8L/SzpmdOxpTZJhGqpqDbU85E0u7rIIzQLAYN3BbSnNrnvmxks1aeX7IpV2F3KdVbYLlar2yvyuwodD7mVGrCwq2EUlasx4bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMtq6coy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BE1C116C6;
+	Fri, 20 Feb 2026 15:55:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771602913;
+	bh=sf7HrBnxjfkYlmWPVKhmzFIrsPNVYpWlY71R+iCD/MI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lMtq6coyU1w+HcU39x8+iNHW5trrgdhfnUnvfElRttjllgaD7tgsS+IM4p1JhmqcL
+	 GwNxz/k1osfXaVXVZ6e4eCL6IrISdlXtvEEr37OWUVexBxmScr7BoQLFqRRLkwgGG4
+	 q32MXNpcESd7QudTXS6cqvLDDsF+UzE8Ytaz7eBzzWI6SgBRpWmc+3ZnFoayKziEn9
+	 C2Pn8hStvf9lQg6NhnIGIZNf9F9FWSMkjAfa0pIftjDbXusi6cUkDwhRjNohAhRb5J
+	 v7wfirYRNnQPyh33JdiccLT5QxV3bX7XizmouCK8dFLL6bEvZ1GogN0TRjvh/6uHAR
+	 q0L1OdWM/dOaw==
+Date: Fri, 20 Feb 2026 16:55:10 +0100
+From: Daniel Gomez <da.gomez@kernel.org>
+To: Ihor Solodrai <ihor.solodrai@linux.dev>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Alexei Starovoitov <ast@kernel.org>, 
+	Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, 
+	Martin KaFai Lau <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>, 
+	linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org, bpf@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev
+Subject: Re: [PATCH] module: Fix kernel panic when a symbol st_shndx is out
+ of bounds
+Message-ID: <aZhyyIVW95SzGzjJ@macos>
+References: <20251230183208.1317279-1-ihor.solodrai@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACePvbWpC7o-Du=pr4Cfn-pM_XcOM1v+6cHb5mqaaEvzsvMX=Q@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <20251230183208.1317279-1-ihor.solodrai@linux.dev>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,zeniv.linux.org.uk,google.com,vger.kernel.org,atomlin.com,linaro.org,gmail.com,intel.com,suse.com];
-	TAGGED_FROM(0.00)[bounces-5768-lists,linux-modules=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-5769-lists,linux-modules=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,suse.com,iogearbox.net,linux.dev,gmail.com,vger.kernel.org,lists.linux.dev];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[intel.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-modules@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[da.gomez@kernel.org,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-modules];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,smile.fi.intel.com:mid]
-X-Rspamd-Queue-Id: 27200165B65
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linux.dev:email]
+X-Rspamd-Queue-Id: BB8D2169160
 X-Rspamd-Action: no action
 
-On Fri, Feb 20, 2026 at 12:06:15AM -0800, Chris Li wrote:
-> On Thu, Feb 19, 2026 at 11:20 AM Andy Shevchenko
-> <andriy.shevchenko@intel.com> wrote:
-> >
-> > On Thu, Feb 19, 2026 at 09:06:23AM -0800, Chris Li wrote:
-> > > On Thu, Feb 19, 2026 at 9:00 AM Daniel Gomez <da.gomez@kernel.org> wrote:
-> > > >
-> > > > Can you please take a look? If Al patch is the correct approach, any
-> > > > chance you can send it and fix this?
-> > >
-> > > I am asking in another thread should I pull Al's git repo instead.
-> > > There are a few good commits there.
-> >
-> > Please, pull Al's work, My colleagues and I use his version of sparse for a few
-> > weeks without noticing any downsides.
+On 2025-12-30 10:32, Ihor Solodrai wrote:
+> The module loader doesn't check for bounds of the ELF section index in
+> simplify_symbols():
 > 
-> Thanks for the heads up. I just pulled Al's sparse repo.
+>        for (i = 1; i < symsec->sh_size / sizeof(Elf_Sym); i++) {
+> 		const char *name = info->strtab + sym[i].st_name;
+> 
+> 		switch (sym[i].st_shndx) {
+> 		case SHN_COMMON:
+> 
+> 		[...]
+> 
+> 		default:
+> 			/* Divert to percpu allocation if a percpu var. */
+> 			if (sym[i].st_shndx == info->index.pcpu)
+> 				secbase = (unsigned long)mod_percpu(mod);
+> 			else
+>   /** HERE --> **/		secbase = info->sechdrs[sym[i].st_shndx].sh_addr;
+> 			sym[i].st_value += secbase;
+> 			break;
+> 		}
+> 	}
+> 
+> A symbol with an out-of-bounds st_shndx value, for example 0xffff
+> (known as SHN_XINDEX or SHN_HIRESERVE), may cause a kernel panic:
+> 
+>   BUG: unable to handle page fault for address: ...
+>   RIP: 0010:simplify_symbols+0x2b2/0x480
+>   ...
+>   Kernel panic - not syncing: Fatal exception
+> 
+> This can happen when module ELF is legitimately using SHN_XINDEX or
+> when it is corrupted.
+> 
+> Add a bounds check in simplify_symbols() to validate that st_shndx is
+> within the valid range before using it.
+> 
+> This issue was discovered due to a bug in llvm-objcopy, see relevant
+> discussion for details [1].
+> 
+> [1] https://lore.kernel.org/linux-modules/20251224005752.201911-1-ihor.solodrai@linux.dev/
+> 
+> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-Can you also issue a new tag (say 0.6.5) so the distros can really be pushed to
-update the quite outdated sparse in their repos?
-
-> Sorry for the delay.
-
-Thanks!
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+ 
 
