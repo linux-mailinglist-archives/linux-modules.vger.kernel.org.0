@@ -1,263 +1,211 @@
-Return-Path: <linux-modules+bounces-5808-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-5810-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yHuVNcC1oGnClwQAu9opvQ
-	(envelope-from <linux-modules+bounces-5808-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 26 Feb 2026 22:06:08 +0100
+	id 6/PILaXboGmOngQAu9opvQ
+	(envelope-from <linux-modules+bounces-5810-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Feb 2026 00:47:49 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9522C1AF668
-	for <lists+linux-modules@lfdr.de>; Thu, 26 Feb 2026 22:06:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1507B1B0FEF
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Feb 2026 00:47:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 682A7304EEA9
-	for <lists+linux-modules@lfdr.de>; Thu, 26 Feb 2026 21:05:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id F0923304D1C5
+	for <lists+linux-modules@lfdr.de>; Thu, 26 Feb 2026 23:47:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC01A395267;
-	Thu, 26 Feb 2026 21:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F376133342E;
+	Thu, 26 Feb 2026 23:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="kMWwDEBX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ENCSd3cU"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB013939C6;
-	Thu, 26 Feb 2026 21:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A27B3161A4
+	for <linux-modules@vger.kernel.org>; Thu, 26 Feb 2026 23:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772139936; cv=none; b=Nhx4516qDQds6ANkHtykVD0BqNRVMJIxKvNkZUGrG/ZV7KJ3L1dJ6kfbbxhiPV1REl2cyLY9phB2JaFGo9+iov2WMnCu3kjW7h+XpS+IS9cWY2FTX30vNZOKJzyRnZV1HxSTpiRCzSIVpQpmGgQY79MgXc00MbqIOVrn45f6aHs=
+	t=1772149661; cv=none; b=SrLLTwTkd+gUZh5aLNtCnQ1HXoS8VWTpMe2huM/UhiPLOjYoaGExdGNvl2Q13Vt62+gLT6PhwTZs41k3uhk8ba4YHrl8ytg9cGC1bWMYTpTJc3Z9+YLDTUNWVNvweT9mQtE0/jVrvwaUKVYfJDHNb08HqYOX+9/2y1dJdwxivt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772139936; c=relaxed/simple;
-	bh=CGJOtdEq3F146PP+b+MPdofOSSJn1EG7PDzHAp8/b3Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IsEqU8jVVCGfweW1NxPv/lbde/9kAJrQSv5U0v4KlOUU/TqRVIG1UwAK7I/iLfh8naoT281sZ7IY1TxYmpKqe9cFRB+1Q0hG5a1s0U71c1dswcj8E0sD/+BIfEISUvnJbuJ7Wx680GGx6/R9sQxp9BHK4Vh4ztTeT3lOVdfuiII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=kMWwDEBX; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61QHtqJC3003598;
-	Thu, 26 Feb 2026 21:05:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=//3GCo
-	5ghP7YnX/8DlB/b0HC567HIVL4lqpc0QRGdAA=; b=kMWwDEBXtVjB1FCTNB9RNg
-	+Dwfah2GZAy0VXXdviJQWi6JByYjpQhPnbKPgZs2QnZrTnx1UZrlBIDOM7qVRr/4
-	+Dus2pqqBQGiY/gk9CN58RcoNKFWxxr6V04qCYqwfPPDh6iD+RUfXdg1H6TE43+K
-	N4H8jViSHaTc4IPsnwtkXWgxWPc718r9BW0+8i8qI2BxUv76fcLSGfZuSBwde/1o
-	fxyYfB6m0RM2la/OIiyuYCPH8JRdR2bH70XEXs/EagtuD9i+SQ64S/lQ5LLT3l1S
-	C7B2iFSoFOT26KQPomP6JVCHoDwzdYaH2xtw0p2hTsYAi4ZNuA/oBzAaV14+tw3Q
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf4bs861v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Feb 2026 21:05:20 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61QIV3aJ015983;
-	Thu, 26 Feb 2026 21:05:19 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfq1sx8sy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Feb 2026 21:05:19 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 61QL5JPY27329254
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 26 Feb 2026 21:05:19 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 462B358056;
-	Thu, 26 Feb 2026 21:05:19 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 641C65803F;
-	Thu, 26 Feb 2026 21:05:18 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 26 Feb 2026 21:05:18 +0000 (GMT)
-Message-ID: <1faaa368-451c-49fa-8ba2-82610dfef3e8@linux.ibm.com>
-Date: Thu, 26 Feb 2026 16:05:17 -0500
+	s=arc-20240116; t=1772149661; c=relaxed/simple;
+	bh=2JZ14oqyop+OfbJKe2VgqDVfV2Lq3g8h2Qdja2yt5Oo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WgIHKh/H+mws1C+xmO28doC4DPlxBCaxqsC2EZ9dp5pyQ+K7mKxRxsZ4Oblurqbgl0MHh+Xc+LNrh9y9+j8C7Ta3spxO0TocwdNQKcWOwURRUn86EMv7Opjz06N6ks2tQOi7ZRE2lnMt2gPBsWCoA2efm7ht4cEcvw/TxJE0sks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ENCSd3cU; arc=none smtp.client-ip=74.125.82.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-1275750cfc7so2116659c88.0
+        for <linux-modules@vger.kernel.org>; Thu, 26 Feb 2026 15:47:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772149658; x=1772754458; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/k9W3puS9VlvVSvbP2i2HOOhKsYSW79uIt5oIhUdqFY=;
+        b=ENCSd3cUnMGC1ERlOrIePmspmhoZmbfuT66oU4+H3HFMbQ7Zrv5Mi711Y3YzsB2sNn
+         DYJBxyL18UrykZbkVR10gESg6yOhLa0m2itDCSv7rDMyEbQcm5exnfXI6gugOZkFRL+W
+         O4aoALh4Fl303a7aqKCGjyCjtMcfuqvVROO5PGmgXu4UYnb77myZ1Qf5KLVwruvD64Z8
+         AClqDPXoeIvsA2GAyWstZKGKYyr6dJFaevuWhW2omHdzPgcJ7NJ2JLUxWa5Ot0uvzHI5
+         ZlUYbeQh6UpwckSfLe0sAKyAHEVsQ36S4BFXERPnsuDXcXJRerPszYJsV/fWWOjU4TK/
+         rupA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772149658; x=1772754458;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/k9W3puS9VlvVSvbP2i2HOOhKsYSW79uIt5oIhUdqFY=;
+        b=dW1ckgLhrk757gPzWmjqZtPRq3wLvgRw8fR+Fo/wF7Y5LhKP5P9j8efq305UTvKjbV
+         cl3ZZea+TbLnpLFlkBsXlaQ2xhYipnqcNHZYhv4voVYb6YyaNtWXAft2zrL7+w810ULz
+         3jVMJZhoLIcCKj8UOV9i4VI7Y0DAadT1Y9YEZupWsqtawOb4L1MHq2LWWOk4IT2ga5qb
+         ki0ITM1T/8MjC0CkNqq3iS0MFlC4d2EX7s/rAuT0wM2iyGHwoD+dzfSp6Obsye/sBvIw
+         UEd5ozVwEXbbQ3dcnd/1XESQRCL3AhNrcEhhdYoqnmhFzD4+IzJBD4+qbJSP8/JdWuNj
+         BO4A==
+X-Forwarded-Encrypted: i=1; AJvYcCWzniuut4jhdVGnFQUxe1LazSU+VLi/Js7zzj4Ah51vXDpG2lOQIu+SlE9Vaf3AvByYDeMBE3suJgqtA8zM@vger.kernel.org
+X-Gm-Message-State: AOJu0YykZr7XmvcwjqSs6US/0CJl6SYQn9z8UBt5UlaWN2mEzB7VaXR6
+	f19L6wxaCuGX/67UjhxEvamrWksRFBLf5vxp261GRgq8pM/Kurt1z1m3
+X-Gm-Gg: ATEYQzwqc1hx6lTWk8P9loepvusSdKiAc0685gh1GRZVRqI/cJIFw6LPPasXgHj/nrW
+	oM0/1OLuxVgzCNWp6QQ7pG4X/1ghxf2Ct5kDGDaH2hJ72cfjSactpokh3tG3CSixonhomQqO31H
+	qqhqgGHWIxFWkFmsk+Snfn36fNMf9G5LNxbxl7GLV/3zD+lcHLHy25L9wAsdAyYr0LV/M52msrc
+	MnBC/hLvl1hFZronEywMw7K2htnoh3v4IMnvdxmlytOOVyVMnVe73o9+Tuk7UpEjEeXFv8LGMSR
+	ilN1J1jkMGQV9biGoFrEFBpoxJLkrkZUkGVDsqq61oDbQ+lify1K/NKqklwWQl9xEIpBrAsQGYq
+	OOHBmD5KUvmWaP8Nn1HF2hQArbaRdtHDygIlMvFruX8ZdZr2+K4Db0CL/Avmink6U2N7jC0V4i7
+	TWwQ2brlaSampmae/w+16p0E29+PapMk/0gB1YCb1EbY8BqWuPLhMVr4R4p2YKff0y6Tl3h59NN
+	Q==
+X-Received: by 2002:a05:7022:4583:b0:127:5cda:fb7d with SMTP id a92af1059eb24-1278fc2c5fbmr491113c88.6.1772149657533;
+        Thu, 26 Feb 2026 15:47:37 -0800 (PST)
+Received: from localhost (99-122-55-39.lightspeed.sntcca.sbcglobal.net. [99.122.55.39])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127899df391sm3990909c88.5.2026.02.26.15.47.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Feb 2026 15:47:37 -0800 (PST)
+From: Matthew Wood <thepacketgeek@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>
+Cc: Aaron Tomlin <atomlin@atomlin.com>,
+	Boqun Feng <boqun@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Tamir Duberstein <tamird@kernel.org>,
+	David Gow <davidgow@google.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	linux-modules@vger.kernel.org,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/8] rust: module parameter extensions
+Date: Thu, 26 Feb 2026 15:47:26 -0800
+Message-ID: <20260226234736.428341-1-thepacketgeek@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: IMA and PQC
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Simo Sorce <simo@redhat.com>, Coiby Xu <coxu@redhat.com>,
-        =?UTF-8?Q?Johannes_Wiesb=C3=B6ck?= <johannes.wiesboeck@aisec.fraunhofer.de>,
-        dhowells@redhat.com, dmitry.kasatkin@gmail.com,
-        eric.snowberg@oracle.com, keyrings@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-integrity@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-modules@vger.kernel.org,
-        roberto.sassu@huawei.com, zohar@linux.ibm.com,
-        michael.weiss@aisec.fraunhofer.de
-References: <aYHznG6vbptVOjHQ@Rk>
- <ee36981d-d658-4296-9acb-874c72606b3e@linux.ibm.com>
- <20260226001049.GA3135@quark>
- <cba10ac6-3557-4fc1-9b86-55361d14156d@linux.ibm.com>
- <dc09be79-5efe-4756-a295-5b0428985525@linux.ibm.com>
- <da190dbbc692b9da8464bbbfffdde7bab26b3f1c.camel@redhat.com>
- <20260226165819.GA2251@sol>
- <969c74f3-81ed-442c-87dd-381274a642a7@linux.ibm.com>
- <20260226183248.GE2251@sol>
- <13ebe763-dcaf-4379-b9a7-82d06fd0fdb3@linux.ibm.com>
- <20260226194406.GG2251@sol>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260226194406.GG2251@sol>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: vX2zSuxstHXhjgCw-A1HAYqr-CGGzolU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDE4OCBTYWx0ZWRfX/a2JQU9aa5ee
- 2rKqdPf62pG74+XDCUnKIphMQ/4jhR5R4mE02G+Wm/dTV0ngzD2zU1a17D7kkbhZjWQyU4Je7Gj
- pilRlxcKp0OgA1ix4MKPI+5c6gKCq1VMifrNl9RW7gT4xE9VW86VT40OGHpIaXRsgZtSj1304/M
- m2myg4j8wgA+664aRPCdSjCdYgYrQVrgfD2bXfOkRVQFmUHibUu0bnzHXKdN/Mh7bCfV1S09VZw
- HlUgab1lgA2nZzKVgZ84vEHb4MRX4ZUVx0DmxeUuiOiQRehYmJTTjyZle+9sARyDJgHCiNL0JpQ
- himd4x0yeXVUoaXySaxyIUQb+a/IpGcQV3uL+2D3nTK6+gRR9TnIvU7zCzal8cWYoZQnGK5IUDi
- uy33sHXS2KmBg9yRrkqs0oiVaOPAY9eH8psumb12xcH5FWUd6dxI7KawEk9EjNkDLiS63N6NGwg
- 2jZR7eOHQSPv05dbG8A==
-X-Authority-Analysis: v=2.4 cv=eNceTXp1 c=1 sm=1 tr=0 ts=69a0b590 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=TKsHhThkkL6ydXzSVRkA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WxIQyzXbclRQMkqPy7P1Z_1PNO7y14kp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-26_03,2026-02-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 phishscore=0 suspectscore=0 adultscore=0
- bulkscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602260188
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ibm.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[ibm.com:s=pp1];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[atomlin.com,kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,gmail.com,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	TAGGED_FROM(0.00)[bounces-5810-lists,linux-modules=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-5808-lists,linux-modules=lfdr.de];
-	FREEMAIL_CC(0.00)[redhat.com,aisec.fraunhofer.de,gmail.com,oracle.com,vger.kernel.org,huawei.com,linux.ibm.com];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.ibm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[stefanb@linux.ibm.com,linux-modules@vger.kernel.org];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[ibm.com:+];
-	NEURAL_HAM(-0.00)[-0.990];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[thepacketgeek@gmail.com,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-0.991];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[11]
-X-Rspamd-Queue-Id: 9522C1AF668
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 1507B1B0FEF
 X-Rspamd-Action: no action
 
+This series extends the Rust module! macro with three capabilities that
+are available to C modules but currently missing from the Rust
+abstractions: string parameters, early boot command-line parameters, and
+configurable initcall levels.
 
+The existing Rust module parameter infrastructure supports integer types
+(i8..u64, isize, usize) but has no way to accept string values.
+Additionally, built-in Rust modules cannot register parameters for early
+boot command-line parsing (__setup / early_param), and all Rust modules
+are hard-coded to initcall level 6 (device_initcall) with no way to
+control initialization ordering.
 
-On 2/26/26 2:44 PM, Eric Biggers wrote:
-> On Thu, Feb 26, 2026 at 02:21:41PM -0500, Stefan Berger wrote:
->>
->>
->> On 2/26/26 1:32 PM, Eric Biggers wrote:
->>> On Thu, Feb 26, 2026 at 12:22:32PM -0500, Stefan Berger wrote:
->>>>> I see that IMA indeed never upgraded full file hashes to use
->>>>> 'struct ima_file_id'.  Building a new feature that relies on this seems
->>>>> like a bad idea though, given that it's a security bug that makes the> IMA
->>>> protocol cryptographically ambiguous.  I.e., it means that in IMA,
->>>>> when the contents of some file are signed, that signature is sometimes
->>>>> also valid for some other file contents which the signer didn't intend.
->>>>
->>>> You mean IMA should not sign the digest in the ima_file_id structure but
->>>> hash the ima_file_id structure in which this file digest is written into
->>>> (that we currently sign) and sign/verify this digest? And we would do this
->>>> to avoid two different files (with presumably different content) from having
->>>> the same hashes leading to the same signature? Which hashes (besides the
->>>> non-recommended ones) are so weak now that you must not merely sign a file's
->>>> hash?
->>>>
->>>> The problem with this is that older kernels (without patching) won't be able
->>>> to handle newer signatures.
->>>
->>> IMA needs to sign the entire ima_file_id structure, which is indeed what
->>> IMA already does when it uses that structure.  (Well, actually it signs
->>> a hash of the struct, but that's best thought of an implementation
->>> detail of legacy signature algorithms that can only sign hashes.  For a
->>> modern algorithm the whole struct should be passed instead.)  Just IMA
->>> uses that structure only for fsverity hashes, which is a bug that makes
->>> the IMA protocol ambiguous.  It needs to use ima_file_id consistently,
->>> otherwise a signed message sometimes corresponds to multiple unique file
->>> contents even without a break in the cryptographic hash function.
->>
->> Before we jump into making changes on this old stuff I think it's good to
->> understand the underlying problem and the likelyhood of signatures
->> validating different data, such as a file and fsverity data. How likely is
->> this?
->>
->> Assuming a strong hash I suppose that is not a concern with RSA because here
->> the digest is padded and then directly encrypted with the private key. Upon
->> verification (pub key decrypt) we would unpad and memcmp the digests.
->>
->> Again, assuming a strong hash: With ECDSA NIST P256 for example we have a 32
->> byte signature. With a SHA512 being used for hashing for example we would be
->> doing a projection of a 64byte hash space to a 32byte signature space with.
->> Just by this projection of a much larger space into a smaller space
->> signatures that validate multiple input data could be a problem. One 'easy'
->> case where signatures for different input data is the same (not exactly the
->> same due to nonce involved the signature is verifyable), albeit unlikely, is
->> that there could be different input data for the SHA512 that lead to the
->> same 32bytes prefix, which is then used after truncating the sha512 to the
->> first 32 bytes for the ECDSA signature, and this then leads to a signature
->> that is verifyable for different input data. So that's the 'simple' case at
->> least for this thought experiment for a non-expert.
->>
->> Now what should still be difficult to do is given a file and a hash-to-use
->> that you can create fsverity content that leads to a hash that in turn leads
->> to a NIST-P256 signature that can be used for signature verification(s) of
->> the file and the totally different fsverity data. Is this a problem that is
->> as difficult to solve just as finding different input data for a hash that
->> leads to the same digest?
-> 
-> There's no differentiation between a 'struct ima_file_id' that
-> *represents* the contents of some file, and a file whose contents are
-> *equal to* that 'struct ima_file_id' and that uses a full-file hash.  In
-> both cases the same key and message are used for signing and verifying.
+String parameter support (patches 1-3):
 
-I hadn't been thinking of this... It's a side-effect of starting to sign 
-ima_file_id for v3 that a file *content* could now hold the ima_file_id 
-structure (as signed with v3) and the signature would validate when used 
-with the v2 signature verification scheme. So, the content of the file 
-would presumably be odd/useless (2 bytes + hash) but it would verify 
-with the signature created for v3. We will have to offer the possibility 
-to move to v3 signatures for all signing schemes and offer the 
-possibility to deactivate older versions (<v3).
+  Introduce StringParam, a Copy wrapper around *const c_char whose
+  memory is managed by the kernel parameter subsystem.  Wire it into
+  the module! macro as the `string` parameter type with a dedicated
+  kernel_param_ops (PARAM_OPS_STRING) that stores the pointer directly
+  into a SetOnce<StringParam> container.  The rust_minimal sample is
+  updated to demonstrate usage.
 
-> 
-> This means that every time a file is signed using the ima_file_id
-> scheme, it also implicitly signs some other file contents, which an
-> attacker can freely replace the file with.  Similarly, every time a file
-> that happens to be a valid ima_file_id is signed using the older scheme,
-> it also implicitly signs the contents that the ima_file_id correspond
-> to, which the attacker can freely replace the file with.  In either
-> case, no collision in the cryptographic hash function is required.
-> 
-> It's simply a broken protocol.  To fix this, IMA must only support
-> signatures that use the ima_file_id scheme.
-> 
-> Of course, that will require making them support full-file hashes and
-> not just fsverity hashes.  If I recall correctly, this was actually part
-> of the original design of the ima_file_id-based signatures.  It's
-> unclear why the implementation is still incomplete.
-> 
-> - Eric
+  An earlier implementation of string parameter support was proposed in:
+
+      https://github.com/Rust-for-Linux/linux/pull/110/
+
+  This series takes a different approach for StringParam by storing the
+  raw C string pointer directly rather than copying the string data,
+  since the kernel guarantees the backing memory remains valid for the
+  module's lifetime.  This avoids allocation in the parameter setter and
+  keeps StringParam as a simple Copy type consistent with the existing
+  integer parameter design.
+
+Early boot parameter support (patches 4-7):
+
+  Add ObsKernelParam (mirroring the C obs_kernel_param), extend the
+  ModuleParam trait with from_setup_arg() for constructing parameter
+  values from raw __setup callback arguments, and integrate an optional
+  `early_param` field into the module! macro.  When specified, the macro
+  emits a __setup entry in the .init.setup ELF section, gated behind
+  #[cfg(not(MODULE))] since this mechanism is only meaningful for
+  built-in modules.
+
+Configurable initcall levels (patch 8):
+
+  Add an optional `initcall` field to the module! macro that accepts
+  any of the eight standard levels (pure through late).  The default
+  remains level 6 (device) so existing modules are unaffected.
+
+Matthew Wood (8):
+  rust: module_param: add StringParam type for C string parameters
+  rust: module_param: wire StringParam into the module! macro
+  samples: rust_minimal: demonstrate string module parameter
+  rust: module_param: add ObsKernelParam type
+  rust: module_param: add from_setup_arg() to ModuleParam trait
+  rust: macros: add early_param support to module! macro
+  samples: rust_minimal: demonstrate early_param usage
+  rust: macros: add configurable initcall levels to module! macro
+
+ rust/kernel/module_param.rs  | 160 +++++++++++++++++++++++++++++++
+ rust/macros/lib.rs           |   9 ++
+ rust/macros/module.rs        | 179 +++++++++++++++++++++++++++++++++--
+ samples/rust/rust_minimal.rs |  33 ++++++-
+ 4 files changed, 368 insertions(+), 13 deletions(-)
+
+-- 
+2.52.0
 
 
