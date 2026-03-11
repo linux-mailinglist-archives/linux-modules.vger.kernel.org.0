@@ -1,159 +1,169 @@
-Return-Path: <linux-modules+bounces-6073-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6075-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8MuXKWxnsWnsugIAu9opvQ
-	(envelope-from <linux-modules+bounces-6073-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Wed, 11 Mar 2026 14:00:28 +0100
+	id oMO3G1htsWlVvAIAu9opvQ
+	(envelope-from <linux-modules+bounces-6075-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Wed, 11 Mar 2026 14:25:44 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A74C26409E
-	for <lists+linux-modules@lfdr.de>; Wed, 11 Mar 2026 14:00:28 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75E03264777
+	for <lists+linux-modules@lfdr.de>; Wed, 11 Mar 2026 14:25:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4FD90305871A
-	for <lists+linux-modules@lfdr.de>; Wed, 11 Mar 2026 12:59:50 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 023523027CB2
+	for <lists+linux-modules@lfdr.de>; Wed, 11 Mar 2026 13:23:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B0442D0635;
-	Wed, 11 Mar 2026 12:59:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="CEiZ87VU"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E36D43191A5;
+	Wed, 11 Mar 2026 13:23:17 +0000 (UTC)
 X-Original-To: linux-modules@vger.kernel.org
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D786F282F33;
-	Wed, 11 Mar 2026 12:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FE232142B
+	for <linux-modules@vger.kernel.org>; Wed, 11 Mar 2026 13:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773233988; cv=none; b=d9TZzf7rQ8MZyPX18HJXDpQNImKYPWX3gs+BpMJEZ/8iI11S5FyQhJtiwT8J7SmmgRuJkjPMXqMNamRin8BrSzraw3FfzyhwhpWAHLJoSSmn423sNz9p45WdJTq6MqDfzOQwyZiaajqhXTQAEFEy8iGmRmdrIdAKuia1lSrKXG4=
+	t=1773235397; cv=none; b=Y1r7GEcI+aM2p96wywO23Eg/YyvYtmkoJYH7nXwNgc+WQ23qFTlqtsWQb/8B/6angyi6xgvH/kvX+vYH8Ogb4A6vM9h+AHdkozz+y+blqytFo1pZh3spqFSDFYHooCmhMVkzRas38hRJx+sHekV1L3ldbcJUaO2TpMJhn40rEVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773233988; c=relaxed/simple;
-	bh=6iMI2XFYcGmArDxHVD1cNM01BLfDHO/WY4pBP+fXMLQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q/tUwcikpTcsHHrNFI2YjlVjMZf7OFMN1SvomY7jJJTBql9fvZJxaVb4e539PQc8NNeMWPBf7WBXIvG/BnzBYuCUdvwqxrCZXcX1weDt2z0WQMHJQPVu34UK+FkeJPXaVC88e43Hq+awh3yVWXfadqTJCWogSUGRat4H4U0MrGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=CEiZ87VU; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1773233984;
-	bh=6iMI2XFYcGmArDxHVD1cNM01BLfDHO/WY4pBP+fXMLQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CEiZ87VUhKkkjxvvSxzMolbjRXZkdgJY0Rzic3nGaTRS6rUPbCgJmnQ+/+MVDz77B
-	 T0VB914Hs6kRIOMVG/+6qkbqwiEQ6Ju+JDASONipQYTCXd3FloBmK2xVggCqy7Xgzr
-	 wkmrvsN0vaq/eTWXkiLVV77iXHXn2bYLd9icP6MQ=
-Date: Wed, 11 Mar 2026 13:59:44 +0100
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
-	Sami Tolvanen <samitolvanen@google.com>, Daniel Gomez <da.gomez@samsung.com>, 
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
-	"Serge E. Hallyn" <serge@hallyn.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Madhavan Srinivasan <maddy@linux.ibm.com>, Michael Ellerman <mpe@ellerman.id.au>, 
-	Nicholas Piggin <npiggin@gmail.com>, Naveen N Rao <naveen@kernel.org>, 
-	Mimi Zohar <zohar@linux.ibm.com>, Roberto Sassu <roberto.sassu@huawei.com>, 
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, Eric Snowberg <eric.snowberg@oracle.com>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Daniel Gomez <da.gomez@kernel.org>, 
-	Aaron Tomlin <atomlin@atomlin.com>, "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, 
-	Nicolas Schier <nsc@kernel.org>, Nicolas Bouchinet <nicolas.bouchinet@oss.cyber.gouv.fr>, 
-	Xiu Jianfeng <xiujianfeng@huawei.com>, Fabian =?utf-8?Q?Gr=C3=BCnbichler?= <f.gruenbichler@proxmox.com>, 
-	Arnout Engelen <arnout@bzzt.net>, Mattia Rizzolo <mattia@mapreri.org>, 
-	kpcyrd <kpcyrd@archlinux.org>, Christian Heusel <christian@heusel.eu>, 
-	=?utf-8?B?Q8OianU=?= Mihai-Drosi <mcaju95@gmail.com>, Sebastian Andrzej Siewior <bigeasy@linutronix.de>, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, 
-	linux-modules@vger.kernel.org, linux-security-module@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-integrity@vger.kernel.org
-Subject: Re: [PATCH v4 09/17] module: Make module loading policy usable
- without MODULE_SIG
-Message-ID: <2f702140-32cf-40aa-80fb-3650145a2adf@t-8ch.de>
-References: <20260113-module-hashes-v4-0-0b932db9b56b@weissschuh.net>
- <20260113-module-hashes-v4-9-0b932db9b56b@weissschuh.net>
- <20260310220146.GE120274@quark>
+	s=arc-20240116; t=1773235397; c=relaxed/simple;
+	bh=bQRlE5OR+3/41N9B/xBGXfMeOTv3hgeQ2WrY6jcTpBY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YBvpkpL+8GbuZ/0vRLPvujRAjHp+jkAQFDo8tantaMD8ftvD3ZbXDV6RoxFwWYtzJVIGs83Bvle0M5i3IcQQcDsnfo9qZLbwN9lOWyNyzdygQNhmT4lXkJY+kDpTy3UL0qST/YZKNp8DaXEwLaLhtjnY1Yr55w8BSNMU1EjAO48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-56b18f05f49so2423889e0c.1
+        for <linux-modules@vger.kernel.org>; Wed, 11 Mar 2026 06:23:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773235395; x=1773840195;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=34DR94e/1PAvLLEaib58vFA4GW0m5SGe6jvxchEhMek=;
+        b=tjszCG6ml4ZPLcYzQMbMqHLwI7OqoWuFSkl0ei5648VDdPYb8LZ1mIYjSeLapEu4dA
+         j5VMUlLUhihl0glAGU8KWT0JqmWWK5ONRSwiR+xzvPwgRQJTjX/2dGwKqe+uwfKghp1r
+         8iOvwXRSVMB8wV91ym78+FjBXwflhhSTBgvXdzH/Gf2vuKDlEiKmVVfR07endjzS6uCQ
+         QnBiygEJp4kBCXLyCzIzq4mf1rBxLbWXka1lxsFIyRe/FLq7jl6GtH6GLpQI/Qk7ucsf
+         7+ohZVWPMVhTtQWUuvuVSzP/0Al6ZV9HNUx6QPK3mESeYs3AgNHNP+4x+H7FG2//zxkG
+         b+Aw==
+X-Forwarded-Encrypted: i=1; AJvYcCU6bX3F3z7UjkzxSA9oBuv2cFJuqMJXCr1uVCZrLDvzXSVM5MSr2xLSGlUTrKZbOJY/6dFrPBU/rxBPr1dg@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvrRBvxfBoYeUyaTl29jaMUmvB3MBqbWxhSw79kMaKx/9wx01v
+	o+H1SkGrCupiqmz9oq8w5fIMTxb6ghXb6jZhlC6/uTwJmUOmzz9JTzYyIiMEEkgqIuQ=
+X-Gm-Gg: ATEYQzzgUVBuD10xN2EZTEYP6B8z7iV9G/heRIYEw95M7tKILUxq1Ah/8lMRXFV+MK1
+	Yf1K8uFCTP4fvRKqJTFhjNY3TW2NcnjX6Nn/YgkSLM9+mX/9MPyor0DC7/iv/t3Xa5f4VajqYi1
+	9RjcMMOXXCLkb8w3XyrdjeB6TZz4inSwTP3ZtXC9IjwpaQTHDNt1QfhRQbPBQw85FsnzzQmEKur
+	l+n8erMyIhkCpl9sudZf1XJmIhpqK7mwrmiBtay/Asus4j1ma6Nx44zZi/ozLFt3d4Kmaz2Ipl+
+	KpjPKpx2rPg2ui9nFdY891VdxQnHpJFP1xsKpNPNo2OQoOSB0oJbWDZvLZLpFLUl0ErzG2/aU6i
+	nVEi291Z9aaY84JwwnD7NHy8QLwuacN/vqpwubyIiYE0Q6y8AwGMAeE/R6rSM2R29q4d2KXg5D7
+	QJkKpN1AxhcxGMI59NaNsvIj+GV0JeKzjkpNw+H313OhQshizXl9AcUnSeJfRn
+X-Received: by 2002:a05:6102:cc6:b0:5ff:1cc2:aa8c with SMTP id ada2fe7eead31-601df0391d4mr1070947137.36.1773235395267;
+        Wed, 11 Mar 2026 06:23:15 -0700 (PDT)
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94ecfd0069dsm495149241.7.2026.03.11.06.23.15
+        for <linux-modules@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2026 06:23:15 -0700 (PDT)
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-94dd7178d63so8317222241.3
+        for <linux-modules@vger.kernel.org>; Wed, 11 Mar 2026 06:23:15 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVKnP5gYks0iRFatYISKg9aAufHWgoWrBVJj1oYlpy2fjUi7qINSX+QgxzJqtr5DmlArJlB8/lpgUMRR/4H@vger.kernel.org
+X-Received: by 2002:a05:6122:1d05:b0:55b:7494:177b with SMTP id
+ 71dfb90a1353d-56b4752d806mr922396e0c.10.1773234967338; Wed, 11 Mar 2026
+ 06:16:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260310220146.GE120274@quark>
-X-Rspamd-Queue-Id: 4A74C26409E
+References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de> <20260310-b4-is_err_or_null-v1-36-bd63b656022d@avm.de>
+In-Reply-To: <20260310-b4-is_err_or_null-v1-36-bd63b656022d@avm.de>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 11 Mar 2026 14:15:56 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdXQ8Q4jvkgFRJYhghz2BZRDC-9Mk6DbXxuaOc6C9DFHZQ@mail.gmail.com>
+X-Gm-Features: AaiRm52J84H77ROK64ZWWtJfaiCpnFeKyoSRmPbi-NC8CN6Ju1TJEFxJU9gZQQ8
+Message-ID: <CAMuHMdXQ8Q4jvkgFRJYhghz2BZRDC-9Mk6DbXxuaOc6C9DFHZQ@mail.gmail.com>
+Subject: Re: [PATCH 36/61] arch/sh: Prefer IS_ERR_OR_NULL over manual NULL check
+To: Philipp Hahn <phahn-oss@avm.de>
+Cc: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com, 
+	bpf@vger.kernel.org, ceph-devel@vger.kernel.org, cocci@inria.fr, 
+	dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org, 
+	gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org, 
+	intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev, kvm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-block@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-btrfs@vger.kernel.org, 
+	linux-cifs@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-erofs@lists.ozlabs.org, linux-ext4@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-hyperv@vger.kernel.org, linux-input@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-mips@vger.kernel.org, linux-mm@kvack.org, 
+	linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org, 
+	linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org, 
+	linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org, 
+	linux-sound@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, ntfs3@lists.linux.dev, 
+	samba-technical@lists.samba.org, sched-ext@lists.linux.dev, 
+	target-devel@vger.kernel.org, tipc-discussion@lists.sourceforge.net, 
+	v9fs@lists.linux.dev, Yoshinori Sato <ysato@users.sourceforge.jp>, 
+	Rich Felker <dalias@libc.org>, John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Content-Type: text/plain; charset="UTF-8"
+X-Rspamd-Queue-Id: 75E03264777
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[weissschuh.net,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[weissschuh.net:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6073-lists,linux-modules=lfdr.de];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6075-lists,linux-modules=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
+	DMARC_NA(0.00)[linux-m68k.org];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[41];
-	FREEMAIL_CC(0.00)[kernel.org,arndb.de,suse.com,google.com,samsung.com,paul-moore.com,namei.org,hallyn.com,lwn.net,linux.ibm.com,ellerman.id.au,gmail.com,huawei.com,oracle.com,linux.dev,atomlin.com,oss.cyber.gouv.fr,proxmox.com,bzzt.net,mapreri.org,archlinux.org,heusel.eu,linutronix.de,vger.kernel.org,lists.ozlabs.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linux@weissschuh.net,linux-modules@vger.kernel.org];
-	DKIM_TRACE(0.00)[weissschuh.net:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,weissschuh.net:dkim,weissschuh.net:email,t-8ch.de:mid]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[geert@linux-m68k.org,linux-modules@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	NEURAL_HAM(-0.00)[-0.999];
+	RCPT_COUNT_GT_50(0.00)[57];
+	R_DKIM_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[fu-berlin.de:email,sourceforge.jp:email,avm.de:email,libc.org:email,glider.be:email,linux-m68k.org:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 2026-03-10 15:01:46-0700, Eric Biggers wrote:
-> On Tue, Jan 13, 2026 at 01:28:53PM +0100, Thomas Weißschuh wrote:
-> > The loading policy functionality will also be used by the hash-based
-> > module validation. Split it out from CONFIG_MODULE_SIG so it is usable
-> > by both.
-> > 
-> > Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-> > ---
-> >  include/linux/module.h  |  8 ++++----
-> >  kernel/module/Kconfig   |  5 ++++-
-> >  kernel/module/main.c    | 26 +++++++++++++++++++++++++-
-> >  kernel/module/signing.c | 21 ---------------------
-> >  4 files changed, 33 insertions(+), 27 deletions(-)
-> > 
-> > diff --git a/include/linux/module.h b/include/linux/module.h
-> > index f288ca5cd95b..f9601cba47cd 100644
-> > --- a/include/linux/module.h
-> > +++ b/include/linux/module.h
-> > @@ -444,7 +444,7 @@ struct module {
-> >  	const u32 *gpl_crcs;
-> >  	bool using_gplonly_symbols;
-> >  
-> > -#ifdef CONFIG_MODULE_SIG
-> > +#ifdef CONFIG_MODULE_SIG_POLICY
-> >  	/* Signature was verified. */
-> >  	bool sig_ok;
-> >  #endif
-> [...]
-> > +config MODULE_SIG_POLICY
-> > +	def_bool MODULE_SIG
-> 
-> Maybe MODULE_AUTH_POLICY?  Hash-based module authentication does not use
-> signatures.
-> 
-> This issue appears elsewhere in the code too.  There are lots of places
-> that still refer to module signatures or "sigs", when really module
-> authentication is meant.
-> 
-> I'm not sure how far you want to go with the renaming, but it's
-> something to think about.  It's confusing to use the term "signature" to
-> mean something that is not a signature.
+On Tue, 10 Mar 2026 at 12:56, Philipp Hahn <phahn-oss@avm.de> wrote:
+> Prefer using IS_ERR_OR_NULL() over using IS_ERR() and a manual NULL
+> check.
+>
+> Change generated with coccinelle.
+>
+> To: Yoshinori Sato <ysato@users.sourceforge.jp>
+> To: Rich Felker <dalias@libc.org>
+> To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+> Cc: linux-sh@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Philipp Hahn <phahn-oss@avm.de>
 
-Ack. "authentication" is much better, I'll use that.
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
+Gr{oetje,eeting}s,
 
-Thomas
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
 
