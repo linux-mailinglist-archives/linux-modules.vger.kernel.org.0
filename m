@@ -1,60 +1,93 @@
-Return-Path: <linux-modules+bounces-6104-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6105-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wGgLKzsytGn4igAAu9opvQ
-	(envelope-from <linux-modules+bounces-6104-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2026 16:50:19 +0100
+	id 6LioGlNEtGk4kAAAu9opvQ
+	(envelope-from <linux-modules+bounces-6105-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2026 18:07:31 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 102C1286573
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2026 16:50:19 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08617287D18
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2026 18:07:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 43B283036755
-	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2026 15:46:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8E4D13033BED
+	for <lists+linux-modules@lfdr.de>; Fri, 13 Mar 2026 17:07:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5F94359A84;
-	Fri, 13 Mar 2026 15:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B2F13CA4BC;
+	Fri, 13 Mar 2026 17:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieMFhs9q"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H+mo1k8/"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927EA355F58;
-	Fri, 13 Mar 2026 15:46:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B421535BDAD
+	for <linux-modules@vger.kernel.org>; Fri, 13 Mar 2026 17:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773416772; cv=none; b=ctI2oANlBuzkSoKTkFdJ+AN4dP5yBTOx7yg5wEIxf4UgaGHumqqaA2oOTGPipPAB9n4qtjSH1+/anrTG70C9rnOfIGvrrWvV7E9Wyz2nK4QfeQZP4XR5LNJEsLQqfm1OGsWYk6tTr9s9AAU62iJhWj1mcKA2tVlUZ4hMXPyYG3g=
+	t=1773421633; cv=none; b=F/ViDu09wVki80NlHL5aveRTNqPke0ZvM1+xApd/D+Cq1uLLz7I3kSuehISCc/t7T7LgKI4GLfWPu51+mcCE4WeqJhjKgOKOnvvbVPAJNEhJQb9i+7Obvz/ySE1/KdiyCcCqqrvvHlC079VLr9Rd91clX6+G1/7CyW5mjZ4BdC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773416772; c=relaxed/simple;
-	bh=QBg0P3i6TrcPBF+Kz4X9evfITG3pLu6eqqjmL0ymkkU=;
+	s=arc-20240116; t=1773421633; c=relaxed/simple;
+	bh=z7AGwqb57CwAMqE9fS+3ykGurf6LPqrzuywb5yXOKzw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D7N7+FZ4cOcKca/Rl/N3alGDaa/RdnjntjdtjNs8bFy9X1EAx08UkW/fETlor93ZC0ywakS9Ye6GcMf/DXGdvPLn4WWLgNtc45zXyRCUjaDalB4S+PnzBU3vRvVoKL+T6ekWmZQlMSHJXycEDOAaMfvcrvDCHCpKw10dJoHLXBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieMFhs9q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD88C19421;
-	Fri, 13 Mar 2026 15:46:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773416772;
-	bh=QBg0P3i6TrcPBF+Kz4X9evfITG3pLu6eqqjmL0ymkkU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ieMFhs9qa5yNqz7puTTH+1OxKkPpjNHLjBzhsuDU9jQQmdHWMlQEymRU5IlzTZmEn
-	 Kje5TR3THZbtFWoWYDNtsxS+RSoF/JsXAi0J4FABOhAGpLysrOYa9zK6THXPWgXjEH
-	 o5cUx3zPPhysYQzChHP68MQnJ1f1PExqE3Je3uVg=
-Date: Fri, 13 Mar 2026 16:46:06 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: linux-modules@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, Luis Chamberlain <mcgrof@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=WOL2YdUelRO0UIGlHMvz3VqhHe+x9iDTGKinzVKJaYDIFu/fetEAGOW835GwrevfFdRy9xeYQAsmozl2aCQ7b0CLj2PBXpUnlpTVtQaE5+ZV3LLV22W7Y3vmdNP9O7jBdEhMsP1snDvhk/sBkq75xfhHX2n3ho1R/qOlVQm5M+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=H+mo1k8/; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2aea4ebb048so3715ad.1
+        for <linux-modules@vger.kernel.org>; Fri, 13 Mar 2026 10:07:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1773421632; x=1774026432; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kcULnJOLAuZh87RKAsbNLZQYw5Yxpz2q2AsZGTy7iU8=;
+        b=H+mo1k8/iHELVGCO1YKNn2bZEyDoPnA7xtKtqnllTeYFZkb0U3P7BgrkQWg2PASxya
+         F7/M9Ehvn4GkRobu+Wdt6Q98audhSAYnPEhEPnpVrDrwodZ+/NImBeaHsGVOBJ5NFfHr
+         uiM1Ou4mBM3zFtc998Wtj9lbS+Gx7pBGNzfU79rjUbSeKOjDA7TAn7l8h06BQroOF5h7
+         IwNVNzt/FA5yOxuyhoNbww4KDvCvt5N7/NU2f1AH60EvDpmOtyH8m7cvzhq1es/NNk1u
+         kJWuJ+mIJvZBEVarCGiSh7f9GO3gi8Hr9cp1cTfWhWa0kk086WOL1biIBWzpCWQH1Qp2
+         TWdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773421632; x=1774026432;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kcULnJOLAuZh87RKAsbNLZQYw5Yxpz2q2AsZGTy7iU8=;
+        b=TlGqEFqq1C4z00Bf6VaGCgPKpuMxWdLyjQoJc5awH2bIjDnJWA9YSUsqgIWJKjLn/H
+         gqp+udbebiKh5CKD9sO2Ul1EYtJRl6lFhK+VeBaGmq732TYKbcXaGJS1GFcKG5/8s92r
+         G7Vkfxpm/o0Yrqc/B2LhAjy1rdQc7hwjcp8fE69WldxYG1Jb5eCmu1sWTPKSnrM4frcK
+         /d/r8Ya+Kq9I6V+uFAKXaZl2QtC/rvJ/QfEH04n3xO/B4/7zFrQtCk98GRWjWenUhYNC
+         6mUZkfCYNZreYIuXbOh178sIdxIq0sJD0PjYg1tt/11e45SjvLbuLQcLw79jIH/clGkB
+         5kgA==
+X-Gm-Message-State: AOJu0YxtRMUdV+P5VxEnDeKZ8iYHcx/C3xERJWFFYUowq1CJCniNuDC3
+	5TAWYmaC2MsZWsZ8uu4BnP1m/ur+CgsKweoHrlOyrTSYqFKnfSIi5cGk06SEbzNlrA==
+X-Gm-Gg: ATEYQzxoC95VwJzhwYW7LmKo63C2SjqIQW2W6/P/oF4eZMhA3wTu5GQAjousNdlhhgK
+	Ci1ot2lktFjfuNGFU/INrnNNf14zs9KPWw20zuFlsEGghj3DNpKn4Rv7yoWp5XECQDBfu0IJOYE
+	Bz/AhNyT+1HP6GUqZYn//wgBunILxAmzasHFAqqJ60qMeNkCVWQtO39i8ndDtFBwrdla/YZnMNB
+	zUcyMj5xPheIbXeysV1vLDiW/CrXrc0s2edJ6ph7nBzuZkpO59Pn31OU3PSReYIlH5r8wJJ9Lm5
+	mGiVPGionhefuqAHn+UApvMEuLagbyZUsfc9UE2eLRGk9e8vLjfIPtbvb1CHZTNiU/J+gwTqIDT
+	d0rbhqELzcItNkRQXtrz0PQ3QrHnPcRFfDPpr1zH37qYnMLhxhNrRZhrMgN8+HldjLelILmp72U
+	CDy1PYeGsy0iAA/pUGsXPAtF0uaKevweXcoPbmG9+aZXXRP0uVcCkg4B6jly09Y2Ib4OA=
+X-Received: by 2002:a17:902:ccc4:b0:2a1:3cdc:7720 with SMTP id d9443c01a7336-2aecd668c28mr2837265ad.21.1773421631684;
+        Fri, 13 Mar 2026 10:07:11 -0700 (PDT)
+Received: from google.com (197.23.125.34.bc.googleusercontent.com. [34.125.23.197])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece5c1465sm39467795ad.21.2026.03.13.10.07.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Mar 2026 10:07:11 -0700 (PDT)
+Date: Fri, 13 Mar 2026 17:07:06 +0000
+From: Sami Tolvanen <samitolvanen@google.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Daniel Gomez <da.gomez@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
 	Aaron Tomlin <atomlin@atomlin.com>,
 	Shyam Saini <shyamsaini@linux.microsoft.com>,
 	Kees Cook <kees@kernel.org>,
 	Thorsten Blum <thorsten.blum@linux.dev>,
 	Christoph Hellwig <hch@infradead.org>
 Subject: Re: [PATCH] module: remove MODULE_VERSION()
-Message-ID: <2026031303-prelaunch-creation-3fce@gregkh>
+Message-ID: <20260313170706.GC213695@google.com>
 References: <2026031341-evolve-repeater-987b@gregkh>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
@@ -65,37 +98,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <2026031341-evolve-repeater-987b@gregkh>
-X-Spamd-Result: default: False [2.34 / 15.00];
-	MID_END_EQ_FROM_USER_PART(4.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
-	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
+	R_DKIM_ALLOW(-0.20)[google.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6104-lists,linux-modules=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linuxfoundation.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.997];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,linux-modules@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	DKIM_TRACE(0.00)[google.com:+];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6105-lists,linux-modules=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-modules];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linuxfoundation.org:dkim,linuxfoundation.org:email,infradead.org:email,atomlin.com:email,suse.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linux.dev:email]
-X-Rspamd-Queue-Id: 102C1286573
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[samitolvanen@google.com,linux-modules@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-modules];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,infradead.org:email,linuxfoundation.org:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,suse.com:email]
+X-Rspamd-Queue-Id: 08617287D18
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
+
+Hi Greg,
 
 On Fri, Mar 13, 2026 at 03:20:42PM +0100, Greg Kroah-Hartman wrote:
 > Module "versions" do not make sense as the kernel is built all at once,
@@ -125,141 +159,10 @@ On Fri, Mar 13, 2026 at 03:20:42PM +0100, Greg Kroah-Hartman wrote:
 >  kernel/params.c        | 30 ----------------------
 >  2 files changed, 11 insertions(+), 75 deletions(-)
 
+This certainly solves our version problems! I noticed there are a
+couple of __modver references left in the code base after this patch,
+which can be dropped too, and you can also remove the version field
+from struct module at the same time.
 
-Sami just pointed out to me off-list that maybe I should also drop the
-srcversion stuff too.  I'll gladly do that too, does anyone know if
-anyone even uses that anymore?
-
-thanks,
-
-greg k-h
-
-
-> 
-> diff --git a/include/linux/module.h b/include/linux/module.h
-> index 14f391b186c6..37cb369b4c3a 100644
-> --- a/include/linux/module.h
-> +++ b/include/linux/module.h
-> @@ -62,15 +62,6 @@ struct module_attribute {
->  	void (*free)(struct module *);
->  };
->  
-> -struct module_version_attribute {
-> -	struct module_attribute mattr;
-> -	const char *module_name;
-> -	const char *version;
-> -};
-> -
-> -extern ssize_t __modver_version_show(const struct module_attribute *,
-> -				     struct module_kobject *, char *);
-> -
->  extern const struct module_attribute module_uevent;
->  
->  /* These are either module local, or the kernel's dummy ones. */
-> @@ -256,43 +247,18 @@ struct module_kobject *lookup_or_create_module_kobject(const char *name);
->  static typeof(name) __mod_device_table(type, name)			\
->    __attribute__ ((used, alias(__stringify(name))))
->  
-> -/* Version of form [<epoch>:]<version>[-<extra-version>].
-> - * Or for CVS/RCS ID version, everything but the number is stripped.
-> - * <epoch>: A (small) unsigned integer which allows you to start versions
-> - * anew. If not mentioned, it's zero.  eg. "2:1.0" is after
-> - * "1:2.0".
-> -
-> - * <version>: The <version> may contain only alphanumerics and the
-> - * character `.'.  Ordered by numeric sort for numeric parts,
-> - * ascii sort for ascii parts (as per RPM or DEB algorithm).
-> -
-> - * <extraversion>: Like <version>, but inserted for local
-> - * customizations, eg "rh3" or "rusty1".
-> -
-> - * Using this automatically adds a checksum of the .c files and the
-> - * local headers in "srcversion".
-> +/*
-> + * Module "versions" do not make sense as the kernel is built all at once, the
-> + * "version" is the overall kernel version number, so modules can not really be
-> + * described as having a unique version given that they rely on the
-> + * infrastructure of the whole kernel.
-> + *
-> + * For now, just make this an "empty" define, to keep existing code building
-> + * properly as the tree is slowly purged of the use of this over time.
-> + *
-> + * It will be removed in the future when there are no in-tree users.
->   */
-> -
-> -#if defined(MODULE) || !defined(CONFIG_SYSFS)
-> -#define MODULE_VERSION(_version) MODULE_INFO(version, _version)
-> -#else
-> -#define MODULE_VERSION(_version)					\
-> -	MODULE_INFO(version, _version);					\
-> -	static const struct module_version_attribute __modver_attr	\
-> -		__used __section("__modver")				\
-> -		__aligned(__alignof__(struct module_version_attribute)) \
-> -		= {							\
-> -			.mattr	= {					\
-> -				.attr	= {				\
-> -					.name	= "version",		\
-> -					.mode	= S_IRUGO,		\
-> -				},					\
-> -				.show	= __modver_version_show,	\
-> -			},						\
-> -			.module_name	= KBUILD_MODNAME,		\
-> -			.version	= _version,			\
-> -		}
-> -#endif
-> +#define MODULE_VERSION(_version)
->  
->  /* Optional firmware file (or files) needed by the module
->   * format is simply firmware file name.  Multiple firmware
-> diff --git a/kernel/params.c b/kernel/params.c
-> index 7188a12dbe86..1b14b1ab5fcb 100644
-> --- a/kernel/params.c
-> +++ b/kernel/params.c
-> @@ -846,35 +846,6 @@ static void __init param_sysfs_builtin(void)
->  	}
->  }
->  
-> -ssize_t __modver_version_show(const struct module_attribute *mattr,
-> -			      struct module_kobject *mk, char *buf)
-> -{
-> -	const struct module_version_attribute *vattr =
-> -		container_of_const(mattr, struct module_version_attribute, mattr);
-> -
-> -	return scnprintf(buf, PAGE_SIZE, "%s\n", vattr->version);
-> -}
-> -
-> -extern const struct module_version_attribute __start___modver[];
-> -extern const struct module_version_attribute __stop___modver[];
-> -
-> -static void __init version_sysfs_builtin(void)
-> -{
-> -	const struct module_version_attribute *vattr;
-> -	struct module_kobject *mk;
-> -	int err;
-> -
-> -	for (vattr = __start___modver; vattr < __stop___modver; vattr++) {
-> -		mk = lookup_or_create_module_kobject(vattr->module_name);
-> -		if (mk) {
-> -			err = sysfs_create_file(&mk->kobj, &vattr->mattr.attr);
-> -			WARN_ON_ONCE(err);
-> -			kobject_uevent(&mk->kobj, KOBJ_ADD);
-> -			kobject_put(&mk->kobj);
-> -		}
-> -	}
-> -}
-> -
->  /* module-related sysfs stuff */
->  
->  static ssize_t module_attr_show(struct kobject *kobj,
-> @@ -977,7 +948,6 @@ static int __init param_sysfs_builtin_init(void)
->  	if (!module_kset)
->  		return -ENOMEM;
->  
-> -	version_sysfs_builtin();
->  	param_sysfs_builtin();
->  
->  	return 0;
-> -- 
-> 2.53.0
-> 
+Sami
 
