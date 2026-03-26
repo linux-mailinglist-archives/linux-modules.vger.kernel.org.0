@@ -1,163 +1,175 @@
-Return-Path: <linux-modules+bounces-6167-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6168-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sDTCOrLbw2lwuQQAu9opvQ
-	(envelope-from <linux-modules+bounces-6167-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Wed, 25 Mar 2026 13:57:22 +0100
+	id wKVkF5CSxWlG/QQAu9opvQ
+	(envelope-from <linux-modules+bounces-6168-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 26 Mar 2026 21:09:52 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA5093254B6
-	for <lists+linux-modules@lfdr.de>; Wed, 25 Mar 2026 13:57:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1E3833B43E
+	for <lists+linux-modules@lfdr.de>; Thu, 26 Mar 2026 21:09:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8099630EF857
-	for <lists+linux-modules@lfdr.de>; Wed, 25 Mar 2026 12:49:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 127223058DCE
+	for <lists+linux-modules@lfdr.de>; Thu, 26 Mar 2026 20:06:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AAC53D5251;
-	Wed, 25 Mar 2026 12:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32CCF3A6414;
+	Thu, 26 Mar 2026 20:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="QsQTBQ2R"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lZiTYQ6K"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-dl1-f73.google.com (mail-dl1-f73.google.com [74.125.82.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056423D47DE
-	for <linux-modules@vger.kernel.org>; Wed, 25 Mar 2026 12:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929EF3537D3
+	for <linux-modules@vger.kernel.org>; Thu, 26 Mar 2026 20:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774442973; cv=none; b=k1t7PgW7Ekfph1I6wTXbblhXfl1wHckEvqt/tTMi2Kuw0d5nI4vxSciAFpxG6+M5UP6Z+0zSWLdNL3qnbsTexOjTus3j3Mr8UQ3daIYrA3SZc3o1OVaYCwBYKrSpjb6JFQtRMeBMLIVBHgzis+cq5TKav3xUSsrsYwvwDU/TzrU=
+	t=1774555615; cv=none; b=qSH2jxQpI7eK7Zpc2zJ6jQuK+lljuNgR7WzbgZ3q81V249zo7bOmkTgzZ0fiWe0Er0QKVTy1TizmRplvSin/0vvgc9HQEbVGlJfY5dCjK9oMFVSjHZ7kj22hBGWg8I4bp+VOfoW2hmdTLukWWCMp3qs3xatt/ABChcbNLhTLXEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774442973; c=relaxed/simple;
-	bh=0jbWB3FjVQp+P8Ybiw1JdATIo1RfpVsEkcvfvEH0fIQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cdi9rQmP6okhycaXqcUbZH5UM6K9DS46djxiqaf120pdKnbaeHnCfj2OO90B+a+Na2UQ1e28fLpwEtsbDgJp/p+eEUvHAva/0MgzQj5SwwOtymEFwcFsLa0chVVQlQKAZi9gq9Sa25/KPL17QSjxymsBnbDiNA7HmNrSR7jSD44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=QsQTBQ2R; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-439b6d9c981so609323f8f.1
-        for <linux-modules@vger.kernel.org>; Wed, 25 Mar 2026 05:49:31 -0700 (PDT)
+	s=arc-20240116; t=1774555615; c=relaxed/simple;
+	bh=jj+yorpeEBxwk+7nym3Vu8xagBVeQ+tug3rKRqZFhbU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=io/GzTA2TGRfUMQDJ6RawJpdYbJnGz0JVfd29FGd5M0i2d2RIJelVtV9M2oZXZi5dOrnAEjHGQUzWiqItN8t8BokzrWQT1q38frSZ2XbHDmJk5CkExcnuUugPmuuxeN72oob49/SqxhZQCNkwcVy3Racz1HMTeMIDp6IBGtXWGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--samitolvanen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lZiTYQ6K; arc=none smtp.client-ip=74.125.82.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--samitolvanen.bounces.google.com
+Received: by mail-dl1-f73.google.com with SMTP id a92af1059eb24-127337c8e52so1019885c88.1
+        for <linux-modules@vger.kernel.org>; Thu, 26 Mar 2026 13:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1774442970; x=1775047770; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BJ4RwDdYC7l5LX4+kxPiqchKwdT0zRAfuYVx8dHTGTI=;
-        b=QsQTBQ2RkrQE7IMnUQFMVZf91MzfH5VhYOdj1f6Kc0qHkUjbpodcFhfNqvP7j00lIL
-         7+0NS3ce2sJFLeV0zP1vFfjxIhzEfBOaUThEj56njyTJBz08hVYC3GsWPreyMX0/s+SI
-         bqiSjb8e/MteSBDYDfZ88BtS+5N4oP3+lCjFDol0aDha2po5mM/macY7Gqc9+Qj7BF1Q
-         Q9kC8G6jUxbYVPT/E3pXanzVD1QenpTOeoh5HahyBpCrlKLC34dPfa3dBGd4ozO0YZsi
-         7nw+Vgi2bbhvnadrOePJ2jhdU86tkN+eJJiNDLdUr890bBTyvTbkDcI5FEOSvJZkri2v
-         oHGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774442970; x=1775047770;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=google.com; s=20251104; t=1774555613; x=1775160413; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BJ4RwDdYC7l5LX4+kxPiqchKwdT0zRAfuYVx8dHTGTI=;
-        b=Tjk/SP0DA3kJ2TMcpNFM1NHiXJDLrKvyBX6sATbQgbqzUes4sty4Q+4tLOsC5E/0Us
-         1anXP2lNut9p1rE6GERGCdIJBINusQXID1BlrvzNK8dhFguqEkqnpzvVcdLNnVoDQiU7
-         bBdDMLnAa73edFbzSrUOnDFacpa1limgtG2rMP0w5fKXIBcBfYm+wDdXHWsYTRoc36QW
-         O54KGJawMD0RcanU4d9GwXPLPYXiJ74lpu1yFtdtko3hsZzHRTfSWW4i3eVSPqsiztK2
-         4fI2OuK7U5oBN4tE2JjGm8GVGvXCWN4tiwlv/z/o6eUhEr5lXDks/huoMkPBUIDyFe9b
-         VPPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW5KcnYUnfd+OVI//ZVuLgBqwHDJAJTFgz+srndGkDXIJ6DTcQJKFm9LVK4wqQx/YWPlN+aHew9Clz3Znky@vger.kernel.org
-X-Gm-Message-State: AOJu0Yws6oA8R0z9+sS4Uc9r5fAFIgFKKoxTMrdKXLA2Qh4TwqSyzHGI
-	6m/jCksWSqiY23nRO0RQDBpoG8ZxeZicM46iZ+8Zl6n/oogRxETeDuZXzhzBisZBF+0=
-X-Gm-Gg: ATEYQzwURTGMLg301d1gWQkRlm6MOqOkAlHeEIZ31ieEyyPRozp0MRx8/fJXIEXGL07
-	RAIxJ2RRGZdEPQK1KIo8GZ3CDQALzJNexngal9fo9+OSsA10aYFAZADfBvoQpOgJGsZJzQClQY6
-	MrgFq3XTQLuVMmMZWWjtWLbwDoQCzszWWtxXJCz+/KHtNasFg3gDL9/NbcCe9KAerlfY0/6F2EZ
-	v1SivbP0pnRAcnszxmlH+b3XcTJaBAKV/zwO/TOqh1wLnVcbAO2fryCqo7skcEACAtJbYs4jWlC
-	U8fx8OqING/DqYUvmRecsMvg91St3FaxtQS9x2U+QAWGyp9nQLFaTBZwKk1Nn9JdgHn/paJazJ8
-	FUo516QpzndBHWKSaO5iKq4rB9Xw8Ql5PFNz5Z2vH31V980Xna1rVMzS1huyFZQr2RYmzssaLqy
-	8LQbtDhpDVE/cYvTpGupaLngXp4kWVU4csuZbtBR9Inb2D
-X-Received: by 2002:a05:6000:228a:b0:43b:4909:203c with SMTP id ffacd0b85a97d-43b883c881dmr5791312f8f.21.1774442970332;
-        Wed, 25 Mar 2026 05:49:30 -0700 (PDT)
-Received: from [10.100.51.209] (nat2.prg.suse.com. [195.250.132.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b8508285esm13445921f8f.19.2026.03.25.05.49.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Mar 2026 05:49:30 -0700 (PDT)
-Message-ID: <b83c9524-13df-47dd-a597-bebab93288d8@suse.com>
-Date: Wed, 25 Mar 2026 13:49:29 +0100
+        bh=Q39vkXCHwVXHxLZOMIlHqDW4HE8OruDbuf0XK+bdxP4=;
+        b=lZiTYQ6Kyz0T/yPpRU+2Ues0ncOW+GZ8GrSdz9B5oe/4TO36d9Ev8LUF8ozT8UsAHd
+         2bjYRDZ3tiFtL7tXngPxVo8KHGLnfj9Aj3pVdD/+Xcc8IQ95oRsE7B8xRrgyQowML9dw
+         qHSTkk5cAotTvdMS4d7EOVfKI1ZcKPyReHPbSanRuWfrxB/Dedsb7i+hStuMvIV3BEE1
+         uE1LfztRPH3kETgM/+rYr2JyHnGu+ig1uWp2hjgJ3tYF4HUnE5XV5xlClzEO+7B3nJEA
+         UlfD7isuxSZXtc6vWE7NEVDt6oCIbop+EGUh/HTcGHPuVP15IcqVfi33sCVcfIqtjh/R
+         uSXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774555613; x=1775160413;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Q39vkXCHwVXHxLZOMIlHqDW4HE8OruDbuf0XK+bdxP4=;
+        b=FZT0XnBljeAXIlc+OkQzwcLdN99XBzT4rK2GDDR1QUJpZdoOg6WsTsUBHRtJushm14
+         fVa4AjbqzBeMjIvsBGQYdjvGHEu4/soVtjB8zRgaqVUu3GbOA/2P2vZqYM7u/K55sbLP
+         +h/qW81NIxMzQ7NYDX83qZJCNw67C38IzwmLc3tyfjrDxbMspN3tEab1GNH2iiL/rQwE
+         R8nhFjvWczYZnT7wOdBJLyffMMqgcxwUNhAFQRfHLjQ9YDOrCB/dCEUz5WQnCWGu6dTF
+         cqZFtVyWYwoPMj54wzTzZyd9iZvaja/v5ZyaQC70qZW+gf4CC8MiITlYuasebu3B8WYz
+         qMZA==
+X-Forwarded-Encrypted: i=1; AJvYcCUI5iNNi75RzH5qAcXr33DCmk/LyHe+9WAXf6xkg0CBd+rlbgZFVOvv8zAU+8Lc8TlEAGpU/zT5DP8EXmpV@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNHr3XZAKRktVOaZNidLVpn2k6VhzryHme67a0vYjqT7q2KIXz
+	Q39PMocWH0J3DBXdI0kNRA7TgYW5caiwDdZsB1enuwJcg/mqNayZnoh/D1AfnHdvFhOJzQc3of0
+	fTz+tBvPUdSe2xgS3TmmbQfKqyLyZYQ==
+X-Received: from dleb3-n1.prod.google.com ([2002:a05:701b:4243:10b0:12a:86e5:44de])
+ (user=samitolvanen job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7022:125:b0:128:cf5c:5362 with SMTP id a92af1059eb24-12a96e5cde5mr5257574c88.12.1774555612457;
+ Thu, 26 Mar 2026 13:06:52 -0700 (PDT)
+Date: Thu, 26 Mar 2026 20:06:51 +0000
+In-Reply-To: <20260305-module-signature-uapi-v3-0-92f45ea6028c@linutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] scalable symbol flags with __kflagstab
-To: Siddharth Nayyar <sidnayyar@google.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>,
- Arnd Bergmann <arnd@arndb.de>, Nathan Chancellor <nathan@kernel.org>,
- Nicolas Schier <nsc@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, linux-modules@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
- linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org,
- maennich@google.com, gprocida@google.com
-References: <20260305-kflagstab-v4-0-6a76bf8b83c7@google.com>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <20260305-kflagstab-v4-0-6a76bf8b83c7@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Mime-Version: 1.0
+References: <20260305-module-signature-uapi-v3-0-92f45ea6028c@linutronix.de>
+X-Mailer: b4 0.14.3
+Message-ID: <177455561121.2009594.1781899946157697823.b4-ty@google.com>
+Subject: Re: [PATCH v3 0/8] module: Move 'struct module_signature' to UAPI
+From: Sami Tolvanen <samitolvanen@google.com>
+To: David Howells <dhowells@redhat.com>, David Woodhouse <dwmw2@infradead.org>, 
+	Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+	Daniel Gomez <da.gomez@kernel.org>, Aaron Tomlin <atomlin@atomlin.com>, 
+	Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, 
+	Alexander Gordeev <agordeev@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+	Sven Schnelle <svens@linux.ibm.com>, Mimi Zohar <zohar@linux.ibm.com>, 
+	Roberto Sassu <roberto.sassu@huawei.com>, Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, 
+	Eric Snowberg <eric.snowberg@oracle.com>, Paul Moore <paul@paul-moore.com>, 
+	James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>, Alexei Starovoitov <ast@kernel.org>, 
+	Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, 
+	Martin KaFai Lau <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, 
+	Yonghong Song <yonghong.song@linux.dev>, John Fastabend <john.fastabend@gmail.com>, 
+	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>, 
+	Jiri Olsa <jolsa@kernel.org>, Shuah Khan <shuah@kernel.org>, 
+	"=?utf-8?q?Thomas_Wei=C3=9Fschuh?=" <thomas.weissschuh@linutronix.de>
+Cc: keyrings@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-modules@vger.kernel.org, linux-s390@vger.kernel.org, 
+	linux-integrity@vger.kernel.org, linux-security-module@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, bpf@vger.kernel.org, 
+	linux-kselftest@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
+	MV_CASE(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
+	R_DKIM_ALLOW(-0.20)[google.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	TAGGED_FROM(0.00)[bounces-6167-lists,linux-modules=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[suse.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6168-lists,linux-modules=lfdr.de];
+	FREEMAIL_TO(0.00)[redhat.com,infradead.org,kernel.org,suse.com,atomlin.com,linux.ibm.com,huawei.com,gmail.com,oracle.com,paul-moore.com,namei.org,hallyn.com,iogearbox.net,linux.dev,fomichev.me,google.com,linutronix.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[43];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-modules];
+	FROM_NEQ_ENVFROM(0.00)[samitolvanen@google.com,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[google.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: AA5093254B6
+	TAGGED_RCPT(0.00)[linux-modules];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: F1E3833B43E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/5/26 5:55 PM, Siddharth Nayyar wrote:
-> This patch series implements a mechanism for scalable exported symbol
-> flags using a separate section called __kflagstab. The series introduces
-> __kflagstab support, removes *_gpl sections in favor of a GPL flag,
-> simplifies symbol resolution during module loading.
+On Thu, 05 Mar 2026 10:31:36 +0100, Thomas Wei=C3=9Fschuh wrote:
+> This structure definition is used outside the kernel proper.
+> For example in kmod and the kernel build environment.
+>=20
+> To allow reuse, move it to a new UAPI header.
+>=20
+> While it is not a true UAPI, it is a common practice to have
+> non-UAPI interface definitions in the kernel's UAPI headers.
+>=20
+> [...]
 
-I noticed that the series has a bisecting issue. The module loader
-doesn't see any GPL-only exports after patch #4. I think you'll need to
-squash patches #4 and #5 to fix this. Alternatively, the patches could
-be swapped, with the caveat that GPL-only symbols would lose their GPL
-property for one commit.
+Applied to modules-next, thanks!
 
-Nit: Please use simply the "module" prefix in commit subjects:
+[1/8] extract-cert: drop unused definition of PKEY_ID_PKCS7
+      commit: 137676d4482d8b8d755890b4ed29fe8223661d20
+[2/8] module: Drop unused signature types
+      commit: 8988913aacee82e5401bf3b96839731982dcbde7
+[3/8] module: Give 'enum pkey_id_type' a more specific name
+      commit: acd87264af525dba6e9355310e8acdf066a5f6b5
+[4/8] module: Give MODULE_SIG_STRING a more descriptive name
+      commit: 2ae4ea2d9aaf25cb74fbc23450b1b8f0a5b7aa89
+[5/8] module: Move 'struct module_signature' to UAPI
+      commit: f9909cf0a2dcc9e99377f3fcc965ccd93e518e34
+[6/8] tools uapi headers: add linux/module_signature.h
+      commit: d2d7561dc656748f592cc34d34bf5db8d5c67f7b
+[7/8] sign-file: use 'struct module_signature' from the UAPI headers
+      commit: e340db306c3bb85877490f33a78eb80549ac43a7
+[8/8] selftests/bpf: verify_pkcs7_sig: Use 'struct module_signature' from t=
+he UAPI headers
+      commit: 55722b3f80377103bac6ac748554129108c75651
 
-#1: module: define ksym_flags enumeration to represent kernel symbol flags
-#2: module: add kflagstab section to vmlinux and modules
-#4: module: use kflagstab instead of *_gpl sections
-#6: module: deprecate usage of *_gpl sections
-#7: module: remove *_gpl sections from vmlinux and modules
+Best regards,
 
-The changes look otherwise ok to me. With the above fixed, feel free to
-add:
+	Sami
 
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
 
--- 
-Thanks,
-Petr
 
