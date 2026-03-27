@@ -1,81 +1,81 @@
-Return-Path: <linux-modules+bounces-6186-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6190-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qHMmDsA5xmm7HgUAu9opvQ
-	(envelope-from <linux-modules+bounces-6186-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:03:12 +0100
+	id EHt0FFU6xmm7HgUAu9opvQ
+	(envelope-from <linux-modules+bounces-6190-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:05:41 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4792340B98
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:03:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C53A5340C0F
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:05:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 012AE30A0892
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 08:01:08 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 278A23041D46
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 08:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C9133CEB8B;
-	Fri, 27 Mar 2026 08:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAE653CF020;
+	Fri, 27 Mar 2026 08:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="DAY2h5TO"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="PxZ/FGS1"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CC5382379
-	for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 08:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E663C871A
+	for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 08:00:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774598464; cv=none; b=HHlBEFNMQzypLzkzl+wx2ElRIKQlupPX1r3BI90x6Gq5YlYxEyN6lZFmkZXkwVKxh2OUCP4s192kGSKDGyqA9HLsAbBJOJat7HmVc+hK0wmqo0uFLPh3ISXon2gsTeT6cF7DgWQzDMSusDQs3hdft9ecFVH87KdwLRi470oZMAE=
+	t=1774598466; cv=none; b=mPz4BohNd4LpAlshP7FLjMx+oVxUayk24LTWDkA803F3cNTxR4JlPrQofmuNrxXF0zYymgnHo1UoZSgbf/zMZaXGMjZvJ/N0YyIVWlcKPSxnvlv4QCcXegEBhpItB2udbfK4X9H0GtlkRwTZ2l4ioy0z5riJ5OqaAYE7GfVaYYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774598464; c=relaxed/simple;
-	bh=R5/wNfEI166VxEYxX5DKzfd4I8QXDSJZsCGNJsyOgQc=;
+	s=arc-20240116; t=1774598466; c=relaxed/simple;
+	bh=VuK/A2SKkIB8gq+5+JMkruh64JklcZWA+VF4xG65caU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MzBIxzPRvQjVlF9Xw7LemlR0BaWH/ctofsdPT34o3zF/qob+7kLnnG4+UvcydNE1nlPuz8Fh6ehLcipUt/N8ReEG+puGZqjRbYEixZ9NhdvNbTIlw4VMgoh0gd+jplVlllo0kwU7/CqzMHDljR2sxuEy0wOvLeDaacBmKWcEBwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=DAY2h5TO; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=uCRMzzf09vYzGoacr7S1B7H1NXhf9Wzb8+ntXEOnTj7WTbShbZdXL5qxDUOwjy5DPCmQq4YbEuEkrZR68NtSPpcq32whBzlFTDjjUuXkHBaSbHLNnYk2pJ0C5F5XOlstQ1yRRbyHJEHb9g42ozZeXKv0O6k7qkkAW0GahZ9VnJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=PxZ/FGS1; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-48700b1ba53so16886275e9.1
-        for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 01:00:58 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-486fd27754bso16832275e9.3
+        for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 01:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1774598456; x=1775203256; darn=vger.kernel.org;
+        d=suse.com; s=google; t=1774598457; x=1775203257; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2HryrWoWtiuMl3LNqbcdlk98yeRL5cKfDbuBDTCXl6o=;
-        b=DAY2h5TOMKov2CabcY/xMzl5MjApL7TEya7MtwI2A827RoEvHaJc1Fux9/Y3fkb/DG
-         VmRKazIkTATzc+PD0cwklr9SxZGlYWa9H855RRXrNRFem2f7knlaiwXKqFr5M7Ay/Uq2
-         vZwxnjW5xL95MvpUtxAclndmsi7EM5WDAS9EhPwPeZi9X2M1s/28tkEABAGd/qvex6Iq
-         D0ppovJJoHdCPXD0isVSO7JobhfcYh85q/y5AxEnO7HUNCvmsRKtJexy1vMmlPY0ONPT
-         0/bvyaR3m062Cn4R4hxpezPIE00vUH3qUQvynjjxSXTUgpxdQMdOi9BGv6FpLKxkAnFo
-         EdNQ==
+        bh=/maIRRXWsco2YLlNLQIg+54XR4CJ2LAx0k8sLQQpIyQ=;
+        b=PxZ/FGS1/Sq0/D0Dz/6gs05dbL2ERBXFYpjj9uyX39yEEB2PRCoKjvS4pGqYJXzPsD
+         n4cDhvpGAcjJ1Oaly2VG2crQUE/ToXUQW1SFkcnK7aCuJRyEP/fjNYIB3JmxZLRcEY9S
+         Q/w3pMZ1bAe0XfZ+O5vMhXV40/nthHFq7WYcSDOt16oHglBQDQcHL2KaA4sxdzY9zeOA
+         6uQP9f8OUTNQUeCwWouzER6OWakeWO12OymkchDkXFS8HN+QxvdC/hcoluCdgawDFueM
+         ge4Z1AjoJSeqM0rdPH6pS1Koycr1tZqpJWoU5+A7TGENcIdUVI1aD95BcFEWzaZ3Vcek
+         kFcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774598456; x=1775203256;
+        d=1e100.net; s=20251104; t=1774598457; x=1775203257;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2HryrWoWtiuMl3LNqbcdlk98yeRL5cKfDbuBDTCXl6o=;
-        b=Q36BRPhOGZQHonAVxPBU2cyuq+b2t24nqJGGIuwPlqEXiwykq8/NKuWv79EwwwYSM3
-         th0C52NNdx0P6A+4TGdlJO2hL8NZyrbiaDXpra2OGjbkJsyrpwWUkmVtCQyVxfPBo5w9
-         7bIq3WEvvUWdBJvc5smfbEJH4s41adz+zvy1fj+f7ADZQPKsBBYTcLm8eFEjFo2qq92A
-         GSbQPuegAUDqgiEL/bPEw43DM8eysrptvnjegPi8Wcd1/B11dlG/UGGJjhyfjh5DKCHx
-         9UEnsUXOF7QIgtmPP1HSup/64ILLxS8xcI/tCcgwYYepez1SK+ebIjABWMaY4855JnKt
-         wLeA==
-X-Forwarded-Encrypted: i=1; AJvYcCUvunsCyRDWvDeewJoEzPaCBS1qKlpLv8N88ZnDkIl3YqRdR64ybcshCdLvgHao1bWc7Y5BoCqs7qQbCuH5@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqZeFzVUXW2PSnl6IptpfC7cL6FKoDboinBdww88y2EF5tVWZr
-	HkbY86aTCumO+zxPy3i92rDRCc/gmKDZHdutxfDvF+MfmNxGDHwKRS9oprMP0ZAhgqw=
-X-Gm-Gg: ATEYQzyd/JXeV1mLd0a+/SD6ahhiUsDDx7AFz5+BLfX77kJRflFrprxL6V38jL3DvGY
-	Z6J+Qp/v1oV6+/TXZHe3AeDb4HkZQrBqXponOZndDifK6qbk8gwdh5a9h2teakLJRPba6yPz7Km
-	Ep0A94r/C87Fna9hc/8bbNBFzlaV1P4vlTVd/x3nKXotk119GTZ4ppG4Q4OEIipUKul/XkBvz+6
-	UjnUuGtRpQ1ntbS1uY+WtU387Baxd6b3yL59/8sRPjN9eiiDETqJPHKi8Kh39w5rrT72XIxSu0W
-	Iln5WMP4fkexcaYtx6MiC18K7524DQYucW9a7CW7RAGfftzKge8oElijIUAuQPACuXxumjYxYXQ
-	reiiJr3vBLMJTzotho9iDwpYgPQ/2LnbUnBrMx4VjIuqlbGG5YHXxnoP3vA8PgiCOqAme4HzAxq
-	1Djnu5m9v+upP/qKsdsMtK2GwMXfFVGWPhpGLCoXpQ
-X-Received: by 2002:a05:600c:5249:b0:487:386:3714 with SMTP id 5b1f17b1804b1-48727f7bb08mr24460995e9.17.1774598456054;
-        Fri, 27 Mar 2026 01:00:56 -0700 (PDT)
+        bh=/maIRRXWsco2YLlNLQIg+54XR4CJ2LAx0k8sLQQpIyQ=;
+        b=oD9gmZmdTA5OfC8ODA8sSCY+h1DHyX1Z/wntyUKaB3jfewKJODp2wV6RLxv9Bndt26
+         nCOPqjhutPqApEmmTPnyo5l7xaVdBcI5qL2ZqYqX3OtpLUaQJ7MNl7XQ2DuBmKIWxzqy
+         cgN2uwI+DR42mOQn4cLicw6YxwnWFTaov5CsPOddis2Ej+eimuNmALFdOOOesDdZ5ZjG
+         xFZwffN62aqYFdyfvs6gsJnVAudpKjIdg44Hn3lPVXuukQRb+/KIUdqZYiS4z2CHe+LU
+         THeCP8aI44pTsCZjz+21XlPLqTxv+BreWK6MpeehSDVDJQ6Lx9kj75k5DdpQNHpLLAXl
+         uEmw==
+X-Forwarded-Encrypted: i=1; AJvYcCXZBEGM19hLr5HCGUzAsCXmK2MOxXdHkomNInh7gTHiJimk14TrZeEmsIMyObfbsk9oL3Ob9bAX/SooFsWS@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwF/V3GjXOw2uUVMd2HSo75TDk8RSHF2eC1OO8ECnUA0nR6Bfr
+	qqjDXj7Z5Z3nTU8ALUjq6VG3zaA+4ovutV9QZXZn+FFe+AiIjvM36UM6lR7XyzQKt4s=
+X-Gm-Gg: ATEYQzxepC6dfVymRfyyI/a1FlEopEIO1HSyh7XsAqM8Sz0QNrn5NZtvWlpGO+uBMMn
+	w2GHH011AhBoYGB/MX05YiSrCJ7jsAYiIcekmCumwthmx0/8SK+EDC4/1/gRE7MagT0XLw11moJ
+	cZrqB77I/9rAnEbC+HrSs0QofGndoE740N+ED2JsCj/23Cj95uSa+PW6v42COO3dBeXP7/ZVw+2
+	xOFKWqsMX/o+W327ReBDo2iuI6ncb3TPvDdyuQ39qP3S6C2KWlQZX1KerlESJ6hCVJNxPOCW7RH
+	5AhzNf+KDlsyqRHAIBlN602bBzmHYbLHGK4N1x27iBkFWU5L6luQQLJ28sZAM2Mnfzsruq8v7is
+	y5fjZcn4yRZgWGSZZpIhJRJfKUm53AYS8eT/Rn0iBwP/D0oQZlAdfCZAcrRlQNpNS7WLYEskkX6
+	rXpe91wOn8+Dam4ZlTI2NfN6y0vvtdbfMDTlCyu5HX
+X-Received: by 2002:a05:600c:828a:b0:487:338:b4df with SMTP id 5b1f17b1804b1-48727d8818cmr22261095e9.15.1774598457203;
+        Fri, 27 Mar 2026 01:00:57 -0700 (PDT)
 Received: from zovi.suse.cz (nat2.prg.suse.com. [195.250.132.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48725fc4827sm12089735e9.11.2026.03.27.01.00.55
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48725fc4827sm12089735e9.11.2026.03.27.01.00.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2026 01:00:55 -0700 (PDT)
+        Fri, 27 Mar 2026 01:00:56 -0700 (PDT)
 From: Petr Pavlu <petr.pavlu@suse.com>
 To: Russell King <linux@armlinux.org.uk>,
 	Catalin Marinas <catalin.marinas@arm.com>,
@@ -96,9 +96,9 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>,
 	linux-riscv@lists.infradead.org,
 	linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/4] module, arm: force sh_addr=0 for arch-specific sections
-Date: Fri, 27 Mar 2026 08:59:00 +0100
-Message-ID: <20260327080023.861105-2-petr.pavlu@suse.com>
+Subject: [PATCH 2/4] module, arm64: force sh_addr=0 for arch-specific sections
+Date: Fri, 27 Mar 2026 08:59:01 +0100
+Message-ID: <20260327080023.861105-3-petr.pavlu@suse.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327080023.861105-1-petr.pavlu@suse.com>
 References: <20260327080023.861105-1-petr.pavlu@suse.com>
@@ -114,13 +114,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6186-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6190-lists,linux-modules=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	MIME_TRACE(0.00)[0:+];
@@ -133,10 +133,10 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	DKIM_TRACE(0.00)[suse.com:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,suse.com:dkim,suse.com:email,suse.com:mid,sourceware.org:url]
-X-Rspamd-Queue-Id: B4792340B98
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sourceware.org:url]
+X-Rspamd-Queue-Id: C53A5340C0F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -146,28 +146,46 @@ resulting .ko files. Relocatable objects are expected to have sh_addr=0 for
 all sections. Non-zero addresses are confusing in this context, typically
 worse compressible, and may cause tools to misbehave [1].
 
-Force sh_addr=0 for all arm-specific module sections.
+Force sh_addr=0 for all arm64-specific module sections.
 
 Link: https://sourceware.org/bugzilla/show_bug.cgi?id=33958 [1]
 Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 ---
- arch/arm/include/asm/module.lds.h | 4 ++--
+Note that the definition of .text.hot hasn't matched any input sections
+since commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and
+related macros"), and even before that with CONFIG_LTO_CLANG=y.
+
+The preceding comment also explains that the directive is necessary to
+merge section groups. However, this approach seems suboptimal. A better
+method would be to link modules using --force-group-allocation to retain
+only one copy of each group.
+
+I plan to look at this separately.
+---
+ arch/arm64/include/asm/module.lds.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/include/asm/module.lds.h b/arch/arm/include/asm/module.lds.h
-index 0e7cb4e314b4..f9ad774b2889 100644
---- a/arch/arm/include/asm/module.lds.h
-+++ b/arch/arm/include/asm/module.lds.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- #ifdef CONFIG_ARM_MODULE_PLTS
- SECTIONS {
--	.plt : { BYTE(0) }
--	.init.plt : { BYTE(0) }
-+	.plt 0 : { BYTE(0) }
-+	.init.plt 0 : { BYTE(0) }
- }
+diff --git a/arch/arm64/include/asm/module.lds.h b/arch/arm64/include/asm/module.lds.h
+index fb944b46846d..0b3aacd22c59 100644
+--- a/arch/arm64/include/asm/module.lds.h
++++ b/arch/arm64/include/asm/module.lds.h
+@@ -14,7 +14,7 @@ SECTIONS {
+ 	 * directive to force them into a single section and silence the
+ 	 * warning.
+ 	 */
+-	.text.hot : { *(.text.hot) }
++	.text.hot 0 : { *(.text.hot) }
  #endif
+ 
+ #ifdef CONFIG_UNWIND_TABLES
+@@ -22,6 +22,6 @@ SECTIONS {
+ 	 * Currently, we only use unwind info at module load time, so we can
+ 	 * put it into the .init allocation.
+ 	 */
+-	.init.eh_frame : { *(.eh_frame) }
++	.init.eh_frame 0 : { *(.eh_frame) }
+ #endif
+ }
 -- 
 2.53.0
 
