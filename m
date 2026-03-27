@@ -1,107 +1,70 @@
-Return-Path: <linux-modules+bounces-6189-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6191-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OJkjM8E5xmm7HgUAu9opvQ
-	(envelope-from <linux-modules+bounces-6189-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:03:13 +0100
+	id aEkYIghlxmnnJgUAu9opvQ
+	(envelope-from <linux-modules+bounces-6191-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 12:07:52 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CA80340BA7
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:03:13 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42F6034318C
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 12:07:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 52AB730AB8CC
-	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 08:01:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2C33730FF9F5
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 11:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 721AC34BA42;
-	Fri, 27 Mar 2026 08:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 843E33E5596;
+	Fri, 27 Mar 2026 11:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="ewH5Dvse"
+	dkim=pass (2048-bit key) header.d=wp.pl header.i=@wp.pl header.b="KyRusaRx"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx3.wp.pl (mx3.wp.pl [212.77.101.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17780348445
-	for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 08:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AAD3E4C88
+	for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 11:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.77.101.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774598466; cv=none; b=XipNYAxjJPz40zkq6gBY5diRt5XAZPw1od4nzhB7tYcrtGN/VM4BkEMum4nOZu5eap9C1dn0d6YGsVgZ1W3BPAXHZCy9NdE28JnHUPpS7mSMOxUv98+3L9lTM/MmJLDnEaoJiGOi1uT6rlEs+vrd2r97DyS+MASj1wBZsErzAHc=
+	t=1774609224; cv=none; b=H8W2lKZ7/6rpoHIuAk7eTqIOl7bruPkKdElxY+oWwom5OmCxkBNOguVOeAnF7P7KyitqB6zNtdJDScrt67DZMVcsoagE5tci9NBdxxF3sNsc14eyC716PRFqiUmYhxmTM7hmATXqEdMErJTD3x2tcpm5gGQca7w0a0f5wybC4HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774598466; c=relaxed/simple;
-	bh=b4EA7Cjd+Rmu3jUMpgHSoP8C+KLtgyFkpMfPCKIjeuM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=di4FXL1Sl9XXfhaFVGTT3RjSER+nW84V0mf/GtbBGMVx59ZYzJTaLuJ0v1KiaxrI2c4GnMElMrpzyKySN0ntI3qyc9klznnD2BZpMUrLXx2Wb+PoopvgQ7YLebhEh96030+i4d2/iXePe2olhl2QM4CdlglKYrf7s2wpu4lP6xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=ewH5Dvse; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4853e1ce427so21191145e9.3
-        for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 01:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1774598459; x=1775203259; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QlVyZgwbk35jZ7E4LjSb7Hh9QtkNRjrn39+Y58oA5YM=;
-        b=ewH5DvseIaoVSCMuGNSBL70uEaf+vTd9BfwRKhpU78uNzlqgMgq7ptq3qBBAykXwYS
-         ehEuD1jyyTWevMn6c+idZk3Ky+Lni+gSeGzLu7st436n/Bjoy1QcPWRROinVHq0+GnWJ
-         ZrKaXQIUcntWpu5UONhhyqNGNKFsNmB3TYdGLi7PqoVaANJ68Wdt2hfWgdhKgsEBNiYZ
-         NrnpcQGTyW4qZ03xzZNIurigH8fbRP2Ir7NZwHyh8azGdyuft++Dt1L9qVnS3D6i0DrY
-         X4hFW9+yhwMy3z+GdpTSc0ihXB/cSRQT/tsrdAxzUbRFkwdFuZZT4LRwiqj1qHZ06vUQ
-         t0oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774598459; x=1775203259;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=QlVyZgwbk35jZ7E4LjSb7Hh9QtkNRjrn39+Y58oA5YM=;
-        b=ile5yeGzJHNE9pFlbrzDoKSAhKz32USFncDAC1lRAEdhNJlcf5gbDLriXNezCEBMTx
-         l21f7MdD3eTpOPH7z+9Qhc2l+y9udg5BBlmuOV8c5JGx18yHIGNqAvq7VIUavIwt6CP0
-         gQGSjNZa1yk5GxdiQU7x5zFSHodK4diglLhGbpjF4NbNfNwi5Hn/0TKrVFHOODkyejf1
-         I5llw9pUnEbBijO58bGDxHdlEHVidqQfu7Kzea26C/pKnOAiEXgerSrsOqPaCmUZsFYJ
-         18zUT96SBYB6X0PKmu8mx5v4aG2OMmijthDsINj3E7D+NYlHOw6yHyV5hN/L4dp1BNlq
-         pgVg==
-X-Forwarded-Encrypted: i=1; AJvYcCW6ESglgtgsT+igJ6WgoeBPqRBZbTxWGStylO5pA0EPYgPjWhSKeAp9GMPdcZTJj6eVuqOqUhyI4WVAoFFL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyml6OzQ7EotafoIP1CedKd9HUwDZ8O41n0lr3eWn6eC5CyfT8Y
-	TaupbNzmHSm0TdegqEnwvHXJhfSiYtieoWnNEdPIh7RnfrhZNab4nHfErwR74Q8wNPQ=
-X-Gm-Gg: ATEYQzxf/1FLpYTLj82shnLbvPmj/aNlp53I0H2qUpUnyPtqU8deHRIJObWtIyVhIs6
-	xdL3XYdzIyexcwVMeTv9f8gpiiBX6MzDEm0UjWn4kdLzHsVV+t/G+xSTUY1rH2ixZ3Yoeu9SXt8
-	5u9uEtr9ZTejqj7zi1BieiSkCioQri6eSX/OT+GnVXIkd8z1SmvUWKqLAamjB455jO5jagBnHd/
-	2dqUDDrd9QmQnMzGk4osrDwu0JDduEO5lmeLc4EpWfsLZYaosE3q74uZW2PGVE7h9H6b4c+lZwA
-	nY8nZl1NlVSC0Gb1PXL3F+YeljW2ufC7hh4bLJahyta5fRmQiPcpnF/RFvDAqbHsGGbsqVTI7+a
-	IzG9cno9ldG1F0InGRBtzPdurRVT+ekREuj0kGPZ82nrQ7WgAPQL4H2Lf5JbJTcQ2RsaGvuJpv2
-	35BAwE2DHD81J4FX1Js1Ia0T3KEKzaNn62HUU5AR9i
-X-Received: by 2002:a05:600c:5304:b0:485:f1d1:8f3d with SMTP id 5b1f17b1804b1-48727d67a43mr23844745e9.6.1774598458837;
-        Fri, 27 Mar 2026 01:00:58 -0700 (PDT)
-Received: from zovi.suse.cz (nat2.prg.suse.com. [195.250.132.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48725fc4827sm12089735e9.11.2026.03.27.01.00.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2026 01:00:58 -0700 (PDT)
-From: Petr Pavlu <petr.pavlu@suse.com>
-To: Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Sami Tolvanen <samitolvanen@google.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>,
+	s=arc-20240116; t=1774609224; c=relaxed/simple;
+	bh=nrnsHUz7/k/GUUXVjLVXMiD7Ts+e/jGMmi0H77ovY2E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BRlDq7yqI47H3qNIHqtXmIS4vIg9x0VzDiSGXrdLc+NN4jkBHYDzrtnyaMvnL8yWo0WI5A2noEz2GLBq6fraAaYQq3u3hkfHvARW/frLMSLw0vEl664xzEXoNDn2+GT3Vt7Nj+gKr9x6rWUR20o9uNoA0YTxL1Vbq8jaIocP9FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wp.pl; spf=pass smtp.mailfrom=wp.pl; dkim=pass (2048-bit key) header.d=wp.pl header.i=@wp.pl header.b=KyRusaRx; arc=none smtp.client-ip=212.77.101.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wp.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wp.pl
+Received: (wp-smtpd smtp.wp.pl 19510 invoked from network); 27 Mar 2026 12:00:07 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=20241105;
+          t=1774609207; bh=0tuv4FfKBKr6pfb0Zpw0fG5uTeoZMPynNgZXrQMlRdg=;
+          h=From:To:Cc:Subject;
+          b=KyRusaRxgqYdpjFnFpgkoRU6WRMrO4P9/K/87xY9wzL6l/bDPsO3zHR17NGXfjVBg
+           8Uk3BHyM7Ifauu0p6Tl7VYXdj2M4iRyAaDkkB5xfmMCu6FMuiDUbKtWzOaUFiq+Kys
+           A4D4nK/IvqnAvP5LweZNadyHxJmtWAgkTaloSoV1dp5g1obOA50SbvEXM6ev1UOe5x
+           /M7f0kyj0vknySfwuNxaXt6qy1mrKoozUJAQYAV9DPsPWvMQhqP1BkOZp6y1UF/tfF
+           AhGufyUPdVn64So44cxFkauYP8BITW4p0aK8dho+QUFkwGzwqW91QHuz3cbtAs2bwF
+           pWINHecCPEHDg==
+Received: from 77-236-5-223.static.play.pl (HELO localhost) (stf_xl@wp.pl@[77.236.5.223])
+          (envelope-sender <stf_xl@wp.pl>)
+          by smtp.wp.pl (WP-SMTPD) with TLS_AES_256_GCM_SHA384 encrypted SMTP
+          for <linux-modules@vger.kernel.org>; 27 Mar 2026 12:00:07 +0100
+From: Stanislaw Gruszka <stf_xl@wp.pl>
+To: linux-modules@vger.kernel.org,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Petr Pavlu <petr.pavlu@suse.com>
+Cc: linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	live-patching@vger.kernel.org,
 	Daniel Gomez <da.gomez@kernel.org>,
 	Aaron Tomlin <atomlin@atomlin.com>,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-m68k@lists.linux-m68k.org,
-	linux-riscv@lists.infradead.org,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] module, riscv: force sh_addr=0 for arch-specific sections
-Date: Fri, 27 Mar 2026 08:59:03 +0100
-Message-ID: <20260327080023.861105-5-petr.pavlu@suse.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260327080023.861105-1-petr.pavlu@suse.com>
-References: <20260327080023.861105-1-petr.pavlu@suse.com>
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jordan Rome <linux@jordanrome.com>,
+	Viktor Malik <vmalik@redhat.com>
+Subject: [PATCH v2 1/2] module/kallsyms: fix nextval for data symbol lookup
+Date: Fri, 27 Mar 2026 12:00:04 +0100
+Message-Id: <20260327110005.16499-1-stf_xl@wp.pl>
+X-Mailer: git-send-email 2.25.4
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -109,68 +72,95 @@ List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-WP-MailID: e0d26d1a0bf3dbd632a0485b0efa94ed
+X-WP-AV: skaner antywirusowy Poczty Wirtualnej Polski
+X-WP-SPAM: NO 0000000 [IWNk]                               
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[wp.pl,none];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[wp.pl:s=20241105];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6189-lists,linux-modules=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-6191-lists,linux-modules=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_FROM(0.00)[wp.pl];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[stf_xl@wp.pl,linux-modules@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[wp.pl:+];
 	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
 	NEURAL_HAM(-0.00)[-1.000];
-	DKIM_TRACE(0.00)[suse.com:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,suse.com:dkim,suse.com:email,suse.com:mid,sourceware.org:url]
-X-Rspamd-Queue-Id: 2CA80340BA7
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,wp.pl:dkim,wp.pl:email,wp.pl:mid]
+X-Rspamd-Queue-Id: 42F6034318C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-When linking modules with 'ld.bfd -r', sections defined without an address
-inherit the location counter, resulting in non-zero sh_addr values in the
-resulting .ko files. Relocatable objects are expected to have sh_addr=0 for
-all sections. Non-zero addresses are confusing in this context, typically
-worse compressible, and may cause tools to misbehave [1].
+The symbol lookup code assumes the queried address resides in either
+MOD_TEXT or MOD_INIT_TEXT. This breaks for addresses in other module
+memory regions (e.g. rodata or data), resulting in incorrect upper
+bounds and wrong symbol size.
 
-Force sh_addr=0 for all riscv-specific module sections.
+Select the module memory region the address belongs to instead of
+hardcoding text sections. Also initialize the lower bound to the start
+of that region, as searching from address 0 is unnecessary.
 
-Link: https://sourceware.org/bugzilla/show_bug.cgi?id=33958 [1]
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
 ---
- arch/riscv/include/asm/module.lds.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+v1 -> v2: new patch.
 
-diff --git a/arch/riscv/include/asm/module.lds.h b/arch/riscv/include/asm/module.lds.h
-index 1075beae1ac6..9ced27c8ccb6 100644
---- a/arch/riscv/include/asm/module.lds.h
-+++ b/arch/riscv/include/asm/module.lds.h
-@@ -2,8 +2,8 @@
- /* Copyright (C) 2017 Andes Technology Corporation */
- #ifdef CONFIG_MODULE_SECTIONS
- SECTIONS {
--	.plt : { BYTE(0) }
--	.got : { BYTE(0) }
--	.got.plt : { BYTE(0) }
-+	.plt 0 : { BYTE(0) }
-+	.got 0 : { BYTE(0) }
-+	.got.plt 0 : { BYTE(0) }
- }
- #endif
+ kernel/module/kallsyms.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
+index 0fc11e45df9b..f23126d804b2 100644
+--- a/kernel/module/kallsyms.c
++++ b/kernel/module/kallsyms.c
+@@ -258,17 +258,25 @@ static const char *find_kallsyms_symbol(struct module *mod,
+ 	unsigned int i, best = 0;
+ 	unsigned long nextval, bestval;
+ 	struct mod_kallsyms *kallsyms = rcu_dereference(mod->kallsyms);
+-	struct module_memory *mod_mem;
++	struct module_memory *mod_mem = NULL;
+ 
+-	/* At worse, next value is at end of module */
+-	if (within_module_init(addr, mod))
+-		mod_mem = &mod->mem[MOD_INIT_TEXT];
+-	else
+-		mod_mem = &mod->mem[MOD_TEXT];
++	for_each_mod_mem_type(type) {
++#ifndef CONFIG_KALLSYMS_ALL
++		if (!mod_mem_type_is_text(type))
++			continue;
++#endif
++		if (within_module_mem_type(addr, mod, type)) {
++			mod_mem = &mod->mem[type];
++			break;
++		}
++	}
+ 
+-	nextval = (unsigned long)mod_mem->base + mod_mem->size;
++	if (!mod_mem)
++		return NULL;
+ 
+-	bestval = kallsyms_symbol_value(&kallsyms->symtab[best]);
++	/* Initialize bounds within memory region the address belongs to. */
++	nextval = (unsigned long)mod_mem->base + mod_mem->size;
++	bestval = (unsigned long)mod_mem->base - 1;
+ 
+ 	/*
+ 	 * Scan for closest preceding symbol, and next symbol. (ELF
 -- 
-2.53.0
+2.50.1
 
 
