@@ -1,183 +1,173 @@
-Return-Path: <linux-modules+bounces-6185-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6187-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MOrDOqCmxWlUAQUAu9opvQ
-	(envelope-from <linux-modules+bounces-6185-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 26 Mar 2026 22:35:28 +0100
+	id oN2sKk86xmm7HgUAu9opvQ
+	(envelope-from <linux-modules+bounces-6187-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:05:35 +0100
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EB7933BF4E
-	for <lists+linux-modules@lfdr.de>; Thu, 26 Mar 2026 22:35:28 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45184340C08
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 09:05:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4EECB3058711
-	for <lists+linux-modules@lfdr.de>; Thu, 26 Mar 2026 21:32:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 522DA3031B27
+	for <lists+linux-modules@lfdr.de>; Fri, 27 Mar 2026 08:01:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00C3C3A782F;
-	Thu, 26 Mar 2026 21:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD9703CEB94;
+	Fri, 27 Mar 2026 08:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Kho7DaWs"
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="DsoFy1hv"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB7234D382
-	for <linux-modules@vger.kernel.org>; Thu, 26 Mar 2026 21:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774560721; cv=pass; b=QUOPEdHRgm/W2Z9IB64vUFmwaLJJqIwEYi6xBvZbKPLNvw6ETWTr/JQ34tsVrZQJWkwyUyR4zS/ZXLo9mAyelLV4OfSSJOw90xVRa+jQLt7cARbbbNbqL36IJ6BmkWNGbvBtwhseceGWCEhKk/VFTVh39XNFXmU7Isi5p7LxCj8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774560721; c=relaxed/simple;
-	bh=TZyAuJdbm5lNyLHWtj8JZifMocqSIEE/M15yyD9cWUw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i+AuFGPjPglPUZ44Y71365haJQAFSFs7iFkc9gpsMFB7JoLr9Hee8HpRIKOwyOuJGxYEBvwc2bCUioVGDION9jcNCE3oSgLWqVaqDaNhBY4BKbmT2hfag5Vdh7Jx7JEz+E+s4wuZ85Yms8xmaeEYv1O64+/u/s8+tihlNeNNNTM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Kho7DaWs; arc=pass smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79a2ee65171so15379437b3.2
-        for <linux-modules@vger.kernel.org>; Thu, 26 Mar 2026 14:32:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774560720; cv=none;
-        d=google.com; s=arc-20240605;
-        b=a5L9ry0TjUKXTp216/OHGBdatQf4lcA1sagBUQ0aqL7USeKzho8djDIVlxLSL7zXl8
-         z0+jcEXsXJH7MBtmZzq0tRfSbwbk33BsI6nGbhAuhkpGWJVaQRt/QcfQVxJSM2mO1hHJ
-         4eVtBgIu3RzmOnrXZldwUkhiPvwgZW3FdW2W5zMDNV0b+G/9v6uy+3sR3QYbfSEm/1p8
-         gWzG+NX6OIVl+toKER9x9VcTpbq0dNL/9DaJaYf8rMpWI/UtHEaAPVwXelwgtN71Qecg
-         z1A1Eu7UzjGQfpRx0y7a2Hqd9vC/iYxWaFvf95CqHp/0Bb9q3iu1SRzWhcEAdSSUNeQD
-         476w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=TZyAuJdbm5lNyLHWtj8JZifMocqSIEE/M15yyD9cWUw=;
-        fh=DEYHiqj5eaI77JogLWkIH1jKQr21yT0oIqNQF54tfKU=;
-        b=LV6FypJC8moPGHh9zgG2WI0S8yK9d6wPsUfVYHrvH3Lfm5G2un6oBKOEawHF+9FK9/
-         tkxs9QqiZjB6bQGCFlK2r5feFhajOyeK6loOPgI5D4sQPoXrDbEWlNKl1Rhj8exhmA0R
-         3xb7lhorV1n1fiHyfWf3j73m7lyH7TUOZ+tvCMWEYENX6wVDjP6p0xc+4Mi/jOz6Pe8v
-         X7WPLZh+pFLjbxLFfsf2pak9nD90No8VXdhLovn12Q4d9H1jHZ9GyFDwP1qMaC/hmK/v
-         tHC7BWKUrqjfzUMZS2dKxJwMKYy7v33XJCzxDa6hx+508XCDIVDZl+rnMnzSu+meCvc3
-         A/jw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCADE3CD8CC
+	for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 08:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774598465; cv=none; b=hvGgIiHN1QxIcuR2dRi2/CO3aDqEx1xyA5CL3TxvuAH3y7ObqmOBjcocL/mWbQ5XOiS044WxhjvAkGqVM7YxVS7Ic/13UpnKr2UIr2+GWNJrcD0KC7dr+pwNozUHqbd1nc2av0B70fasuVNd0iOIbYopovJ0D3XprIcGsoye9Jg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774598465; c=relaxed/simple;
+	bh=W07Ke74xlJ9FViATMy7TNPyWUyJiXufTMF7faALrZ6Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jUA6sgekAvu+JzVQLV3nHthe80uXweJk8lp0AKne8gtnW+MK6Ab6GgJqGixcrHoLjaiBpOL4aIQpsXIcq6x6UACmfTPCOH/xZDlPVi/UFMlSBrFfWIYwNtWCu4ZCeRWBCr6WrBG2WaMLQfiffE/ckpXjvFLj4WmMG0ye4DqRgVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=DsoFy1hv; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-48334ee0aeaso15536655e9.1
+        for <linux-modules@vger.kernel.org>; Fri, 27 Mar 2026 01:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1774560720; x=1775165520; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TZyAuJdbm5lNyLHWtj8JZifMocqSIEE/M15yyD9cWUw=;
-        b=Kho7DaWsIEK9g/9BJfiXPxDaRWvRSlr9ewjSWhZ3/2jVk7CTpXsD+LMoESL1iui1KP
-         AizCuJYgmL+z5WuW900A2ZDSNB24rn3OMknbhvTvkaeEnfpew564K9JouS/ubzDclFcb
-         u4h9L3i56FhJQIdnr7oX9QRGOjCj6pINHt9s4Ll4B7MQLLbD6vT1iSz2ui0En3rmrSNV
-         xM6JSKvn07/GFG0caP4tW+mUgCMgeCRPWkYnxIsWIA7Q3a+DsGLoeE2e2nA0nOUIVh4T
-         wk7nU+5HATu2tS1HYl9MtrIoSioadmZB30NV9ZfZDB7hjer2F2X99FQrTVBasg7zfz5K
-         8SKg==
+        d=suse.com; s=google; t=1774598455; x=1775203255; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VdbZVRP/Ak929baCc2EeOgVlzDU6Wbl9p0jTnb7CIGk=;
+        b=DsoFy1hvvwOnGNxyOoMVhMogo55oVsmvOCQ8pqd29ZIFMjIJJvycCTwApbMZKML4o9
+         +ut3VtKxEa8U1RJYU5h6nurioOO5w/j2TQUhsj2bxVFxylgPf/y3xFBMp+i0IgfQX0C0
+         h4ksXAKZfTL7XH7oWmDriWbYwJlPyU0xOiEr5mMUUEm5ac4Qr1wSqKGKfacOFjHNZnH6
+         /f8ADqu4hdtXj0AcLu4CU6JXsNA6cmgDsT9DbtdRT54lK0mq73n3YI0AKCEbFExeiR/x
+         voMZnX6r+BUs6sZNVeIiIoCFViH7Zr7gLNTZLgS6qOO0pITr/JZ09Xr8ffUMAGp9u93P
+         Llow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774560720; x=1775165520;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=TZyAuJdbm5lNyLHWtj8JZifMocqSIEE/M15yyD9cWUw=;
-        b=K8aTWvkT5SrRvg9nXtRQqX7O1AkisRnktiWf/mNHfJUeNxicrRR6k1B1XS0NpoZmGp
-         38EPdgInyc5/PuuI07H16OmIZhGrmpHNt2U+DX9vypS2dT9MLp57BSigHkuRiSGdNe+1
-         AL3rnR/FCyOvbWvA1a/oWubhz5G/U4tOiJRAmdITdPQxwun2CjIvbyx/FOYfr8ry8kV+
-         Z3iNIuipegxQJldYnc6BbWBzgygigFX5noY205YKQT5NEAdhN/ffCIaoZf7tcqrDpa/Q
-         luPjlKo9dMUPf7Xr/tZcL2Vdr9DGgl82RiDTxu7WupodOJcNWzRExYQkUG/OOps+njDM
-         dbCw==
-X-Forwarded-Encrypted: i=1; AJvYcCX5RhbKOG/mJ1D6TDxF8CweGTQYxG6Vj7nefWKtzD5F19deM6tOBaPIhxX+pZrpA0V2rbgC/VVAHAVqPbhE@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgC3LLtTHYleM3CR1WfqRAqAkIdwEHR8YzLtcGgUM/fjJE5iVg
-	2Ldf4vwh132VBBNcI2LEmO6rIsphwBzDi38uiHL0a9Dnh7e0HX5M+7caE6O+OXKof9c8wk5SuVm
-	J1aXzGv9DCuKbAU+Lc4laQLIk/l2r4c/u+8XCHSmt
-X-Gm-Gg: ATEYQzzkrdep99p2A78doLUWmP3SlLFHBwuNzngWWh2mTaHpGu3ZUCDFbayhZ69kECE
-	BbzlrVJdUUTIjT0pCqULXXvZdVg7WVmCHVKvV9AYGZj/a2M+a0Wo9/c6nQn9px5GkVK3xktonja
-	+FZJURwjo5JaiiSp6yo+XriaI7+sii13q708yQ2KOxnXvtqCAPE1GKRtYNGMqvmYpqJUKpdoZOI
-	Bfs7yHklPp/OtU/suC4X7MCezRxoYSwr/GHw1UGIYrNc8uKaSAwhdjmbE0HkbfevFbNjXZ/IK81
-	OxQ1XGre
-X-Received: by 2002:a05:690c:368f:b0:79a:b409:b62c with SMTP id
- 00721157ae682-79acf39ca9fmr101703267b3.22.1774560719217; Thu, 26 Mar 2026
- 14:31:59 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774598455; x=1775203255;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VdbZVRP/Ak929baCc2EeOgVlzDU6Wbl9p0jTnb7CIGk=;
+        b=YUNRX2M9SpO8G2UEjtIJFDy0p7MdecWcUxl+B5+74uZIexxoiNL8T1agKQVRi6EHpd
+         ywyN7BTgzFBrfo8gHTm33yK0bwPo19fY20HbSbYThrYU5/C/EqS1QTLj0os+it9AUSC/
+         ZlgNRryKvF+US7GRVebn4YKAr9EZe9hJvZE+BYS+PS6RUfTmiSdvF+iEY6jalvgjHGL6
+         r3+OxbyTPqOBnUd7GZlJvUe+oUxvT6oe5bYTub7aqcw0UfNnt5gkbsGwMbH6Sj682MrO
+         biTuAjUicXK6CHAsmtkNldrJtzSf8NG8Pqv1DX3prRvHts2w5xJXEtpwtuAexhw3WFx8
+         EeCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXKNSbI9R8nDSLEvqF5Mg77bVFoAKDFrt25U3D+qRYNt3BCBF3pUOofIE3siI392eQ+ZLwljmSgSOVJDY8p@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTPv4n+r9BtxCFmke9Pcknc95+6tQA/9wh/Sc16zSjmBUjucAy
+	BTHJdTEt7WWdBNYIT+jDcAIiBH0GtjEz43oVjaxmr57UAWAOdJCCBGeGPaSLEWyHtNc=
+X-Gm-Gg: ATEYQzyPRXyg/cjFKUZlPDxpOAnbFDZmO82SpVW3F4P6VKWeNlU5fTvRZR86En+eM7l
+	CKf7TJL+DaOM0hvftMnEgKvSh/M++2WNmK/B6b7GJnmKkvZg2exMKfxOUh3b18ksUR8P5wjH33c
+	Sq4P/mlXydLsj+4ddvQYC/0Y6XtQFrcFDaXLHdfSesO0nSGho48e+2FLUZvAj6JFdOlv87lNDLt
+	L5omzYBuR1tBnn9XZD94fahHRfb+mVWopQqC6ZMk2qpOE/q9Q1LNXlYyrg2jVBUzVQHL8g2WMoY
+	Pm1ofG8N0BHZe/K4poiYFx1FKEh0nfcy6yHFWS5soWgVJ/DK1WIWcU5fZfVvuQV+qHyZyODrEv9
+	kefQ1LaK5t9DOmxgAhEYxPmJDu0j9lwu5GaMqQIMLCnMDqCsq5+3eawTxS9H2sMJ4JNK3RrAdpe
+	BS8oRjwptKuPDJnrg95PDJqI84TN8XKvEISZFnPDHb5QdvIFJoCTU=
+X-Received: by 2002:a05:600c:8b6e:b0:487:716:2fa9 with SMTP id 5b1f17b1804b1-48727e883c4mr23399585e9.13.1774598455233;
+        Fri, 27 Mar 2026 01:00:55 -0700 (PDT)
+Received: from zovi.suse.cz (nat2.prg.suse.com. [195.250.132.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48725fc4827sm12089735e9.11.2026.03.27.01.00.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Mar 2026 01:00:54 -0700 (PDT)
+From: Petr Pavlu <petr.pavlu@suse.com>
+To: Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Sami Tolvanen <samitolvanen@google.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-m68k@lists.linux-m68k.org,
+	linux-riscv@lists.infradead.org,
+	linux-modules@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] module: force sh_addr=0 for arch-specific sections
+Date: Fri, 27 Mar 2026 08:58:59 +0100
+Message-ID: <20260327080023.861105-1-petr.pavlu@suse.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260305-kflagstab-v4-0-6a76bf8b83c7@google.com> <b83c9524-13df-47dd-a597-bebab93288d8@suse.com>
-In-Reply-To: <b83c9524-13df-47dd-a597-bebab93288d8@suse.com>
-From: Sid Nayyar <sidnayyar@google.com>
-Date: Thu, 26 Mar 2026 21:31:45 +0000
-X-Gm-Features: AQROBzDfMgZ3xEPPX-07HtZ6qMri8pHd4_VLlgIvmfka8IMZId9kQN4ffSRsYhc
-Message-ID: <CA+OvW8butx7OD5ArjWXm7osCf4tV2O-suNHcHj4gFaQfMMPjwQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/8] scalable symbol flags with __kflagstab
-To: Petr Pavlu <petr.pavlu@suse.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Daniel Gomez <da.gomez@kernel.org>, 
-	Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
-	Arnd Bergmann <arnd@arndb.de>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
-	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arch@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	linux-doc@vger.kernel.org, maennich@google.com, gprocida@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
-	R_DKIM_ALLOW(-0.20)[google.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6187-lists,linux-modules=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6185-lists,linux-modules=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sidnayyar@google.com,linux-modules@vger.kernel.org];
-	DKIM_TRACE(0.00)[google.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-modules];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[suse.com:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 7EB7933BF4E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sourceware.org:url]
+X-Rspamd-Queue-Id: 45184340C08
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 25, 2026 at 12:49=E2=80=AFPM Petr Pavlu <petr.pavlu@suse.com> w=
-rote:
->
-> On 3/5/26 5:55 PM, Siddharth Nayyar wrote:
-> > This patch series implements a mechanism for scalable exported symbol
-> > flags using a separate section called __kflagstab. The series introduce=
-s
-> > __kflagstab support, removes *_gpl sections in favor of a GPL flag,
-> > simplifies symbol resolution during module loading.
->
-> I noticed that the series has a bisecting issue. The module loader
-> doesn't see any GPL-only exports after patch #4. I think you'll need to
-> squash patches #4 and #5 to fix this. Alternatively, the patches could
-> be swapped, with the caveat that GPL-only symbols would lose their GPL
-> property for one commit.
->
-> Nit: Please use simply the "module" prefix in commit subjects:
->
-> #1: module: define ksym_flags enumeration to represent kernel symbol flag=
-s
-> #2: module: add kflagstab section to vmlinux and modules
-> #4: module: use kflagstab instead of *_gpl sections
-> #6: module: deprecate usage of *_gpl sections
-> #7: module: remove *_gpl sections from vmlinux and modules
->
-> The changes look otherwise ok to me. With the above fixed, feel free to
-> add:
->
-> Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+When linking modules with 'ld.bfd -r', sections defined without an address
+inherit the location counter, resulting in non-zero sh_addr values in the
+resulting .ko files. Relocatable objects are expected to have sh_addr=0 for
+all sections. Non-zero addresses are confusing in this context, typically
+worse compressible, and may cause tools to misbehave [1].
 
-Thanks a lot for the review. I incorporated the suggested changes and
-sent the revised patch series for review.
+Joe Lawrence previously addressed the same issue in the main
+scripts/module.lds.S file [2] and we discussed that the same fix should be
+also applied to architecture-specific module sections. This series
+implements these changes.
 
-Regards,
-Siddharth Nayyar
+The series can later be merged through the modules tree, or individual
+patches can be applied through the architecture-specific trees.
+
+[1] https://sourceware.org/bugzilla/show_bug.cgi?id=33958
+[2] https://lore.kernel.org/linux-modules/20260305015237.299727-1-joe.lawrence@redhat.com/
+
+Petr Pavlu (4):
+  module, arm: force sh_addr=0 for arch-specific sections
+  module, arm64: force sh_addr=0 for arch-specific sections
+  module, m68k: force sh_addr=0 for arch-specific sections
+  module, riscv: force sh_addr=0 for arch-specific sections
+
+ arch/arm/include/asm/module.lds.h   | 4 ++--
+ arch/arm64/include/asm/module.lds.h | 4 ++--
+ arch/m68k/include/asm/module.lds.h  | 2 +-
+ arch/riscv/include/asm/module.lds.h | 6 +++---
+ 4 files changed, 8 insertions(+), 8 deletions(-)
+
+
+base-commit: c369299895a591d96745d6492d4888259b004a9e
+-- 
+2.53.0
+
 
