@@ -1,154 +1,131 @@
-Return-Path: <linux-modules+bounces-6220-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6221-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sOLtLkZd0Gk97AYAu9opvQ
-	(envelope-from <linux-modules+bounces-6220-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Sat, 04 Apr 2026 02:37:26 +0200
+	id 4Go1NMtu0WmCJgcAu9opvQ
+	(envelope-from <linux-modules+bounces-6221-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Sat, 04 Apr 2026 22:04:27 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DD983995B7
-	for <lists+linux-modules@lfdr.de>; Sat, 04 Apr 2026 02:37:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F1B639C5A1
+	for <lists+linux-modules@lfdr.de>; Sat, 04 Apr 2026 22:04:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5754D300B198
-	for <lists+linux-modules@lfdr.de>; Sat,  4 Apr 2026 00:37:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D6C1A300C91D
+	for <lists+linux-modules@lfdr.de>; Sat,  4 Apr 2026 20:04:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4985B26982C;
-	Sat,  4 Apr 2026 00:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C28F22C031E;
+	Sat,  4 Apr 2026 20:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ij4yOdY/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oAbsmWzk"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-dy1-f201.google.com (mail-dy1-f201.google.com [74.125.82.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F338925A655
-	for <linux-modules@vger.kernel.org>; Sat,  4 Apr 2026 00:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC2217A30A;
+	Sat,  4 Apr 2026 20:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775263035; cv=none; b=CZgx3rDy6qpN/hhqFoAsV9ZkC1YEVXqhBGMUeG+4iM6HmaF/yNu5vofDHM5JE/azAXevRhFH/4VSWyUOCNBeZpZqzFgo6bIQm7jY9D5vNIpPltNy32xCkxnwqYdwxtTaVaXRgYJtNpXEUcU364J3aFIVufIMLQYkgge65cnaZ6M=
+	t=1775333064; cv=none; b=S8ltPc/7qxK4DbXWMIQvusP5aSns6LUKL7PIL2x/H2AF7/CP/oOGU19EbX4+esbs6LU60cpClHby45gJzoLd3q7/oH+3HZv0HfUkA+DP3dIsFt8w7gRL5pqPcOx3g1s4eX98nPy0nnqFcmMoRkEuZmF8ZVWaWUAc3DWTmhkqdIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775263035; c=relaxed/simple;
-	bh=VRW7wRW2Q9r1frAdP8PWIidOriIPo2srmhCCTDv7jTw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=EYtHGz0u1XOmLQ1msRyECiagdI/K8x3il+36Wl5kr30NKdSNx8HlPIZ8cCRrwv3T98EkE26+UWU4Pk9cWVtV/517MNrKBPrhnCD2wm6PrmPLZEfdiBdkOkja/zusEBA0jOls0KF3lKpg1/X8dDUVH00+Eft8Lvj3nAR0W/zqM0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--samitolvanen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ij4yOdY/; arc=none smtp.client-ip=74.125.82.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--samitolvanen.bounces.google.com
-Received: by mail-dy1-f201.google.com with SMTP id 5a478bee46e88-2ba8013a9e3so2920644eec.0
-        for <linux-modules@vger.kernel.org>; Fri, 03 Apr 2026 17:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1775263033; x=1775867833; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3x1eiPd8cw5y47bgewxMpWPbrV3i1xPOtcWTmsjzHhk=;
-        b=ij4yOdY/AYLqfIvHo0B21GI7Fban2p5xjP9dfLmkVAip7vHPGpgfXMwZ7Bujhp/SFe
-         +H3U9qmx49F7X6708y91nHEi1+zu5ycbDZiEpTUl8SG+pJUa3tI8R6Kx5MGg1OTqzJre
-         macOsafIhIQxeUjM15Nq13U0PXtiNWurwjkrwNplXcrrR6XPnj5LXMQskD460VCXYuQp
-         QO8KI2Iee4XrEVVdRMD4oqlu5s2pRSXtvlJs++85vtkcIHu6F+SKqO0c4ysdf1mZ6088
-         kcaqWlkcGLGe/hQqjGcx2w5V8m3FN8BpLZLCpzFZdpogHKWrLdaoziliQLtGTtTaVwj6
-         p05g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775263033; x=1775867833;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3x1eiPd8cw5y47bgewxMpWPbrV3i1xPOtcWTmsjzHhk=;
-        b=jE5wjTDtnz+MerrA4a+4HeKRblgo6UphUPu1PRQjJWNkTUj3UB52WS15ZGjWhxaqne
-         LC9/37XeOie7dEU1IyN5Nbdw9+d7UkuynO3L6IkmL5TUHiG+vI7jBxXXs1opB2unDTAs
-         Abh9tFg5DbKdDHefNZIt318zeigMDNd1nlMR3+o+7hLOjwoJs65LQjVFNzVnlBlwojCy
-         kDxk2EdEYX9Hgzo4QG/86PABizpmGzPlF4P7ogcd/m5OV/Fv0kp/PQBFXpEtKX2TS0Ku
-         9wG0mouaeMMU/Iee9CE/tAv9osLGtMH4FQn7+j7VM/RVs5IVEUHSEHVZTyva2vz53gth
-         it5g==
-X-Forwarded-Encrypted: i=1; AJvYcCU/29uJ0biFAA1yilDlj73Fsn20yJv1PtOLywdYD/+lhvRU1eKqoGROBh1p0Is53fW0b0e8+dwmp4GI8XhK@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrDtfkU9x7sNKw3PRWe23b5yjnBY6g6Z8ugbNf+rB5Gzbhd67d
-	JkCDdtBID7KaWtbmKA2y+Gl5HCxltprHf7GQwMNS1x+Lvxp1VYPrkZMysItL/KgchmDBNw6Mvpp
-	zT1oXF/PTmoTZvQ3WiUrE7o3AubuF3g==
-X-Received: from dlbrl15.prod.google.com ([2002:a05:7022:f50f:b0:128:e0dc:644a])
- (user=samitolvanen job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:7022:ec17:b0:12b:ebb8:e518 with SMTP id a92af1059eb24-12bfb779d53mr2038986c88.35.1775263032852;
- Fri, 03 Apr 2026 17:37:12 -0700 (PDT)
-Date: Sat,  4 Apr 2026 00:37:07 +0000
-In-Reply-To: <-v2-0-a3542e15111c@kernel.org>
+	s=arc-20240116; t=1775333064; c=relaxed/simple;
+	bh=nuQOhXqzh/yrI4waHmqs/SiP+Sic5BOEOdHFjfTuvAA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=fBkhNWIuwFnWdCdRjxISqpkSuVhov4CA9aO8qlrk9JTNR1EJm+6jBlCPhIhmJ1aCd+spXFC1c3H+/IGb/At+0qm1cDFiv1iliJK4JnXO1Wv+Xe1DBj6GTOIlzWa+YI0oIR2iSjmP6E5Ux7l+B/ccLMWkYiwQ/37o8k5c/kyrJHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oAbsmWzk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066AFC19421;
+	Sat,  4 Apr 2026 20:04:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775333064;
+	bh=nuQOhXqzh/yrI4waHmqs/SiP+Sic5BOEOdHFjfTuvAA=;
+	h=Date:From:To:Subject:From;
+	b=oAbsmWzkPGgR0PdvC1MshFr0gmWuZFGCFBrxlkPj32/7ALpt1J4W9nzLLGMTrswSo
+	 6sMJImbxidX3ORM6HtZeQdxGnf741hzNsUqCRUqij1y7yaPn6ApmIFuqg6FKNyJ1Vf
+	 uD0wtLT5/x5r/LwcQTMMgHWkHsAxCsUTSP4Pj8TXTbrQHmURX/O/6FfZlJE3VsflRH
+	 lI3QpsIyIsD9UvOR6x18spMJ4HFmxqRGNMrF7V2LaXCm0qD7xUmbbb5aHN4OVVHCUP
+	 3rn+W6uq4VXNsrl9bMBOzhw48Vw2if7pcwyoYde0N0KmSIPAEM6+JcK8OTEwW0pdFb
+	 LDn0MIFdfNckg==
+Date: Sat, 4 Apr 2026 22:04:19 +0200
+From: Helge Deller <deller@kernel.org>
+To: linux-kernel@vger.kernel.org, linux-parisc@vger.kernel.org,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>, linux-modules@vger.kernel.org
+Subject: [PATCH] module.lds.S: Fix modules on 32-bit parisc architecture
+Message-ID: <adFuw1E4iVyiXLf_@p100>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <-v2-0-a3542e15111c@kernel.org>
-X-Developer-Key: i=samitolvanen@google.com; a=openpgp; fpr=35CCFB63B283D6D3AEB783944CB5F6848BBC56EE
-X-Developer-Signature: v=1; a=openpgp-sha256; l=936; i=samitolvanen@google.com;
- h=from:subject:message-id; bh=VRW7wRW2Q9r1frAdP8PWIidOriIPo2srmhCCTDv7jTw=;
- b=owGbwMvMwCUWxa662nLh8irG02pJDJkXYk1uVKzNUSjzucIeWGR4Kaws2zKGaV18b3fjQtFD1
- t1nZz7oKGVhEONikBVTZGn5unrr7u9Oqa8+F0nAzGFlAhnCwMUpABNZNYfhn/aR7wm1zjNk3Q2W
- 77x94cOTlfsnHHm4ME5k9rwJNsfufrBkZFjN0Plo5sJ/zcwF8ZP+/GzrY9ebZxWSIFl15nLOrLz rzJwA
-X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
-Message-ID: <177526278781.1915281.2852116163003969353.b4-ty@google.com>
-Subject: Re: [PATCH v2 0/2] module: Tweak return and warning
-From: Sami Tolvanen <samitolvanen@google.com>
-To: Luis Chamberlain <mcgrof@kernel.org>, Daniel Gomez <da.gomez@kernel.org>, 
-	Lucas De Marchi <demarchi@kernel.org>
-Cc: Sami Tolvanen <samitolvanen@google.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Aaron Tomlin <atomlin@atomlin.com>, 
-	Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@samsung.com>, Phil Sutter <phil@nwl.cc>, 
-	linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Christophe Leroy <chleroy@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[google.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6221-lists,linux-modules=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6220-lists,linux-modules=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[google.com:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[samitolvanen@google.com,linux-modules@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-modules];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 5DD983995B7
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[deller@kernel.org,linux-modules@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-modules];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gmx.de:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2F1B639C5A1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 30 Mar 2026 08:13:50 -0500, Lucas De Marchi wrote:
-> Do not let userspace tools and end users confused on the return code and
-> log messages.
-> 
-> To: Luis Chamberlain <mcgrof@kernel.org>
-> To: Daniel Gomez <da.gomez@kernel.org>
-> To: Sami Tolvanen <samitolvanen@google.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Aaron Tomlin <atomlin@atomlin.com>
-> Cc: Petr Pavlu <petr.pavlu@suse.com>
-> Cc: Daniel Gomez <da.gomez@samsung.com>
-> Cc: Phil Sutter <phil@nwl.cc>
-> Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-> Cc: linux-modules@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> 
-> [...]
+On the 32-bit parisc architecture, we always used the
+-ffunction-sections compiler option to tell the compiler to put the
+functions into seperate text sections. This is necessary, otherwise
+"big" kernel modules like ext4 or ipv6 fail to load because some
+branches won't be able to reach their stubs.
 
-Applied to modules-next, thanks!
+Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related
+macros") broke this for parisc because all text sections will get
+unconditionally merged now.
 
-[1/2] module: Override -EEXIST module return
-      commit: 743f8cae549affe8eafb021b8c0e78a9f3bc23fa
-[2/2] module: Simplify warning on positive returns from module_init()
-      commit: 663385f9155f27892a97a5824006f806a32eb8dc
+Fix the issue by avoiding the text section merge for 32-bit parisc while still
+allowing it for all other architectures.
 
-Best regards,
+Fixes: 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related macros")
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Helge Deller <deller@gmx.de>
 
-	Sami
-
+diff --git a/scripts/module.lds.S b/scripts/module.lds.S
+index 054ef99e8288..41e13e9cbb9d 100644
+--- a/scripts/module.lds.S
++++ b/scripts/module.lds.S
+@@ -41,9 +41,11 @@ SECTIONS {
+ 	__kcfi_traps		: { KEEP(*(.kcfi_traps)) }
+ #endif
+ 
++#if !defined(CONFIG_PARISC) || defined(CONFIG_64BIT)
+ 	.text : {
+ 		*(.text .text.[0-9a-zA-Z_]*)
+ 	}
++#endif
+ 
+ 	.bss : {
+ 		*(.bss .bss.[0-9a-zA-Z_]*)
 
