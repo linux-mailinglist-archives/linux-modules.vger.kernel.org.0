@@ -1,180 +1,154 @@
-Return-Path: <linux-modules+bounces-6231-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6232-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qAKmImWi12kUQQgAu9opvQ
-	(envelope-from <linux-modules+bounces-6231-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 09 Apr 2026 14:58:13 +0200
+	id kOllKr3S12mrTAgAu9opvQ
+	(envelope-from <linux-modules+bounces-6232-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 09 Apr 2026 18:24:29 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB8B63CAAAE
-	for <lists+linux-modules@lfdr.de>; Thu, 09 Apr 2026 14:58:12 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FC073CDA01
+	for <lists+linux-modules@lfdr.de>; Thu, 09 Apr 2026 18:24:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DACE63027134
-	for <lists+linux-modules@lfdr.de>; Thu,  9 Apr 2026 12:57:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2F905302A1BA
+	for <lists+linux-modules@lfdr.de>; Thu,  9 Apr 2026 16:19:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C4C93CE4BC;
-	Thu,  9 Apr 2026 12:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9E203DD53C;
+	Thu,  9 Apr 2026 16:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Or/VJgUS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ha6ai0lb"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D0D3BFE5B
-	for <linux-modules@vger.kernel.org>; Thu,  9 Apr 2026 12:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6482364E8B
+	for <linux-modules@vger.kernel.org>; Thu,  9 Apr 2026 16:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775739424; cv=none; b=INw0+EWh4NLv62JXAY6dJXokhzr+zJwopDlQADI1//iBC7bbkhyI1yidjCALp0eXfgKnimA+l8iL2qltTv9H3G4NBxCK2MvuLLmnmxw2Pz4eHaBKMPAk4CdeRP6ZxbNR3WgyS6mvUjS9gSktpW/JojjSD2706/SSKGISKmhdp7w=
+	t=1775751566; cv=none; b=jpjt8UybymkKUQ327h7quSFFf5HuIMHXdqMmbKPvOAXgm1icpekNpro8FXFG0N4Exer2mrKlmzRH5uWTb3aNzgI1vSyE7c2lizffsuw64qc/dYEYmhLzPOFQU1glyr2mM+NB4cXkikXzucoa4s3PmxZsUb+AuPP7wE/Piwq7nvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775739424; c=relaxed/simple;
-	bh=8N+L1gz4eOCtCLR2SD6m9/UInh24I1S3iZOo1q0YSvA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=c1AThmhWeHGtP/zMEKBNZcYr5ZyMVw91PhHClvT08oYHTijjvNcxjdaXNupZ3J9BOI7ZZgIgs+YpI8Qe65KU4vo97HCDxkWZjTroWFoaigTnaBpezSzue9kqfrg2TpXB40DEkTlrOpJD0+8jypMKot9vMxS1dc8o3YU0k99PPgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Or/VJgUS; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488a88aeec9so10210275e9.2
-        for <linux-modules@vger.kernel.org>; Thu, 09 Apr 2026 05:57:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1775739420; x=1776344220; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:cc:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Zi5resqMRI4nHDxaylhlSh5hJPIr3A88NHSW9enHb70=;
-        b=Or/VJgUSW/LPFab1O4g/scRr2sf5yp6vXEpcO2aivqL/wpMw/HHz68y9JzFeUsBXWB
-         SQsgmZiV3jwtGYvjdtav+cRAvDAbxlOubmtQGC68hdEjh57obeii5XQf1HUBIGTEPuJf
-         i/8mRY8yi3XiYvDaJdIgMJY2qYeYzA9yMkPegaurzb2ph8ALe7UcZIRfXgRCZ55rJ8MA
-         pnBLeVt3HKbWv17C3+b8JMrT4aQAxrqiRZuoZOhG+zxGPcFfgx2UXdZJ0+PNgDWWUchZ
-         vsPceb4UTFYeoPEDMB6TfLVdKWrsf2+UInLdD0jgMrYfDcod16tK6NEgZfSTDdAQOA2v
-         hzyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775739420; x=1776344220;
-        h=content-transfer-encoding:in-reply-to:from:cc:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Zi5resqMRI4nHDxaylhlSh5hJPIr3A88NHSW9enHb70=;
-        b=TaT5PojYanqMkKy536KHd0E5N9Z5I0Grqz4DhpWFVoV5GmWdK0+mcmYQpzCMFvmBl+
-         gXvl30sT8xcOq5lGh1I2B8PVGYE/sRqk+TkTvyOny68mdJiDikJR1xoCE3ZKP2OGP3eO
-         GDQg/fWGGZhgqVb08pT6Q2fjwtQdZiDe+b8HEnYqhhO0YtqktOzj4NvGgBfOsgsRSibz
-         bfoBBKMZBgNSIDz0+OpQW4yUS5eUd0DcS+BujmLEbvtbgaUr9wcSSKyqeOaCKSSzfkYB
-         yqPFGGR5EjX2o3j892G7WqffcTi5LEkVE3Zp9X8v7RUCO2xOb27DLLgpUZ9Nennt3sFM
-         aN/w==
-X-Forwarded-Encrypted: i=1; AJvYcCVbCrbPxW9IoHE7XsI/jEKXvDMEjORitDlX7N1Rg6+2mdEpdvlXzAdFS3i/gHfhcwSjC1MI6SLKo2iGItq3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8AwqmUZOIuzEeeOFSPNscNvIQ+S8L08zgPszt4bvxAnlQDH63
-	6IYhXXUUzbmutnQ5uCAqqSLwqLX9WDIUO5/xKi1SUDvPdzMgKJP8eftOJ+Y09ArLYhY=
-X-Gm-Gg: AeBDiet/tI+wq24hvjDsvlOD4mBIieuLn7bDH+pZcSV2jxsTtEKu9dBlSyXBK1/18f8
-	1oISZGJMo0vaiVYkAoSvPHiHA1K0ACr9+NE+dGUEwSrKLECjxWabGHk/o91wMxjG0UISi/0jelr
-	FOHW2bugGoRvb9w2EQWm+w0OSiFVkZZlvG6iOdOmp7zGPzY3kEoRCDnYoVkZ+yWN3gpOeebT7FY
-	IcZvk4eF3ZtAPLmv4G3aR1EH8g6LZerN1/Uo6kh8ZsjbKgK0IZQqi25YP79h0Ouo3l3P7b7O7Ur
-	nxfK91O7PiWL21r+r5J5GWIPgjtlHlFZ6lrzWlzf8Dmj/4lBfQQDnPq4+XH9O9eDN1qN3zvxN8x
-	aSM36xaP7atuNYOv0S3r2juuRq8fxlSyZlEHwbaxeM2SBxWoCjLdb/MBHGaaigcLvqOrHWDughG
-	qL7yej05wq0zkVzjDjFy5+chkFjIrWDML1LFlWGVXhhGRU
-X-Received: by 2002:a05:600c:3f08:b0:485:40db:d40c with SMTP id 5b1f17b1804b1-488996d2323mr417321415e9.3.1775739420375;
-        Thu, 09 Apr 2026 05:57:00 -0700 (PDT)
-Received: from [10.100.51.209] (nat2.prg.suse.com. [195.250.132.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e2a7223sm63022433f8f.5.2026.04.09.05.56.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2026 05:57:00 -0700 (PDT)
-Message-ID: <8ea1cb60-7112-479d-8e05-62506dd0d54e@suse.com>
-Date: Thu, 9 Apr 2026 14:56:59 +0200
+	s=arc-20240116; t=1775751566; c=relaxed/simple;
+	bh=4ST+hPB0HfJyx4zcBPDhvtmJYMEBRZ/dYXMapLMv6bg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u9UoB1BadOIH9sBHapMEQbO0Z2sQNsjOU7lOTBdB8rXk2iB9r1spW6PKPqlJ0Un0MY44lEhbGqBamI9nuD3zq138QSxawc5hkwR2mKoZUqLF8y3J37kyaSPxbvNLLjA7fxu8e0U+oer1tNVQy+orokfgnEaU4Uxl6l8lude7fyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ha6ai0lb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC01C2BCB3
+	for <linux-modules@vger.kernel.org>; Thu,  9 Apr 2026 16:19:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775751566;
+	bh=4ST+hPB0HfJyx4zcBPDhvtmJYMEBRZ/dYXMapLMv6bg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Ha6ai0lbwR8U5dFvxHDDn3S4cqYm4HR+WmDmiEfue1jHfrutZTZb/fklkVqsjKNhR
+	 7W/YSX1wjvyxCIXtCADAWNlCyuVz+MWZHEHfpZ4qJ8EbUXueZOEu+d9Vf1jc+Rjfde
+	 bXR1VOcyDPwYIf2uk+G3ful6Bba7gNpjVwRLR9Gv5fI/8IXA4xHPCjo8X9SbkpgW4D
+	 zepHaIJp3rlE16hg5AsR3ib6YMvcd9m5UlSH2MKJdFKAvQIxQ57wfHlbuBtjmav+uy
+	 +q09uY/zjecylWD1FIjTxyCzny/Q7iSFTp8gXg6z+obB/22Ecq2wUnAh/xGM+KKkSP
+	 wkjJFJmjAX71Q==
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38dfb789d7fso9989621fa.2
+        for <linux-modules@vger.kernel.org>; Thu, 09 Apr 2026 09:19:26 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCW/X37qwKfsXt6q9TncMvWoFcBtEeUFK/lrSrWPH59/XoB03QWB3Wd9gS28AuFIsEJuvlNmeTLLbVrMaV42@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIh0HrafQDa4erRfw7KA6hqaTjry4KpYJTBuIiZrcIrqrQi4Ey
+	uDGgXkOwruXhRF5g9Xcr4SQtRxS1w2sUwgObmgSG2JIpQ6v8Kl3Z+ggiQq5suCo1IgA7qOZTW1R
+	68LJRvSG/5XQtDDKeFTMipEf19heLIyA=
+X-Received: by 2002:a2e:95c3:0:b0:38c:c32e:5b2c with SMTP id
+ 38308e7fff4ca-38e3362371emr11761351fa.19.1775751564937; Thu, 09 Apr 2026
+ 09:19:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] module.lds.S: Fix modules on 32-bit parisc
- architecture
-To: Helge Deller <deller@kernel.org>
-References: <adVukQYvRuuC5F-K@p100>
-Content-Language: en-US
-Cc: linux-kernel@vger.kernel.org, linux-parisc@vger.kernel.org,
- Josh Poimboeuf <jpoimboe@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>,
- Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>,
- Aaron Tomlin <atomlin@atomlin.com>, linux-modules@vger.kernel.org
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <adVukQYvRuuC5F-K@p100>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+References: <20260331205849.498295-1-ojeda@kernel.org> <CAJ-ks9nqv30SOiCia8LE6XbKEURNCa9qwwcszsQ0a8FRxR0Msg@mail.gmail.com>
+ <CANiq72mKuQgK_R=xs6270nwYigzCvJiFJ1PcOB+WT3OdXO7E0A@mail.gmail.com>
+In-Reply-To: <CANiq72mKuQgK_R=xs6270nwYigzCvJiFJ1PcOB+WT3OdXO7E0A@mail.gmail.com>
+From: Tamir Duberstein <tamird@kernel.org>
+Date: Thu, 9 Apr 2026 12:18:48 -0400
+X-Gmail-Original-Message-ID: <CAJ-ks9nMA1zqGhHhOk8hmfNgoODQ+D-WforPU6iCciYbPsDD-Q@mail.gmail.com>
+X-Gm-Features: AQROBzDZ5E11AfueQzg0LR9apqPigjI17D9aa2qN_B_BOWd8NoNl2G48fdG5R0g
+Message-ID: <CAJ-ks9nMA1zqGhHhOk8hmfNgoODQ+D-WforPU6iCciYbPsDD-Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] kbuild: rust: allow `clippy::uninlined_format_args`
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
+	Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>, 
+	Sami Tolvanen <samitolvanen@google.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nsc@kernel.org>, Boqun Feng <boqun@kernel.org>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	Aaron Tomlin <atomlin@atomlin.com>, linux-modules@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[suse.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[suse.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[suse.com:+];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6232-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6231-lists,linux-modules=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,suse.com,google.com,garyguo.net,protonmail.com,umich.edu,vger.kernel.org,atomlin.com];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tamird@kernel.org,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[petr.pavlu@suse.com,linux-modules@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gmx.de:email,suse.com:dkim,suse.com:email,suse.com:mid]
-X-Rspamd-Queue-Id: DB8B63CAAAE
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2FC073CDA01
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/7/26 10:52 PM, Helge Deller wrote:
-> On the 32-bit parisc architecture, we always used the
-> -ffunction-sections compiler option to tell the compiler to put the
-> functions into seperate text sections. This is necessary, otherwise
-> "big" kernel modules like ext4 or ipv6 fail to load because some
-> branches won't be able to reach their stubs.
-> 
-> Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related
-> macros") broke this for parisc because all text sections will get
-> unconditionally merged now.
-> 
-> Introduce the ARCH_WANTS_MODULES_TEXT_SECTIONS config option which
-> avoids the text section merge for modules, and fix this issue by
-> enabling this option by default for 32-bit parisc.
-> 
-> v2: Introduce and use ARCH_WANTS_MODULES_TEXT_SECTIONS option
-> 
-> Fixes: 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related macros")
-> Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-> Cc: stable@vger.kernel.org # v6.19+
-> Suggested-by: Sami Tolvanen <samitolvanen@google.com>
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> 
-> diff --git a/arch/Kconfig b/arch/Kconfig
-> index 102ddbd4298e..78abb8be1e63 100644
-> --- a/arch/Kconfig
-> +++ b/arch/Kconfig
-> @@ -1128,6 +1128,13 @@ config ARCH_WANTS_MODULES_DATA_IN_VMALLOC
->  	  For architectures like powerpc/32 which have constraints on module
->  	  allocation and need to allocate module data outside of module area.
->  
-> +config ARCH_WANTS_MODULES_TEXT_SECTIONS
-> +	bool
-> +	help
-> +	  For architectures like 32-bit parisc which require that functions in
-> +	  modules have to keep code in own text sections (-ffuntion-sections)
-> +	  and to avoid merging all text into one big text section,
-> +
+On Fri, Apr 3, 2026 at 9:07=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> On Fri, Apr 3, 2026 at 12:25=E2=80=AFPM Tamir Duberstein <tamird@kernel.o=
+rg> wrote:
+> >
+> > Seeing this patch a bit late but in clippy 1.85.0 there is
+> > `#[clippy::format_args]` which would permit us to make the lint work
+> > with our custom macros.
+>
+> +1, that may be good to consider, especially with the bump -- added
+> and backlinked in:
+>
+>   https://github.com/Rust-for-Linux/linux/issues/349
+>
+> Maybe an issue would be good to create too.
 
-Typos: '-ffuntion-sections' -> '-ffunction-sections' and ',' -> '.'
+Turns out `#[clippy::format_args]` doesn't work for us due to the
+`fmt!` proc-macro.
 
-Otherwise, this looks ok to me. Feel free to add:
+It seems the handling of `#[clippy::format_args]` is more
+sophisticated than (at least I) expected: it doesn't blindly check the
+inputs to annotated macros, but rather looks for the place where
+`fmt::Arguments` are created.
 
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+In our case something like `pr_info!("{}", i)` ends up expanding to
+`core::format_args!("{}", Adapter(&(i)))`, which does not trigger
+`uninlined_format_args`.
 
--- 
-Thanks,
-Petr
+We also cannot fix that just by having `fmt!` assign `Adapter(&(i))`
+to a local variable and then return `fmt::Arguments`, since
+`core::format_args!` borrows its arguments. The local would not live
+long enough.
+
+I filed this upstream as https://github.com/rust-lang/rust-clippy/issues/16=
+833.
 
