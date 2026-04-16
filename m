@@ -1,204 +1,162 @@
-Return-Path: <linux-modules+bounces-6258-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6259-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mcLIDzrV4GlymgAAu9opvQ
-	(envelope-from <linux-modules+bounces-6258-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 16 Apr 2026 14:25:30 +0200
+	id WK+CAojX4GlymgAAu9opvQ
+	(envelope-from <linux-modules+bounces-6259-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 16 Apr 2026 14:35:20 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6F9A40E109
-	for <lists+linux-modules@lfdr.de>; Thu, 16 Apr 2026 14:25:29 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72CD440E48D
+	for <lists+linux-modules@lfdr.de>; Thu, 16 Apr 2026 14:35:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A54353016506
-	for <lists+linux-modules@lfdr.de>; Thu, 16 Apr 2026 12:25:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2CF05301105A
+	for <lists+linux-modules@lfdr.de>; Thu, 16 Apr 2026 12:30:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7E3D3B7B64;
-	Thu, 16 Apr 2026 12:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9650D3B895E;
+	Thu, 16 Apr 2026 12:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQGv29sX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SMyIhcMB"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C69337C924;
-	Thu, 16 Apr 2026 12:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F953B892B
+	for <linux-modules@vger.kernel.org>; Thu, 16 Apr 2026 12:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776342318; cv=none; b=BxN9ADopjT0HG67ERqv27hTKoTqduufKYyqNQQVEskErZusc7h4cHqQrNDfWE/SFLyKX16g5jXT54Xde2HaMrxPV4Q6gUQOSGC3FPPnSWxfIbdpoGLYoNnXoowfaZAPpalMqUekDmhLyuprL40HoH41iMxukcXlhldI0BRF2E7s=
+	t=1776342610; cv=none; b=qT52rFeIqqnMT3J29BvOnEAcXBn0VwI7MZhehfpaiKA4rfh8cq4ZLmnPcZlH/sQcjt71S6ov+r+8+f++Na4PIg5nL7pKILPzJAt2HVgH1Qn+Mhvy5Js5vBA3SLFZnQk9VDI1UVE/Rbcotg2jDCNAucgjetZUzF4nV5gS1f5/feo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776342318; c=relaxed/simple;
-	bh=gECMS4EGrtN1lWkNcMdqV1cQaJPbxrgRQTXN3zouHSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qdy/3MK0MwfEslDJpUvmQ3NbrxoYe4MuYEDd5I/0hg/Nklg/98f/WeraW+0hZjOYR3ll5HB/lln9Vf/aNZ/P5qvUZTryMZaQMBekQrlZ6d0uvRI+GqT9D3Ogs1R7/zYBLCu6V41SnsfnNkoGkdpGsPaklv/lrlL6JXwJhjAW5P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQGv29sX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4797C2BCB3;
-	Thu, 16 Apr 2026 12:25:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776342318;
-	bh=gECMS4EGrtN1lWkNcMdqV1cQaJPbxrgRQTXN3zouHSg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GQGv29sXj5S5z7UPKnXaUJAuD1qc92DQaWs8UXQ6wwBCK62RBOeMuB3RtNcxzLs+n
-	 PPcHL7L8pFqT/h2G0bvvPkUySB8nqp1hX+g8DsxNBEPpxoa8+yXm1bMdZVixBjqxgs
-	 n60V3osh+8lSW6pt2nDmsfqoDHDW6Auv9CDrXKgdtoPlM9Xla54AXl1OSAYSKpcXrA
-	 NmL+fSV7Qk/BTzx5WK8y+vV+U+fxOTS5SiuiemUg0UByoPARoWSlKdZYhXUYnMvTFf
-	 DgJsTYvf1ogHE4V/gC2FO90mA6aK9sVcz0Z1Cm9dDcGVpaCAj1nCKENYb7/YBcL1F4
-	 1oc9q29NjGBrg==
-Message-ID: <1fd72d1b-f5cd-447f-ae11-6f4d4426b8e8@kernel.org>
-Date: Thu, 16 Apr 2026 14:24:57 +0200
+	s=arc-20240116; t=1776342610; c=relaxed/simple;
+	bh=K/4afwQ5p31SSvbXjWdzi0L0oqupXfEEFTghGQ4JcSM=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=N/WT4z7UWPl5Q1qqoJ1FOVmxyg9rkph/NH8oiq3TItpJrVIf5wmqZ3OxN101Gt2HKYr7DyRymAO5n6dOeeV1QQ+PEj6NN21+Iwb5zcsZwrdO9cTDahRRflJ9BX+hIdWpXeWjtv/n05Bq5HRQHmda+Q7ly3TQst+dA63hHt/rV2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SMyIhcMB; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-488ba6366a7so95599855e9.0
+        for <linux-modules@vger.kernel.org>; Thu, 16 Apr 2026 05:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776342607; x=1776947407; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wD5n29vJmomxS6DITZYPjUM6os1Itf/93DfNIu2KPog=;
+        b=SMyIhcMBhud7E9S0oZfY4dPtDZqiIEqLPYjB6s4KMU/0r83YLgF5ZbDmBOKyocj9ZY
+         qrYE7AXH6tRIrCBZ2stUl3Qi0p1ekSMzV/bw635qeh1plkYWcNycJtCcJhUXvLmdYZkQ
+         ak84/JBnez1KRfcmlMpgZ++CuFvu085GXxYYRhr73LFU4mA8rLyuOYJFvhMOOSuhDheC
+         cVlzWB5L4UqeH/Dt9xlmzSUVQmUeJPE5kIcqSfdNeq+fT/ncidGLUeITziIc3LIGoSlb
+         mIEymQGy7PCqcWSexrvq+2z77t5rI8LX0YHsKA3o8o949yKU9SPV8ckeT8kyG1heRNFK
+         DfaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776342607; x=1776947407;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wD5n29vJmomxS6DITZYPjUM6os1Itf/93DfNIu2KPog=;
+        b=Z+sdgL5xD9K3QtsfaKLdeIHm06JK23k+K7t/uqczdn6zUe41rV4GsJPd4dDSbO1xMj
+         N4zALg8ZdW8WDW1kmH9+nJw6dXRuFXUXvU1tnJ4uoslGxAFtvMHj5bu0XfSOkHFkyLk3
+         bGspIctcUtKyPjkv6UqzelhnMyag51PkXduAcMSV/huYeSW69mazh6Sp8SX2bi+GxcJm
+         myQGgPG5bcE8gC+pVEe2gZjsF6aFjTbBcA+/odjbplsUHoBHwd485zP5gbZk+1CcX+//
+         5C11Jdn8X7iFhDZglU8ZDLp/IH44OuZFViyPfpii7TLMkzpHSEQOhlsk/5zrjMeoMbpm
+         jN2w==
+X-Forwarded-Encrypted: i=1; AFNElJ+WRG3FKBNkJz+Dt7o8Ascf7g/zVVUc4X3+sEQMpir4cwlkMCtFLkB4tKamZUkA430JojIzHNtxwG3Q/oXn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyU1OIQY+BB483CQ9Il0XUjcpOiARMhPFUM3w6GbDbacIVhob3+
+	lJjdogpe/E5d9EbG7WYeepFKMLJTrhGmK4wGO04jvUd+DZNfImb+Xfvj
+X-Gm-Gg: AeBDievBlwCE2mEMoCuZyrhOXxI1qUvqgRfgqlHR6egLSFokShjpdm5y+GroD6ENlj6
+	KQu786lZdpOeKrctAhtCVeHZPXhN33Dk2HnBGsi6PkNfpL+GxO78hbofZHjjjENryOixg3gLAax
+	5d5CzremvoY9HsjCTlLqEdDRi314+RQCtsiHE4/VOFOlLPUUmt9CtAOM0nTxqCVXPN5BVfAoHkW
+	YjcnjsLuORQgzFx11PIBmTy+Jg0Tv4cZ5DWjd1FcBze4qL4JST3mzX8lwHkhfBsMhjZH+HlWayn
+	1sYZbgaf6OtzDiquRM9yChatQXp+K1sgIgX9ekTJaXB9kjLLrzPpJcxb+YPn4IK+XX6wutIEYyH
+	M7sJM6qzZmdhnzx1qHyf/QFwYeDp9kHKTBzJSVVShyzKM2vLKJE1R+l8S6Oehr67dhHOfQOgV8N
+	5AQ5aZpFoJMbLkKDINeoyxrKkI54tgVmhjXXBX+ckGh8UQMa3qtpihcx62ffAj1Bd4
+X-Received: by 2002:a05:600c:45ce:b0:485:3e19:9e01 with SMTP id 5b1f17b1804b1-488d6890c9dmr355637165e9.28.1776342606991;
+        Thu, 16 Apr 2026 05:30:06 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488f0e9c668sm69981255e9.4.2026.04.16.05.30.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Apr 2026 05:30:06 -0700 (PDT)
+Date: Thu, 16 Apr 2026 13:30:04 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: chensong_2000@189.cn
+Cc: rafael@kernel.org, lenb@kernel.org, mturquette@baylibre.com,
+ sboyd@kernel.org, viresh.kumar@linaro.org, agk@redhat.com,
+ snitzer@kernel.org, mpatocka@redhat.com, bmarzins@redhat.com,
+ song@kernel.org, yukuai@fnnas.com, linan122@huawei.com,
+ jason.wessel@windriver.com, danielt@kernel.org, dianders@chromium.org,
+ horms@kernel.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, paulmck@kernel.org,
+ frederic@kernel.org, mcgrof@kernel.org, petr.pavlu@suse.com,
+ da.gomez@kernel.org, samitolvanen@google.com, atomlin@atomlin.com,
+ jpoimboe@kernel.org, jikos@kernel.org, mbenes@suse.cz, pmladek@suse.com,
+ joe.lawrence@redhat.com, rostedt@goodmis.org, mhiramat@kernel.org,
+ mark.rutland@arm.com, mathieu.desnoyers@efficios.com,
+ linux-modules@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+ live-patching@vger.kernel.org, dm-devel@lists.linux.dev,
+ linux-raid@vger.kernel.org, kgdb-bugreport@lists.sourceforge.net,
+ netdev@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] kernel/notifier: replace single-linked list
+ with double-linked list for reverse traversal
+Message-ID: <20260416133004.07bd2886@pumpkin>
+In-Reply-To: <20260415070137.17860-1-chensong_2000@189.cn>
+References: <20260415070137.17860-1-chensong_2000@189.cn>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 55/61] interconnect: Prefer IS_ERR_OR_NULL over manual
- NULL check
-To: Philipp Hahn <phahn-oss@avm.de>, amd-gfx@lists.freedesktop.org,
- apparmor@lists.ubuntu.com, bpf@vger.kernel.org, ceph-devel@vger.kernel.org,
- cocci@inria.fr, dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org,
- gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org,
- intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev,
- kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-erofs@lists.ozlabs.org,
- linux-ext4@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-hyperv@vger.kernel.org,
- linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-leds@vger.kernel.org, linux-media@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-mm@kvack.org,
- linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org,
- linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
- linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- ntfs3@lists.linux.dev, samba-technical@lists.samba.org,
- sched-ext@lists.linux.dev, target-devel@vger.kernel.org,
- tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev
-Cc: Georgi Djakov <djakov@kernel.org>
-References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
- <20260310-b4-is_err_or_null-v1-55-bd63b656022d@avm.de>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260310-b4-is_err_or_null-v1-55-bd63b656022d@avm.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-6258-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6259-lists,linux-modules=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[55];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[189.cn];
+	RCPT_COUNT_TWELVE(0.00)[48];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-modules@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_NEQ_ENVFROM(0.00)[davidlaightlinux@gmail.com,linux-modules@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_NONE(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,avm.de:email]
-X-Rspamd-Queue-Id: D6F9A40E109
+	DBL_BLOCKED_OPENRESOLVER(0.00)[189.cn:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 72CD440E48D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 10/03/2026 12:49, Philipp Hahn wrote:
-> Prefer using IS_ERR_OR_NULL() over using IS_ERR() and a manual NULL
-> check.
-> 
-> Semantich change: Previously the code only printed the warning on error,
-> but not when the pointer was NULL. Now the warning is printed in both
-> cases!
+On Wed, 15 Apr 2026 15:01:37 +0800
+chensong_2000@189.cn wrote:
 
-NAK, read the code
-
+> From: Song Chen <chensong_2000@189.cn>
 > 
-> Change found with coccinelle.
-> 
-> To: Georgi Djakov <djakov@kernel.org>
-> Cc: linux-pm@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Philipp Hahn <phahn-oss@avm.de>
-> ---
->  drivers/interconnect/core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index 8569b78a18517b33abeafac091978b25cbc1acc7..22e92b30f73853d5bd2e05b4f52cb5aa22556468 100644
-> --- a/drivers/interconnect/core.c
-> +++ b/drivers/interconnect/core.c
-> @@ -790,7 +790,7 @@ void icc_put(struct icc_path *path)
->  	size_t i;
->  	int ret;
->  
-> -	if (!path || WARN_ON(IS_ERR(path)))
-> +	if (WARN_ON(IS_ERR_OR_NULL(path)))
+> The current notifier chain implementation uses a single-linked list
+> (struct notifier_block *next), which only supports forward traversal
+> in priority order. This makes it difficult to handle cleanup/teardown
+> scenarios that require notifiers to be called in reverse priority order.
 
-IS_ERR_OR_NULL is simply discouraged, but beside of code preference, you
-just added bug here. This is clearly not equivalent and you emit warn on
-perfectly valid case!
+If it is only cleanup/teardown then the list can be order-reversed
+as part of that process at the same time as the list is deleted.
 
-Best regards,
-Krzysztof
+	David
+
+
 
