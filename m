@@ -1,167 +1,129 @@
-Return-Path: <linux-modules+bounces-6323-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6325-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SA84KkTN7mlMxwAAu9opvQ
-	(envelope-from <linux-modules+bounces-6323-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Mon, 27 Apr 2026 04:43:16 +0200
+	id 0IqXOqIY72mB6QAAu9opvQ
+	(envelope-from <linux-modules+bounces-6325-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Mon, 27 Apr 2026 10:04:50 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9C5546C35F
-	for <lists+linux-modules@lfdr.de>; Mon, 27 Apr 2026 04:43:15 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 883D246EB8A
+	for <lists+linux-modules@lfdr.de>; Mon, 27 Apr 2026 10:04:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 377363007A4A
-	for <lists+linux-modules@lfdr.de>; Mon, 27 Apr 2026 02:42:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id EDCE83005997
+	for <lists+linux-modules@lfdr.de>; Mon, 27 Apr 2026 08:04:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A57832D0D4;
-	Mon, 27 Apr 2026 02:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EA333976B2;
+	Mon, 27 Apr 2026 08:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sony.com header.i=@sony.com header.b="OsK6yiDO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aw0958X3"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from jpms-ob01-os7.noc.sony.co.jp (jpms-ob01-os7.noc.sony.co.jp [211.125.139.71])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60327328B62;
-	Mon, 27 Apr 2026 02:42:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.125.139.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A63025F99F;
+	Mon, 27 Apr 2026 08:04:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777257747; cv=none; b=nQirt0iqMfUyx5kox7hFy6YczREkpkOE54aArZ+IwDo+60iiYzdiULTyyxfo/CwGRtxiT3MFKd28IpJpU7+tlk8xdHz+6QramT7x8IzvqknWbuhGphlA3eC94dm5SYzkMrdit0LAm2+atyGOnJ8ZRJfQfrGKqMonA01x9twxKEM=
+	t=1777277089; cv=none; b=D7JytI8LvOxwspjERfjMSZ6EuqLaQFg5HR4zP7c2tDhUsN1nOD7+TPEkbDLzRoERzsTkbqWikUoopstBdSiAOQlE3MASXU0DQP5HbfDf81flNt0ryLq2KcLK+HwJpcyPrQkc0948q4llTiE9IQWWfNJrnt0WUIdktmjMPbKpoCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777257747; c=relaxed/simple;
-	bh=Ntxs4LrM9nMix70BKY/iLLvKQ7C8YsLHb8BjcRBYfF0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Z4fdI1AqCZ23OQ5UMvKhwA+YvYQDJw7DeLVOKmo0d7DAtYyYHzcrYp6wCXtr0X781MziCaJ4BeefowxnwcVAOuH2+tBJf/3cbnOcUkreMMj8o/HACDz1iA3qN/WWIdnWoQ3nfGtzrnpcszp3UXFafLa6TGJ7y/Qw5YDvxbinbV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sony.com; spf=fail smtp.mailfrom=sony.com; dkim=pass (2048-bit key) header.d=sony.com header.i=@sony.com header.b=OsK6yiDO; arc=none smtp.client-ip=211.125.139.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sony.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=sony.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=sony.com; s=s1jp; t=1777257743; x=1808793743;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=9dNZSXPaU7SwRa36y6sq2F/bVDLBSOQWDoZdmR4n+V4=;
-  b=OsK6yiDO4pSvzgOqwchMp2KW8IhzbXC3hNN3u022vcm/I1453lg+qRkO
-   rZjKedg2Qse1cJqkUgJxmbMxilzyOcrkStGr5GaE+YNQMFNZR3WMwOyb2
-   Sd6kb3sspzDMjaUz/q4ubvDEZa5eiOs3NPFn+WQcOEBOr5ZGb5byTlaYV
-   qC4Rhl545Qzgme8tXj6h7RvvvHJZ/xp/aFIt8Sit1e1iTIZJau5FQLF3e
-   MXV9v3MnYoj49ytmru/yqTgko2kj8Ko6SGo6J5InOycGpO4i0jUO3wsPl
-   8ynfE6DUqhzhFncaqA7mogR5pMp70WXtv9KOv9owQiuhKy6f/JDlbkEkQ
-   g==;
-X-CSE-ConnectionGUID: A2WXXHTNQbqhpj/T5H48rA==
-X-CSE-MsgGUID: La4tyUiPRo+yGak3meGJFQ==
-Received: from unknown (HELO jpmta-ob02-os7.noc.sony.co.jp) ([IPv6:2001:cf8:acf:1104::7])
-  by jpms-ob01-os7.noc.sony.co.jp with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2026 11:42:06 +0900
-X-CSE-ConnectionGUID: lBeFfeEhTdCwKS4pXM/ITA==
-X-CSE-MsgGUID: 4YLeYhxMRa2Yx4TTtDP+/g==
-X-IronPort-AV: E=Sophos;i="6.23,201,1770562800"; 
-   d="scan'208";a="52275261"
-Received: from unknown (HELO [127.0.1.1]) ([IPv6:2001:cf8:1:573:0:dddd:eb3e:119e])
-  by jpmta-ob02-os7.noc.sony.co.jp with ESMTP; 27 Apr 2026 11:42:05 +0900
-From: Shashank Balaji <shashank.mahadasyam@sony.com>
-Date: Mon, 27 Apr 2026 11:41:24 +0900
-Subject: [PATCH v4 4/4] docs: driver-api: add mod_name argument to
- __platform_register_drivers()
+	s=arc-20240116; t=1777277089; c=relaxed/simple;
+	bh=a3KsCsQY1qf3Eqj+ww908F1BuBkQT/7TSswL16BGEr0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BMWAMDa+USFqz5SiJD4F9oHlmBCuBmJ5fwYlITdN4pFApbFMcTtPTcJGQ0sbKJSL5r/mQaszGGUVy2DH28BwGHaRgkXQUoNuXMXUVBvGK8Kj/wtISLsqQHrJuPwHII1oTBpQFJ5xq3Fy2zO3jiQTxNLb6Hp/D86Xcx1lv8ApJF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aw0958X3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49BFC19425;
+	Mon, 27 Apr 2026 08:04:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777277089;
+	bh=a3KsCsQY1qf3Eqj+ww908F1BuBkQT/7TSswL16BGEr0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=Aw0958X3R5h6nswE7Jjc9xZ24VT0QMvEnhM57z6sIHKkbXFQDqUeuq70R3LRXK0oT
+	 L3M8UJbAoy/INYEhhWViPJHKB7E3tJj3GocvNNTGsj9ex6ZBHZUnL8A0OBPVDy22Hf
+	 yebmRcDCQT1hLH9loMvqVaydioydhyhUg7tbPk76YyJX7dHihSa9647EKDa4Ry3KKO
+	 GPRXgVq0zI5u/5cwKphKFBANdYSJjFzASri2cTjptsjlVBBsz6XMr3NIOP2O5Ikoj7
+	 x8iUhTyTgF7AcGkZC8y/5LA3GYOc6O48AQa6Xnl7X9ZzsWuAGvogiGdbYsF6pYp5bP
+	 YEOGKjT0lxULg==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: Wenzhao Liao <wenzhaoliao@ruc.edu.cn>, mcgrof@kernel.org,
+ petr.pavlu@suse.com, da.gomez@kernel.org, samitolvanen@google.com,
+ ojeda@kernel.org, linux-modules@vger.kernel.org,
+ rust-for-linux@vger.kernel.org
+Cc: atomlin@atomlin.com, boqun@kernel.org, gary@garyguo.net,
+ bjorn3_gh@protonmail.com, lossin@kernel.org, aliceryhl@google.com,
+ tmgross@umich.edu, dakr@kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/1] rust: module_param: support bool parameters
+In-Reply-To: <20260411130254.3510128-2-wenzhaoliao@ruc.edu.cn>
+References: <20260411130254.3510128-1-wenzhaoliao@ruc.edu.cn>
+ <20260411130254.3510128-2-wenzhaoliao@ruc.edu.cn>
+Date: Mon, 27 Apr 2026 10:04:36 +0200
+Message-ID: <87tsswrfqj.fsf@t14s.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260427-acpi_mod_name-v4-4-22b42240c9bf@sony.com>
-References: <20260427-acpi_mod_name-v4-0-22b42240c9bf@sony.com>
-In-Reply-To: <20260427-acpi_mod_name-v4-0-22b42240c9bf@sony.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>, 
- James Clark <james.clark@linaro.org>, 
- Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
- Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
- Gary Guo <gary@garyguo.net>, 
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
- Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
- Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
- Richard Cochran <richardcochran@gmail.com>, 
- Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
- Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
- Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
- Aaron Tomlin <atomlin@atomlin.com>, Mike Leach <mike.leach@arm.com>, 
- Leo Yan <leo.yan@arm.com>, Mike Leach <mike.leach@arm.com>
-Cc: Rahul Bukte <rahul.bukte@sony.com>, 
- Shashank Balaji <shashank.mahadasyam@sony.com>, 
- linux-kernel@vger.kernel.org, coresight@lists.linaro.org, 
- linux-arm-kernel@lists.infradead.org, driver-core@lists.linux.dev, 
- rust-for-linux@vger.kernel.org, linux-doc@vger.kernel.org, 
- Daniel Palmer <daniel.palmer@sony.com>, Tim Bird <tim.bird@sony.com>, 
- linux-modules@vger.kernel.org
-X-Mailer: b4 0.16-dev-3bfbc
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1165;
- i=shashank.mahadasyam@sony.com; h=from:subject:message-id;
- bh=Ntxs4LrM9nMix70BKY/iLLvKQ7C8YsLHb8BjcRBYfF0=;
- b=owGbwMvMwCU2bX1+URVTXyjjabUkhsx3Z37dP5picffdXU5/nzP2lrWFZ/60ahV/nu7mI7aK/
- cZZ928bOkpZGMS4GGTFFFlKlap/7V0RtKTnzGtFmDmsTCBDGLg4BWAiVjKMDJMEdF50TzXKPv9U
- TVJjv4b/9lrv4CvbMmqLLvH9zhC/8JqRYTLXfx+7IA9NltunV3Jzzgq5qj/X4WDjH9tf3l9O7fU
- w5AUA
-X-Developer-Key: i=shashank.mahadasyam@sony.com; a=openpgp;
- fpr=75227BFABDA852A48CCCEB2196AF6F727A028E55
-X-Rspamd-Queue-Id: E9C5546C35F
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 883D246EB8A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[sony.com,none];
-	R_DKIM_ALLOW(-0.20)[sony.com:s=s1jp];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+X-Spamd-Result: default: False [3.84 / 15.00];
+	SEM_URIBL(3.50)[ruc.edu.cn:email];
+	R_MISSING_CHARSET(0.50)[];
 	MAILLIST(-0.15)[generic];
+	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-6323-lists,linux-modules=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[arm.com,linaro.org,linux.intel.com,gmail.com,foss.st.com,linuxfoundation.org,kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,lwn.net,suse.com,atomlin.com];
+	FREEMAIL_CC(0.00)[atomlin.com,kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-6325-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	R_DKIM_ALLOW(0.00)[kernel.org:s=k20201202];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[sony.com:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	RCPT_COUNT_TWELVE(0.00)[38];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_SPAM(0.00)[0.892];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shashank.mahadasyam@sony.com,linux-modules@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
-	TO_DN_SOME(0.00)[]
+	FROM_NEQ_ENVFROM(0.00)[a.hindborg@kernel.org,linux-modules@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	R_SPF_ALLOW(0.00)[+ip4:172.232.135.74:c];
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,t14s.mail-host-address-is-not-set:mid,ruc.edu.cn:email]
 
-Sync the function signature of __platform_register_driver() between the code and
-the doc.
+Wenzhao Liao <wenzhaoliao@ruc.edu.cn> writes:
 
-Co-developed-by: Rahul Bukte <rahul.bukte@sony.com>
-Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
-Signed-off-by: Shashank Balaji <shashank.mahadasyam@sony.com>
----
- Documentation/driver-api/driver-model/platform.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Add support for parsing boolean module parameters in the Rust
+> module! macro.
+>
+> Currently, only integer types are supported by the `module_param!`
+> macros. This patch implements the `ModuleParam` trait for `bool`
+> by delegating the string parsing to the existing C implementation
+> via `kstrtobool_bytes()`. It also wires up `PARAM_OPS_BOOL` so that
+> the Rust parameter system correctly links to the C `param_ops_bool`
+> structure.
+>
+> For demonstration and verification, a boolean parameter is added
+> to `samples/rust/rust_minimal.rs`.
+>
+> Assisted-by: Codex:GPT-5
+> Signed-off-by: Wenzhao Liao <wenzhaoliao@ruc.edu.cn>
 
-diff --git a/Documentation/driver-api/driver-model/platform.rst b/Documentation/driver-api/driver-model/platform.rst
-index cf5ff48d3115..9673470bded2 100644
---- a/Documentation/driver-api/driver-model/platform.rst
-+++ b/Documentation/driver-api/driver-model/platform.rst
-@@ -70,7 +70,8 @@ Kernel modules can be composed of several platform drivers. The platform core
- provides helpers to register and unregister an array of drivers::
- 
- 	int __platform_register_drivers(struct platform_driver * const *drivers,
--				      unsigned int count, struct module *owner);
-+				      unsigned int count, struct module *owner,
-+				      const char *mod_name);
- 	void platform_unregister_drivers(struct platform_driver * const *drivers,
- 					 unsigned int count);
- 
+Looks good to me!
 
--- 
-2.43.0
+Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
+Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
+
+Best regards,
+Andreas Hindborg
+
 
 
