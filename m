@@ -1,49 +1,49 @@
-Return-Path: <linux-modules+bounces-6372-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6375-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4nkrFSez+Wly/QIAu9opvQ
-	(envelope-from <linux-modules+bounces-6372-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:06:47 +0200
+	id ENfVJHGz+Wld/AIAu9opvQ
+	(envelope-from <linux-modules+bounces-6375-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:08:01 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 357A34C9224
-	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:06:47 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FD654C92C0
+	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:08:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 07BB830144E9
-	for <lists+linux-modules@lfdr.de>; Tue,  5 May 2026 09:05:55 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 31CB9302F21D
+	for <lists+linux-modules@lfdr.de>; Tue,  5 May 2026 09:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01ABA3E0C41;
-	Tue,  5 May 2026 09:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48F9C3E6386;
+	Tue,  5 May 2026 09:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="PYVOCmjq"
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="g4Fknziw"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A453B38BA;
-	Tue,  5 May 2026 09:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640DE3E1205;
+	Tue,  5 May 2026 09:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777971931; cv=none; b=SjClSJqaW0UCw5xUr4/wy8mkAgO5r9EhSDCoXQy/CbG6Aqv00BKNmyZUUpNafIOgmwj5HN+yP+tNxX84bW07BY8Q4NJ3Z/dL5XJRfEjDx/ys9RQE/JZ47LVSOqgSLKkjVdGC1t3Q5Qlr9m+D9aAV7yD2SCTClAKmn66Msr5GTOU=
+	t=1777971935; cv=none; b=FyVttL2anDAifiG3sVLYgQ2HoeX/mBsMS+/UQzhOD7IF+AoaikAO/lt2vR+t2wT2cwpn84aH2g1UZwFLmCYMUq0O4LVWuSkN1dPb6x6k/wphKSXQTqodmqKmDU4Ob5tZH3EDaliQDZv7stMd9z9UwgmBlDQbg1zkE8Z9G9pa5hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777971931; c=relaxed/simple;
-	bh=XIA5YFBwc6Ej9VZmFF9JGp6ZBIHakQDs8PjcS5hpne4=;
+	s=arc-20240116; t=1777971935; c=relaxed/simple;
+	bh=QGuEjahQSX5KIR3mv9uZyKkgUGxQh5zTTSgnqh/jiis=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sZXHjfHhEk9dUT0J4o6N6z90m+oE+IDSj1BZn1E06ynYzzX+zvwJ5xxonwKvZ/cNGUBB6quVtaPSwQJFkYAoHc4BZZ2VJAd/ssrXqweS1tR/2X0h8pabPDF0EDzANcQyBIp12VRdrrY9/9GKwpIW3hxqlcF1v/rV7ZrBNL8etnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=PYVOCmjq; arc=none smtp.client-ip=159.69.126.157
+	 In-Reply-To:To:Cc; b=kfg8lwUNlb5tbsZoECPtYy3q8K997utwzhGll5pZJso3U6gcxOUcKhr+O2m0u5bdMAsFIo2H3knEf/x/gcgJfkbD9RMnlLQktOQlz/xpuKcUnM23u7IGC4C0Sp/8Y9zHOjljRYkSubvDmvyZXGOxjc/8bY8SeVOSxBd2JeDVNxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=g4Fknziw; arc=none smtp.client-ip=159.69.126.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
 	s=mail; t=1777971923;
-	bh=XIA5YFBwc6Ej9VZmFF9JGp6ZBIHakQDs8PjcS5hpne4=;
+	bh=QGuEjahQSX5KIR3mv9uZyKkgUGxQh5zTTSgnqh/jiis=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=PYVOCmjq815JBlphGcbWGjosj5154jDxWGNn8ySDnDRZCagPbXH9bmGuDkWLdstc5
-	 grpEv/Yl2QEHm9XpoxDF+rxCVkiggxlJsqZd9mPp3D9zvHgh8AHdI19vL1MIJlb8ak
-	 bm5DkY3Tc6TmLgjyO/DFdc2VD/nWslfWIYCOq/mw=
+	b=g4Fknziwd96fLN+TTNQAV/fMHOhd/dIN0idNYLfwkjvob2sS26e2GZhdQjmJKGBg2
+	 1Wuj9kttFMh09utr0/SaRmtgS+EoGk8Ji0s7efvwWTViHA7Eic1XoFHkeNankvLZGH
+	 d2Dvf/IQdZzsPGC4AF+nGave4W25BM2Rl2cxHXow=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Tue, 05 May 2026 11:05:08 +0200
-Subject: [PATCH v5 04/14] module: Drop pointless debugging message
+Date: Tue, 05 May 2026 11:05:09 +0200
+Subject: [PATCH v5 05/14] module: Make mod_verify_sig() static
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260505-module-hashes-v5-4-e174a5a49fce@weissschuh.net>
+Message-Id: <20260505-module-hashes-v5-5-e174a5a49fce@weissschuh.net>
 References: <20260505-module-hashes-v5-0-e174a5a49fce@weissschuh.net>
 In-Reply-To: <20260505-module-hashes-v5-0-e174a5a49fce@weissschuh.net>
 To: Alexei Starovoitov <ast@kernel.org>, 
@@ -92,26 +92,26 @@ Cc: Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
  debian-kernel@lists.debian.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777971921; l=660;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777971921; l=1372;
  i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=XIA5YFBwc6Ej9VZmFF9JGp6ZBIHakQDs8PjcS5hpne4=;
- b=Ee+VM+f9ivEIue9ulRLTnR7A7RxGy6esDrOUiYWXgYjcohrPW0vgCLL+otaNguQ4yU33rNoC0
- E/xUSCAFfC8Dq68rIFE+RjjVdNuj1MSQsJK7czkKKBhaEAT8wIUs2W8
+ bh=QGuEjahQSX5KIR3mv9uZyKkgUGxQh5zTTSgnqh/jiis=;
+ b=YPbhooCs8Z4p5xzEA8Bou2VKPPahpzMZhKoMk8D4SPl0woEZ2hjUdTCq/NfLfVDVlfTISZ3Ax
+ 2PKz7Hagg7xC31UJ4xI2NezkX4xUOqNSMisfL91GfGeptv87RApuP5L
 X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-X-Rspamd-Queue-Id: 357A34C9224
+X-Rspamd-Queue-Id: 8FD654C92C0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[weissschuh.net,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[weissschuh.net:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-6372-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6375-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
 	FREEMAIL_TO(0.00)[kernel.org,iogearbox.net,gmail.com,arndb.de,suse.com,google.com,samsung.com,paul-moore.com,namei.org,hallyn.com,lwn.net,linux.ibm.com,ellerman.id.au,huawei.com,oracle.com,linux.dev,atomlin.com,oss.cyber.gouv.fr];
@@ -128,32 +128,45 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[atomlin.com:email,weissschuh.net:email,weissschuh.net:dkim,weissschuh.net:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-This is the only instance of pr_devel() in the whole module subsystem
-and essentially useless.
-
-Drop it.
+It is not used outside of signing.c.
 
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
 ---
- kernel/module/signing.c | 2 --
- 1 file changed, 2 deletions(-)
+ kernel/module/internal.h | 1 -
+ kernel/module/signing.c  | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
+diff --git a/kernel/module/internal.h b/kernel/module/internal.h
+index 061161cc79d9..071999743341 100644
+--- a/kernel/module/internal.h
++++ b/kernel/module/internal.h
+@@ -117,7 +117,6 @@ struct module_use {
+ 	struct module *source, *target;
+ };
+ 
+-int mod_verify_sig(const void *mod, struct load_info *info);
+ int try_to_force_load(struct module *mod, const char *reason);
+ bool find_symbol(struct find_symbol_arg *fsa);
+ struct module *find_module_all(const char *name, size_t len, bool even_unformed);
 diff --git a/kernel/module/signing.c b/kernel/module/signing.c
-index 590ba29c85ab..4a5e4eef250d 100644
+index 4a5e4eef250d..69d4b1758540 100644
 --- a/kernel/module/signing.c
 +++ b/kernel/module/signing.c
-@@ -46,8 +46,6 @@ int mod_verify_sig(const void *mod, struct load_info *info)
+@@ -40,7 +40,7 @@ void set_module_sig_enforced(void)
+ /*
+  * Verify the signature on a module.
+  */
+-int mod_verify_sig(const void *mod, struct load_info *info)
++static int mod_verify_sig(const void *mod, struct load_info *info)
+ {
+ 	struct module_signature ms;
  	size_t sig_len, modlen = info->len;
- 	int ret;
- 
--	pr_devel("==>%s(,%zu)\n", __func__, modlen);
--
- 	if (modlen <= sizeof(ms))
- 		return -EBADMSG;
- 
 
 -- 
 2.54.0
