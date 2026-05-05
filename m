@@ -1,50 +1,50 @@
-Return-Path: <linux-modules+bounces-6378-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6381-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GKoFJEW0+Wm6AwMAu9opvQ
-	(envelope-from <linux-modules+bounces-6378-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:11:33 +0200
+	id yNbkDbiz+Wly/QIAu9opvQ
+	(envelope-from <linux-modules+bounces-6381-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:09:12 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFB434C94AE
-	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:11:32 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EA784C93A5
+	for <lists+linux-modules@lfdr.de>; Tue, 05 May 2026 11:09:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF6E930A8D58
-	for <lists+linux-modules@lfdr.de>; Tue,  5 May 2026 09:06:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C15433039353
+	for <lists+linux-modules@lfdr.de>; Tue,  5 May 2026 09:06:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F38E83E1CE5;
-	Tue,  5 May 2026 09:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E5E33F54C6;
+	Tue,  5 May 2026 09:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="owjODUEx"
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="uSjcE3/7"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706163E3DAA;
-	Tue,  5 May 2026 09:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0F63D5649;
+	Tue,  5 May 2026 09:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777971935; cv=none; b=Oa03xd19BrLkIGxmIJUN69HkuGLnZIID8SvJPdMACqbopH8Z0+O3C0Sdxz8MWbLqU9im6q0tsERZIP4X2U46Zqkwu0VNTyBTAQwqNh/DdQF2CNBe+KpzO80lHax7qZ844uEcIc2S6mQrxC+PssDnv/2J9sui1qCTMdAmAL4mYzM=
+	t=1777971938; cv=none; b=BxFx5/3b0cwU2hMGv6FdQAbcJGu6FM4yZnETgv95AKlutbo6cfEr+B1ag3lTHUizX/EwSiC8/x61FtNMfCBnxt70li+wbpD0E9XbAhYKVOkSXxIjDM5q/B8CMlJHtHbL+Fb+AMdXcBBHEP+I+q7vokVh5vzuILtwmmW3SPpDZrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777971935; c=relaxed/simple;
-	bh=6VJvYnOHZshtQlmEnWd/K1udWrIwe9dejx/5mZI/Wtg=;
+	s=arc-20240116; t=1777971938; c=relaxed/simple;
+	bh=chCyrFKTgdh3bqAx/mQ6lIysEIJoVqpFJGF/rlIkqi4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fkqnszPBcxsx8vyUpPbbP9tyWLLo75QPFeIbHGNZ2rqgW/8Wso/AJZFSJocJLuPO4N5rvp0xYgfGuxdvbrKm6DW8NRSkvFUdW4S6oKGMXsfV+ksornOYcCqaKDkaxScdkD/MvvGOm3GoHnAIQy39T+6OReGhYygz9bOcrcSy3+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=owjODUEx; arc=none smtp.client-ip=159.69.126.157
+	 In-Reply-To:To:Cc; b=ZRB1PEY+0p0AssTxY+P8D9kod+9ThNF4c/pPFoXRkD1OKuv2cjhPhrYqRHADBy2nW2/vBJiHBUbP72ikil6m/1jaXUzD7GD8lCJGEhsTq0k9aImIuWRckZi7vHhdb26yQdbFzztivSw4uv1P9Fa/NQo8bao+WMzDwxT60cFRewg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=uSjcE3/7; arc=none smtp.client-ip=159.69.126.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
 	s=mail; t=1777971923;
-	bh=6VJvYnOHZshtQlmEnWd/K1udWrIwe9dejx/5mZI/Wtg=;
+	bh=chCyrFKTgdh3bqAx/mQ6lIysEIJoVqpFJGF/rlIkqi4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=owjODUExCCypec6TKWlnIwzT8DVnXMsfb+ZaEjU0MoKmKL+u/Hgk0XMLanRHlOS5p
-	 MNeyeJ7VYX8n6e4baZNE/ejhPU8IePBOA5zatZB7qfpcaHAbaVKcUT7fN5vxhMYVdb
-	 T5d4nFyczBMUPklVRaKpvkmaSNX/c9tzIRq1bRpM=
+	b=uSjcE3/7RPzqVxYeknvP09UES2PQcOS9VkYVVqueNpzecmFvo1an3XpkguzW1D0Bg
+	 nFEHj3iswoLhusE/F96Ei5XojOmHw/x30HPACKMdW35EThCzDfqEd2VucH5aOjSyPt
+	 ZadmbkICr/8be6TA7uVP9y8q16Xm891dDk9OoxpA=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Tue, 05 May 2026 11:05:13 +0200
-Subject: [PATCH v5 09/14] module: Move signature type check out of
- mod_check_sig()
+Date: Tue, 05 May 2026 11:05:14 +0200
+Subject: [PATCH v5 10/14] module: Prepare for additional module
+ authentication mechanisms
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260505-module-hashes-v5-9-e174a5a49fce@weissschuh.net>
+Message-Id: <20260505-module-hashes-v5-10-e174a5a49fce@weissschuh.net>
 References: <20260505-module-hashes-v5-0-e174a5a49fce@weissschuh.net>
 In-Reply-To: <20260505-module-hashes-v5-0-e174a5a49fce@weissschuh.net>
 To: Alexei Starovoitov <ast@kernel.org>, 
@@ -93,26 +93,26 @@ Cc: Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
  debian-kernel@lists.debian.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777971921; l=2558;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777971921; l=2563;
  i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=6VJvYnOHZshtQlmEnWd/K1udWrIwe9dejx/5mZI/Wtg=;
- b=CMdNpxTCGkVu3CYbUQ//Xh1Da5BfQXG6erPbBdP2NTFne3QRqh52DC/9CSjILoKbNrS8gBQHS
- 8rcJfdzG3nTABuTlKzuzZV5cQk7a/PkWY+ZZAqFMl0YgtXmFbCISOTR
+ bh=chCyrFKTgdh3bqAx/mQ6lIysEIJoVqpFJGF/rlIkqi4=;
+ b=AghgISpSvC9jFLJMASwIQ2fl2y7giwEV7IIPQJiNe92PMZ8lKZf0qC99jV/SdHmNA1NchS945
+ I53O1yr0Ve6Cw+2TVu7rpkv9iMeNkP/+D4AMPAnvVv3dujuIZnIrT4f
 X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-X-Rspamd-Queue-Id: DFB434C94AE
+X-Rspamd-Queue-Id: 3EA784C93A5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[weissschuh.net,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[weissschuh.net:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-6378-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6381-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
 	FREEMAIL_TO(0.00)[kernel.org,iogearbox.net,gmail.com,arndb.de,suse.com,google.com,samsung.com,paul-moore.com,namei.org,hallyn.com,lwn.net,linux.ibm.com,ellerman.id.au,huawei.com,oracle.com,linux.dev,atomlin.com,oss.cyber.gouv.fr];
@@ -129,78 +129,82 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[weissschuh.net:email,weissschuh.net:dkim,weissschuh.net:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[weissschuh.net:email,weissschuh.net:dkim,weissschuh.net:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-Additional signature types are about to be added.
-As each caller of mod_check_sig() can have different support for these,
-move the type validation into the callers.
+Reorganize the code to make it easier to add the new hash-based module
+authentication.
+
+Also drop the now unnecessary stub for module_sig_check().
 
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 ---
- kernel/module/auth.c                | 5 +++++
- kernel/module_signature.c           | 8 +-------
- security/integrity/ima/ima_modsig.c | 5 +++++
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ kernel/module/auth.c     | 17 ++++++++++++++---
+ kernel/module/internal.h |  8 --------
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
 diff --git a/kernel/module/auth.c b/kernel/module/auth.c
-index 831a13eb0c9b..21e49eb4967c 100644
+index 21e49eb4967c..2ee512d26790 100644
 --- a/kernel/module/auth.c
 +++ b/kernel/module/auth.c
-@@ -48,6 +48,11 @@ static int mod_verify_sig(const void *mod, struct load_info *info)
+@@ -37,6 +37,14 @@ void set_module_sig_enforced(void)
+ 	sig_enforce = true;
+ }
+ 
++static __always_inline bool mod_sig_type_valid(enum module_signature_type id_type)
++{
++	if (id_type == MODULE_SIGNATURE_TYPE_PKCS7 && IS_ENABLED(CONFIG_MODULE_SIG))
++		return true;
++
++	return false;
++}
++
+ static int mod_verify_sig(const void *mod, struct load_info *info)
+ {
+ 	struct module_signature ms;
+@@ -48,8 +56,8 @@ static int mod_verify_sig(const void *mod, struct load_info *info)
  
  	memcpy(&ms, mod + (modlen - sizeof(ms)), sizeof(ms));
  
-+	if (ms.id_type != MODULE_SIGNATURE_TYPE_PKCS7) {
-+		pr_err("module: not signed with expected PKCS#7 message\n");
-+		return -ENOPKG;
-+	}
-+
- 	ret = mod_check_sig(&ms, modlen, "module");
- 	if (ret)
- 		return ret;
-diff --git a/kernel/module_signature.c b/kernel/module_signature.c
-index a0eee2fe4368..4d0476bcdb72 100644
---- a/kernel/module_signature.c
-+++ b/kernel/module_signature.c
-@@ -24,12 +24,6 @@ int mod_check_sig(const struct module_signature *ms, size_t file_len,
- 	if (be32_to_cpu(ms->sig_len) >= file_len - sizeof(*ms))
- 		return -EBADMSG;
- 
--	if (ms->id_type != MODULE_SIGNATURE_TYPE_PKCS7) {
--		pr_err("%s: not signed with expected PKCS#7 message\n",
--		       name);
--		return -ENOPKG;
--	}
--
- 	if (ms->algo != 0 ||
- 	    ms->hash != 0 ||
- 	    ms->signer_len != 0 ||
-@@ -37,7 +31,7 @@ int mod_check_sig(const struct module_signature *ms, size_t file_len,
- 	    ms->__pad[0] != 0 ||
- 	    ms->__pad[1] != 0 ||
- 	    ms->__pad[2] != 0) {
--		pr_err("%s: PKCS#7 signature info has unexpected non-zero params\n",
-+		pr_err("%s: signature info has unexpected non-zero params\n",
- 		       name);
- 		return -EBADMSG;
+-	if (ms.id_type != MODULE_SIGNATURE_TYPE_PKCS7) {
+-		pr_err("module: not signed with expected PKCS#7 message\n");
++	if (!mod_sig_type_valid(ms.id_type)) {
++		pr_err("module: not signed with expected signature\n");
+ 		return -ENOPKG;
  	}
-diff --git a/security/integrity/ima/ima_modsig.c b/security/integrity/ima/ima_modsig.c
-index 632c746fd81e..ebfcdd368a2a 100644
---- a/security/integrity/ima/ima_modsig.c
-+++ b/security/integrity/ima/ima_modsig.c
-@@ -57,6 +57,11 @@ int ima_read_modsig(enum ima_hooks func, const void *buf, loff_t buf_len,
- 	buf_len -= marker_len;
- 	sig = (const struct module_signature *)(p - sizeof(*sig));
  
-+	if (sig->id_type != MODULE_SIGNATURE_TYPE_PKCS7) {
-+		pr_err("%s: not signed with expected PKCS#7 message\n", func_tokens[func]);
-+		return -ENOPKG;
-+	}
+@@ -61,7 +69,10 @@ static int mod_verify_sig(const void *mod, struct load_info *info)
+ 	modlen -= sig_len + sizeof(ms);
+ 	info->len = modlen;
+ 
+-	return module_sig_check(mod, modlen, mod + modlen, sig_len);
++	if (ms.id_type == MODULE_SIGNATURE_TYPE_PKCS7 && IS_ENABLED(CONFIG_MODULE_SIG))
++		return module_sig_check(mod, modlen, mod + modlen, sig_len);
 +
- 	rc = mod_check_sig(sig, buf_len, func_tokens[func]);
- 	if (rc)
- 		return rc;
++	return 0;
+ }
+ 
+ int module_auth_check(struct load_info *info, int flags)
+diff --git a/kernel/module/internal.h b/kernel/module/internal.h
+index d923e31a5d8e..aabe7f8e1af4 100644
+--- a/kernel/module/internal.h
++++ b/kernel/module/internal.h
+@@ -335,15 +335,7 @@ int module_enforce_rwx_sections(const Elf_Ehdr *hdr, const Elf_Shdr *sechdrs,
+ void module_mark_ro_after_init(const Elf_Ehdr *hdr, Elf_Shdr *sechdrs,
+ 			       const char *secstrings);
+ 
+-#ifdef CONFIG_MODULE_SIG
+ int module_sig_check(const void *mod, size_t mod_len, const void *sig, size_t sig_len);
+-#else /* !CONFIG_MODULE_SIG */
+-static inline int module_sig_check(const void *mod, size_t mod_len,
+-				   const void *sig, size_t sig_len)
+-{
+-	return 0;
+-}
+-#endif /* !CONFIG_MODULE_SIG */
+ 
+ #ifdef CONFIG_MODULE_AUTH
+ int module_auth_check(struct load_info *info, int flags);
 
 -- 
 2.54.0
