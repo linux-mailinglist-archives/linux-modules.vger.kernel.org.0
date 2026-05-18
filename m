@@ -1,179 +1,273 @@
-Return-Path: <linux-modules+bounces-6419-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6423-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SMv7J27MCmqf8AQAu9opvQ
-	(envelope-from <linux-modules+bounces-6419-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 10:23:10 +0200
+	id 2NwiD9TrCmo89gQAu9opvQ
+	(envelope-from <linux-modules+bounces-6423-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 12:37:08 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D14B568A07
-	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 10:23:10 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D19956ACC5
+	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 12:37:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9D551300C03A
-	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 08:22:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DDF023051D11
+	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 10:30:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5916A3E3170;
-	Mon, 18 May 2026 08:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52DED3EDACC;
+	Mon, 18 May 2026 10:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YEFuiHQp"
+	dkim=pass (2048-bit key) header.d=sony.com header.i=@sony.com header.b="RBHufr+G"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jpms-ob01-os7.noc.sony.co.jp (jpms-ob01-os7.noc.sony.co.jp [211.125.139.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352003E3152;
-	Mon, 18 May 2026 08:22:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698003EBF04;
+	Mon, 18 May 2026 10:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.125.139.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779092565; cv=none; b=SWLuEVBFA7zbQbuFdZGdumLt0YOF+Eq9ApZZaGnun96My9VeN0P0iNFxcaHdzjtJ07OQ5Urx7hgrYu8sGST3Gbp6cW+61vfY4C09g1XZhdFxVjeyVL2W8wjFI6k0vR4Dm3Um940m3/KCce7vhK7HgLTLh4WX9ZtyqZ6ThHlweqk=
+	t=1779100233; cv=none; b=MFikoygFmCqjo9sAb+2MrAlDXEEnXX7aC+xdRGBE+2t40aDkpEGCh0g+BtIluZorxmlfHqsIWs7sQRHIy47JHfIw4QSH6HMG2ShJj0QjRUCcqecE5nG9P0kFuEYz6u1d7Vzl8V175hVDbxu0AtAMnAwpxMARJK5M2+sS3kgvGmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779092565; c=relaxed/simple;
-	bh=Ja8xJYvBHw17MUGizTjwFmkJ2dRz7Z5VWkYWZtCVoog=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NzVUAunD8S4nJ7wMnp8sszTXK0QU4/cpIUUaHzp3LrL4Bfni+zJ8UsL7RGCEPI/FYeFnPf+CwDhJ5dRdfuziDSNdbBSr3DIBRZs1qYcSTL3U7v7qAKm9LX9vtFwdquFQOhe5kfs1nQ6uulN8LVi3Bc477VTO9sv0wkUyLI6m7ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEFuiHQp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65E5C2BCB7;
-	Mon, 18 May 2026 08:22:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779092565;
-	bh=Ja8xJYvBHw17MUGizTjwFmkJ2dRz7Z5VWkYWZtCVoog=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YEFuiHQpDtqhUhZ3FORIrOHsR0w499XWeUAjyakRRs+GQWxJZc4epb6SHKrRpHGmP
-	 nDBO0uGOVzS64kCc/r0tOevkb2pWycBH12kTlFDG47ObtOx/PrLzFU0xixixWDeULu
-	 YAyKl1yTlkV6U7NNn2hqDK1K6Pet0dAxt9qArgjzPxss295VOJZXhrMZ34Pyg9itvN
-	 JKGR7lPLLYHGL6cR1QmtB+CMhTd1BSwyn2f3WWn8lGaTKhwkWDxx5ttLvUQMX6B2A8
-	 Sw2R5uwdiuSIEUOsh2VveriUic99JXBtrZZE40EWth3C5YFuOAjTneq0YMof5U+rtJ
-	 CfjD58w2Wh/Rw==
-Message-ID: <f9fab2bc-ee1c-4d9c-af76-cde159b29ed9@kernel.org>
-Date: Mon, 18 May 2026 10:22:41 +0200
+	s=arc-20240116; t=1779100233; c=relaxed/simple;
+	bh=O9LaxrL42z23osWLnzEggWM0DPpmMqp5gkr/0jAvRGA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=LkAIH0r7rdKUMPYI07kjDHfowgII1coQ6QotP7/v92Aeny5Ti0hlTKYQ7C9wjSTgnSGXTGdADaFzm74Vm+kAM08vqJFWOUJiECtXYpvXNdKv8YmAA4uQbgCVfDgl7hLNxQcCVoaYD2XgMoYuJtKujdcR07U961Pi3Cg/7k7joCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sony.com; spf=fail smtp.mailfrom=sony.com; dkim=pass (2048-bit key) header.d=sony.com header.i=@sony.com header.b=RBHufr+G; arc=none smtp.client-ip=211.125.139.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sony.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=sony.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=sony.com; s=s1jp; t=1779100219; x=1810636219;
+  h=from:subject:date:message-id:mime-version:
+   content-transfer-encoding:in-reply-to:references:to:cc;
+  bh=cZOl++/U8mgGRzBj4a+TwuLZWAUpFgNm4L1UTdesaiE=;
+  b=RBHufr+G7iViWXb337IBWV4QyTshe3CEDMRhrojSr4spB6RiMt+wMt1Y
+   UEFpOs1+E2/hwlggDu0wnGTZYWRvnCtc32ONxjjuq9ZjVG29c3/0WiHHS
+   mKkSnnoIXgkGK5a/3FMwItANtVZ+rEvtldOgq7GcOi5+3h3vxnGBevqtN
+   QOt5W+RamPeh4FssLLShOqlJ4NKwI+KbsaDm+IzDoyaNeCVAKh8AXI+yj
+   JwY4Eic1usIgdaSFRACix0y9KX0fcDNcDYJHR90grjEV7CvrAOWUzNXw3
+   CZXLndWe7wJaoTod2O/dCL1eZmXeJoR3NclquRfhDGjKWu4uj5EdC658j
+   g==;
+X-CSE-ConnectionGUID: 79tOulu9S6+YAmJwh/cccg==
+X-CSE-MsgGUID: 8rFKEgLITGKGJr6I7MFuEg==
+Received: from unknown (HELO jpmta-ob02-os7.noc.sony.co.jp) ([IPv6:2001:cf8:acf:1104::7])
+  by jpms-ob01-os7.noc.sony.co.jp with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 19:20:03 +0900
+X-CSE-ConnectionGUID: ZtJ8Ohn+Q/eMmZQya0wKEA==
+X-CSE-MsgGUID: DD9c8FoKSYeM1xB6sFyjqA==
+X-IronPort-AV: E=Sophos;i="6.23,241,1770562800"; 
+   d="scan'208";a="56041664"
+Received: from unknown (HELO [127.0.1.1]) ([IPv6:2001:cf8:1:573:0:dddd:6b3e:119e])
+  by jpmta-ob02-os7.noc.sony.co.jp with ESMTP; 18 May 2026 19:20:02 +0900
+From: Shashank Balaji <shashank.mahadasyam@sony.com>
+Subject: [PATCH v5 0/4] Enable sysfs module symlink for more built-in
+ drivers
+Date: Mon, 18 May 2026 19:19:56 +0900
+Message-Id: <20260518-acpi_mod_name-v5-0-705ccc430885@sony.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] module: decompress: check return value of
- module_extend_max_pages()
-To: Andrii Kuchmenko <capyenglishlite@gmail.com>,
- linux-modules@vger.kernel.org
-Cc: mcgrof@kernel.org, dmitry.torokhov@gmail.com,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20260517110037.21506-1-capyenglishlite@gmail.com>
-Content-Language: fr-FR
-From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-In-Reply-To: <20260517110037.21506-1-capyenglishlite@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 3D14B568A07
+X-B4-Tracking: v=1; b=H4sIAMznCmoC/3XNTQrCMBCG4atI1kbyZ2pceQ8RSZMZjdCmNFosp
+ Xc31U0JuPxgnncmkqAPkMhxM5EehpBCbPPYbzfE3W17Axp83kQwoZnimlrXhWsT/bW1DVDUam8
+ rDVJWNcmm6wHD+9s7X347veoHuOcSWS7uIT1jP34fDny5+9ceOGWUW+WNRn/QzpxSbMediw1Z0
+ oNYYcFLLDKGSqKRnHnrZYHlGosSy4wtPyhANIgaC6zWuCqxyliIOmcVc6Ze43meP4TjS4dyAQA
+ A
+X-Change-ID: 20260416-acpi_mod_name-f645a76e337b
+In-Reply-To: <20260427-acpi_mod_name-v4-0-22b42240c9bf@sony.com>
+References: <20260427-acpi_mod_name-v4-0-22b42240c9bf@sony.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>, 
+ James Clark <james.clark@linaro.org>, 
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
+ Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
+ Gary Guo <gary@garyguo.net>, 
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+ Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+ Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+ Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+ Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
+ Aaron Tomlin <atomlin@atomlin.com>, Mike Leach <mike.leach@arm.com>, 
+ Leo Yan <leo.yan@arm.com>, Thierry Reding <thierry.reding@kernel.org>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, Mike Leach <mike.leach@arm.com>
+Cc: Rahul Bukte <rahul.bukte@sony.com>, 
+ Shashank Balaji <shashank.mahadasyam@sony.com>, 
+ linux-kernel@vger.kernel.org, coresight@lists.linaro.org, 
+ linux-arm-kernel@lists.infradead.org, driver-core@lists.linux.dev, 
+ rust-for-linux@vger.kernel.org, linux-doc@vger.kernel.org, 
+ Daniel Palmer <daniel.palmer@sony.com>, Tim Bird <tim.bird@sony.com>, 
+ linux-modules@vger.kernel.org, linux-tegra@vger.kernel.org, 
+ Sumit Gupta <sumitg@nvidia.com>
+X-Mailer: b4 0.16-dev-3bfbc
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5952;
+ i=shashank.mahadasyam@sony.com; h=from:subject:message-id;
+ bh=O9LaxrL42z23osWLnzEggWM0DPpmMqp5gkr/0jAvRGA=;
+ b=owGbwMvMwCU2bX1+URVTXyjjabUkhiyu5+evnVP3asuKrfB9fiR5U4v1xrjjqz68mfmiTvTsz
+ i8K+m35HaUsDGJcDLJiiiylStW/9q4IWtJz5rUizBxWJpAhDFycAjCRO4yMDAf33V6tsyJwer/j
+ u3Qt0+tOEVqPvGfO6tv/6OJNjV1/mUIZGTbZHzB4NnGT7YX1Fct/dUyy41bdqbliX3GrSWDHrV2
+ aCYwA
+X-Developer-Key: i=shashank.mahadasyam@sony.com; a=openpgp;
+ fpr=75227BFABDA852A48CCCEB2196AF6F727A028E55
+X-Rspamd-Queue-Id: 8D19956ACC5
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[sony.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[sony.com:s=s1jp];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6423-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6419-lists,linux-modules=lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[arm.com,linaro.org,linux.intel.com,linuxfoundation.org,kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,lwn.net,suse.com,atomlin.com,nvidia.com];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_TWELVE(0.00)[39];
+	DKIM_TRACE(0.00)[sony.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[chleroy@kernel.org,linux-modules@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[shashank.mahadasyam@sony.com,linux-modules@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
-	REDIRECTOR_URL(0.00)[aka.ms];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
-	RCPT_COUNT_FIVE(0.00)[6];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,aka.ms:url]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
+struct device_driver's mod_name is not set by a number of bus' driver registration
+functions. Without that, built-in drivers don't have the module symlink in sysfs.
+We want this to go from unbound driver name -> module name -> kernel config name.
+This is useful on embedded platforms to minimize kernel config, reduce kernel size,
+and reduce boot time.
 
+In order to achieve this, mod_name has to be set to KBUILD_MODNAME, and this has
+to be done for all buses which don't yet do this.
 
-Le 17/05/2026 à 13:00, Andrii Kuchmenko a écrit :
-> [Vous ne recevez pas souvent de courriers de capyenglishlite@gmail.com. Découvrez pourquoi ceci est important à https://aka.ms/LearnAboutSenderIdentification ]
-> 
-> module_extend_max_pages() calls kvrealloc() internally and returns
-> -ENOMEM on allocation failure. The return value is never checked.
-> The decompression loop then continues calling module_get_next_page(),
-> which writes struct page pointers into info->pages[]. When used_pages
-> reaches the stale max_pages value (not updated due to the failed
-> extend), a subsequent write to info->pages[used_pages++] goes out of
-> bounds into adjacent heap memory.
-> 
-> Adjacent slab objects in the same kmalloc cache (pipe_buffer,
-> seq_operations, cred) can be corrupted, potentially leading to local
-> privilege escalation on kernels without SLAB_VIRTUAL mitigation.
-> 
-> The call order in finit_module() is:
-> 
->    module_decompress()    <- vulnerable, runs FIRST
->    load_module()
->      module_sig_check()   <- signature check, runs SECOND
-> 
-> Decompression happens before signature verification. A crafted
-> compressed module submitted via finit_module(MODULE_INIT_COMPRESSED_FILE)
-> reaches this code path before any signature gate is applied. On kernels
-> with module.sig_enforce=0 (default without SecureBoot) or with
-> unprivileged user namespaces (Ubuntu, Debian default), this is
-> reachable without CAP_SYS_MODULE.
-> 
-> Confirmed present in mainline (tested on v6.14-rc3).
-> 
-> Fix: add the missing error check after module_extend_max_pages() and
-> return immediately on failure. This matches the pattern used by every
-> other kvrealloc() caller in the module loading path.
-> 
-> Fixes: 169a58ad824d ("module: add in-kernel support for decompressing")
-> Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Cc: Luis Chamberlain <mcgrof@kernel.org>
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Andrii Kuchmenko <capyenglishlite@gmail.com>
-> ---
->   kernel/module/decompress.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
-> index a1b2c3d4e5f6..b7c8d9e0f1a2 100644
-> --- a/kernel/module/decompress.c
-> +++ b/kernel/module/decompress.c
-> @@ -XXX,10 +XXX,13 @@ int module_decompress(struct load_info *info,
->                                  const void *buf, size_t size)
->   {
->          unsigned int n_pages;
-> -       int error;
-> +       int error = 0;
+Here are some treewide stats:
+- 110 registration functions across all bus types
+- 20 of them set mod_name
+- Remaining 90 do not set mod_name:
+    1. 36 functions under pattern 1:
+        They have a __register function + register macro. KBUILD_MODNAME needs to
+        be passed and the function needs to take mod_name as input.
+    2. 42 functions under pattern 2:
+        These have no macro wrapper. They need a double-underscore rename + macro
+        wrapper to make them similar to pattern 1.
+    3. Remaining 12 do not have such a clean registration interface. More analysis
+       is required.
 
-Please don't do that, this is unnecessary. 'error' is being set 
-inconditionaly two lines below and unused before that.
+We plan to start with pattern 1, since it's the easiest category of changes.
+Within that, for now we're only sending the platform patch. If we get the go-ahead
+on that, we'll send the remaining ones.
 
->          ssize_t data_size;
-> 
->          n_pages = DIV_ROUND_UP(size, PAGE_SIZE) * 2;
-> +
+Patch 4 depends on patches 1, 2, and 3.
 
-Don't add unrelated blank lines.
+Co-developed-by: Rahul Bukte <rahul.bukte@sony.com>
+Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
+Signed-off-by: Shashank Balaji <shashank.mahadasyam@sony.com>
+---
+Changes in v5:
+- Move tegra cbb driver init to core_initcall and module_kset init to pure_initcall (Gary)
+- Rename coresight_init_driver() to coresight_init_driver_with_owner(), and
+  declare function prototype before use (Leo)
+- Merge doc change patch with code change patch, so that __platform_register_drivers()
+  prototype is changed everywhere in the same patch
+- Link to v4: https://patch.msgid.link/20260427-acpi_mod_name-v4-0-22b42240c9bf@sony.com
 
->          error = module_extend_max_pages(info, n_pages);
-> +       if (error)
-> +               return error;
-> +
->          data_size = MODULE_DECOMPRESS_FN(info, buf, size);
->          if (data_size < 0) {
->                  error = data_size;
-> --
-> 2.39.0
-> 
+Changes in v4:
+- Initialize module_kset in do_basic_setup() before do_initcalls() (Gary)
+- Add commit body to the documentation patch (Greg)
+- Link to v3: https://patch.msgid.link/20260422-acpi_mod_name-v3-0-a184eff9ff6f@sony.com
 
-On which tree/branch does your patch applies ?
+Changes in v3:
+- Initialize module_kset on-demand (Greg)
+- Make coresight driver registration happen through a macro (Greg)
+- Split up the patch adding mod_name to platform driver registrations (Greg)
+- Link to v2: https://patch.msgid.link/20260421-acpi_mod_name-v2-0-e73f9310dad3@sony.com
+
+Changes in v2:
+- Drop acpi patch, send platform instead (Rafael)
+- Link to v1: https://patch.msgid.link/20260416-acpi_mod_name-v1-0-1a4d96fd86c9@sony.com
+
+To: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Mike Leach <mike.leach@linaro.org>
+To: James Clark <james.clark@linaro.org>
+To: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+To: Danilo Krummrich <dakr@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+To: Boqun Feng <boqun@kernel.org>
+To: Gary Guo <gary@garyguo.net>
+To: Björn Roy Baron <bjorn3_gh@protonmail.com>
+To: Benno Lossin <lossin@kernel.org>
+To: Andreas Hindborg <a.hindborg@kernel.org>
+To: Alice Ryhl <aliceryhl@google.com>
+To: Trevor Gross <tmgross@umich.edu>
+To: Jonathan Corbet <corbet@lwn.net>
+To: Shuah Khan <skhan@linuxfoundation.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+To: Petr Pavlu <petr.pavlu@suse.com>
+To: Daniel Gomez <da.gomez@kernel.org>
+To: Sami Tolvanen <samitolvanen@google.com>
+To: Aaron Tomlin <atomlin@atomlin.com>
+To: Mike Leach <mike.leach@arm.com>
+To: Leo Yan <leo.yan@arm.com>
+To: Thierry Reding <thierry.reding@kernel.org>
+To: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: linux-kernel@vger.kernel.org
+Cc: coresight@lists.linaro.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: driver-core@lists.linux.dev
+Cc: rust-for-linux@vger.kernel.org
+Cc: linux-doc@vger.kernel.org
+Cc: Shashank Balaji <shashank.mahadasyam@sony.com>
+Cc: Rahul Bukte <rahul.bukte@sony.com>
+Cc: Daniel Palmer <daniel.palmer@sony.com>
+Cc: Tim Bird <tim.bird@sony.com>
+Cc: linux-modules@vger.kernel.org
+Cc: linux-tegra@vger.kernel.org
+Cc: Sumit Gupta <sumitg@nvidia.com>
+
+---
+Shashank Balaji (4):
+      soc/tegra: cbb: Move driver registration from pure_initcall to core_initcall
+      kernel: param: initialize module_kset in a pure_initcall
+      coresight: pass THIS_MODULE implicitly through a macro
+      driver core: platform: set mod_name in driver registration
+
+ Documentation/driver-api/driver-model/platform.rst |  3 ++-
+ drivers/base/platform.c                            | 21 ++++++++++++++-------
+ drivers/hwtracing/coresight/coresight-catu.c       |  2 +-
+ drivers/hwtracing/coresight/coresight-core.c       |  9 +++++----
+ drivers/hwtracing/coresight/coresight-cpu-debug.c  |  3 +--
+ drivers/hwtracing/coresight/coresight-funnel.c     |  3 +--
+ drivers/hwtracing/coresight/coresight-replicator.c |  3 +--
+ drivers/hwtracing/coresight/coresight-stm.c        |  2 +-
+ drivers/hwtracing/coresight/coresight-tmc-core.c   |  2 +-
+ drivers/hwtracing/coresight/coresight-tnoc.c       |  2 +-
+ drivers/hwtracing/coresight/coresight-tpdm.c       |  3 +--
+ drivers/hwtracing/coresight/coresight-tpiu.c       |  2 +-
+ drivers/soc/tegra/cbb/tegra194-cbb.c               |  2 +-
+ drivers/soc/tegra/cbb/tegra234-cbb.c               |  2 +-
+ include/linux/coresight.h                          |  7 +++++--
+ include/linux/platform_device.h                    | 17 +++++++++--------
+ kernel/params.c                                    |  2 +-
+ rust/kernel/platform.rs                            |  4 +++-
+ 18 files changed, 50 insertions(+), 39 deletions(-)
+---
+base-commit: 5200f5f493f79f14bbdc349e402a40dfb32f23c8
+change-id: 20260416-acpi_mod_name-f645a76e337b
+
+Best regards,
+--  
+Shashank Balaji <shashank.mahadasyam@sony.com>
+
 
