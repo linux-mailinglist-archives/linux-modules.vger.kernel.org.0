@@ -1,192 +1,223 @@
-Return-Path: <linux-modules+bounces-6439-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6442-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wFtrCi6MC2p1IwUAu9opvQ
-	(envelope-from <linux-modules+bounces-6439-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 00:01:18 +0200
+	id oLvpBY8CDGp0TgUAu9opvQ
+	(envelope-from <linux-modules+bounces-6442-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 08:26:23 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DD1D57430E
-	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 00:01:17 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9A3157808B
+	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 08:26:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B7E74306B37B
-	for <lists+linux-modules@lfdr.de>; Mon, 18 May 2026 21:55:52 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C69993024FB0
+	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 06:26:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3FBB39B97E;
-	Mon, 18 May 2026 21:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BD3F38B131;
+	Tue, 19 May 2026 06:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IvoDbo4V"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="fyQNwWx4"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6B3398915
-	for <linux-modules@vger.kernel.org>; Mon, 18 May 2026 21:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1522F60CC;
+	Tue, 19 May 2026 06:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779141351; cv=none; b=A3GQ5fW2Ke1LnV1jNgEQnEGOgfMWEUR66K8YbdjvaQBcOhNtidZSx0JHds52Q4RlxfWCd0ScugOGfXLdwJVXwcDQ08e8ZzHImeyYX9z0/P0Xl5Mg9hQpi51NUyO/sSZXZyopL/EmRaCiDfYePmQHBnDrxh0TG7gIJhtAmEjo3Uk=
+	t=1779171977; cv=none; b=JRVtxOhXbp+jVrcEO6E5nN+x/sMHCHzPmVa/eJAl4pPVaiW2c8oQg+d2PkByps+h7fddRmFW97GIjdff5ZsFqn4ZqucUEXnYtMsuSOgKO/acZWIZYEeQdE5kqP1vefbVLZEiPd9fB3mvZJzaLj8OjanGJtG97F8vzuRzJOYki5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779141351; c=relaxed/simple;
-	bh=WhaVFwVRm1Wf4thmzuA0e0qjOQLT9x+04R1dduxYWzY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLiUFZ1gS7gDEc5iWppHGVY/UBO1j4ru508PC8hhKehmKwb0YRYvYgTK66VPHiD3TrsL2j3Y0v9BTeC6Sy6Pa9mjziMGzANXsWKB4BmktdGoolRxdu2QvgagjIlChMQ4xV7zxbBhABcv+MScq7x+QvL6JmfacgOL8E3r7YZtx1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IvoDbo4V; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ba3b9bcf69so765ad.0
-        for <linux-modules@vger.kernel.org>; Mon, 18 May 2026 14:55:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1779141350; x=1779746150; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=eATlafWR2CpUln9HSfV3CyzBd2Vyaqeh6UVZyYqlodE=;
-        b=IvoDbo4V1nj4Q9OWvBMcUPpA6eDFfBAFbu4ry1ujeKWH4fYBAFNjP7BApepEoXKgFW
-         echIH2GbEhb+kGhHlHfftLXlBnHDih1oHm9UtaSSK5CAFRUvXh1PCqOj+XI9wKqJnmv9
-         BdHZsxEJDc6k4l629t6bytiQfWInZt6CAKX455PJMRgqGvsL+3fHb7ubaoj1OjP5TMpJ
-         apWTAqJbeutKX9DtvRx+hRvKlId5JUFry4JYzoUpiHudyEvfAoPlfnA1GOb/KpKOehgq
-         VY2sjO/zadidGT8zNRrbzepfosggp1gNZrno+6RpVU2wOW8V9Y0N7qAHPHbOdQPTZ4W2
-         afYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779141350; x=1779746150;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eATlafWR2CpUln9HSfV3CyzBd2Vyaqeh6UVZyYqlodE=;
-        b=TSK+4ywValGhp2ak6l0eR7KFlmvcHoglOgxD4bb/sNAfP6FrZRkh9AeD4ud6HCWT94
-         AoPM5erb3LrQySyo/ZkHCvrkL9SPj+6oTePM7MpQN/SKg/3ZS9Ait2n3GIgV8KuvzV/P
-         NwYt+G6K+vYTfC7Hq+7kFjfuJF05U/ha6x8+HwNYSX/ikZMtx5bEiWqqL7IczmRnD3YA
-         x1/DZVIpkHrzMd16xPmMmLeXmqnLQvcmvECv+uz3OjjoRyPYDRz57dFbCkKtnIqSHkjH
-         vD9fezqZ6tYJQTKWuCGI8kmDmSzDWzin3lu7pz5Xn/F5+maeUuhhhZMgJWLp5605txJf
-         DSkQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9lK4IkjQKs+U7yQ8M0VVGN0/o7xgf2qX3pnjB5Gfan9EZiykevYhJMbAGxGWeHL/JJ9UIbpZ0kYZZJK6kj@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKPtQSU6z++bdlOErV0K6tOEHUO6WfuZrf1zcCOVlRu9yPg7k+
-	SzX9an/RSM6S5owk/9hHntzN9fehCLqI66L609cHr6arf0x+FPPrf06AwcTUtois6w==
-X-Gm-Gg: Acq92OGsC1KL6ufGQEk67BE+nYrCQ6MmlhOSOqAyZknttVtcraM3t62aoSmMVpOZiCF
-	/UbsVq6AoxFCKwAApkSeu1ePCXobwsiaKuc6D1lgkNG0t2BLhskVQoBfLksM9B3vERykFkQyIJY
-	e/bYnFARWzOcYxIIkQhjIa9kbfcUXz6NrqsRoUt6U8JeCWyq2CUr4tfUfmvNfFcuk3NTnJbrmfr
-	pzumei58NN+cMStkL4aF9PpZQ8/k2QdIEameNRsCrkHyaTSmgZfozP6yLCeyNfXDgQA3wN7UNcP
-	4jtOCv3yIPjCG75p+LQFXDVFJuX1WKY8kM0rER/QOeSlvTAw4CdObYEpYn1eW4N1ldWsYyPdocm
-	qY/DQ/AfZosXZvfsvgcM1SQCvwjBiyCMnr96F/C9cs/7DdYJexn2SHAekINibBVG+kc1E9Pgh1T
-	0GYtXXL0otC5zpmQreR7ok3vHIhDMhFGYamh7r9pnfMVzcMuMDVsF5rE4kInFOhVzcam4Wywwrr
-	u94XFzUClA+mvDJ
-X-Received: by 2002:a17:902:d512:b0:2bc:dc0b:ab29 with SMTP id d9443c01a7336-2bdb0109472mr3880435ad.0.1779141349445;
-        Mon, 18 May 2026 14:55:49 -0700 (PDT)
-Received: from google.com (171.46.125.34.bc.googleusercontent.com. [34.125.46.171])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe498asm164380125ad.39.2026.05.18.14.55.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 14:55:48 -0700 (PDT)
-Date: Mon, 18 May 2026 21:55:43 +0000
-From: Sami Tolvanen <samitolvanen@google.com>
-To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
-Cc: Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Naveen N Rao <naveen@kernel.org>, Mimi Zohar <zohar@linux.ibm.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Nicolas Bouchinet <nicolas.bouchinet@oss.cyber.gouv.fr>,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>, bpf@vger.kernel.org,
-	Fabian =?iso-8859-1?Q?Gr=FCnbichler?= <f.gruenbichler@proxmox.com>,
-	Arnout Engelen <arnout@bzzt.net>,
-	Mattia Rizzolo <mattia@mapreri.org>, kpcyrd <kpcyrd@archlinux.org>,
-	Christian Heusel <christian@heusel.eu>,
-	=?iso-8859-1?Q?C=E2ju?= Mihai-Drosi <mcaju95@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org, linux-modules@vger.kernel.org,
-	linux-security-module@vger.kernel.org, linux-doc@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-integrity@vger.kernel.org,
-	debian-kernel@lists.debian.org
-Subject: Re: [PATCH v5 00/14] module: Introduce hash-based integrity checking
-Message-ID: <20260518215543.GA1878854@google.com>
-References: <20260505-module-hashes-v5-0-e174a5a49fce@weissschuh.net>
+	s=arc-20240116; t=1779171977; c=relaxed/simple;
+	bh=gnozQPQnkJBReVQYxjjuPb5BYLWwTWhcOmK2QpLcVnM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jgXcC46oDq0/y1Si93wwi54DalOpcbUHNJGVpXsISD7oruK51xzO5aAx4ctEWjw5lI4YSAq+LEWW5U67/WC8p0j5t3LbFTLGNa9dfnSTvRl7MmUjuG+LgjJRCuqpVqSCUMBSxkiv0trYfIHuHTmljtvmnygist3ZB/+lm7CArvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=fyQNwWx4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EE3B7C2BCB3;
+	Tue, 19 May 2026 06:26:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux.dev; s=korg;
+	t=1779171977; bh=gnozQPQnkJBReVQYxjjuPb5BYLWwTWhcOmK2QpLcVnM=;
+	h=From:Subject:Date:To:Cc:From;
+	b=fyQNwWx4oQVfgdUB9KR7wyQcwT/DXmDAyNCfd/t5GW0eIkLckz65KjVgjdDpZv2fM
+	 bglZKoZRe4wJfG7/zlQ1bHnIYxTQYvG0w2PMRTo6qPrg3QXGyeqmd1Nd21O3aXSsIr
+	 b6fK5+0wPcPbQ0r1tfvLqEGyYnpycQZUN9MTO9P0=
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA944CD4F54;
+	Tue, 19 May 2026 06:26:16 +0000 (UTC)
+From: Alvin Sun <alvin.sun@linux.dev>
+Subject: [PATCH 0/8] Fix missing fops.owner in Rust DRM/misc abstractions
+Date: Tue, 19 May 2026 14:26:12 +0800
+Message-Id: <20260519-fix-fops-owner-v1-0-2ded9830da14@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260505-module-hashes-v5-0-e174a5a49fce@weissschuh.net>
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIUCDGoC/02NwQ6CMBBEf6XZs2soKNX+iuHQLov2UIotVBPCv
+ 9tIYjy+ybyZFRJHxwm0WCFydsmFsYA8CKCHGe+Mri8MdVW31VlecXBvHMKUMLxGjsiNUcraWlF
+ LUKQpcml8B2/dzpGfS9md9xCsSYwUvHezFlkdJUY6wf+fFr837xL1nHEpzhCiNzNejVV8aawkK
+ XWW0G3bB1ik0zfGAAAA
+X-Change-ID: 20260519-fix-fops-owner-e3a77bb27c6c
+To: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
+ Gary Guo <gary@garyguo.net>, 
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+ Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+ Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+ Danilo Krummrich <dakr@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
+ Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>, 
+ Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, 
+ Daniel Almeida <daniel.almeida@collabora.com>, 
+ Arnd Bergmann <arnd@arndb.de>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-modules@vger.kernel.org, driver-core@lists.linux.dev, 
+ dri-devel@lists.freedesktop.org, nova-gpu@lists.linux.dev, 
+ Alvin Sun <alvin.sun@linux.dev>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779171974; l=6176;
+ i=alvin.sun@linux.dev; s=20260317; h=from:subject:message-id;
+ bh=gnozQPQnkJBReVQYxjjuPb5BYLWwTWhcOmK2QpLcVnM=;
+ b=ku5YXdgCRDoVUxetEP7cdBpVNgktrDn7dvpwKArd3hsyV982SOcsuuUsTEKUvoNG+8A9/HY3a
+ OCKwkMoHehXD0cHMm6QkiSSjJxFWt5rBQG0fdhbiUz2L3t/Pgi/prGo
+X-Developer-Key: i=alvin.sun@linux.dev; a=ed25519;
+ pk=CHcwQp8GSoj25V/L1ZWNSQjWp9eSIb0s9LKr0Nm3WuE=
+X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
+ auth_id=684
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
-	R_DKIM_ALLOW(-0.20)[google.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[linux.dev:s=korg];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,iogearbox.net,gmail.com,arndb.de,suse.com,samsung.com,paul-moore.com,namei.org,hallyn.com,lwn.net,linux.ibm.com,ellerman.id.au,huawei.com,oracle.com,linux.dev,atomlin.com,oss.cyber.gouv.fr,vger.kernel.org,proxmox.com,bzzt.net,mapreri.org,archlinux.org,heusel.eu,linutronix.de,lists.ozlabs.org,lists.debian.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[google.com:+];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-6439-lists,linux-modules=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[27];
 	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,suse.com,atomlin.com,linuxfoundation.org,gmail.com,ffwll.ch,collabora.com,arndb.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6442-lists,linux-modules=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[samitolvanen@google.com,linux-modules@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[52];
+	FROM_NEQ_ENVFROM(0.00)[alvin.sun@linux.dev,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[linux.dev:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-modules];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,sashiko.dev:url]
-X-Rspamd-Queue-Id: 7DD1D57430E
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,linux.dev:mid,linux.dev:dkim,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: A9A3157808B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Thomas,
+During tyr debugfs development, a kernel NULL pointer dereference was
+encountered after `rmmod tyr` while gnome-shell still held /dev/card1 open:
 
-On Tue, May 05, 2026 at 11:05:04AM +0200, Thomas Weißschuh wrote:
-> The current signature-based module integrity checking has some drawbacks
-> in combination with reproducible builds. Either the module signing key
-> is generated at build time, which makes the build unreproducible, or a
-> static signing key is used, which precludes rebuilds by third parties
-> and makes the whole build and packaging process much more complicated.
-> 
-> The goal is to reach bit-for-bit reproducibility. Excluding certain
-> parts of the build output from the reproducibility analysis would be
-> error-prone and force each downstream consumer to introduce new tooling.
-> 
-> Introduce a new mechanism to ensure only well-known modules are loaded
-> by embedding a merkle tree root of all modules built as part of the full
-> kernel build into vmlinux.
+```
+  [158827.868132] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  [158827.868918] Mem abort info:
+  [158827.869177]   ESR = 0x0000000086000004
+  [158827.869519]   EC = 0x21: IABT (current EL), IL = 32 bits
+  [158827.870000]   SET = 0, FnV = 0
+  [158827.870281]   EA = 0, S1PTW = 0
+  [158827.870571]   FSC = 0x04: level 0 translation fault
+  [158827.871043] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000108dec000
+  [158827.871623] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+  [158827.872242] Internal error: Oops: 0000000086000004 [#1]  SMP
+  [158827.872246] Modules linked in: tyr sunrpc snd_soc_simple_card rk805_pwrkey snd_soc_simple_card_utils rtw88_8822bu display_connector rtw88_usb rtw88_8822b snd_soc_rockchip_i2s_tdm snd_soc_hdmi_codec
+  rtw88_core]
+  [158827.872337] CPU: 4 UID: 1000 PID: 11276 Comm: gnome-s:disk$0 Tainted: G                 N  7.1.0-rc1+ #331 PREEMPT
+  [158827.880534] Tainted: [N]=TEST
+  [158827.880535] Hardware name: FriendlyElec NanoPi R6C/NanoPi R6C, BIOS v1.1 04/09/2025
+  [158827.880538] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  [158827.880542] pc : 0x0
+  [158827.880547] lr : _RNvNtCs257m05FHVbX_3tyr2vm8pt_unmap+0x8c/0x12c [tyr]
+  [158827.880578] sp : ffff800083c236b0
+  [158827.880579] x29: ffff800083c236d0 x28: ffff00013f8a0000 x27: 0000000000000000
+  [158827.880585] x26: 000000000000007c x25: ffff000108e6ed80 x24: 0000000000401000
+  [158827.880590] x23: 0000000000000000 x22: 0000000040000000 x21: 0000000000001000
+  [158827.880595] x20: ffff00010f778138 x19: 0000000000400000 x18: 00000000ffffffff
+  [158827.880600] x17: 000000040044ffff x16: 045000f2b5503510 x15: 0720072007200720
+  [158827.880606] x14: 0720072007200720 x13: 0000000000401000 x12: 0000000000400000
+  [158827.880611] x11: ffff800083c239d0 x10: ffff000141e4fd88 x9 : 0000000000000000
+  [158827.880615] x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000400000
+  [158827.880620] x5 : ffff00013f8a0000 x4 : 0000000000000000 x3 : 0000000000000001
+  [158827.880625] x2 : 0000000000001000 x1 : 0000000000400000 x0 : ffff00010f778138
+  [158827.880630] Call trace:
+  [158827.880632]  0x0 (P)
+  [158827.880635]  _RNvXs6_NtCs257m05FHVbX_3tyr2vmNtB5_9GpuVmDataNtNtNtCsgmSOfgXi5CZ_6kernel3drm5gpuvm11DriverGpuVm13sm_step_unmap+0x3c/0x120 [tyr]
+  [158827.891166]  _RNvMs4_NtNtNtCsgmSOfgXi5CZ_6kernel3drm5gpuvm6sm_opsINtB7_5GpuVmNtNtCs257m05FHVbX_3tyr2vm9GpuVmDataE13sm_step_unmapB13_+0x18/0x34 [tyr]
+  [158827.891187]  op_unmap_cb+0x78/0xb0
+  [158827.891196]  __drm_gpuvm_sm_unmap+0x18c/0x1b4
+  [158827.891204]  drm_gpuvm_sm_unmap+0x38/0x4c
+  [158827.891209]  _RNvMs5_NtCs257m05FHVbX_3tyr2vmNtB5_2Vm7exec_op+0x1cc/0x254 [tyr]
+  [158827.894085]  _RNvMs5_NtCs257m05FHVbX_3tyr2vmNtB5_2Vm11unmap_range+0x124/0x188 [tyr]
+  [158827.894105]  _RINvNtCs5hGKnPbRUFW_4core3ptr13drop_in_placeNtNtCs257m05FHVbX_3tyr3gem8KernelBoEBK_+0x44/0xd8 [tyr]
+  [158827.894125]  _RINvNtCs5hGKnPbRUFW_4core3ptr13drop_in_placeINtNtNtCsgmSOfgXi5CZ_6kernel5alloc4kvec3VecNtNtCs257m05FHVbX_3tyr2fw7SectionNtNtBL_9allocator7KmallocEEB1r_+0x3c/0x100 [tyr]
+  [158827.894147]  _RINvNtCs5hGKnPbRUFW_4core3ptr13drop_in_placeINtNtNtCsgmSOfgXi5CZ_6kernel4sync3arc3ArcNtNtCs257m05FHVbX_3tyr2fw8FirmwareEEB1p_+0x94/0x190 [tyr]
+  [158827.894167]  _RNvMs4_NtNtCsgmSOfgXi5CZ_6kernel3drm6deviceINtB5_6DeviceNtNtCs257m05FHVbX_3tyr6driver12TyrDrmDriverE7releaseBW_+0x30/0x98 [tyr]
+  [158827.899550]  drm_dev_put.part.0+0x88/0xc0
+  [158827.899557]  drm_minor_release+0x18/0x28
+  [158827.899562]  drm_release+0x144/0x170
+  [158827.899567]  __fput+0xe4/0x30c
+  [158827.899573]  ____fput+0x14/0x20
+  [158827.899579]  task_work_run+0x7c/0xe8
+  [158827.899586]  do_exit+0x2a8/0xac4
+  [158827.899590]  do_group_exit+0x34/0x90
+  [158827.899594]  get_signal+0xaac/0xabc
+  [158827.899599]  arch_do_signal_or_restart+0x90/0x3e8
+  [158827.899606]  exit_to_user_mode_loop+0x140/0x1d0
+  [158827.899613]  el0_svc+0x2f4/0x2f8
+  [158827.899620]  el0t_64_sync_handler+0xa0/0xe4
+  [158827.899627]  el0t_64_sync+0x198/0x19c
+  [158827.899632] ---[ end trace 0000000000000000 ]---
+```
 
-I noticed Sashiko had a few concerns about the build changes. Would you
-mind taking a look to see if they're valid?
+The root cause: fops.owner was NULL in Rust DRM drivers, so the kernel never
+blocked module unloading while file descriptors were open. This leads to
+use-after-free when drm_release (or other fops) is called on freed module code. 
 
-https://sashiko.dev/#/patchset/20260505-module-hashes-v5-0-e174a5a49fce%40weissschuh.net
+The series adds MODULE_PTR to ModuleMetadata, threads ThisModule through the
+DRM Driver trait into create_fops(), and applies the same fix to miscdevice.
 
-Sami
+Signed-off-by: Alvin Sun <alvin.sun@linux.dev>
+---
+Alvin Sun (8):
+      rust: module: add `MODULE_PTR` const to `ModuleMetadata` trait
+      rust: driver: make `DriverModule` struct pub(crate) in `module_driver!`
+      rust: drm: add `ThisModule` associated type to `Driver` trait
+      gpu: nova: implement `ThisModule`
+      gpu: tyr: implement `ThisModule`
+      rust: drm: set fops.owner from driver module pointer
+      rust: miscdevice: add `ThisModule` associated type to `MiscDevice` trait
+      samples: rust: rust_misc_device: implement `ThisModule` for `RustMiscDevice`
+
+ drivers/gpu/drm/nova/driver.rs   |  1 +
+ drivers/gpu/drm/tyr/driver.rs    |  1 +
+ rust/kernel/driver.rs            |  2 +-
+ rust/kernel/drm/device.rs        |  3 ++-
+ rust/kernel/drm/driver.rs        |  3 +++
+ rust/kernel/drm/gem/mod.rs       |  4 ++--
+ rust/kernel/lib.rs               |  3 +++
+ rust/kernel/miscdevice.rs        |  5 +++++
+ rust/macros/module.rs            | 14 ++++++++++++++
+ samples/rust/rust_misc_device.rs |  1 +
+ 10 files changed, 33 insertions(+), 4 deletions(-)
+---
+base-commit: aa61612ab641d7d62b0b6889f2c7c9251489f6e3
+change-id: 20260519-fix-fops-owner-e3a77bb27c6c
+prerequisite-change-id: 20260519-miscdev-use-format-9ab7e83b1c11:v1
+prerequisite-patch-id: 405b334ff0d48ad350014f05a2321bdbaa025400
+prerequisite-patch-id: 604b631c81d5423f4ebb2e12ba2d22e9ce371bfc
+
+Best regards,
+-- 
+Alvin Sun <alvin.sun@linux.dev>
+
+
 
