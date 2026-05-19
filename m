@@ -1,52 +1,52 @@
-Return-Path: <linux-modules+bounces-6447-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6448-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YPuPAKUEDGojTwUAu9opvQ
-	(envelope-from <linux-modules+bounces-6447-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 08:35:17 +0200
+	id 6Nn4K6wCDGp0TgUAu9opvQ
+	(envelope-from <linux-modules+bounces-6448-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 08:26:52 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50C0F5782A0
-	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 08:35:16 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5561D5780E5
+	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 08:26:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E2047304E7EB
-	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 06:26:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 85A1B3029E97
+	for <lists+linux-modules@lfdr.de>; Tue, 19 May 2026 06:26:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17C613976A9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2803D399342;
 	Tue, 19 May 2026 06:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pqFk2zvo"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="0DWDv0YS"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7B93921D8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F142F395D87;
 	Tue, 19 May 2026 06:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779171978; cv=none; b=GtuzL753xdVPqyrKBYFaKzlbYmF3se2kZChlGUW6Jg49J3joS7/8VuCfjCLCCeZypE+Ftjj/O/Lkrr5gCS0L6xLkeS0uqi7rZoO7vK/JhgnoJ6m74h0SM4TWGYGIkSv+AnRYE0lPj5t3j2R92vWmhmuzur4Z7NFCDtrt9gCCknY=
+	t=1779171978; cv=none; b=VtuMVM0qVNlyrpXl4cTLPjpOxmCZxOZMwMeCvEWJ3MxLwHijiyH8fG/oe5QE78PkVTGvE5ORPjZyPo7MMzridMiBAct7KQ5NgUUfqqOJzz22L9tCjHppl9GMBTAuFxoE2Ha7UcDtaVrjpHpdGWTjcahcHXYcblXyEgtEc8ZJ9m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779171978; c=relaxed/simple;
-	bh=w1EoH2KiN5QmfxawPU8PJaSlqVT8J3DiMsT2xzxxCS8=;
+	bh=I3viC+xei+z7Du+zKhaAbdeTTw0QaX58PY37KUiWlx0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EMAQz2qTCwrBvq0ggtAjCLLpuPsSPLQGZ+CQwCJSGbyvH1O2yDD1eAP7fedkp6euNLx8/CiuJu/Ahuogcleq/dCmKRTcwU3twoFq1vEh9+jfhmcW6NgUMto3wpA8+P0I2WTYpHiYxVU7uhXVZLZDN9ljbkdrV9KRcZHAa6z35x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pqFk2zvo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 66C95C4AF48;
+	 In-Reply-To:To:Cc; b=qxjrwTxlcr0YTh3hljzhp797VSTxkJsMBu3Mek1s3sxK8+MjU/zJeYZcM5WoasxxwpvEzsgB4OZNtGUQIVPSluo7gMVTnGMWJ4l6s8qisWFT1ZtXJD8DNbN422ocXtCdFvPA0TOUU33YZDwNpAoR+v/OdCtilhz5pQM3xjsIuto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=0DWDv0YS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 79D26C4AF09;
 	Tue, 19 May 2026 06:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux.dev; s=korg;
-	t=1779171977; bh=w1EoH2KiN5QmfxawPU8PJaSlqVT8J3DiMsT2xzxxCS8=;
+	t=1779171977; bh=I3viC+xei+z7Du+zKhaAbdeTTw0QaX58PY37KUiWlx0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=pqFk2zvot/fGkAa2B95CruvT+F/m81RwHSe5EFDIyzYIQvyOEqVbEJlOVZidiGESB
-	 vzU6SsE1rDpeMtDRYXXBQYMDkHBWWc3PxtyOyf4C3nQLXUx4SOn996Ls4qBm5ECLmw
-	 z+p7x59zc2QfRifwq1u0QGQTVt1UcL9yY44xKpWQ=
+	b=0DWDv0YStWDiNp2eRzgkI7+ej1qmXthujxBH+MsQWflTKP/xdZvf2orjR5g3iiH35
+	 956R+3pI+1lLcuEUKFb7dw8KyPWsTc9rYB7VYILW63MTxBe0h0gmu7lOGkC8GA2naT
+	 DvVTWmtKDvAx7VHzGd757z7H165p58/kzANNl3QM=
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C6ACCD4F5E;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB1DCD4F5B;
 	Tue, 19 May 2026 06:26:17 +0000 (UTC)
 From: Alvin Sun <alvin.sun@linux.dev>
-Date: Tue, 19 May 2026 14:26:19 +0800
-Subject: [PATCH 7/8] rust: miscdevice: add `ThisModule` associated type to
- `MiscDevice` trait
+Date: Tue, 19 May 2026 14:26:20 +0800
+Subject: [PATCH 8/8] samples: rust: rust_misc_device: implement
+ `ThisModule` for `RustMiscDevice`
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-fix-fops-owner-v1-7-2ded9830da14@linux.dev>
+Message-Id: <20260519-fix-fops-owner-v1-8-2ded9830da14@linux.dev>
 References: <20260519-fix-fops-owner-v1-0-2ded9830da14@linux.dev>
 In-Reply-To: <20260519-fix-fops-owner-v1-0-2ded9830da14@linux.dev>
 To: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
@@ -76,11 +76,11 @@ Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  dri-devel@lists.freedesktop.org, nova-gpu@lists.linux.dev, 
  Alvin Sun <alvin.sun@linux.dev>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779171975; l=1248;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779171975; l=782;
  i=alvin.sun@linux.dev; s=20260317; h=from:subject:message-id;
- bh=w1EoH2KiN5QmfxawPU8PJaSlqVT8J3DiMsT2xzxxCS8=;
- b=2boe+1XQRLD4hO3skU1aJJQcbDXlgDARy7PBUJ88luhYe/WLmSsDSDrEExQl2YbOWZ2Tl8h0e
- pmNkBMmnQSyAdamOhFMpfzrTeCuM7HWH36VOSdl/5OJbzmR7hEcHgBQ
+ bh=I3viC+xei+z7Du+zKhaAbdeTTw0QaX58PY37KUiWlx0=;
+ b=rU+vsujc7ps9LVjZzU2EMVWbRxlsY4wFfumiMPvocW2zu/qAFSe1VduxhoLk7OyuG0fnmJIIt
+ Eprmd69bn3tAxqv+SqqTQzC3dXJdIYh/YoZDUxIWVdu64Gch28eCwMA
 X-Developer-Key: i=alvin.sun@linux.dev; a=ed25519;
  pk=CHcwQp8GSoj25V/L1ZWNSQjWp9eSIb0s9LKr0Nm3WuE=
 X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
@@ -88,7 +88,7 @@ X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[linux.dev:s=korg];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -98,9 +98,9 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,suse.com,atomlin.com,linuxfoundation.org,gmail.com,ffwll.ch,collabora.com,arndb.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6447-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6448-lists,linux-modules=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[alvin.sun@linux.dev,linux-modules@vger.kernel.org];
@@ -109,50 +109,31 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-modules];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,linux.dev:mid,linux.dev:dkim,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 50C0F5782A0
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,linux.dev:email,linux.dev:mid,linux.dev:dkim]
+X-Rspamd-Queue-Id: 5561D5780E5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add a `ThisModule` associated type bound by `ModuleMetadata` to the
-`MiscDevice` trait, and use it to set the miscdevice fops owner field
-instead of defaulting to null.
+Set `ThisModule = RustMiscDeviceModule` to provide the correct module
+pointer for file operations ownership.
 
 Signed-off-by: Alvin Sun <alvin.sun@linux.dev>
 ---
- rust/kernel/miscdevice.rs | 5 +++++
- 1 file changed, 5 insertions(+)
+ samples/rust/rust_misc_device.rs | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/rust/kernel/miscdevice.rs b/rust/kernel/miscdevice.rs
-index 05a6b6b9770f2..007caaae62697 100644
---- a/rust/kernel/miscdevice.rs
-+++ b/rust/kernel/miscdevice.rs
-@@ -38,6 +38,7 @@
-         ForeignOwnable,
-         Opaque, //
-     },
-+    ModuleMetadata, //
- };
- use core::{
-     marker::PhantomData,
-@@ -137,6 +138,9 @@ pub trait MiscDevice: Sized {
-     /// What kind of pointer should `Self` be wrapped in.
-     type Ptr: ForeignOwnable + Send + Sync;
+diff --git a/samples/rust/rust_misc_device.rs b/samples/rust/rust_misc_device.rs
+index 41e26c825060b..a4b012a35b5ec 100644
+--- a/samples/rust/rust_misc_device.rs
++++ b/samples/rust/rust_misc_device.rs
+@@ -176,6 +176,7 @@ struct RustMiscDevice {
+ #[vtable]
+ impl MiscDevice for RustMiscDevice {
+     type Ptr = Pin<KBox<Self>>;
++    type ThisModule = RustMiscDeviceModule;
  
-+    /// The module implementing this driver.
-+    type ThisModule: ModuleMetadata;
-+
-     /// Called when the misc device is opened.
-     ///
-     /// The returned pointer will be stored as the private data for the file.
-@@ -441,6 +445,7 @@ impl<T: MiscDevice> MiscdeviceVTable<T> {
-         } else {
-             None
-         },
-+        owner: <T::ThisModule as ModuleMetadata>::MODULE_PTR,
-         ..pin_init::zeroed()
-     };
- 
+     fn open(_file: &File, misc: &MiscDeviceRegistration<Self>) -> Result<Pin<KBox<Self>>> {
+         let dev = ARef::from(misc.device());
 
 -- 
 2.43.0
