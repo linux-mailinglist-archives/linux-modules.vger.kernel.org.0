@@ -1,146 +1,242 @@
-Return-Path: <linux-modules+bounces-6457-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6459-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UKrLDJZCDmrV9QUAu9opvQ
-	(envelope-from <linux-modules+bounces-6457-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 01:24:06 +0200
+	id eFQAC3G6DmrBBgYAu9opvQ
+	(envelope-from <linux-modules+bounces-6459-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:55:29 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C9EB59CB63
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 01:24:05 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A7855A0771
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:55:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C661933F4AE6
-	for <lists+linux-modules@lfdr.de>; Wed, 20 May 2026 21:33:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E6D0A301FE56
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 07:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 995CA399340;
-	Wed, 20 May 2026 21:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED7FB39E9DE;
+	Thu, 21 May 2026 07:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yo5vkiXW"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oXd4lJYa"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BFF37C930;
-	Wed, 20 May 2026 21:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339AB3033E7;
+	Thu, 21 May 2026 07:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779312827; cv=none; b=YZdLBzXn2NjFdNvGLLFvC7ZER56iDoXXJUsdymGdwccZd/fZ7d8UafSjBk/Bbcb1SOzEd1MFfg+kxD4v7MtVPpvDpoBoj+pKrnzbYwGRhGAqXQR2Otv2tDFMPQaaMj3XhczPEtWcO3QWnSG87GSAE+zsP77vwkKq7z6AfYHEwzc=
+	t=1779349978; cv=none; b=ZxnrG/TJjm1FGgcRUTk8BncnZkvoJnOwXaM+VkA9FL2SawcPZXcuTvocXoKhu1PjLO6Rt/zq7DEoAVyke5ZnjIdkNXVafDhpgRgDsnKd0In0Fb/okTadGu/dHGezTP1vXjzebGE9Nty50fS/JX6ihbq7dbU8n5+vd/fmf2VmbIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779312827; c=relaxed/simple;
-	bh=EPxcbYJLZc/lrklYCQRDZ8tN6p9116v4gcvMc1bd2Xw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OVyvJ+tswn3+EUZgo5R/9IbmZgDiDe44CCH+tGIirZHUuQOrXnWjy9LKtXOXv7PW8Z1kZmm24h9ZLmzaLAq7oQzyi6N24fFL4JmNyvo1eU5WwUsOrYPeakCToAAS4ewiWExm4WAfwBtdX7nvSudUHjdHH+uFXwG50/9vfL6gA1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yo5vkiXW; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C023B1F000E9;
-	Wed, 20 May 2026 21:33:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779312826;
-	bh=E70q9Uwl+Cu+LSi8XOgS2WvHM1D9Yqo2nCLaHoPmdlM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Yo5vkiXW0IoG6UqhTM0xctDCb7mb3syLT/rsmOrxXJeB0dO9Q+IygrkfpIsJQaOFQ
-	 SmDVHF3edHfQVBNzm7Uh+5QcxZ1QGQCwDFXX07dujaip7Ohg7ICDkJtigfLoylK3KN
-	 2B6KLtwRP2mvx1wislkonvK6kZB7Rm7MZpdC9Kx1p6VqRm/kKji91C0YOnGQN/en+p
-	 3budk7pUZnVzJ59iN9dI5HOoofCMKSvQFtd4tLvl5OPrMidbbBDesvvVVdVUC7vf7d
-	 K1qTHmPR+GVKx7eFOWC/6NkItM/3AOzkNxTDga09pLpLtabq79YNagndB4qUisSfwQ
-	 1xQ/l3OvGtQlg==
-Message-ID: <bb4daac1-ee1b-405d-a07a-4b951945d664@kernel.org>
-Date: Wed, 20 May 2026 23:33:40 +0200
+	s=arc-20240116; t=1779349978; c=relaxed/simple;
+	bh=HyVgAWbWtHB+CL4MJEDtqWmjFW/v1NEt0n6hVz/R6yQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fl7n7jV6u5LWAuXwm7CoYcwIt/LN0LT5gbr+Vydv4B8TR77UuojeqCnjEESL/6tG2iPnMnu7gcdTbwc8ZJWUFcag54/xiIE/0wkaGjKgojb5Q7uIRhS8iA1Gjb2IHUAyrDG73aqKhO39tObBJ3Hy6thR0DKqhrjimpMB9tXvk2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oXd4lJYa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5F9F4C2BCC6;
+	Thu, 21 May 2026 07:52:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux.dev; s=korg;
+	t=1779349977; bh=HyVgAWbWtHB+CL4MJEDtqWmjFW/v1NEt0n6hVz/R6yQ=;
+	h=From:Subject:Date:To:Cc:From;
+	b=oXd4lJYaNYw5+J3ONT4jIyylBb45a7AURaRpDls3zC0iscEr7h5P1T7gSirJj1Zub
+	 oa73J/3nty6Wx9Dy0jSymnzE+CFU2PFDd5mdodbfRbdBIVkeMfGxmIn3a/u+7Wg666
+	 Xcp6fE48VTXOihuoSfsteZww/Sd1geczlVnkhTXA=
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 427D0CD5BAB;
+	Thu, 21 May 2026 07:52:57 +0000 (UTC)
+From: Alvin Sun <alvin.sun@linux.dev>
+Subject: [PATCH v2 0/7] Fix missing fops.owner in Rust DRM/misc
+ abstractions
+Date: Thu, 21 May 2026 15:52:52 +0800
+Message-Id: <20260521-fix-fops-owner-v2-0-fd99079c5a04@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] module: decompress: check return value of
- module_extend_max_pages()
-To: Afi0 <capyenglishlite@gmail.com>, Sami Tolvanen <samitolvanen@google.com>
-Cc: linux-modules@vger.kernel.org, mcgrof@kernel.org,
- dmitry.torokhov@gmail.com, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20260518143233.16091-1-capyenglishlite@gmail.com>
- <20260519212328.GA2614626@google.com>
- <CAEABq7f3agKZqrBiu+UwXHY44mTcK360ryg-i0w=wEc_Lv+T0A@mail.gmail.com>
- <CABCJKuej82rrQbQ0eoG+JsY6Fwi0SdVJqduvps7eiPrJ_BgT0A@mail.gmail.com>
- <CAEABq7e5NT0c58gG=fqFK-RmfrgUDA-8jXnmMMQZHMNu4hea5Q@mail.gmail.com>
-Content-Language: fr-FR
-From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-In-Reply-To: <CAEABq7e5NT0c58gG=fqFK-RmfrgUDA-8jXnmMMQZHMNu4hea5Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANS5DmoC/3WPSw7CMAwFr1J5jVGTAqFdcQ/EIh8XLNEGkjaAU
+ O9OKEJiw3Isvzf2EyIFpghN8YRAiSP7PoNcFGBPuj8SsssMspSbci1qbPmOrb9E9LeeAlKllTJ
+ GKruxkEOXQHljLtwfPhzoOube4TMEoyOh9V3HQ1MktRQY7Ap+fVn/tXUcraOEY860PnR6wFobR
+ dvKCCtEkyp4W04cBx8e8xdJzJp/ByeBJUpHrt5WpdNitTtzP96X2QKHaZpeg/oP+hIBAAA=
+X-Change-ID: 20260519-fix-fops-owner-e3a77bb27c6c
+To: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
+ Gary Guo <gary@garyguo.net>, 
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+ Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+ Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+ Danilo Krummrich <dakr@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
+ Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>, 
+ Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, 
+ Daniel Almeida <daniel.almeida@collabora.com>, 
+ Arnd Bergmann <arnd@arndb.de>, Brendan Higgins <brendan.higgins@linux.dev>, 
+ David Gow <david@davidgow.net>, Rae Moar <raemoar63@gmail.com>, 
+ Breno Leitao <leitao@debian.org>, Jens Axboe <axboe@kernel.dk>
+Cc: rust-for-linux@vger.kernel.org, linux-modules@vger.kernel.org, 
+ driver-core@lists.linux.dev, dri-devel@lists.freedesktop.org, 
+ nova-gpu@lists.linux.dev, linux-kselftest@vger.kernel.org, 
+ kunit-dev@googlegroups.com, linux-block@vger.kernel.org, 
+ Alvin Sun <alvin.sun@linux.dev>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779349975; l=6964;
+ i=alvin.sun@linux.dev; s=20260317; h=from:subject:message-id;
+ bh=HyVgAWbWtHB+CL4MJEDtqWmjFW/v1NEt0n6hVz/R6yQ=;
+ b=kraSiBDZpeV6sQEI75bqLsTo77paHD9WOqMwagyFAQ7MQsI/zCcIkQaOgdDhxg9QULUp/2ylp
+ 2z9t7M3YzskAa1tQsQfI4vXuWPnP8YJbcwN/d7ek/pjUHQuKL1wljKp
+X-Developer-Key: i=alvin.sun@linux.dev; a=ed25519;
+ pk=CHcwQp8GSoj25V/L1ZWNSQjWp9eSIb0s9LKr0Nm3WuE=
+X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
+ auth_id=684
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[linux.dev:s=korg];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-6457-lists,linux-modules=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com,google.com];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-6459-lists,linux-modules=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,suse.com,atomlin.com,linuxfoundation.org,gmail.com,ffwll.ch,collabora.com,arndb.de,linux.dev,davidgow.net,debian.org,kernel.dk];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[34];
+	DKIM_TRACE(0.00)[linux.dev:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[chleroy@kernel.org,linux-modules@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[alvin.sun@linux.dev,linux-modules@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 7C9EB59CB63
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,linux.dev:email,linux.dev:mid,linux.dev:dkim]
+X-Rspamd-Queue-Id: 6A7855A0771
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+During tyr debugfs development, a kernel NULL pointer dereference was
+encountered after `rmmod tyr` while gnome-shell still held /dev/card1 open:
 
+```
+  [158827.868132] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  [158827.868918] Mem abort info:
+  [158827.869177]   ESR = 0x0000000086000004
+  [158827.869519]   EC = 0x21: IABT (current EL), IL = 32 bits
+  [158827.870000]   SET = 0, FnV = 0
+  [158827.870281]   EA = 0, S1PTW = 0
+  [158827.870571]   FSC = 0x04: level 0 translation fault
+  [158827.871043] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000108dec000
+  [158827.871623] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+  [158827.872242] Internal error: Oops: 0000000086000004 [#1]  SMP
+  [158827.872246] Modules linked in: tyr sunrpc snd_soc_simple_card rk805_pwrkey snd_soc_simple_card_utils rtw88_8822bu display_connector rtw88_usb rtw88_8822b snd_soc_rockchip_i2s_tdm snd_soc_hdmi_codec
+  rtw88_core]
+  [158827.872337] CPU: 4 UID: 1000 PID: 11276 Comm: gnome-s:disk$0 Tainted: G                 N  7.1.0-rc1+ #331 PREEMPT
+  [158827.880534] Tainted: [N]=TEST
+  [158827.880535] Hardware name: FriendlyElec NanoPi R6C/NanoPi R6C, BIOS v1.1 04/09/2025
+  [158827.880538] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  [158827.880542] pc : 0x0
+  [158827.880547] lr : _RNvNtCs257m05FHVbX_3tyr2vm8pt_unmap+0x8c/0x12c [tyr]
+  [158827.880578] sp : ffff800083c236b0
+  [158827.880579] x29: ffff800083c236d0 x28: ffff00013f8a0000 x27: 0000000000000000
+  [158827.880585] x26: 000000000000007c x25: ffff000108e6ed80 x24: 0000000000401000
+  [158827.880590] x23: 0000000000000000 x22: 0000000040000000 x21: 0000000000001000
+  [158827.880595] x20: ffff00010f778138 x19: 0000000000400000 x18: 00000000ffffffff
+  [158827.880600] x17: 000000040044ffff x16: 045000f2b5503510 x15: 0720072007200720
+  [158827.880606] x14: 0720072007200720 x13: 0000000000401000 x12: 0000000000400000
+  [158827.880611] x11: ffff800083c239d0 x10: ffff000141e4fd88 x9 : 0000000000000000
+  [158827.880615] x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000400000
+  [158827.880620] x5 : ffff00013f8a0000 x4 : 0000000000000000 x3 : 0000000000000001
+  [158827.880625] x2 : 0000000000001000 x1 : 0000000000400000 x0 : ffff00010f778138
+  [158827.880630] Call trace:
+  [158827.880632]  0x0 (P)
+  [158827.880635]  _RNvXs6_NtCs257m05FHVbX_3tyr2vmNtB5_9GpuVmDataNtNtNtCsgmSOfgXi5CZ_6kernel3drm5gpuvm11DriverGpuVm13sm_step_unmap+0x3c/0x120 [tyr]
+  [158827.891166]  _RNvMs4_NtNtNtCsgmSOfgXi5CZ_6kernel3drm5gpuvm6sm_opsINtB7_5GpuVmNtNtCs257m05FHVbX_3tyr2vm9GpuVmDataE13sm_step_unmapB13_+0x18/0x34 [tyr]
+  [158827.891187]  op_unmap_cb+0x78/0xb0
+  [158827.891196]  __drm_gpuvm_sm_unmap+0x18c/0x1b4
+  [158827.891204]  drm_gpuvm_sm_unmap+0x38/0x4c
+  [158827.891209]  _RNvMs5_NtCs257m05FHVbX_3tyr2vmNtB5_2Vm7exec_op+0x1cc/0x254 [tyr]
+  [158827.894085]  _RNvMs5_NtCs257m05FHVbX_3tyr2vmNtB5_2Vm11unmap_range+0x124/0x188 [tyr]
+  [158827.894105]  _RINvNtCs5hGKnPbRUFW_4core3ptr13drop_in_placeNtNtCs257m05FHVbX_3tyr3gem8KernelBoEBK_+0x44/0xd8 [tyr]
+  [158827.894125]  _RINvNtCs5hGKnPbRUFW_4core3ptr13drop_in_placeINtNtNtCsgmSOfgXi5CZ_6kernel5alloc4kvec3VecNtNtCs257m05FHVbX_3tyr2fw7SectionNtNtBL_9allocator7KmallocEEB1r_+0x3c/0x100 [tyr]
+  [158827.894147]  _RINvNtCs5hGKnPbRUFW_4core3ptr13drop_in_placeINtNtNtCsgmSOfgXi5CZ_6kernel4sync3arc3ArcNtNtCs257m05FHVbX_3tyr2fw8FirmwareEEB1p_+0x94/0x190 [tyr]
+  [158827.894167]  _RNvMs4_NtNtCsgmSOfgXi5CZ_6kernel3drm6deviceINtB5_6DeviceNtNtCs257m05FHVbX_3tyr6driver12TyrDrmDriverE7releaseBW_+0x30/0x98 [tyr]
+  [158827.899550]  drm_dev_put.part.0+0x88/0xc0
+  [158827.899557]  drm_minor_release+0x18/0x28
+  [158827.899562]  drm_release+0x144/0x170
+  [158827.899567]  __fput+0xe4/0x30c
+  [158827.899573]  ____fput+0x14/0x20
+  [158827.899579]  task_work_run+0x7c/0xe8
+  [158827.899586]  do_exit+0x2a8/0xac4
+  [158827.899590]  do_group_exit+0x34/0x90
+  [158827.899594]  get_signal+0xaac/0xabc
+  [158827.899599]  arch_do_signal_or_restart+0x90/0x3e8
+  [158827.899606]  exit_to_user_mode_loop+0x140/0x1d0
+  [158827.899613]  el0_svc+0x2f4/0x2f8
+  [158827.899620]  el0t_64_sync_handler+0xa0/0xe4
+  [158827.899627]  el0t_64_sync+0x198/0x19c
+  [158827.899632] ---[ end trace 0000000000000000 ]---
+```
 
-Le 20/05/2026 à 18:05, Afi0 a écrit :
->    Thanks for the correction. Updated commit message
+The root cause: `fops.owner` was `NULL` in Rust DRM drivers, so the kernel
+never blocked module unloading while file descriptors were open. This leads to
+use-after-free when drm_release (or other fops) is called on freed module code. 
 
-Please follow kernel rules:
-- Mails in plain text, not Mime
-- Patches as part of core text, no attachment
-- Your real name, not Afi0 <capyenglishlite@gmail.com>
-- No top-posting
+The series moves `THIS_MODULE` into the `ModuleMetadata` as a const, threads it
+through `#[vtable]` to set `fops.owner` in DRM/miscdevice, and updates configfs
+and rnull to use `LocalModule::THIS_MODULE`.
 
-See:
-- 
-https://docs.kernel.org/process/submitting-patches.html#use-trimmed-interleaved-replies-in-email-discussions
-- 
-https://docs.kernel.org/process/submitting-patches.html#no-mime-no-links-no-compression-no-attachments-just-plain-text
+Signed-off-by: Alvin Sun <alvin.sun@linux.dev>
+---
+Changes in v2:
+- Merged old `static THIS_MODULE` and v1's `MODULE_PTR` into a single
+  `ModuleMetadata::THIS_MODULE` const
+- `#[vtable]` macro now auto-inserts `type ThisModule`, removing all per-driver
+  manual patches from v1
+- Added configfs & rnull usage site updates and doctest `LocalModule` fallback
+- Link to v1: https://lore.kernel.org/r/20260519-fix-fops-owner-v1-0-2ded9830da14@linux.dev
 
+---
+Alvin Sun (7):
+      rust: module: add `THIS_MODULE` const to `ModuleMetadata` trait
+      rust: macros: auto-insert ThisModule in #[vtable]
+      rust: doctest: add LocalModule fallback for #[vtable] ThisModule
+      rust: drm: set fops.owner from driver module pointer
+      rust: miscdevice: set fops.owner from driver module pointer
+      rust: configfs: use `LocalModule` for `THIS_MODULE`
+      block: rnull: use `LocalModule` for `THIS_MODULE`
 
-Christophe
+ drivers/block/rnull/configfs.rs |  6 ++----
+ rust/kernel/configfs.rs         |  8 +++++---
+ rust/kernel/drm/device.rs       |  3 ++-
+ rust/kernel/drm/gem/mod.rs      |  4 ++--
+ rust/kernel/lib.rs              |  3 +++
+ rust/kernel/miscdevice.rs       |  2 ++
+ rust/macros/lib.rs              |  6 ++++++
+ rust/macros/module.rs           | 34 +++++++++++++++++-----------------
+ rust/macros/vtable.rs           | 38 +++++++++++++++++++++++++++++++++++++-
+ scripts/rustdoc_test_gen.rs     | 16 ++++++++++++++++
+ 10 files changed, 92 insertions(+), 28 deletions(-)
+---
+base-commit: aa61612ab641d7d62b0b6889f2c7c9251489f6e3
+change-id: 20260519-fix-fops-owner-e3a77bb27c6c
+prerequisite-change-id: 20260519-miscdev-use-format-9ab7e83b1c11:v3
+prerequisite-patch-id: 405b334ff0d48ad350014f05a2321bdbaa025400
+prerequisite-patch-id: 604b631c81d5423f4ebb2e12ba2d22e9ce371bfc
+prerequisite-patch-id: cb550d94cefe01920e0d3ced2b2bcbecd76f3907
+prerequisite-patch-id: 3bc830839742591460cb86d9472c04f4686dc600
+prerequisite-patch-id: 571058244bc8c7088638d2e3225713011246c7e9
+prerequisite-patch-id: 347c5a3c6dbef9832bfce8419fc23e6e08ba477f
+prerequisite-patch-id: 3e202d988b56b88446f7535e90d3f00cf5f15701
 
-> 
-> On Wed, May 20, 2026 at 3:13 PM Sami Tolvanen <samitolvanen@google.com 
-> <mailto:samitolvanen@google.com>> wrote:
-> 
->     On Tue, May 19, 2026 at 9:11 PM Afi0 <capyenglishlite@gmail.com
->     <mailto:capyenglishlite@gmail.com>> wrote:
->      >
->      > Hi,
->      >
->      > You are right, the commit message overstates the impact. The
->     actual result is an immediate kernel oops, not an OOB write into
->     adjacent slab objects. The fix is still correct - checking the
->     return value avoids the oops. Shall I send a v3 with a corrected
->     commit message?
-> 
->     Yes, please send v3.
-> 
->     Sami
-> 
+Best regards,
+-- 
+Alvin Sun <alvin.sun@linux.dev>
+
 
 
