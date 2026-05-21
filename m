@@ -1,51 +1,51 @@
-Return-Path: <linux-modules+bounces-6465-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6463-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eALuMr26DmrBBgYAu9opvQ
-	(envelope-from <linux-modules+bounces-6465-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:56:45 +0200
+	id sFGGHZi6DmrBBgYAu9opvQ
+	(envelope-from <linux-modules+bounces-6463-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:56:08 +0200
 X-Original-To: lists+linux-modules@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52D665A07ED
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:56:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A13D5A07C8
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:56:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5365E30A2A8D
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 07:53:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0988B308C598
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 07:53:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F2B3A2E3F;
-	Thu, 21 May 2026 07:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EA063A16B6;
+	Thu, 21 May 2026 07:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FWlSCKvu"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tkyWKwdq"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9335E39D6E8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBFC39D3FD;
 	Thu, 21 May 2026 07:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779349978; cv=none; b=fYRsL4uttJoiLnG8l2VvZPds5EhDNRLoi/OamfCTY2554GpPe6ul//gfm+Dmk2qzkoBkWiyJi+8h+/qZNP/01IlCuQJpRgecnccVrNO8YxQ39PBgAzYsJzfoR/ic6p+5xwuc1kzlTui/Vaydh812i3wj2KPanKRfA77qfPGiCJU=
+	t=1779349978; cv=none; b=JGhBZV/c9IxSHY2zNHCfsOJ4VX50FPqqwCHm0WpwVkQ1n0VBX9kZfOT/Ups7QjxXM8iTYQBsScrlLQgfTrt3U+WVBpaXQotsJBL8G8S1XQ1/2d3KuwLB/Er8PCKzE6YV3+1pMSPX5soEfsEsG9DKmnHdwdZOahWz3RWVsEPPucI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779349978; c=relaxed/simple;
-	bh=IhDcgM1opHQeEW8Lhx3ILcfCCuQubakT0ILbtE8LP9Q=;
+	bh=S4pPbSgc+qf3s7sj9z2x5AM1OIfB+ksx2cOL1FaBOAE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HRl9OuQuy+fcprx6ioJ87lZsqrQn3dDjl+46NreiIzx+FtONlj8qOWhDk+pY9XRggfr1rp/rckv5ZapK7wxzpxKRxP7mE9cmHBzWIiybB0mjsJg3adgjPNcld1PtK0XPGBWv45ZHHUa8gS8MquMXTY1A6MrAYbEpdYaWc//FLic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FWlSCKvu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D5E8AC2BCB7;
+	 In-Reply-To:To:Cc; b=RzMFQDiMFQsSNUGBriI+4wiRV3u2Upz8VeTnWJxknWYSZ7+vs8GMoYIY6K8BgMeG/LXOQCrvh14/dpZPvAVtfCQGaMmuTUormSRoJYdS8w1jYciLXXzfbQ3SF6GRGE5ILswBRTuqAHACOvwVGaIj+TGCpgvUPCQifLr4YT/L0IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tkyWKwdq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EA971C2BCB4;
 	Thu, 21 May 2026 07:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux.dev; s=korg;
-	t=1779349977; bh=IhDcgM1opHQeEW8Lhx3ILcfCCuQubakT0ILbtE8LP9Q=;
+	t=1779349978; bh=S4pPbSgc+qf3s7sj9z2x5AM1OIfB+ksx2cOL1FaBOAE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=FWlSCKvuJDPYLkC44Cysam4hJdbuocMZqt0GTqvStv4m70h6C+/l2VxwuRc99cOm7
-	 VHC8kj2kO3xDN/ZulFll8h49EDtg+6b+uyq6HwoQEso3Ns7w4/kvQs94iQbncwDjV5
-	 1TRWsfVD3awlJNY6A4M4bWvwOinxzxe5dIk+8ATY=
+	b=tkyWKwdqKhSdr3lwRDMPhBtzprdSJwetH8RWYZc8gSXV1yx6OJEKJENHK2rZyHrHM
+	 rf0RCsvAWX3M1DQ2ltJl4m8GLXhuxF8eST64Q/LC7u849LX6nQhjm9FlqpHq3kBey6
+	 A8Mb7EHWH1qGfUmVK0d9GR7mcQetrqYFjObzxAMM=
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA8D5CD4F3C;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D38CD5BAC;
 	Thu, 21 May 2026 07:52:57 +0000 (UTC)
 From: Alvin Sun <alvin.sun@linux.dev>
-Date: Thu, 21 May 2026 15:52:58 +0800
-Subject: [PATCH v2 6/7] rust: configfs: use `LocalModule` for `THIS_MODULE`
+Date: Thu, 21 May 2026 15:52:59 +0800
+Subject: [PATCH v2 7/7] block: rnull: use `LocalModule` for `THIS_MODULE`
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-fix-fops-owner-v2-6-fd99079c5a04@linux.dev>
+Message-Id: <20260521-fix-fops-owner-v2-7-fd99079c5a04@linux.dev>
 References: <20260521-fix-fops-owner-v2-0-fd99079c5a04@linux.dev>
 In-Reply-To: <20260521-fix-fops-owner-v2-0-fd99079c5a04@linux.dev>
 To: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
@@ -78,11 +78,11 @@ Cc: rust-for-linux@vger.kernel.org, linux-modules@vger.kernel.org,
  kunit-dev@googlegroups.com, linux-block@vger.kernel.org, 
  Alvin Sun <alvin.sun@linux.dev>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779349975; l=1996;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779349975; l=753;
  i=alvin.sun@linux.dev; s=20260317; h=from:subject:message-id;
- bh=IhDcgM1opHQeEW8Lhx3ILcfCCuQubakT0ILbtE8LP9Q=;
- b=xu7fCCb/X5SIsHPhPGu9B415jM0ngv4cFvYDJedOxZLgAglNfbavmx+H5SJ/7zGEINxd+Txdg
- uO3ilrLZMqRDD0SOxi9FUK+DUTpUcvFD0DSJIdqnk3/NIwKv7PrqhdA
+ bh=S4pPbSgc+qf3s7sj9z2x5AM1OIfB+ksx2cOL1FaBOAE=;
+ b=D/WbQh6QCQ4+L8oHA0rQ/T+b96zfIASqmqtVA6vSSnL0g729WfQ333Fc4Gu/a3riPU0GOYKm2
+ ILmRx37kgAvBAD1gAoSG/HegdK+N3yV5OgDBVjD2yOiAIVd4GuNszfW
 X-Developer-Key: i=alvin.sun@linux.dev; a=ed25519;
  pk=CHcwQp8GSoj25V/L1ZWNSQjWp9eSIb0s9LKr0Nm3WuE=
 X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
@@ -96,7 +96,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6465-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6463-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,suse.com,atomlin.com,linuxfoundation.org,gmail.com,ffwll.ch,collabora.com,arndb.de,linux.dev,davidgow.net,debian.org,kernel.dk];
 	MIME_TRACE(0.00)[0:+];
@@ -113,52 +113,35 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,linux.dev:mid,linux.dev:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 52D665A07ED
+X-Rspamd-Queue-Id: 2A13D5A07C8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Replace the `THIS_MODULE` static reference in the `configfs_attrs!`
-macro with `<LocalModule as ModuleMetadata>::THIS_MODULE`, consistent
-with the move of `THIS_MODULE` into the `ModuleMetadata` trait.
+Replace the `THIS_MODULE` import with `LocalModule` from the crate,
+consistent with the move of `THIS_MODULE` into the `ModuleMetadata`
+trait.
 
 Signed-off-by: Alvin Sun <alvin.sun@linux.dev>
 ---
- rust/kernel/configfs.rs | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/block/rnull/configfs.rs | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/rust/kernel/configfs.rs b/rust/kernel/configfs.rs
-index 2339c6467325d..cc60297f11551 100644
---- a/rust/kernel/configfs.rs
-+++ b/rust/kernel/configfs.rs
-@@ -875,7 +875,7 @@ fn as_ptr(&self) -> *const bindings::config_item_type {
- ///                 configfs::Subsystem<Configuration>,
- ///                 Configuration
- ///                 >::new_with_child_ctor::<N,Child>(
--///             &THIS_MODULE,
-+///             &<LocalModule as ::kernel::ModuleMetadata>::THIS_MODULE,
- ///             &CONFIGURATION_ATTRS
- ///         );
- ///
-@@ -1021,7 +1021,8 @@ macro_rules! configfs_attrs {
+diff --git a/drivers/block/rnull/configfs.rs b/drivers/block/rnull/configfs.rs
+index c10a55fc58948..b2547ad1e5ddd 100644
+--- a/drivers/block/rnull/configfs.rs
++++ b/drivers/block/rnull/configfs.rs
+@@ -1,9 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
  
-                     static [< $data:upper _TPE >] : $crate::configfs::ItemType<$container, $data>  =
-                         $crate::configfs::ItemType::<$container, $data>::new::<N>(
--                            &THIS_MODULE, &[<$ data:upper _ATTRS >]
-+                            &<LocalModule as ::kernel::ModuleMetadata>::THIS_MODULE,
-+                            &[<$ data:upper _ATTRS >]
-                         );
-                 )?
- 
-@@ -1030,7 +1031,8 @@ macro_rules! configfs_attrs {
-                         $crate::configfs::ItemType<$container, $data>  =
-                             $crate::configfs::ItemType::<$container, $data>::
-                             new_with_child_ctor::<N, $child>(
--                                &THIS_MODULE, &[<$ data:upper _ATTRS >]
-+                                &<LocalModule as ::kernel::ModuleMetadata>::THIS_MODULE,
-+                                &[<$ data:upper _ATTRS >]
-                             );
-                 )?
- 
+-use super::{
+-    NullBlkDevice,
+-    THIS_MODULE, //
+-};
++use super::NullBlkDevice;
++use crate::LocalModule;
+ use kernel::{
+     block::mq::gen_disk::{
+         GenDisk,
 
 -- 
 2.43.0
