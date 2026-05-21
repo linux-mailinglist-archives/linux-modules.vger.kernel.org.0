@@ -1,52 +1,51 @@
-Return-Path: <linux-modules+bounces-6458-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6461-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OOSNAFm6DmrBBgYAu9opvQ
-	(envelope-from <linux-modules+bounces-6458-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:55:05 +0200
+	id QHaTLn26DmrBBgYAu9opvQ
+	(envelope-from <linux-modules+bounces-6461-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:55:41 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A20A75A0743
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:55:04 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 017C75A079C
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 09:55:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7BC79306AA5C
-	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 07:53:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3105A30216E9
+	for <lists+linux-modules@lfdr.de>; Thu, 21 May 2026 07:53:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8006039A4D6;
-	Thu, 21 May 2026 07:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C16A314D21;
+	Thu, 21 May 2026 07:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xhTIw633"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xCZwE6GO"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DBA397B1C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35339397B02;
 	Thu, 21 May 2026 07:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779349978; cv=none; b=QI/CgUQjNJQEzMhtNUld79MuVd1t9QwBc6T/QoYTOjt6QlhX42H8UiQJhbC2b048q4OTZ0tc+naCKb1rdaiyfvs4v+BTpqW1OSYWhHlNhuiCMiIvoZhDlMhjUXFTRrndlA0+tAJqaCOsLWA07sQyDeJttnYev4y5+YoXow7e7fY=
+	t=1779349978; cv=none; b=Mt8K93m0YqV3KOsNuAOVWjgxrOqI5AuWxLkFSCsZ4iURqbmHYucCWtA/K0VUVlECgor5vMnY/o5TV7QgkRXy6xyB5Zsr3NRb6v02dxM4EeOyxhGe0152iGJXiuHkEjmy+OcnKxwQOyGXHofN8bYal4DNt9DTXRk9qn/3VAXjJyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779349978; c=relaxed/simple;
-	bh=g5lNOWZdFZ078Eg8FihJThI93jDxzsjGBAigjw8fo38=;
+	bh=o0NVwirES5UBqa+dDLOUFzSJEpbDhFbK8hdfhxeciEw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gdeTBoBFWKN+wagATxPZjwLGzFdIi6wt36WopyhGBx2r2hewUOXxTp3f1FLcNhOaLtolPk1xN/cBvY1sDXirOy8KSH08s9p+Yrt86uhuSl0iNqMo1+WIuXZfpu6D+Y+KNIO1CO8k0i2P3e+49JhCxSdS8PoozV/9mKVjPzGqfzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xhTIw633; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7A06FC2BCB9;
+	 In-Reply-To:To:Cc; b=Aa7rDYQvkiGoN2jO/eAlQn77OvGzxPsTr/cINyZscmHc2AJ0sXEsd4BowzE+bIH5N4Wekh1GHW5jxisGhPJIc35wCDuXO0eYU5QVn2cQiOo1ov8SfteXgSzoLszXxkaxs0kh/p5ZDxRbIUux9//bo3dQJovjWVni6PT8RqzAar4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xCZwE6GO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8185FC4AF0C;
 	Thu, 21 May 2026 07:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux.dev; s=korg;
-	t=1779349977; bh=g5lNOWZdFZ078Eg8FihJThI93jDxzsjGBAigjw8fo38=;
+	t=1779349977; bh=o0NVwirES5UBqa+dDLOUFzSJEpbDhFbK8hdfhxeciEw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=xhTIw633sN19LCBdjB1HTf9dSgzdyM88djd03g3BpnZHdUyCCkbcKfy36L1S7zUB3
-	 hwfBhn5IG72NrMEjIvZwX/q0t4z3l9jlJ/GykCpm20eLuBbUblip4QWbimYlbDI7JB
-	 b+IP+0hfTs0YUy63TXNSrCWCoc6HEQ7tal7tCB6o=
+	b=xCZwE6GOX4iuDiy20/IGmM8QsxM+3ra6PCO0q6H2M+A0gS5+2S85pCJjY1k9+ZnV7
+	 Jj7lrHwDlUpSmegwXIC7fgfyM0QafFIRYu/zy8pSMXdxgVGqHLmsyTXoDzldJiQ8HL
+	 KSMiyBOczT6rTyVbqMNClEvkIn7GvqU48/ROO/HE=
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59F92CD4F5E;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ED62CD4F3C;
 	Thu, 21 May 2026 07:52:57 +0000 (UTC)
 From: Alvin Sun <alvin.sun@linux.dev>
-Date: Thu, 21 May 2026 15:52:53 +0800
-Subject: [PATCH v2 1/7] rust: module: add `THIS_MODULE` const to
- `ModuleMetadata` trait
+Date: Thu, 21 May 2026 15:52:54 +0800
+Subject: [PATCH v2 2/7] rust: macros: auto-insert ThisModule in #[vtable]
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -55,7 +54,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-fix-fops-owner-v2-1-fd99079c5a04@linux.dev>
+Message-Id: <20260521-fix-fops-owner-v2-2-fd99079c5a04@linux.dev>
 References: <20260521-fix-fops-owner-v2-0-fd99079c5a04@linux.dev>
 In-Reply-To: <20260521-fix-fops-owner-v2-0-fd99079c5a04@linux.dev>
 To: Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun@kernel.org>, 
@@ -79,11 +78,11 @@ Cc: rust-for-linux@vger.kernel.org, linux-modules@vger.kernel.org,
  kunit-dev@googlegroups.com, linux-block@vger.kernel.org, 
  Alvin Sun <alvin.sun@linux.dev>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779349975; l=3841;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779349975; l=4177;
  i=alvin.sun@linux.dev; s=20260317; h=from:subject:message-id;
- bh=g5lNOWZdFZ078Eg8FihJThI93jDxzsjGBAigjw8fo38=;
- b=FhGtAlbF3396Z+dQAsyxXzU2I9Oz+YJMiNSCAigLuceECR4JjS9R0/Tvaps4sBC+ytD60pqQZ
- Arr+EzySJNWBLxRc55m2GilIMFF4U2MTiMxCo80BR4hrhjbfpnj+i/w
+ bh=o0NVwirES5UBqa+dDLOUFzSJEpbDhFbK8hdfhxeciEw=;
+ b=Q6DTbV7+PYfAMn/D2wleruFS9xF8ZeX0LkKJ4lQ3KJ9pAlD1ePSSYkJDIUEFG7J7bjgi4m6yG
+ SlPaIh4AX5MA9Gos3sDeR7pI9c3YzSVg0Y89M2pSvYmn9amiF6SQMDP
 X-Developer-Key: i=alvin.sun@linux.dev; a=ed25519;
  pk=CHcwQp8GSoj25V/L1ZWNSQjWp9eSIb0s9LKr0Nm3WuE=
 X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
@@ -91,20 +90,20 @@ X-Endpoint-Received: by B4 Relay for alvin.sun@linux.dev/20260317 with
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[linux.dev:s=korg];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6458-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6461-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[kernel.org,garyguo.net,protonmail.com,google.com,umich.edu,suse.com,atomlin.com,linuxfoundation.org,gmail.com,ffwll.ch,collabora.com,arndb.de,linux.dev,davidgow.net,debian.org,kernel.dk];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[34];
 	DKIM_TRACE(0.00)[linux.dev:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[alvin.sun@linux.dev,linux-modules@vger.kernel.org];
@@ -113,97 +112,114 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-modules];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,linux.dev:mid,linux.dev:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: A20A75A0743
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,linux.dev:email,linux.dev:mid,linux.dev:dkim]
+X-Rspamd-Queue-Id: 017C75A079C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add a `THIS_MODULE` const to the `ModuleMetadata` trait so that
-modules can provide their `ThisModule` pointer usable in const
-contexts such as static file_operations.
-
-Move the `THIS_MODULE` static from the `module!` macro into the
-`ModuleMetadata` impl, and update `__init` to use
-`LocalModule::THIS_MODULE` instead.
+Auto-add `type ThisModule: ::kernel::ModuleMetadata;` as a required
+associated type on the trait side if not already defined, and
+auto-insert `type ThisModule = crate::LocalModule;` on the impl side
+if not explicitly provided, eliminating the need to manually declare
+and implement `ThisModule` in every vtable trait and impl.
 
 Signed-off-by: Alvin Sun <alvin.sun@linux.dev>
 ---
- rust/kernel/lib.rs    |  3 +++
- rust/macros/module.rs | 34 +++++++++++++++++-----------------
- 2 files changed, 20 insertions(+), 17 deletions(-)
+ rust/macros/lib.rs    |  6 ++++++
+ rust/macros/vtable.rs | 38 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index b72b2fbe046d6..f0cf0705d9697 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -184,6 +184,9 @@ fn init(module: &'static ThisModule) -> impl pin_init::PinInit<Self, error::Erro
- pub trait ModuleMetadata {
-     /// The name of the module as specified in the `module!` macro.
-     const NAME: &'static crate::str::CStr;
-+
-+    /// The module's `THIS_MODULE` pointer.
-+    const THIS_MODULE: ThisModule;
- }
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index 2cfd59e0f9e7c..d35e45ea745c0 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -176,6 +176,12 @@ pub fn module(input: TokenStream) -> TokenStream {
+ ///
+ /// This macro should not be used when all functions are required.
+ ///
++/// Additionally, this macro automatically handles the `ThisModule`
++/// associated type: on the trait side, `type ThisModule: ModuleMetadata;`
++/// is added as a required associated type if not already defined; on the
++/// impl side, `type ThisModule = LocalModule;` is automatically inserted
++/// if not explicitly defined.
++///
+ /// # Examples
+ ///
+ /// ```
+diff --git a/rust/macros/vtable.rs b/rust/macros/vtable.rs
+index c6510b0c4ea1d..d3d0e9cbd7172 100644
+--- a/rust/macros/vtable.rs
++++ b/rust/macros/vtable.rs
+@@ -23,6 +23,7 @@
  
- /// Equivalent to `THIS_MODULE` in the C API.
-diff --git a/rust/macros/module.rs b/rust/macros/module.rs
-index 06c18e2075083..b6d7b3299fbf9 100644
---- a/rust/macros/module.rs
-+++ b/rust/macros/module.rs
-@@ -497,28 +497,28 @@ pub(crate) fn module(info: ModuleInfo) -> Result<TokenStream> {
-         /// Used by the printing macros, e.g. [`info!`].
-         const __LOG_PREFIX: &[u8] = #name_cstr.to_bytes_with_nul();
+ fn handle_trait(mut item: ItemTrait) -> Result<ItemTrait> {
+     let mut gen_items = Vec::new();
++    let mut has_this_module = false;
  
--        // SAFETY: `__this_module` is constructed by the kernel at load time and will not be
--        // freed until the module is unloaded.
--        #[cfg(MODULE)]
--        static THIS_MODULE: ::kernel::ThisModule = unsafe {
--            extern "C" {
--                static __this_module: ::kernel::types::Opaque<::kernel::bindings::module>;
--            };
--
--            ::kernel::ThisModule::from_ptr(__this_module.get())
--        };
--
--        #[cfg(not(MODULE))]
--        static THIS_MODULE: ::kernel::ThisModule = unsafe {
--            ::kernel::ThisModule::from_ptr(::core::ptr::null_mut())
--        };
--
-         /// The `LocalModule` type is the type of the module created by `module!`,
-         /// `module_pci_driver!`, `module_platform_driver!`, etc.
-         type LocalModule = #type_;
+     gen_items.push(parse_quote! {
+          /// A marker to prevent implementors from forgetting to use [`#[vtable]`](vtable)
+@@ -30,6 +31,28 @@ fn handle_trait(mut item: ItemTrait) -> Result<ItemTrait> {
+          const USE_VTABLE_ATTR: ();
+     });
  
-         impl ::kernel::ModuleMetadata for #type_ {
-             const NAME: &'static ::kernel::str::CStr = #name_cstr;
++    // Detect existing type ThisModule so we don't add a duplicate.
++    for i in &item.items {
++        if let TraitItem::Type(type_item) = i {
++            if type_item.ident == "ThisModule" {
++                has_this_module = true;
++            }
++        }
++    }
 +
-+            #[cfg(MODULE)]
-+            const THIS_MODULE: ::kernel::ThisModule = {
-+                extern "C" {
-+                    static __this_module: ::kernel::types::Opaque<::kernel::bindings::module>;
-+                }
++    // Add `type ThisModule: ModuleMetadata` as a required associated type if
++    // the trait does not already define it. No default is used because
++    // `associated_type_defaults` is unstable (issue #29661).
++    if !has_this_module {
++        gen_items.push(parse_quote! {
++            /// The module implementing this vtable trait.
++            ///
++            /// Automatically set to `crate::LocalModule` by the `#[vtable]`
++            /// impl macro.
++            type ThisModule: ::kernel::ModuleMetadata;
++        });
++    }
 +
-+                // SAFETY: `__this_module` is constructed by the kernel at load time
-+                // and lives until the module is unloaded.
-+                unsafe { ::kernel::ThisModule::from_ptr(__this_module.get()) }
-+            };
-+
-+            #[cfg(not(MODULE))]
-+            const THIS_MODULE: ::kernel::ThisModule = unsafe {
-+                ::kernel::ThisModule::from_ptr(::core::ptr::null_mut())
-+            };
+     for item in &item.items {
+         if let TraitItem::Fn(fn_item) = item {
+             let name = &fn_item.sig.ident;
+@@ -58,18 +81,31 @@ fn handle_trait(mut item: ItemTrait) -> Result<ItemTrait> {
+ fn handle_impl(mut item: ItemImpl) -> Result<ItemImpl> {
+     let mut gen_items = Vec::new();
+     let mut defined_consts = HashSet::new();
++    let mut defined_types = HashSet::new();
+ 
+-    // Iterate over all user-defined constants to gather any possible explicit overrides.
++    // Iterate over all user-defined constants and types to gather any possible explicit overrides.
+     for item in &item.items {
+         if let ImplItem::Const(const_item) = item {
+             defined_consts.insert(const_item.ident.clone());
          }
++        if let ImplItem::Type(type_item) = item {
++            defined_types.insert(type_item.ident.clone());
++        }
+     }
  
-         // Double nested modules, since then nobody can access the public items inside.
-@@ -616,7 +616,7 @@ pub extern "C" fn #ident_exit() {
-                 /// This function must only be called once.
-                 unsafe fn __init() -> ::kernel::ffi::c_int {
-                     let initer = <super::super::LocalModule as ::kernel::InPlaceModule>::init(
--                        &super::super::THIS_MODULE
-+                        &<super::super::LocalModule as ::kernel::ModuleMetadata>::THIS_MODULE
-                     );
-                     // SAFETY: No data race, since `__MOD` can only be accessed by this module
-                     // and there only `__init` and `__exit` access it. These functions are only
+     gen_items.push(parse_quote! {
+         const USE_VTABLE_ATTR: () = ();
+     });
+ 
++    // Auto-insert `type ThisModule = crate::LocalModule` if not explicitly defined.
++    // `crate::LocalModule` resolves to the real module type (via `module!`) or a
++    // dummy fallback in non-module contexts (e.g., doctests).
++    if !defined_types.contains(&parse_quote!(ThisModule)) {
++        gen_items.push(parse_quote! {
++            type ThisModule = crate::LocalModule;
++        });
++    }
++
+     for item in &item.items {
+         if let ImplItem::Fn(fn_item) = item {
+             let name = &fn_item.sig.ident;
 
 -- 
 2.43.0
