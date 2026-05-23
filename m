@@ -1,84 +1,84 @@
-Return-Path: <linux-modules+bounces-6505-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6507-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UOXcC5FVEWrxkAYAu9opvQ
-	(envelope-from <linux-modules+bounces-6505-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Sat, 23 May 2026 09:21:53 +0200
+	id 2OptEBpVEWrxkAYAu9opvQ
+	(envelope-from <linux-modules+bounces-6507-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Sat, 23 May 2026 09:19:54 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85CFC5BDA92
-	for <lists+linux-modules@lfdr.de>; Sat, 23 May 2026 09:21:51 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BEB55BD9FF
+	for <lists+linux-modules@lfdr.de>; Sat, 23 May 2026 09:19:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EBF2C306B350
-	for <lists+linux-modules@lfdr.de>; Sat, 23 May 2026 07:15:37 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id BF53C30226FB
+	for <lists+linux-modules@lfdr.de>; Sat, 23 May 2026 07:15:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23FE434DCF3;
-	Sat, 23 May 2026 07:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E55B351C27;
+	Sat, 23 May 2026 07:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QLotZ37J"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q1/6ALyK"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC78D34B1AD
-	for <linux-modules@vger.kernel.org>; Sat, 23 May 2026 07:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F4C346A10
+	for <linux-modules@vger.kernel.org>; Sat, 23 May 2026 07:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779520523; cv=none; b=TqSoq7G3HkgnET0+AeAel4oJCdKFKeS/X9VY3+fyLUxEkL/Wy742WfJSYPiUkhR5MblkqTi2RZOsjmVKXhBPxKgOsA2WMTZo1Fej0nlwsoPi/Jh7e7dOQGop/lO5zs20fGBiUuuW2vPE5Y00fRgQUedUCYPcSvpe69aFaZsZjyY=
+	t=1779520524; cv=none; b=im9ZFXupQ3nJGAIXg+5PcmXZ5JqThKCClj4+xICAfVfQIlW+/5x9TDKFSVcKKufniMtloetYZRwJs5lK84jYpEJb7j0+F5THPDCzQEQvQi6869lDf4i3gH+MoYmhl/d/A6lYXMjHeGsjPY8HFUnpiY3a8A5Z5VDGI+C6s/RyYJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779520523; c=relaxed/simple;
-	bh=rOksOAhaWphEcgDsCZEZduEgXwfTtl68VUCgxNPY7/c=;
+	s=arc-20240116; t=1779520524; c=relaxed/simple;
+	bh=zY26AoTDT5sXs+cwH/35lsu5KHT7UoaJFyISX4/PEiA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=V0m8+4aasKEEdVb58ojAQPqBp8QcTmboK54ngPoX4wT+Z0k2J7ychpeLA+C1QCjsk7nwLr9cbvmp9EIggynMLe/AMG0cWMxEZmYWbAb2SzpTqWOgW34H+CmiTdw9IXOEo3zLr5igHv4KlbSmcUyLAX7I7vJ2KQmneJBWnD3IKk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QLotZ37J; arc=none smtp.client-ip=209.85.221.46
+	 In-Reply-To:To:Cc; b=qr8b7/HBrNp6adkaibbAmCO4TRKTA0ilCcT8c6VqrtbRBQSFY8hE1oBFWFhL6vTK2AhHqp52qSOrhwhxSd6NsRPCP4EL5yVTiO43xKnW4qTEn/+etUz07QgLATp4YOXlx7rMJbguzE53lPuTOvk80t8dJsis/Cbw/Cq9Q8uSY/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q1/6ALyK; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-4526a8170ceso4024403f8f.2
-        for <linux-modules@vger.kernel.org>; Sat, 23 May 2026 00:15:17 -0700 (PDT)
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-43eb05b1875so4419045f8f.3
+        for <linux-modules@vger.kernel.org>; Sat, 23 May 2026 00:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779520516; x=1780125316; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779520520; x=1780125320; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kcnaLfaQGctlS33zvErx78bjZPUMxYDde02HXus0bGY=;
-        b=QLotZ37J11STgwaAiHh56BoyvTARohcxUqM37DfmdE35eUkT2sjjQZtzfh0CxDZK62
-         CY3xksaw8x+q26nNcnhvkU/Cag5f3IzXTr1DX3N4v7v9vLf+ju1O6KB8O4U7QCH82ENF
-         1XT/nBKP3MxlqXV/lWgsXM9MEyN64KFS/lEhv353u0pC3AgCGJgVDhYqfCfmm6OWPAfK
-         BZ29hK33glyV4VvQIq28/sMidYS43gFQzVymq59LycYey/G110wCxCmVYL5X8So61J8P
-         TpJTb52HLtL+P8kOnTDP33xEnJgZzMtZlQG4HCPPBRbOCi3Oo+zuZYX/k6Xay30dlFnI
-         WJWg==
+        bh=UrPKdNKgj6LivKrqLr8CgMfwExcBZv4b+V8NB+o2xak=;
+        b=q1/6ALyKibzj3o6aDV1YE50rTA6024QvKw3ZMDxGxL4M8KD4ulePXnYjLcYZV6Dm82
+         D0/JSnDgtpuyRGAA3X773ftyiBUFTqFmNzYWNY/kEhXRabRuJTbtMKdqB+ZQayX3o8li
+         tYwV4bq0mCoFzsJfaWB7E2y4kwgGuOvDw8oBJDsA8872pW1uPo00o3M6PTg11vt0pH/2
+         qLjiqBKEo/nJUh2Ctjc7Pd/vE2MnjOKqwTZz35lBkxdnaNZ7JZySICIStiqMQEhbo/Sj
+         w2hSkv7Rf6Y31QWsi7rHTIul8z90/l8t8UQebTv91J06loPE4m3c0uGIDJyots/FHK5o
+         T1ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779520516; x=1780125316;
+        d=1e100.net; s=20251104; t=1779520520; x=1780125320;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=kcnaLfaQGctlS33zvErx78bjZPUMxYDde02HXus0bGY=;
-        b=KAHMKiFdYw76wxQkW5CXOz28WwTAJbUMwtj67N5/TBBAATD3spUWxMtkwfmQnKajlS
-         E75gMGtTheyfgNH4CRsGhzBn0zGmePWjHwMI1YEZDCaKPgS9CF3sH6zoC2Dw7a4Mn9Cp
-         jc9TlUbZY8sGm6p60sdQdE0gUGDtITn1aNYvEHOlVltUFPeq4z6GRTAPSS+d8plCKdWR
-         ZEQGnSMUKiH7Fecx9hSjoaB4HwTCBoFGFCthup7S/jyfdtTpM8W9PXVBTatmjZ35Gs23
-         FsqHX1kOXxpIDD7GZmizU/NQxqzQRcVTRGK1bzogc3gEl+4TEt1n/o/IjcjupDU3a3hv
-         GxTA==
-X-Forwarded-Encrypted: i=1; AFNElJ9qpA/1unJbbHOPvZSArJLQMyXaSPUEYWa/lryQCFD4o0B7hkqre2h4k0Vn4KC0xXp9ty2CNkprxKf1RsUM@vger.kernel.org
-X-Gm-Message-State: AOJu0YzytxE2wQRg0xwxzg2Ptoex9ry/EEyBljr6VaYH5fNgZ+U5GuQK
-	xmSfcpT1nkcjl2N5ApLIFXQCImMXflbb8eEs6fe0W2yw3yNDoWoLHNxWN86XATQ63Ls=
-X-Gm-Gg: Acq92OHlMTIzXtXlB+5EbeOl/jwNxUr0BZ6QB9yxTnCZHdh5Ui1ewFc9RDrgD3ga4MS
-	L0334wtONDU2eiCEYCjK4E5OidmmozfiOBGTJpDwEuu11t1TFLRuj6QT9RM+/UuTqBoMzUMgokb
-	MTK8WtU6Lk+rXBIIIbip4hGzN+YIIHrtSqHQ8dsjVTl5ImKdVDXr4WTwSKwdRTUV8EwAMqX+3vF
-	0FZ16A57KC/XJ5xpSOImyfx5OebLLXCmMHu6MYv7WiElX9OdxBu9myhH86VmE8e8dV8QQCUWtu8
-	FUHCJeLyGPWEciktPdqHmsd57/8F/8CyBsAPxotyLTkyBl0NM4ahPgyPRE5+ONuMfZVyJygtVtC
-	OjDLAA0auZgU/QdopvDamjnqhKZyY13uK5Dt8Fy01tu5AJrd2FaZI7fsx7mV31XJ5slMxOrN2Q0
-	BuHPOdx+7bxs6/WdAe4t1KA4RKq8T8
-X-Received: by 2002:a05:6000:1ace:b0:45e:9417:556f with SMTP id ffacd0b85a97d-45eb38c679fmr10298303f8f.39.1779520516325;
-        Sat, 23 May 2026 00:15:16 -0700 (PDT)
+        bh=UrPKdNKgj6LivKrqLr8CgMfwExcBZv4b+V8NB+o2xak=;
+        b=mGt9zkw3weCFkj+sGyZHJxzd9tEqtOPENEEKS/0C107HhlsGe5Ggf5nXfM/FlH7HqF
+         mu2MR99ul/p7oGRihimNG3xjqmA50RZflnKZIX6C33eQBKTZR04X3bEjQbCoDCbM8AUx
+         v5ZqIJSjT3ipH5Vgxd8jfS3/iYuUUd80HE01l6LFW7lyloBNv5xTgD2yj/mCjYh1BVbt
+         DxTmNBxjw0tELcbbSUjb4sk1T+XBVee7McHxsTyQV59kKrf1jIR2J6trSSt5y3jQDi+g
+         j5e6gvoUwg6sh0i3DgkxR/RcCZDJBfzFeKY+ecNj1rTNts3I+Hvj8duC1kEThyW3xChS
+         VeaQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+cizGh5FtTb0Atxv+cF5ICsGbx9vBpdnKc74XR2LvlK0y0fHVho8WaV9eI47bPcMOPqPlg7GaRpnSUf2oq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzegIhTqZOHuAoiwu/Q4EhceKNW+gpAN1+5YfL+SE80UHdim9YS
+	l9miNROudBtTHOJvL99mWaFOwWb11Ap4QzHWzQXX3On3In6rsgdUcCyzOp5mMxQ1Cag=
+X-Gm-Gg: Acq92OEPrzO5BOzCwpq9ZvZo/ULcAkfk/H4JDPB78WRMWVKqsvUlaGqVr2IvKetsIQo
+	7fGaJQOCxvZswk9Gvn0J1Fic5kS26ne5S6jzChGbKMSdNSA1G3m7fo2Fi9yj74+RODA79PmPHVp
+	dIMcSruaxYPy06JQuIy4Kthipjir5V/NYi89AfUPkIQNrvKgfvj1p1Y41GMNa7OACxHDIkIFg3P
+	9lO4f9bOgvT76YLbuK+a36QzCl2a81jPRtHOV1DB7lRdYyH6ahQF41T7bq4a9lZVGNl1lsCGQPu
+	Q4B4Sb0I0Y+NEfeScNzXX/sg9wUUQqtn2k/XYRrp5z0RLrtlKbaMtnuxBURK9aPopoqTPvOE57/
+	vKdIPQeLF9gtNraZGxJlYiq+23dTwRbUetcw/8SBKiIXmqDl7mxiDIejw9DcSqdJ0alOQQ0Fkrf
+	vgOE+WJ7WJpvUegqfCLw6NFGiZD8z4
+X-Received: by 2002:a05:6000:2889:b0:45e:5b92:1e45 with SMTP id ffacd0b85a97d-45eb38c7d20mr10565597f8f.40.1779520519421;
+        Sat, 23 May 2026 00:15:19 -0700 (PDT)
 Received: from [192.168.0.174] ([31.96.183.250])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-45eb6d5cb76sm8639838f8f.25.2026.05.23.00.15.13
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-45eb6d5cb76sm8639838f8f.25.2026.05.23.00.15.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2026 00:15:15 -0700 (PDT)
+        Sat, 23 May 2026 00:15:18 -0700 (PDT)
 From: Jim Cromie <jim.cromie@gmail.com>
-Date: Sat, 23 May 2026 01:14:45 -0600
-Subject: [PATCH v2 12/24] dyndbg: drop NUM_TYPE_ARGS
+Date: Sat, 23 May 2026 01:14:46 -0600
+Subject: [PATCH v2 13/24] dyndbg: reduce verbose/debug clutter
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260523-dd-maint-2-v2-12-b937312aa083@gmail.com>
+Message-Id: <20260523-dd-maint-2-v2-13-b937312aa083@gmail.com>
 References: <20260523-dd-maint-2-v2-0-b937312aa083@gmail.com>
 In-Reply-To: <20260523-dd-maint-2-v2-0-b937312aa083@gmail.com>
 To: Jonathan Corbet <corbet@lwn.net>, 
@@ -101,11 +101,11 @@ Cc: linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-kselftest@vger.kernel.org, Jim Cromie <jim.cromie@gmail.com>, 
  Louis Chauvet <louis.chauvet@bootlin.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779520485; l=1439;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779520485; l=4656;
  i=jim.cromie@gmail.com; s=20260203; h=from:subject:message-id;
- bh=rOksOAhaWphEcgDsCZEZduEgXwfTtl68VUCgxNPY7/c=;
- b=IMkDxWEEMSyVXwT4wwtQxotcBdIkVon/BYyg9V3iMJcUkveV+jlKy9k+DfRHSnUkHdLpkLm0O
- gslJgQJjRPlCsYxqB/1ZQBFCoQdKro1LQI2q09sXEIk8n+4Le5VrzBd
+ bh=zY26AoTDT5sXs+cwH/35lsu5KHT7UoaJFyISX4/PEiA=;
+ b=L2RL4t6UeiHcEGIX7kfDlIJ3EmHkqwuLl8YVbLdl0/jhDPOyxEy1b8gUT+0am8u8QIKmPveZD
+ uy88jHV84ClDGG73VhFpecIhC0yryh1axgP4R06jKvH8P0W/nSkUzUT
 X-Developer-Key: i=jim.cromie@gmail.com; a=ed25519;
  pk=C6E5ODlPQo7ZBynATXH9wg7K6HxP0pIXyf4s38Qw0XE=
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -113,11 +113,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-6505-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6507-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -125,7 +125,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -136,54 +136,151 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 85CFC5BDA92
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,bootlin.com:email]
+X-Rspamd-Queue-Id: 8BEB55BD9FF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-ARRAY_SIZE works here, since array decl is complete.
+currently, for verbose=3, these are logged (blank lines for clarity):
+
+ dyndbg: query 0: "class DRM_UT_CORE +p" mod:*
+ dyndbg: split into words: "class" "DRM_UT_CORE" "+p"
+
+ dyndbg: op='+'
+ dyndbg: flags=0x1
+ dyndbg: *flagsp=0x1 *maskp=0xffffffff
+
+ dyndbg: parsed: func="" file="" module="" format="" lineno=0-0 class=...
+ dyndbg: no matches for query
+ dyndbg: no-match: func="" file="" module="" format="" lineno=0-0 class=...
+ dyndbg: processed 1 queries, with 0 matches, 0 errs
+
+That is excessive, so this patch:
+ - shrinks 3 lines of 2nd stanza to single line
+ - drops 1st 2 lines of 3rd stanza
+   3rd line is like 1st, with result, not procedure.
+   2nd line is just status, retold in 4th, with more info.
+
+New output:
+
+ dyndbg: query 0: "class DRM_UT_CORE +p"
+ dyndbg: split into words: "class" "DRM_UT_CORE" "+p"
+ dyndbg: op='+' flags=0x1 maskp=0xffffffff
+ dyndbg: processed 1 queries, with 0 matches, 0 errs
+
+Also drop several verbose=3 messages in ddebug_add_module
+
+When modprobing a module, dyndbg currently logs/says "add-module", and
+then "skipping" if the module has no prdbgs.  Instead just check 1st
+and return quietly.
 
 no functional change
 
 Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
 Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
 ---
-v2: include linux/array_size.h, correct commit subject
-    review after sob
----
- include/linux/dynamic_debug.h | 4 +---
- lib/dynamic_debug.c           | 1 +
- 2 files changed, 2 insertions(+), 3 deletions(-)
+v2:
 
-diff --git a/include/linux/dynamic_debug.h b/include/linux/dynamic_debug.h
-index aa45dcf36a44..e724f6b93663 100644
---- a/include/linux/dynamic_debug.h
-+++ b/include/linux/dynamic_debug.h
-@@ -121,11 +121,9 @@ struct ddebug_class_param {
- 		.mod_name = KBUILD_MODNAME,				\
- 		.base = _base,						\
- 		.map_type = _maptype,					\
--		.length = NUM_TYPE_ARGS(char*, __VA_ARGS__),		\
-+		.length = ARRAY_SIZE(_var##_classnames),		\
- 		.class_names = _var##_classnames,			\
- 	}
--#define NUM_TYPE_ARGS(eltype, ...)				\
--	(sizeof((eltype[]) {__VA_ARGS__}) / sizeof(eltype))
- 
- extern __printf(2, 3)
- void __dynamic_pr_debug(struct _ddebug *descriptor, const char *fmt, ...);
+RvB after SoB
+
+trivial change to verbose-debug output line to output the actual
+"module" keyword rather than "mod:", and do so only when the module is
+constrained by the callchain (ie as part of a modprobe).
+
+ was:   query X: "(keyword value)* [+-=]flags" mod:*
+ now:   query X: "(keyword value)* [+-=]flags"
+   or   query X: module FOO "keyword value)* [+-=]flags"
+
+IOW, adjust output to reflect the input grammar more closely.
+---
+ lib/dynamic_debug.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
+
 diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-index 0377d9f8dcd1..6d9dbeb68ae8 100644
+index 6d9dbeb68ae8..dfed3725aa44 100644
 --- a/lib/dynamic_debug.c
 +++ b/lib/dynamic_debug.c
-@@ -13,6 +13,7 @@
+@@ -277,9 +277,6 @@ static int ddebug_change(const struct ddebug_query *query,
+ 	}
+ 	mutex_unlock(&ddebug_lock);
  
- #define pr_fmt(fmt) "dyndbg: " fmt
+-	if (!nfound && verbose)
+-		pr_info("no matches for query\n");
+-
+ 	return nfound;
+ }
  
-+#include <linux/array_size.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/moduleparam.h>
+@@ -512,7 +509,6 @@ static int ddebug_parse_flags(const char *str, struct flag_settings *modifiers)
+ 		pr_err("bad flag-op %c, at start of %s\n", *str, str);
+ 		return -EINVAL;
+ 	}
+-	v3pr_info("op='%c'\n", op);
+ 
+ 	for (; *str ; ++str) {
+ 		for (i = ARRAY_SIZE(opt_array) - 1; i >= 0; i--) {
+@@ -526,7 +522,6 @@ static int ddebug_parse_flags(const char *str, struct flag_settings *modifiers)
+ 			return -EINVAL;
+ 		}
+ 	}
+-	v3pr_info("flags=0x%x\n", modifiers->flags);
+ 
+ 	/* calculate final flags, mask based upon op */
+ 	switch (op) {
+@@ -542,7 +537,7 @@ static int ddebug_parse_flags(const char *str, struct flag_settings *modifiers)
+ 		modifiers->flags = 0;
+ 		break;
+ 	}
+-	v3pr_info("*flagsp=0x%x *maskp=0x%x\n", modifiers->flags, modifiers->mask);
++	v3pr_info("op='%c' flags=0x%x maskp=0x%x\n", op, modifiers->flags, modifiers->mask);
+ 
+ 	return 0;
+ }
+@@ -552,7 +547,7 @@ static int ddebug_exec_query(char *query_string, const char *modname)
+ 	struct flag_settings modifiers = {};
+ 	struct ddebug_query query = {};
+ #define MAXWORDS 9
+-	int nwords, nfound;
++	int nwords;
+ 	char *words[MAXWORDS];
+ 
+ 	nwords = ddebug_tokenize(query_string, words, MAXWORDS);
+@@ -570,10 +565,7 @@ static int ddebug_exec_query(char *query_string, const char *modname)
+ 		return -EINVAL;
+ 	}
+ 	/* actually go and implement the change */
+-	nfound = ddebug_change(&query, &modifiers);
+-	vpr_info_dq(&query, nfound ? "applied" : "no-match");
+-
+-	return nfound;
++	return ddebug_change(&query, &modifiers);
+ }
+ 
+ /* handle multiple queries in query string, continue on error, return
+@@ -594,7 +586,8 @@ static int ddebug_exec_queries(char *query, const char *modname)
+ 		if (!query || !*query || *query == '#')
+ 			continue;
+ 
+-		vpr_info("query %d: \"%s\" mod:%s\n", i, query, modname ?: "*");
++		vpr_info("query %d: %s%s \"%s\"\n", i,
++			 modname ? "module " : "", modname ?: "", query);
+ 
+ 		rc = ddebug_exec_query(query, modname);
+ 		if (rc < 0) {
+@@ -1160,11 +1153,10 @@ static int ddebug_add_module(struct _ddebug_info *di, const char *modname)
+ {
+ 	struct ddebug_table *dt;
+ 
+-	v3pr_info("add-module: %s.%d sites\n", modname, di->num_descs);
+-	if (!di->num_descs) {
+-		v3pr_info(" skip %s\n", modname);
++	if (!di->num_descs)
+ 		return 0;
+-	}
++
++	v3pr_info("add-module: %s %d sites\n", modname, di->num_descs);
+ 
+ 	dt = kzalloc_obj(*dt);
+ 	if (dt == NULL) {
 
 -- 
 2.54.0
