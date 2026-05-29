@@ -1,185 +1,171 @@
-Return-Path: <linux-modules+bounces-6576-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6577-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GHV9DsnEGWqyywgAu9opvQ
-	(envelope-from <linux-modules+bounces-6576-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Fri, 29 May 2026 18:54:33 +0200
+	id YMamDxHJGWpXzAgAu9opvQ
+	(envelope-from <linux-modules+bounces-6577-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Fri, 29 May 2026 19:12:49 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3B7B605FF5
-	for <lists+linux-modules@lfdr.de>; Fri, 29 May 2026 18:54:30 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D728A606311
+	for <lists+linux-modules@lfdr.de>; Fri, 29 May 2026 19:12:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 55A18303608A
-	for <lists+linux-modules@lfdr.de>; Fri, 29 May 2026 16:47:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1D03E3008C1F
+	for <lists+linux-modules@lfdr.de>; Fri, 29 May 2026 17:12:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3918F3B8BA1;
-	Fri, 29 May 2026 16:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64A1B367B9A;
+	Fri, 29 May 2026 17:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="R9XI+hpA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0Rc4P/Y"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.54])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4255376A13;
-	Fri, 29 May 2026 16:47:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5103E37A4B7
+	for <linux-modules@vger.kernel.org>; Fri, 29 May 2026 17:12:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780073247; cv=none; b=MQvsFsM6oWHTw+1BWJAb1f5tmh4sUe93Wy3kpLLSVdJKKdgur2isHOcgwstu+wRPAESNfM1EspI6UtD8ADu1oXoisRAxZc1zN2DWpZfQj1gUMYYyQ2BjEZSyUfgPrreDZMHHOMlc4ZcAvElQ4/BFqsipgrD+/lHxRo8YBO/BWBA=
+	t=1780074765; cv=none; b=PzZhIlwjhXTQQTDzQdepLyiILsG/Zp5szJYu2CsTqbXDb/jbgzOuxOtl8LNhsjALxyFFMQAmORIvF+BtrIf72jea0I4GMIUv1KNkHgkZoYKtc/gYGizO1Iv0enTXfhiL5/SADS0TpTPvW52nTqC8678lzKabzQxZl9O0ZqRDLUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780073247; c=relaxed/simple;
-	bh=qEVchMN8v0+wSJWDNDy3B7C/easzG8SyBuV68bz4C90=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=RA4ygFeCAmVlnP3Phr0F4yrsNYsX0k0VaR35lKS2xJwwV37bycjxl/KgluLvjU0UBRg9ysTtiIvWTZljR2pgF5ocA8SfcBcK4j3xaOzWHlLC7qfDTrdH8MrIDgjSKjge1Y08It8XpDU9ZjL2WNzNIJg7oxsCNyYUBrh17dUJNMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=R9XI+hpA; arc=none smtp.client-ip=43.163.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1780073240;
-	bh=JVvGpZVbgfNh7wolCwvE0ghD3nqiaYT40C2yK739Pw8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9XI+hpA7VQRt8YfW2NlbI+bwtYErbwAFIfb6gIKY3ReW/RXAyg5TLYoIbW0Iwenx
-	 RSze0tZQM0f4/CoSd8OooMXhZgB+77lOSouebFQdWI0ydJHbq/yozjU5CndTEv+Iv4
-	 3Dvin/PXUYk9jwIJeJZ0V+GJT5/PJZ2YdCl3pi/M=
-Received: from LAPTOP-JJ91J38E.localdomain ([222.125.130.99])
-	by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
-	id BD230674; Sat, 30 May 2026 00:47:18 +0800
-X-QQ-mid: xmsmtpt1780073238t8ug9n6mv
-Message-ID: <tencent_D9CDCA221D0AF5EDF260559734464D39B708@qq.com>
-X-QQ-XMAILINFO: OedO1VJQO5LrvC24y5F2mOvinXoZ6aK1mrP8eIF0xMqf/sBGynbGIw8+ZegpHj
-	 uXr2Ys3xkdz7wl83b1+4sFIKieCFkvtedA7hUChnKo41DRXmVccT0hrB0R6kZiSdbeTVaOAmgfRg
-	 CHjoI/j1/3ikZT83M3mFOZqagrd1M5tQUvwWeqiMZYZpFNBXb8XcjeJzW7YVv9M012Ko3sQaP8+f
-	 JLAX4dICv+vH5aY8xsICdHMEszd2iGxHHUC3tduxtWw0RGAhHwC7iy/Kpo3HKac0Rl037Khd2VMM
-	 tsVnBGdn0dlZvZ3yhmlS0UR1vFlAVHiS1k2S25+VDgV1B4ZZQKEo2eeM/TxZIsAVW+HNfe01PIYn
-	 FUJJnl5zPIVUDUQSK89JLpQ/MSuyUlGoPMjrcPo/0EerMzwkHNXO1agAM6saJ+k9R7oMlMgwzdKr
-	 Ah3ku4c1Wt7XTelUfvXQLmbh8y5Ag+OpRsOhqiiXu5ndpF5MjoOlryLSE7rNDaoRXazxNKPfacU8
-	 xCCi/Oqh7DE5Wc5dp04q3CdqAQgELSMQsMImh9gALZddJ2NGDC3FwL6CKpPYKzfDEY3Jh83dCEGj
-	 /t7BJ5mYYiJvfFvsz2t3up4xvcLnoWkjqcGpCtV151RMI3yPYbd8aJcZ9/YkAQIkLGkGJMpUMv/+
-	 VvxIYEWO0+ApKSSmUrXjleZDWL2acRaKS+upcGMQBuwvKaFAoBrsq965bMx/fSD2815zCJhLLsHv
-	 KxTglrgdDANI0HTHJdIG4i2aSYnZl0wovuii+QxYkyQh1/Ajj4rNs2JzcF2kwQQW3HxHqkWiwacF
-	 RZNULx6NWN8RfoboH3HEfgwCgwiRsPdLGk0zW8fOZf1YbPMpCK937juALTzDjqwONy2uKnq2ibts
-	 /rDckhZhriedMySeRHLwWLlGzqxrFWwqeQW6FLG/eLkr77taCrkZy00YnIelBfL2rnbqYWGKjSmc
-	 sGZe1xlg4o9vGGSJue4ljYOycAoRRPTzLOVf0OeCORAqnSRg5A/8MVFMvYIR+T9Y0d8QzZVUSAVH
-	 mqFQiLUxforjkPscpERfCXAOJNybFquJhdj7Sj9hWde88zhTfg+FwPQ05tpWi2pOLxAiVH9atli5
-	 dLYny+Bcj6qI/GDUIYaBK+Iu5rf3uwmB91nSdl
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-From: Egg12138 <egg12138@foxmail.com>
-To: Russell King <linux@armlinux.org.uk>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Xiao Junzhe <egg12138@foxmail.com>
-Subject: [PATCH v2] ARM: module.lds: fix unwind metadata for merged .text sections
-Date: Sat, 30 May 2026 00:46:08 +0800
-X-OQ-MSGID: <20260529164608.1870192-1-egg12138@foxmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <tencent_69DC6E2A5B77E4D567CA4F552DD3A835590A@qq.com>
-References: <tencent_69DC6E2A5B77E4D567CA4F552DD3A835590A@qq.com>
+	s=arc-20240116; t=1780074765; c=relaxed/simple;
+	bh=8gy8v24fWXGyiDG/HsSPi7FzupO+wJept+qsFk4Czw4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=WJ0tb3b0KYB/HFE7rJtN6WkMN8ogoqsvIqoAM/2bWn41faG8NQMevWni5TCDZhc9NWpNGmQXH9pNhgZ+d0gR9nR/TGwrqPmviQVu5dXRIxV1GeImE9HLjMmRqmEKEF3Q+a3tRv/cQXlgOdhxfD4IMhLHTaB+QW0buAjUjzgbgrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0Rc4P/Y; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101861F00893;
+	Fri, 29 May 2026 17:12:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780074764;
+	bh=vgVALfg/VfC6yBgAjZR1iy6vbTHjSsMQgVylxmrOKT4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=D0Rc4P/Yde5BD7sWjf6+Qsi9wNE2hAFSPY24RsyG18PNzcYpXyXuUGzEbv7H8z3AD
+	 +0QN8YwxG5K7apWuj842ctEJepSHbFP2vHTyvLHP8jrUvanJB9SEzdjqUuhiIWOIQj
+	 3GTDD6WGVzJASzGt6PUtq+Nzk0ovDl4hK4ql76pDMJcX5couxkLaxo/KLaj5SaqVtC
+	 T8CUYPJXi8tn5lrgFh/NurW42OD8eF7un0F0O0ml9NpeHhL3xBiYkEB0I3blQnDkSH
+	 LGo2UJaTCog9Q/aGGKkboC6+ADE8WPKzutZJ33NwMJPThRB4l26zu+1clcT+cxni+v
+	 6kLoWnIDFQjHQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] ARM: module.lds: fix unwind metadata for merged
+ .text sections
+Reply-To: sashiko-reviews@lists.linux.dev
+To: Egg12138 <egg12138@foxmail.com>
+Cc: linux-modules@vger.kernel.org
+In-Reply-To: <tencent_D9CDCA221D0AF5EDF260559734464D39B708@qq.com>
+References: <tencent_D9CDCA221D0AF5EDF260559734464D39B708@qq.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 29 May 2026 17:12:43 +0000
+Message-Id: <20260529171244.101861F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	MISSING_MIME_VERSION(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[foxmail.com,none];
-	R_DKIM_ALLOW(-0.20)[foxmail.com:s=s201512];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6576-lists,linux-modules=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-6577-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,suse.com,lists.infradead.org,vger.kernel.org,foxmail.com];
+	REPLYTO_DN_EQ_FROM_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[sashiko-bot@kernel.org,linux-modules@vger.kernel.org];
+	FREEMAIL_TO(0.00)[foxmail.com];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[egg12138@foxmail.com,linux-modules@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[foxmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	FREEMAIL_FROM(0.00)[foxmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qq.com:mid]
-X-Rspamd-Queue-Id: F3B7B605FF5
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NO_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	HAS_REPLYTO(0.00)[sashiko-reviews@lists.linux.dev];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[smtp.kernel.org:mid,sashiko.dev:url,lists.linux.dev:replyto,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,foxmail.com:email]
+X-Rspamd-Queue-Id: D728A606311
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Xiao Junzhe <egg12138@foxmail.com>
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [High] The linker script fix is wrapped in an inverted configuration cond=
+itional (`#ifndef CONFIG_ARM_UNWIND`), applying the fix only when unwinding=
+ is disabled.
+- [High] The wildcard patterns are enclosed in double quotes, which disable=
+s wildcard matching in GNU ld.
+- [Low] Non-standard linker script syntax with a space between the wildcard=
+ asterisk and the section name list.
+--
 
-Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN,
-and related macros") made scripts/module.lds.S merge module input
-.text.* sections into the output .text section.
+commit 165574ad9cf92e77eac788d811caa72c990e0b3d
+Author: Xiao Junzhe <egg12138@foxmail.com>
+Subject: ARM: module.lds: fix unwind metadata for merged .text sections
 
-On ARM, the paired unwind input sections keep their original names.  A
-module can therefore contain .ARM.exidx.text.unlikely with sh_link
-pointing at .text, while .text.unlikely no longer exists.
+This commit attempts to fix a module stack unwinding failure on ARM by
+coalescing .ARM.exidx and .ARM.extab input sections that belong to merged
+.text.* sections. This is intended to keep the output names in sync with
+what the ARM module unwind code expects.
 
-This is a valid ELF relationship, but ARM module_finalize() does not use
-sh_link when registering module unwind tables.  It derives the target
-text section from the exidx section name instead:
+> diff --git a/arch/arm/include/asm/module.lds.h b/arch/arm/include/asm/mod=
+ule.lds.h
+> --- a/arch/arm/include/asm/module.lds.h
+> +++ b/arch/arm/include/asm/module.lds.h
+> @@ -1,4 +1,20 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+> +
+> +#ifndef CONFIG_ARM_UNWIND
 
-  .ARM.exidx.text.unlikely -> .text.unlikely
+[Severity: High]
+Does this exclude the fix in the exact configuration it is intended for?
 
-The lookup fails and the unwind table is not registered for the actual
-.text range.  This can make module stack unwinding fail with:
+The patch aims to fix module stack unwinding, which is controlled by
+CONFIG_ARM_UNWIND. Because this block is wrapped in an #ifndef, the section
+coalescing will be skipped when unwinding is enabled, leaving the unwind
+tables unmerged and the issue unresolved.
 
-  unwind: Index not found
+> +SECTIONS {
+> +	.ARM.extab		0 : {
+> +		*(.ARM.extab)
+> +		* (".ARM.extab.text")
+> +		* (".ARM.extab.text.[0-9a-zA-Z_]*")
 
-Keep the ARM module unwind output names in sync with the text sections
-that scripts/module.lds.S now produces.  Coalesce the .ARM.exidx/.ARM.extab
-section associated with .text.*, into the
-stable output names expected by the existing ARM module unwind code.
+[Severity: Low]
+This isn't a bug, but there is a space between the asterisk wildcard and
+the section name list. While GNU ld ignores this whitespace, standard kernel
+linker script conventions typically omit it.
 
-Fixes: 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related macros")
-Signed-off-by: Xiao Junzhe <egg12138@foxmail.com>
----
-Changes in v2:
-  - Quote ARM unwind input section patterns and split them across separate
-    linker-script entries to avoid checkpatch false positives on wildcard
-    syntax.
-  - No functional change: the script still folds .ARM.extab.text.* and
-    .ARM.exidx.text.* into the stable .ARM.extab/.ARM.exidx output sections.
+[Severity: High]
+Will GNU ld expand the wildcard patterns when they are enclosed in double
+quotes?
 
- arch/arm/include/asm/module.lds.h | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Enclosing a section name in double quotes causes wildcard characters like
+the asterisk and brackets to lose their special meaning and be treated as
+literal characters. The linker will try to match a section literally named
+".ARM.extab.text.[0-9a-zA-Z_]*" instead of expanding the glob to match
+sections like ".ARM.extab.text.unlikely".
 
-diff --git a/arch/arm/include/asm/module.lds.h b/arch/arm/include/asm/module.lds.h
-index 0e7cb4e314b4..19ceb8cf235f 100644
---- a/arch/arm/include/asm/module.lds.h
-+++ b/arch/arm/include/asm/module.lds.h
-@@ -1,4 +1,20 @@
- /* SPDX-License-Identifier: GPL-2.0 */
-+
-+#ifndef CONFIG_ARM_UNWIND
-+SECTIONS {
-+	.ARM.extab		0 : {
-+		*(.ARM.extab)
-+		* (".ARM.extab.text")
-+		* (".ARM.extab.text.[0-9a-zA-Z_]*")
-+	}
-+	.ARM.exidx		0 : {
-+		*(.ARM.exidx)
-+		* (".ARM.exidx.text")
-+		* (".ARM.exidx.text.[0-9a-zA-Z_]*")
-+	}
-+}
-+#endif
-+
- #ifdef CONFIG_ARM_MODULE_PLTS
- SECTIONS {
- 	.plt : { BYTE(0) }
--- 
-2.43.0
+> +	}
+> +	.ARM.exidx		0 : {
+> +		*(.ARM.exidx)
+> +		* (".ARM.exidx.text")
+> +		* (".ARM.exidx.text.[0-9a-zA-Z_]*")
+> +	}
+> +}
+> +#endif
 
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/tencent_D9CDCA221D0=
+AF5EDF260559734464D39B708@qq.com?part=3D1
 
