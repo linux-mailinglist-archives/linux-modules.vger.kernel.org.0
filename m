@@ -1,178 +1,175 @@
-Return-Path: <linux-modules+bounces-6582-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6583-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SMz4JKQGG2o4+ggAu9opvQ
-	(envelope-from <linux-modules+bounces-6582-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Sat, 30 May 2026 17:47:48 +0200
+	id U/oiBrgIG2pg+ggAu9opvQ
+	(envelope-from <linux-modules+bounces-6583-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Sat, 30 May 2026 17:56:40 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB1DF60DD33
-	for <lists+linux-modules@lfdr.de>; Sat, 30 May 2026 17:47:47 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E79560DD85
+	for <lists+linux-modules@lfdr.de>; Sat, 30 May 2026 17:56:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26B6A30107D6
-	for <lists+linux-modules@lfdr.de>; Sat, 30 May 2026 15:46:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CDBC73024470
+	for <lists+linux-modules@lfdr.de>; Sat, 30 May 2026 15:56:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C2DA29AB02;
-	Sat, 30 May 2026 15:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11000327C0D;
+	Sat, 30 May 2026 15:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="wIty/s2r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Igk0GyuO"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.44])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3902227FB1C;
-	Sat, 30 May 2026 15:46:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D062F8E85
+	for <linux-modules@vger.kernel.org>; Sat, 30 May 2026 15:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780155985; cv=none; b=FT0oTGCpWKE2Sj01v/ONNKlemOUjHlDHXpvcIWDVFh4O3UZJ+rbETKqMxcEbXbspZe+9JitHG9KyjFEgtb/DkJMZvQbBhGagYN7TGX76tGgIiWAEhn4MX8Z2ZKz32WzzPKOJx7ehhrNYjiT0XWW8WLVqlt4XavBFKSukytIiBr4=
+	t=1780156562; cv=none; b=ZUjxLRO3YtUcWMBBHP4TeW+HOsu2TANmOgOrxbZ4kbakNfHhtIGSzYflEnO7KNYIeQnmBDNT9SZq3mvTalVxH3ACRliKLWRoiXk+fPuWHFN3l6d8Mu5alkK3t8qmPn2ppdUgHEU4AFfd7ysgnTf6EGpXOeJcd9l2ISgUOazeUow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780155985; c=relaxed/simple;
-	bh=xm71VHTCRupxnG2aliywUiZm9ZIVX+C8OKruUSD9ccE=;
-	h=Message-ID:From:To:Cc:Subject:Date:MIME-Version; b=ewW3yCPwlwnfOJAo5hslq0ReLDUd6mfmCRvuwNAtyr+mJo7I3BGaShKLy1AVUE/zi4h/97KwWlYoZKGTiplqVyGr8PHEqcOpgNUb1jKDgqgnT27l0GNw4asGIv9pgoWlhXuZdPoluc7QozYkda9cAMR5g2XENRZ5Vy680F6oUaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=wIty/s2r; arc=none smtp.client-ip=43.163.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1780155972;
-	bh=ilThKkB9WvCKq5FZp5MfmjxtGvtaKq8BAl5toqC3268=;
-	h=From:To:Cc:Subject:Date;
-	b=wIty/s2rPe8/MPWtYYUIP9eXzk6OrHz1kRu+aqNpsXRJofHgssoosZ7zdmjWrv5i8
-	 AmxjVgf2L4OosLWjmIRh6WzJZcNk2SoRezw2opVWF7N+znceUQwGS/bp3eqYwMo6DS
-	 GZQMBmZDtVr0HHvICOxdCzSADRstSbDYiC+iypY8=
-Received: from LAPTOP-JJ91J38E.localdomain ([222.125.130.99])
-	by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
-	id B89BCE76; Sat, 30 May 2026 23:46:09 +0800
-X-QQ-mid: xmsmtpt1780155969tp6b9r6cb
-Message-ID: <tencent_08845B64E5F38EB7FA1779982A071AB4A607@qq.com>
-X-QQ-XMAILINFO: MRMtjO3A6C9XIq5n+/XvMRMRIkQ5/XvU5XffPlcu+zegeLaEElrr7GQKhI1EMN
-	 ua7TU82ORW2Bc11eRPHjdJZ7+hjyIlUGSmvLfJzhnB9BwkF9lHH6v6TtJ62pMVBT98JzWrk7Kcpq
-	 0Z/JXUdRosiYyOio1u/OIXTwJ9CQCBYygFZGkHS4Xthd/iX1AuMjeslWfayBnoZkJ9wLzUctWO7A
-	 U2NMIAcc0YL1xG4DmB97nH7/1e4/OKhDhRNG37SZ8blcsWSCpUoKgG+X3JvGtgCGnr5pL1qK60Uz
-	 hFDZ0azg8cLJrTqSs5JIeSgc7nsZLDyqeGzKPIAuhjRHfGe9KEnEmtzpNKiAvvF25NHmDI9iCn1p
-	 IYul+DNYeqPEpH2udXdHw+dM5MSg+2JYKrDgNUu3ERKXh+8sG75sEPqiEW8uXT3ZO75zCtPy8amW
-	 blTsnLkBwMRybXHe8GJGp3e4IlZvM0Vrhya1sTl7XeaqQxEzfT5dI6hZDT1EmAFBuHiu2Y1tiu1a
-	 vtwGp/mgnqJT0CM2RftLD3FplFdVUCb9rn0XiDjdoC7xsN0IU4KtMzGYT7AzizUU9fKWTIRei9F7
-	 hrBZLMiitibD+a8i36UHeTY0u6U/1oUXxtb7t7I3wTV1PeHJdotUcKoY3Ajp9d6FoXYlie77RZp0
-	 9KOCRBtdZOwS2jvspvs0Zcbk3jo6MmOtdggbLO5cp+X/YTeCjnPIn5DDFf+5GLZ14ui6nVDRUB5W
-	 LarKPeD694U/DokZKcB0ST5SfXj1NxeTiPwf1QhZ3Shpen1ElU0qzsP5OyvA4k++BIGdl+SU719/
-	 UqFZDt8oUwofCGoN3OupfDQpfuORItp5/Vy9mgYok5NyiXvoMpadAXdowZYmTCkwO1f/sBnU6Sg+
-	 v6YgJ/Yqoec8mMtrNtqo4eQvq6vqM4EnOKaqpyR8oI7q/PzqjpkwDIBHOUQyFmegGHxX1FpE9/v7
-	 RsLAuSuvETZYRk+M6tsv+tSgw0E77BcpBwyWO5ybHB6bjPBsmd5KMHQ3WbLEieE8K2GT+7QsRt7C
-	 DOYmiHqsWfz3TyjB9W5z0G/hITwmq1uBCs1HmBmMRx9AhQ0gJ4AIcCTPbjS8w44j35DQm3sULJ7k
-	 4sag9EoZN9XdTkFYo=
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-From: Egg12138 <egg12138@foxmail.com>
-To: Russell King <linux@armlinux.org.uk>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-modules@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Xiao Junzhe <egg12138@foxmail.com>
-Subject: [PATCH v3] ARM: module.lds: fix unwind metadata for merged .text sections
-Date: Sat, 30 May 2026 23:46:01 +0800
-X-OQ-MSGID: <20260530154601.2409511-1-egg12138@foxmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1780156562; c=relaxed/simple;
+	bh=49diSm0PLFW8UguWtFSjd5MLm7awxZVRxqaKWvGrgM0=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Sg5W3ozKVBiYdGDT+dKBJ/bA08+5LdS4XDV81pFX61ZKf6T8yGul3bRd3bIN+QN6UGNgLjfFpjxww0dqbUGj2/dNRvTynDH2pKm5HTYgu+a9Zz13hNlaemq54tgPzcUtzB+fjjyLCCIzGe6fRjlgKzlUvgDSXX0Y+dhF6ay6JF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Igk0GyuO; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74901F00893;
+	Sat, 30 May 2026 15:56:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780156560;
+	bh=47FRlhr4lLDLGcldCmy4ksl15B/hQmuf6g8VNhXI62o=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Igk0GyuOtF4Yf01wJG+oVQDs1JXghPoHPQcEUSpVf+ozj1C/kgkBAy1dMWe/7G3MT
+	 4oo55NDYe8I9x1n8yGNs8pPPO/EKCu4Ry5fxPz18thNbFNviHeH+EY44gioS3IRjAq
+	 fxD8GV4HIWOqdI3h20Id1bfTXJcz6l91Pa9KtgCuDJuFs6N1vbLBkNHhFzSQrU3VGG
+	 Ztbc6GWWAAAU3D4V5vWExJuUcPMlD55RwpuShv7SFFz6/1xxOCgh5Rh8DxC1LMCcGG
+	 a2F9oQUhh3j0XhEIchbJsRr0uEdQJwzLRb/1mW7C3sdWFNrHO8AimnINGVEsuQFKEf
+	 EN+FfgXpQsI7Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3] ARM: module.lds: fix unwind metadata for merged
+ .text sections
+Reply-To: sashiko-reviews@lists.linux.dev
+To: Egg12138 <egg12138@foxmail.com>
+Cc: linux-modules@vger.kernel.org
+In-Reply-To: <tencent_08845B64E5F38EB7FA1779982A071AB4A607@qq.com>
+References: <tencent_08845B64E5F38EB7FA1779982A071AB4A607@qq.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 30 May 2026 15:56:00 +0000
+Message-Id: <20260530155600.A74901F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	MISSING_MIME_VERSION(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[foxmail.com,none];
-	R_DKIM_ALLOW(-0.20)[foxmail.com:s=s201512];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6582-lists,linux-modules=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-6583-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,suse.com,lists.infradead.org,vger.kernel.org,foxmail.com];
+	REPLYTO_DN_EQ_FROM_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[sashiko-bot@kernel.org,linux-modules@vger.kernel.org];
+	FREEMAIL_TO(0.00)[foxmail.com];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[egg12138@foxmail.com,linux-modules@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[foxmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	TAGGED_RCPT(0.00)[linux-modules];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	FREEMAIL_FROM(0.00)[foxmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,foxmail.com:email,foxmail.com:dkim]
-X-Rspamd-Queue-Id: EB1DF60DD33
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NO_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	HAS_REPLYTO(0.00)[sashiko-reviews@lists.linux.dev];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[foxmail.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,sashiko.dev:url,lists.linux.dev:replyto]
+X-Rspamd-Queue-Id: 7E79560DD85
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Xiao Junzhe <egg12138@foxmail.com>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+
+Pre-existing issues:
+- [High] Missing NULL check on the return value of `unwind_table_add()` in =
+`module_finalize()` causes a kernel panic on memory allocation failure.
+--
+
+commit 0098f68f3e89e8e569da9c5eaaa9486505d4ea3d
+Author: Xiao Junzhe <egg12138@foxmail.com>
+
+ARM: module.lds: fix unwind metadata for merged .text sections
 
 Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN,
 and related macros") made scripts/module.lds.S merge module input
-.text.* sections into the output .text section.
+.text.* sections into the output .text section. On ARM, the paired
+unwind input sections keep their original names. This commit ensures
+the ARM module unwind output names stay in sync with the text sections.
 
-On ARM, the paired unwind input sections keep their original names.  A
-module can therefore contain .ARM.exidx.text.unlikely with sh_link
-pointing at .text, while .text.unlikely no longer exists.
+> diff --git a/arch/arm/include/asm/module.lds.h b/arch/arm/include/asm/mod=
+ule.lds.h
+> index 0e7cb4e314b48..1d56c0375c18b 100644
+> --- a/arch/arm/include/asm/module.lds.h
+> +++ b/arch/arm/include/asm/module.lds.h
+> @@ -1,4 +1,16 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+> +
+> +#ifdef CONFIG_ARM_UNWIND
+> +SECTIONS {
+> +	.ARM.extab		0 : {
+> +		*(.ARM.extab .ARM.extab.text .ARM.extab.text.[0-9a-zA-Z_]*)
+> +	}
+> +	.ARM.exidx		0 : {
+> +		*(.ARM.exidx .ARM.exidx.text .ARM.exidx.text.[0-9a-zA-Z_]*)
+> +	}
+> +}
+> +#endif
 
-This is a valid ELF relationship, but ARM module_finalize() does not use
-sh_link when registering module unwind tables.  It derives the target
-text section from the exidx section name instead:
+[Severity: High]
+This is a pre-existing issue and was not introduced by the patch under revi=
+ew,
+but while reviewing how ARM module unwind tables are registered, I noticed a
+potential concern in arch/arm/kernel/module.c:
 
-  .ARM.exidx.text.unlikely -> .text.unlikely
+arch/arm/kernel/module.c:module_finalize() {
+    ...
+		if (txt_sec) {
+			struct unwind_table *table =3D
+				unwind_table_add(s->sh_addr,
+						s->sh_size,
+						txt_sec->sh_addr,
+						txt_sec->sh_size);
 
-The lookup fails and the unwind table is not registered for the actual
-.text range.  This can make module stack unwinding fail with:
+			list_add(&table->mod_list, unwind_list);
+    ...
+}
 
-  unwind: Index not found
+Does this code safely handle a null return from unwind_table_add?
 
-Keep the ARM module unwind output names in sync with the text sections
-that scripts/module.lds.S now produces.  Coalesce the .ARM.exidx/.ARM.extab
-section associated with .text.*, into the
-stable output names expected by the existing ARM module unwind code.
+If unwind_table_add fails to allocate memory, it returns a null pointer.
+Passing that directly to list_add causes an offset-based dereference of nul=
+l.
 
-Fixes: 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related macros")
-Signed-off-by: Xiao Junzhe <egg12138@foxmail.com>
----
-Changes in v3:
-  - Apply the ARM unwind section coalescing under CONFIG_ARM_UNWIND.
-  - Remove quotes around linker-script wildcard patterns so GNU ld expands
-    them correctly.
-  - Use conventional linker-script wildcard syntax, i.e. *(...) without a
-    space after the wildcard.
+Could this trigger a kernel panic during module loading if the system is out
+of memory?
 
- arch/arm/include/asm/module.lds.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> +
+>  #ifdef CONFIG_ARM_MODULE_PLTS
+>  SECTIONS {
+>  	.plt : { BYTE(0) }
 
-diff --git a/arch/arm/include/asm/module.lds.h b/arch/arm/include/asm/module.lds.h
-index 0e7cb4e314b4..1d56c0375c18 100644
---- a/arch/arm/include/asm/module.lds.h
-+++ b/arch/arm/include/asm/module.lds.h
-@@ -1,4 +1,16 @@
- /* SPDX-License-Identifier: GPL-2.0 */
-+
-+#ifdef CONFIG_ARM_UNWIND
-+SECTIONS {
-+	.ARM.extab		0 : {
-+		*(.ARM.extab .ARM.extab.text .ARM.extab.text.[0-9a-zA-Z_]*)
-+	}
-+	.ARM.exidx		0 : {
-+		*(.ARM.exidx .ARM.exidx.text .ARM.exidx.text.[0-9a-zA-Z_]*)
-+	}
-+}
-+#endif
-+
- #ifdef CONFIG_ARM_MODULE_PLTS
- SECTIONS {
- 	.plt : { BYTE(0) }
--- 
-2.43.0
-
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/tencent_08845B64E5F=
+38EB7FA1779982A071AB4A607@qq.com?part=3D1
 
