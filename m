@@ -1,170 +1,271 @@
-Return-Path: <linux-modules+bounces-6586-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6588-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SK8NCpFjHWpHaAkAu9opvQ
-	(envelope-from <linux-modules+bounces-6586-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 12:48:49 +0200
+	id sLYqLcN2HWqnbAkAu9opvQ
+	(envelope-from <linux-modules+bounces-6588-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 14:10:43 +0200
 X-Original-To: lists+linux-modules@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D7E161DD70
-	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 12:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0883961EF09
+	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 14:10:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 53E9F3170664
-	for <lists+linux-modules@lfdr.de>; Mon,  1 Jun 2026 10:28:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CC100306B3B1
+	for <lists+linux-modules@lfdr.de>; Mon,  1 Jun 2026 12:05:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 345BB39768F;
-	Mon,  1 Jun 2026 10:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21FE437649D;
+	Mon,  1 Jun 2026 12:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bbLZA3z8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQ7F7Xxq"
 X-Original-To: linux-modules@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5432BE65B
-	for <linux-modules@vger.kernel.org>; Mon,  1 Jun 2026 10:28:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7654A3750D5
+	for <linux-modules@vger.kernel.org>; Mon,  1 Jun 2026 12:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780309699; cv=none; b=PfR6qOIGD0S+fd8IEdngPPR+2ems0OyAz3sBsICAVav9ZtcE8R7ENyeJ5kbBlqqhALykcE6MWYdgJRafgVBS/rcrWYYT+AtjnBSq5+kaxf2HRtgwk1zBnwOevJA6fcJubBlptxmCJ9qJC7LxisMZpsiHJUQ4u6BD712YHmBrCoc=
+	t=1780315502; cv=none; b=g6YeN0V8kgzEs0h4J83tnZxniCfNC1W73AXUHs8lWhS219J3g+59hxQ1mboea4nbsrcBzHpb5jaX68woU0x9/LlRLIyp1CC2cxTGO6Myb8cCTzbPSEjw9mLnCed261xIKu+I2iLbNqvYZvlUKSElgX7IyARylSfYAMcv2ONea7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780309699; c=relaxed/simple;
-	bh=TfRoJn5H2150htKDlgxUzZg+ESJjTTUa6+EVSFM2IlI=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=IxS0iYhVWbYvqpUEm1EjY1KX9+A3ms66IJSxH5CMd2mlmYymtVot5CCktNKlNvkRmESpN0xwm70X3O73yV4sVjDozBv5dmegoKrlP0R8xKOZYbxTBHiSlYmU9EmLhZk63DffzXec0B8UbmhgxYi4D8BlDoZnCGsrQYYkFrukbGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bbLZA3z8; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F73E1F00893;
-	Mon,  1 Jun 2026 10:28:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780309697;
-	bh=nEROZ4LOz55S8/AK1V2OysBrwyBvMsVthmgneAqyCIU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bbLZA3z8fCOwkN9uUoNuHM7+3UYD7EYFMv0ScxgOyF8R95RkeKfW9dUdcIkvcWHzQ
-	 8B1/X1v4qK9+2/w861bJVZqpvMzqwPGs2YFUtxaRJ4pghgFSC1kiTyT6Aej/UcPvwn
-	 4Q+b10w7OGL0yXGpCon5HYJAyiN1U+1opT1KO5YWh06lFMm2vQwrJMwHOIaa7+GtH9
-	 sEyu+Ji4lmVzkVGt/LXfIDzSAtiWd7A6TugKkWVqj2hGF05PpP2+QjxuLcmkmDviY8
-	 MHRoWrpoGuSCvStNOcW3ZCTaBz4nNRMrWgoSencezevG1FErcXe83PGSzSz7SD9/FM
-	 xv0L/STgcbpBg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] rust: module_param: return value by copy from
- `value`
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andreas Hindborg" <a.hindborg@kernel.org>
-Cc: linux-modules@vger.kernel.org, ojeda@kernel.org
-In-Reply-To: <20260601-modules-value-ref-v2-1-12ebbf0510c9@kernel.org>
-References: <20260601-modules-value-ref-v2-1-12ebbf0510c9@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 01 Jun 2026 10:28:17 +0000
-Message-Id: <20260601102817.9F73E1F00893@smtp.kernel.org>
+	s=arc-20240116; t=1780315502; c=relaxed/simple;
+	bh=UexA6IlALDsQZOTV0hLwfWpaRW3TbsQLPhPBboqis4A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oTZkDCMdvSvsSXNR+yfV4CN3e71jAF8j03KJti31gzgyH6Ar7zdnN2OIsHxVfHTpNzeu5ZqV3akqX7r5bBZxybf2eKh+BRH0dZhBG3U+3n9iC+ItoauYQj3S8xTalSC8TxvVoIAlUAi8A88drCrBuoGvJNUd4Slb228Cvpg+cqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQ7F7Xxq; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-490ac357c55so6959765e9.1
+        for <linux-modules@vger.kernel.org>; Mon, 01 Jun 2026 05:05:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780315499; x=1780920299; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=n5qzKyfnccgdjCAGXdsv8yWwGixxrImvsfnV142aaYI=;
+        b=JQ7F7XxqW9g6DVtsZTVcda+KjsdeNYn03hmt1o6VGeG8nxxIPttdGcU2M3XHOG1i/o
+         j8BQD+cSziDz2A3oOPRlYD8cXBkW3gRsJZup1Z7KrLkD+8yKuGZpMdGg0HFyOcHHErNj
+         pPn8msShsZmISyTLfGbxQRUWehoHPj0nbB/knuRc2A5NIzEWaW87Kwn73G/eFSwpwz/p
+         08mQMiTn/KI/RXo3qWKj9Wk7aX7Mu7l7MeuDUpln6AsUedO1PVyF/10kJZSLJX96Z8dq
+         GxdF5jRwpCqMnWT3Bj1SkWjBR/xpawinuD53I1lZypcGGqPuiafesvGeIuqtaipOtIbb
+         fQgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780315499; x=1780920299;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n5qzKyfnccgdjCAGXdsv8yWwGixxrImvsfnV142aaYI=;
+        b=iRIs4sDDZUcL8Xj0ZFbi9x+1X7TzSOFrVgw8rZNst7tbPCzwJ/cUBXmZxAD2XAEK0W
+         AYXjHjJWkQTPDf77/Jd6aftLpHTw0QXfRWZ5SQMy4BUXHZcmyOvx2ER1xDEIRbz/BSsr
+         QQ8SzLPV9OQP7nAR9ZqO0lsnDJwSctPOJbe116AFqe1RWsM+HcmCUJHVUV5Zer2vXety
+         sAeqexYySHm/eREDlBbqxkPWSrv656wJ+atIyPxDfBDphQXz+DEseWFE8b79lXKOBGvN
+         0mAkNO41dwXKAJLyK7RZ4TOcJTOxUHmRFYhTZTS6WMHxbcyTa4Il9RxSeB2ugTPZq0p4
+         tT8Q==
+X-Forwarded-Encrypted: i=1; AFNElJ9lgtdR8zlW1h4CrM7QMoo3oI3mg92rF8mGPrtawKHz+Vcd71O/GIAK5zG3Id8A8SF07GlLGDHYqkRGi8SM@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSRND5ju/DTEGH31Qxytk0ybbSBaW6aa21mZUYpi1WIH59hsQM
+	47cFd7LCLOzM8G8+r7rFFTgNmVJPqPqQRGbJo74kfxGMmpWgd+e2KPMa
+X-Gm-Gg: Acq92OEp8QI9x+3DDuActhC+34pZTjtuwoPv8mRHsdRjK3MjahT0uGGKJEVbeOOFzrj
+	s2qfhlG9nlVoCTxQig3bOkg2M3AsXnmQGqvcWBlGrBe8D3vw2sk0H4aEs214xN/Hdu6Q2Yhpq28
+	HO+ZMZIwxRwCIPSX0oZ7sm5raImx8+ACIvydO8TR3r3vhsGgSbq4eiBpkGCon66uJyPGHbuyGpX
+	gbmXNsvz4rtxFJFsJBZ56h1yxqpmFlLXl9sKCRSNYlhdd+eXZtpEZO/4FjdQGT8YGVpf985Y4kE
+	Vh64EM/TWIyIRRFSl8YF0DOaOSxZ8ABG+Y4D/cQoS8Cd8mkaRK+rJJOTJD06FT4rPQSGSzN0TLJ
+	mPQZYYFOBKowcWTVvML8AatQte2FOlAh8bQdu6U785qc8tSE544gtVf7FFy7CaKkl6k4agr+0d3
+	k+3kJ/stvdCkXfxz0L853sPw5itq+IaSThECfXi/aghw==
+X-Received: by 2002:a05:600c:3487:b0:48f:e1ac:c94f with SMTP id 5b1f17b1804b1-490a2918103mr212890145e9.10.1780315498448;
+        Mon, 01 Jun 2026 05:04:58 -0700 (PDT)
+Received: from [172.16.188.153] ([213.181.114.83])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4909c152570sm103972805e9.9.2026.06.01.05.04.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2026 05:04:57 -0700 (PDT)
+From: Jim Cromie <jim.cromie@gmail.com>
+Subject: [PATCH v3 00/24] dynamic-debug cleanups refactors maintenance +
+ alignment fix
+Date: Mon, 01 Jun 2026 12:04:46 +0000
+Message-Id: <20260601-dd-maint-2-v3-0-4a15b241bd3c@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
 List-Subscribe: <mailto:linux-modules+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-modules+unsubscribe@vger.kernel.org>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	MISSING_MIME_VERSION(2.00)[];
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/02MwQrCMBBEf6Xs2ZV0Yxvryf+QHmIS2wWblKQEp
+ fTfjQXBy8CbYd4KyUV2CS7VCtFlThx8AXmowIzaDw7ZFgYS1IqGarQWJ81+QULVmuZEQnUloBz
+ m6B782mW3vvDIaQnxvbszfdufRv5rMqHAeyeVrElrcZbXoUzPowkT9Nu2fQATd1+rpAAAAA==
+X-Change-ID: 20260521-dd-maint-2-76c542079420
+To: Jonathan Corbet <corbet@lwn.net>, 
+ Shuah Khan <skhan@linuxfoundation.org>, Arnd Bergmann <arnd@arndb.de>, 
+ Jason Baron <jbaron@akamai.com>, Luis Chamberlain <mcgrof@kernel.org>, 
+ Petr Pavlu <petr.pavlu@suse.com>, Daniel Gomez <da.gomez@kernel.org>, 
+ Sami Tolvanen <samitolvanen@google.com>, Aaron Tomlin <atomlin@atomlin.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, Shuah Khan <shuah@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arch@vger.kernel.org, linux-modules@vger.kernel.org, 
+ linux-kselftest@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ Jim Cromie <jim.cromie@gmail.com>, 
+ Louis Chauvet <louis.chauvet@bootlin.com>, 
+ =?utf-8?q?=C5=81ukasz_Bartosik?= <ukaszb@chromium.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780315495; l=5739;
+ i=jim.cromie@gmail.com; s=20260203; h=from:subject:message-id;
+ bh=UexA6IlALDsQZOTV0hLwfWpaRW3TbsQLPhPBboqis4A=;
+ b=lvmgQ8g7xkH604t4KBSwylbWD7BLSeGoj0N94EqFttk+uNoSZ34wsVJ4kCQjAP+56C7j9e8+r
+ 8/livVa5JYuDL7dtGrwkxv+mPMASsWpXe10/NQqoJFwX0pqQwFAG0+r
+X-Developer-Key: i=jim.cromie@gmail.com; a=ed25519;
+ pk=C6E5ODlPQo7ZBynATXH9wg7K6HxP0pIXyf4s38Qw0XE=
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_NEQ_ENVFROM(0.00)[sashiko-bot@kernel.org,linux-modules@vger.kernel.org];
-	REPLYTO_DN_EQ_FROM_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-6586-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6588-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[lwn.net,linuxfoundation.org,arndb.de,akamai.com,kernel.org,suse.com,google.com,atomlin.com,linux-foundation.org,linux.intel.com,suse.de,gmail.com,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,gmail.com,bootlin.com,chromium.org];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[linux-modules];
-	NEURAL_HAM(-0.00)[-0.999];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_NO_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jimcromie@gmail.com,linux-modules@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-modules];
+	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	HAS_REPLYTO(0.00)[sashiko-reviews@lists.linux.dev];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,sashiko.dev:url,lists.linux.dev:replyto,smtp.kernel.org:mid]
-X-Rspamd-Queue-Id: 7D7E161DD70
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,sashiko.dev:url]
+X-Rspamd-Queue-Id: 0883961EF09
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+This series starts with 2 doc-only patches updating the current state
+of dynamic-debug, they were posted separately here, without pushback.
 
-Pre-existing issues:
-- [High] Casting a pointer of `ModuleParamAccess<T>` to `SetOnce<T>` invoke=
-s undefined behavior due to missing `#[repr(C)]` on `ModuleParamAccess`.
---
+https://lore.kernel.org/linux-doc/20260502-dyndbg-doc-v1-0-67cc4a93a77e@gmail.com/
+    
+Next 5 are a fix to a linker-script alignment problem in 32bit arches
+causing a null-ptr scanning dyndbg-descriptor section on i386.  These
+were reviewed by Petr Pavlu.
 
-commit 9dc35dfddf4037b5b314ed7586fa775219811371
-Author: Andreas Hindborg <a.hindborg@kernel.org>
+The remaining patches are cleanups, refactors in preparation for an
+API change needed to fix a regression in DRM when it uses classmaps.
+I split these out for easier review, I will follow up with the API
+change afterwards.
 
-rust: module_param: return value by copy from value
+The biggest revision vs V2 is the new patch: 25.  It addresses a flaw
+detected by sashiko which is best described by example.
 
-This commit updates parameter access to be more ergonomic for Copy types
-by returning the parameter value by copy rather than through a shared
-reference. It changes ModuleParamAccess::value to return T by copy when
-T: Copy, and renames the previous reference-returning accessor to
-value_ref. The in-tree caller in rust_minimal is updated to reflect this
-change.
+Dyndbg uses KBUILD_MODNAME to provide module-name, this works well for
+loadable modules (module loader requires unique module names), but for
+builtin modules, is effectively kbasename, and not unique.
 
-> diff --git a/rust/kernel/module_param.rs b/rust/kernel/module_param.rs
-> index 6a8a7a875643a..a33302d1b8a36 100644
-> --- a/rust/kernel/module_param.rs
-> +++ b/rust/kernel/module_param.rs
+So we get 4 modules named "main": init/main, kernel/power/main,
+kernel/base/poser/main.  This ambiguity is visible in user-space since
+the beginning of dyndbg.
 
-[ ... ]
+Now suppose kernel/{,base}/power/main want to define classmaps to
+categorize the various pr-debugs they have.  The current code finds a
+module's classmaps by strcmp on modname, so init/main will match
+against classmaps defined by both kernel/{,base}/power/main.
 
-[Severity: High]
-This isn't a bug introduced by this patch, but casting the pointer to
-SetOnce<T> appears to rely on an unspecified memory layout.
+The current code will also map "main" classes to kernel/*/power/main,
+so they will probably work at first, but 2 independent classmaps can
+both use class-ids 0-N, but will conflict if they're both used by a
+module.  Then we have classmap overlaps and unpredictable results.
 
-In rust/kernel/module_param.rs:ModuleParamAccess:
+patch-25 eliminates the ambiguity by using KBUILD_MODFILE to provide a
+unique module-name, then adds matching against kbasename(modname) to
+restore the legacy query behavior.  It *does* change the modname
+exposed in /proc/dynamic_debug/control, but not the result of a query
+like "module main +p".
 
-pub struct ModuleParamAccess<T> {
-    value: SetOnce<T>,
-    default: T,
-}
+OLDER VERSIONS:
 
-Since ModuleParamAccess lacks a #[repr(C)] annotation, the compiler is
-free to reorder its fields. If the default field is placed before value
-to minimize padding, would the cast in set_param() overwrite the default
-field instead?
+V2 primarily revises:
+ https://lore.kernel.org/lkml/20260504-dd-cleanups-2-v1-0-6fdd24040642@gmail.com/
+    
+V2 addressed most of sashiko's feedback on V1:
+ https://sashiko.dev/#/patchset/20260504-dd-cleanups-2-v1-0-6fdd24040642%40gmail.com
+    
+It dropped the pr-fmt patch, as not reproducible,
+advanced the drop-NAMES patch to reduce subsequent churn,
+and fixed the classmaps PARAMs to u64 to avoid 32bit flags on 32bit arches
+    
+For easy one-stop-shopping, V2 also included 2 smaller series:
+    
+1st fixes a section alignment problem, with Reviewed-by from Petr Pavlu
+ https://lore.kernel.org/lkml/20260515-asm-generic-1-v3-0-680b273666d4@gmail.com/
+    
+Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+    
 
-rust/kernel/module_param.rs:set_param() {
-    ...
-    // SAFETY: By function safety requirements, this access is safe.
-    let container =3D unsafe {
-        &*((*param).__bindgen_anon_1.arg.cast::<SetOnce<T>>())
-    };
+Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+---
+Changes in v3:
+- EDITME: describe what is new in this series revision.
+- EDITME: use bulletpoints and terse descriptions.
+- Link to v2: https://lore.kernel.org/r/20260523-dd-maint-2-v2-0-b937312aa083@gmail.com
 
-    container
-        .populate(new_value)
-    ...
-}
+---
+Jim Cromie (24):
+      docs/dyndbg: update examples \012 to \n
+      docs/dyndbg: explain flags parse 1st
+      vmlinux.lds.h: refactor BOUNDED_SECTION_* macros into bounded_sections.lds.h
+      vmlinux.lds.h: drop unused HEADERED_SECTION* macros
+      vmlinux.lds.h: Fix ALIGN(8) omission causing NULL ptr on i386
+      vmlinux.lds.h: remove redundant ALIGN(8) directives
+      dyndbg.lds.S: fix lost dyndbg sections in modules
+      dyndbg: factor ddebug_match_desc out from ddebug_change
+      dyndbg: add stub macro for DECLARE_DYNDBG_CLASSMAP
+      dyndbg: reword "class unknown," to "class:_UNKNOWN_"
+      dyndbg-API: remove DD_CLASS_TYPE_(DISJOINT|LEVEL)_NAMES and code
+      dyndbg: drop NUM_TYPE_ARGS
+      dyndbg: reduce verbose/debug clutter
+      dyndbg: refactor param_set_dyndbg_classes and below
+      dyndbg: tighten fn-sig of ddebug_apply_class_bitmap
+      dyndbg: replace classmap list with an array-slice
+      dyndbg: macrofy a 2-index for-loop pattern
+      dyndbg: Upgrade class param storage to u64 for 64-bit classmaps
+      dyndbg,module: make proper substructs in _ddebug_info
+      dyndbg: move mod_name down from struct ddebug_table to _ddebug_info
+      dyndbg: hoist classmap-filter-by-modname up to ddebug_add_module
+      selftests-dyndbg: add a dynamic_debug run_tests target
+      dyndbg: change __dynamic_func_call_cls* macros into expressions
+      dynamic_debug: use KBUILD_MODFILE for unique builtin module names
 
-Should ModuleParamAccess be marked with #[repr(C)], or should the pointer
-be cast back to ModuleParamAccess<T> before accessing the value field?
+ Documentation/admin-guide/dynamic-debug-howto.rst  |  55 ++-
+ MAINTAINERS                                        |   2 +
+ drivers/gpu/drm/drm_print.c                        |   6 +-
+ include/asm-generic/bounded_sections.lds.h         |  32 ++
+ include/asm-generic/dyndbg.lds.h                   |  18 +
+ include/asm-generic/vmlinux.lds.h                  |  68 +--
+ include/drm/drm_print.h                            |   2 +-
+ include/linux/dynamic_debug.h                      | 133 +++---
+ kernel/module/main.c                               |  12 +-
+ lib/dynamic_debug.c                                | 501 ++++++++++-----------
+ lib/test_dynamic_debug.c                           |  30 +-
+ scripts/module.lds.S                               |   2 +
+ tools/testing/selftests/Makefile                   |   1 +
+ tools/testing/selftests/dynamic_debug/Makefile     |   9 +
+ tools/testing/selftests/dynamic_debug/config       |   8 +
+ .../selftests/dynamic_debug/dyndbg_selftest.sh     | 294 ++++++++++++
+ 16 files changed, 736 insertions(+), 437 deletions(-)
+---
+base-commit: e43ffb69e0438cddd72aaa30898b4dc446f664f8
+change-id: 20260521-dd-maint-2-76c542079420
 
-> @@ -131,10 +131,26 @@ pub const fn new(default: T) -> Self {
->          }
->      }
-> =20
-> +    /// Get a copy of the parameter value.
-> +    ///
+Best regards,
+-- 
+Jim Cromie <jim.cromie@gmail.com>
 
-[ ... ]
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601-modules-va=
-lue-ref-v2-1-12ebbf0510c9@kernel.org?part=3D1
 
