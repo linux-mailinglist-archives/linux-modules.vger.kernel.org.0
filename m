@@ -1,61 +1,61 @@
-Return-Path: <linux-modules+bounces-6615-lists+linux-modules=lfdr.de@vger.kernel.org>
+Return-Path: <linux-modules+bounces-6616-lists+linux-modules=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-modules@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aK74J4p6HWrEbAkAu9opvQ
-	(envelope-from <linux-modules+bounces-6615-lists+linux-modules=lfdr.de@vger.kernel.org>)
-	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 14:26:50 +0200
+	id aHtqDDd5HWrEbAkAu9opvQ
+	(envelope-from <linux-modules+bounces-6616-lists+linux-modules=lfdr.de@vger.kernel.org>)
+	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 14:21:11 +0200
 X-Original-To: lists+linux-modules@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1432C61F402
-	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 14:26:49 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5D0C61F2D0
+	for <lists+linux-modules@lfdr.de>; Mon, 01 Jun 2026 14:21:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BD0293016D1D
-	for <lists+linux-modules@lfdr.de>; Mon,  1 Jun 2026 12:20:47 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A2936300D773
+	for <lists+linux-modules@lfdr.de>; Mon,  1 Jun 2026 12:21:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 133F4372073;
-	Mon,  1 Jun 2026 12:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7478376481;
+	Mon,  1 Jun 2026 12:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DAOu3ts/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="flo8J27F"
 X-Original-To: linux-modules@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112FE371880
-	for <linux-modules@vger.kernel.org>; Mon,  1 Jun 2026 12:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED12374725
+	for <linux-modules@vger.kernel.org>; Mon,  1 Jun 2026 12:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780316447; cv=none; b=qSKDxEiEkIliADefpBHuLc+H1gytmJ4EJXebS8RbOVxk0spS2htAyvuEyfx6s4TwYfcPfmm5BswpF2k94DBIvE1v8ctwDqNlevRjryK1x9OnPXJHVSIsvZHGxGK1CbvXdrCOkY4ewH4rS7Xw2IruDwznjXwXCkoTCC4DBSLo9YI=
+	t=1780316463; cv=none; b=q8hgUYBeuuff6KxQuH8l9YUy6sM+3Lv9hZyWpf/Byfb0qvITaeTkq6Yh8Zxz4xxmxC5ZBJBiNRh2C/uvDgQK+tgQXhFtjQLIqRsMmj+NHWzs7O477CGnVeJW9t6iEH5/QrNmmRVc04LL/MH+biEQ6Eq0k64NPkJSR3eYtn9gf/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780316447; c=relaxed/simple;
-	bh=h+2jgYQvTStWdCngbud+3VmpduVkM4DHw0CVRt7gL9g=;
+	s=arc-20240116; t=1780316463; c=relaxed/simple;
+	bh=nyPf389pjLVld6hsBNJmt6B+xPQb4bCwTsd5iOZ/fyA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=odqle0yzqaZdBe9/i+UVs7/4gTUnS894772/TDZ8ZI0t5JdbBgAB1ymcmx1659LOBlsR23LVtj7T/kDlqj9WiKZq6N25RKTWxX3D5HLtN8x9K84FFNkbDFr1o9gcgaGWsMHlNgMGWTgrc3+sbKBCW0849moAXNG0Q5pjy35vCCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DAOu3ts/; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889961F00893;
-	Mon,  1 Jun 2026 12:20:45 +0000 (UTC)
+	 Message-Id; b=jPczw9+/gxyNbRfup3gldq3QETbpmLY6F6GEXHD2b2WAmmE/VWmHnDRjv5pu22BbiTg/J8Y9W387SuCgESga/WQF3z5dTzEnOvwhCtozGi+M4XjX4EUabmMJHh/QZdBfpx3nrMIDKqav/rUHoAMtOGYOR3S5G8c9zC4X3IrPM78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=flo8J27F; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360121F00893;
+	Mon,  1 Jun 2026 12:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780316445;
-	bh=yr602zP+a84lq9vwBywD0yEALkBYNTGbkNwAfpRp2ns=;
+	s=k20260515; t=1780316462;
+	bh=pjbARCzrhSEFuFxs7ec6GlrsC5D3O6Yf6gVlYzStKkg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=DAOu3ts/9+LyLN20/KyLWdgeL4keVeN4Dhu6D4FerxE/UVuhdMFSPi6O7D2lUEfzV
-	 1+s5FsU4vcuTrmB8lVBd7+b+7XUX2RRp6oGTOkEYlyOqboZEagpUQi6uxxBr16NO7o
-	 ucMHcDrr4uX9hs4+7K69W9GKF2KARxv6Ib6TfHbtTyYEW9mRoYlvd3h+vKyFWP3C7Q
-	 jiiIrVwbopgJbIaKouwCul4ThN6SgDfZrlgKHyLFSzQXCEZWQ4GcahQUruZ3+gM9QO
-	 9uaPgW7zMSTiGQcwZK2OiEFTnkryLajHUC+QZNS70FWXa/pvWg3u0FrizNDQdoONdG
-	 /CFnXZCZ9Betg==
+	b=flo8J27FlUgQkSw/gpqhol/4vnKRHKk4XhpActEHiNa69BWF5HGNKplXADrEV0cgw
+	 wmwIPhqSNj6eltxbMpQKL+G8wt+pduMiEW2UV3Hxf02KdAdKHh9zzR+BZ+S8bzpf4e
+	 QPldbZ+Gvz7XYhTgScTOQdg/VUcNeTuY6dSFRH2tC8RXeR2MvrltZKygE0Fu7KjTtl
+	 +HxWNvRON9B1kbKZpRraZoxPu035AhsLJK9b+pL0hw20SrBhnglFn5IM5Z5zyPeTjn
+	 AEku2PUm3pOpMHpWKcfRbqmiP+BH1UZsJDyLA7cXtv15e4OiBxpHbJR23/kGPlYdP8
+	 cePvbBBxyic8g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 18/24] dyndbg: Upgrade class param storage to u64 for
- 64-bit classmaps
+Subject: Re: [PATCH v3 22/24] selftests-dyndbg: add a dynamic_debug
+ run_tests target
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Jim Cromie" <jim.cromie@gmail.com>
 Cc: linux-modules@vger.kernel.org
-In-Reply-To: <20260601-dd-maint-2-v3-18-4a15b241bd3c@gmail.com>
-References: <20260601-dd-maint-2-v3-18-4a15b241bd3c@gmail.com>
+In-Reply-To: <20260601-dd-maint-2-v3-22-4a15b241bd3c@gmail.com>
+References: <20260601-dd-maint-2-v3-22-4a15b241bd3c@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 01 Jun 2026 12:20:45 +0000
-Message-Id: <20260601122045.889961F00893@smtp.kernel.org>
+Date: Mon, 01 Jun 2026 12:21:01 +0000
+Message-Id: <20260601122102.360121F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-modules@vger.kernel.org
 List-Id: <linux-modules.vger.kernel.org>
@@ -66,11 +66,11 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-6615-lists,linux-modules=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-6616-lists,linux-modules=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	REPLYTO_DN_EQ_FROM_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -90,61 +90,65 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FROM_NO_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	HAS_REPLYTO(0.00)[sashiko-reviews@lists.linux.dev];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[smtp.kernel.org:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,sashiko.dev:url,lists.linux.dev:replyto]
-X-Rspamd-Queue-Id: 1432C61F402
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,smtp.kernel.org:mid,lists.linux.dev:replyto,sashiko.dev:url]
+X-Rspamd-Queue-Id: B5D0C61F2D0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Low] The patch causes a compilation failure by instantiating an undeclar=
-ed type `struct _ddebug_class_param` for `drm_debug_bitmap`.
+- [Low] Unquoted variable in helper function `search_trace` truncates the s=
+earch pattern if it contains spaces.
 --
 
-commit 907ab9c053461a5ca389ec9e173d54aa04b245d4
+commit 35e29a827e53195f855e4fc5d139746aeb606df3
 Author: Jim Cromie <jim.cromie@gmail.com>
 
-dyndbg: Upgrade class param storage to u64 for 64-bit classmaps
+selftests-dyndbg: add a dynamic_debug run_tests target
 
-This patch upgrades the internal storage types in the dynamic debug class
-parameter structures to u64 to fully support 64-bit debug categories. It
-updates the internal storage elements and the relevant dynamic debug sysfs
-input parsers to use the 64-bit types.
+This commit adds a dynamic-debug selftest script and basic test targets
+for the dynamic_debug subsystem. It introduces tests that modify pr_debug()
+flags and verify their effects in the control interface.
 
-> diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
-> index ded9461df5f25..9b4d8e3baacc0 100644
-> --- a/drivers/gpu/drm/drm_print.c
-> +++ b/drivers/gpu/drm/drm_print.c
+> diff --git a/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh b/t=
+ools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
+> new file mode 100755
+> index 0000000000000..8b2b7388678e3
+> --- /dev/null
+> +++ b/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
 [ ... ]
-> @@ -69,7 +69,7 @@ DECLARE_DYNDBG_CLASSMAP(drm_debug_classes, DD_CLASS_TYP=
-E_DISJOINT_BITS, 0,
->  			"DRM_UT_DP",
->  			"DRM_UT_DRMRES");
-> =20
-> -static struct ddebug_class_param drm_debug_bitmap =3D {
-> +static struct _ddebug_class_param drm_debug_bitmap =3D {
+> +function ifrmmod {
+> +    lsmod | grep $1 2>&1>/dev/null && rmmod $1
+> +}
+> +
+> +# $1 - text to search for
+> +function search_trace() {
+> +    search_trace_name 0 1 $1
 
 [Severity: Low]
-Does this cause a build failure when CONFIG_DRM_USE_DYNAMIC_DEBUG is enable=
-d?
+Does this unquoted variable truncate the search pattern if it contains
+spaces?
 
-The struct is still defined as ddebug_class_param in
-include/linux/dynamic_debug.h at this point in the commit history.
-Instantiating the undeclared _ddebug_class_param type for drm_debug_bitmap
-breaks bisectability for this patch.
+If search_trace() is called with a multi-word string like
+search_trace "error message", word splitting will cause
+search_trace_name() to receive "error" as the third parameter and
+"message" as a fourth parameter. Since search_trace_name() only uses
+$3 for its grep pattern, it will only search for the first word.
 
-I see this issue is fixed later in the patch series in commit
-97c08d5dc7f7ec501676f73addba8ad9f6c67352, but it might be worth correcting
-here to keep the tree building at every step.
+Could this be fixed by quoting "$1" instead?
 
->  	.bits =3D &__drm_debug,
->  	.flags =3D "p",
->  	.map =3D &drm_debug_classes,
+> +}
+> +
+> +# $1 - trace instance name, 0 for global event trace
+> +# $2 - line number counting from the bottom
+> +# $3 - text to search for
+> +function search_trace_name() {
+[ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601-dd-maint-2=
--v3-0-4a15b241bd3c@gmail.com?part=3D18
+-v3-0-4a15b241bd3c@gmail.com?part=3D22
 
